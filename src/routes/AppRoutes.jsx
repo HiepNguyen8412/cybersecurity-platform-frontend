@@ -1,5 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom"
+
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout"
+
+import Login from "../pages/auth/Login"
+import Register from "../pages/auth/Register"
+import ForgotPassword from "../pages/auth/ForgotPassword"
 
 function Placeholder({ title }) {
     return (
@@ -18,10 +23,31 @@ function Placeholder({ title }) {
 function AppRoutes() {
     return (
         <Routes>
+            {/* ==================== */}
+            {/* Authentication */}
+            {/* ==================== */}
+
+            <Route path="/login" element={<Login />} />
+
+            <Route path="/register" element={<Register />} />
+
+            <Route
+                path="/forgot-password"
+                element={<ForgotPassword />}
+            />
+
+            {/* ==================== */}
+            {/* Default */}
+            {/* ==================== */}
+
             <Route
                 path="/"
                 element={<Navigate to="/dashboard" replace />}
             />
+
+            {/* ==================== */}
+            {/* Dashboard */}
+            {/* ==================== */}
 
             <Route
                 path="/dashboard"
@@ -32,6 +58,10 @@ function AppRoutes() {
                 }
             />
 
+            {/* ==================== */}
+            {/* Threats */}
+            {/* ==================== */}
+
             <Route
                 path="/threats"
                 element={
@@ -40,6 +70,10 @@ function AppRoutes() {
                     </DashboardLayout>
                 }
             />
+
+            {/* ==================== */}
+            {/* Vulnerabilities */}
+            {/* ==================== */}
 
             <Route
                 path="/vulnerabilities"
@@ -50,6 +84,10 @@ function AppRoutes() {
                 }
             />
 
+            {/* ==================== */}
+            {/* Incidents */}
+            {/* ==================== */}
+
             <Route
                 path="/incidents"
                 element={
@@ -58,6 +96,10 @@ function AppRoutes() {
                     </DashboardLayout>
                 }
             />
+
+            {/* ==================== */}
+            {/* Security Labs */}
+            {/* ==================== */}
 
             <Route
                 path="/security-labs"
@@ -68,6 +110,10 @@ function AppRoutes() {
                 }
             />
 
+            {/* ==================== */}
+            {/* Learning */}
+            {/* ==================== */}
+
             <Route
                 path="/learning"
                 element={
@@ -76,6 +122,10 @@ function AppRoutes() {
                     </DashboardLayout>
                 }
             />
+
+            {/* ==================== */}
+            {/* Profile */}
+            {/* ==================== */}
 
             <Route
                 path="/profile"
@@ -86,6 +136,10 @@ function AppRoutes() {
                 }
             />
 
+            {/* ==================== */}
+            {/* Settings */}
+            {/* ==================== */}
+
             <Route
                 path="/settings"
                 element={
@@ -93,6 +147,15 @@ function AppRoutes() {
                         <Placeholder title="Settings" />
                     </DashboardLayout>
                 }
+            />
+
+            {/* ==================== */}
+            {/* 404 */}
+            {/* ==================== */}
+
+            <Route
+                path="*"
+                element={<Navigate to="/dashboard" replace />}
             />
         </Routes>
     )
