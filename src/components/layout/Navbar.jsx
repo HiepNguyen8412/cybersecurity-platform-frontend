@@ -9,6 +9,8 @@ import {
   LogOut,
   ChevronDown,
   X,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react"
 import useLayout from "../../hooks/useLayout"
 import {
@@ -23,9 +25,12 @@ import {
 /**
  * Topbar for authenticated application.
  * Simple, clean layout communicating "Where am I?" with breadcrumbs, search, and user tools.
+ * Dynamically adjusts left offset based on expanded or collapsed sidebar state.
  */
 export function Navbar() {
   const {
+    isSidebarCollapsed,
+    toggleSidebarCollapse,
     openMobileMenu,
     pageTitle,
     breadcrumbs: customBreadcrumbs,
@@ -120,10 +125,16 @@ export function Navbar() {
   ]
 
   return (
-    <header className="fixed top-0 right-0 left-0 md:left-60 z-30 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all duration-200 ease-in-out">
+    <header
+      className={`
+        fixed top-0 right-0 left-0 z-30 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all duration-200 ease-in-out
+        ${isSidebarCollapsed ? "md:left-[72px]" : "md:left-60"}
+      `.trim()}
+    >
       <div className="flex h-full items-center justify-between px-4 sm:px-6 gap-3">
-        {/* Left: Mobile hamburger & Clear Breadcrumb / Page Context ("Where am I?") */}
-        <div className="flex items-center gap-3 min-w-0">
+        {/* Left: Mobile hamburger + Desktop toggle + Breadcrumb */}
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          {/* Mobile hamburger */}
           <button
             type="button"
             onClick={openMobileMenu}
@@ -133,7 +144,22 @@ export function Navbar() {
             <Menu className="h-5 w-5" />
           </button>
 
-          <div className="flex items-center min-w-0">
+          {/* Desktop sidebar toggle button */}
+          <button
+            type="button"
+            onClick={toggleSidebarCollapse}
+            className="hidden md:flex p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+            title={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {isSidebarCollapsed ? (
+              <PanelLeftOpen className="h-4 w-4" />
+            ) : (
+              <PanelLeftClose className="h-4 w-4" />
+            )}
+          </button>
+
+          <div className="flex items-center min-w-0 overflow-hidden">
             <Breadcrumb items={breadcrumbItems} />
           </div>
         </div>
@@ -274,7 +300,7 @@ export function Navbar() {
                 <div className="px-3 py-2.5 border-b border-slate-100">
                   <p className="text-xs font-semibold text-slate-900 leading-tight">Alex Morgan</p>
                   <p className="text-[11px] text-slate-500 truncate mt-0.5">
-                    alex.morgan@cybershield.edu
+                    alex.morgan@cyberpath.edu
                   </p>
                   <div className="mt-2">
                     <Badge variant="primary" size="sm">

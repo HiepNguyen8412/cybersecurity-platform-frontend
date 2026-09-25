@@ -19,14 +19,14 @@ export function AuthLayout({ children }) {
           <Link
             to="/"
             className="flex items-center gap-2.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg p-0.5"
-            title="CyberShield Platform"
+            title="CyberPath Platform"
           >
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-2xs">
               <ShieldCheck className="h-5 w-5 stroke-[2.2]" />
             </div>
             <div className="flex flex-col text-left">
               <span className="text-sm font-bold tracking-tight text-slate-900 leading-tight">
-                CyberShield
+                CyberPath
               </span>
               <span className="text-[11px] font-medium text-slate-500 leading-tight">
                 Learning Platform
@@ -46,7 +46,7 @@ export function AuthLayout({ children }) {
 
         {/* Auth Footer */}
         <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
-          <span>&copy; {new Date().getFullYear()} CyberShield Academy</span>
+          <span>&copy; {new Date().getFullYear()} CyberPath, Inc.</span>
           <div className="flex items-center gap-3">
             <span className="hover:text-slate-600 transition-colors cursor-pointer">
               Privacy Policy
