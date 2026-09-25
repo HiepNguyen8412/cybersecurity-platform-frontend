@@ -1,144 +1,188 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState, useEffect, useCallback } from "react"
+import authService from "../services/authService"
 
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem("cybershield_auth_user")
-      return saved ? JSON.parse(saved) : null
-    } catch {
-      return null
-    }
-  })
-
+  const [user, setUser] = useState(null)
+  const [isInitializing, setIsInitializing] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
+  const [authError, setAuthError] = useState(null)
 
-  // Sync user state changes to storage
+  // Clear any global auth error
+  const clearAuthError = useCallback(() => {
+    setAuthError(null)
+  }, [])
+
+  // Restore session on mount without race conditions
   useEffect(() => {
-    try {
-      if (user) {
-        localStorage.setItem("cybershield_auth_user", JSON.stringify(user))
-      } else {
-        localStorage.removeItem("cybershield_auth_user")
+    let isMounted = true
+
+    async function initializeAuth() {
+      try {
+        const result = await authService.getCurrentUser()
+        if (isMounted && result.success && result.data?.user) {
+          setUser(result.data.user)
+        }
+      } catch {
+        // No valid session, stay unauthenticated
+      } finally {
+        if (isMounted) {
+          setIsInitializing(false)
+        }
       }
-    } catch {
-      // Ignore storage errors
     }
-  }, [user])
+
+    initializeAuth()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   /**
-   * Mock login with realistic delay and validation states.
+   * Log in user
    */
   const login = async (email, password, rememberMe = true) => {
     setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 600))
-    setIsLoading(false)
+    setAuthError(null)
 
-    // Trigger mock error for testing if user enters invalid demo credentials
-    if (email === "error@test.com" || password === "wrong") {
-      return {
-        success: false,
-        error: "Invalid email or password. For demo, try alex@cybershield.edu with any password.",
+    try {
+      const result = await authService.login({ email, password, rememberMe })
+
+      if (result.success && result.data?.user) {
+        setUser(result.data.user)
+        if (rememberMe) {
+          try {
+            localStorage.setItem("cyberpath_user_profile", JSON.stringify(result.data.user))
+          } catch {
+            // Ignore storage quota errors
+          }
+        }
+        return { success: true, user: result.data.user }
+      } else {
+        const errorMsg = result.error || "Invalid email or password."
+        setAuthError(errorMsg)
+        return { success: false, error: errorMsg }
       }
+    } catch {
+      const errorMsg = "Unable to sign in. Please verify your connection and try again."
+      setAuthError(errorMsg)
+      return { success: false, error: errorMsg }
+    } finally {
+      setIsLoading(false)
     }
-
-    const mockUser = {
-      name: email.split("@")[0].replace(/[._]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) || "Alex Morgan",
-      email: email,
-      role: "Security Analyst",
-      avatarStatus: "online",
-      rememberMe,
-    }
-
-    setUser(mockUser)
-    return { success: true, user: mockUser }
   }
 
   /**
-   * Mock registration.
+   * Register new user account
    */
   const register = async ({ name, email, password }) => {
     setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 650))
-    setIsLoading(false)
+    setAuthError(null)
 
-    if (email === "taken@cybershield.edu") {
-      return {
-        success: false,
-        error: "An account with this email address already exists. Please sign in instead.",
-      }
-    }
-
-    const newUser = {
-      name,
-      email,
-      role: "Learner",
-      avatarStatus: "online",
-      isEmailVerified: false,
-      hasPassword: Boolean(password),
-    }
-
-    // Save pending email in session storage for verification flow
     try {
-      sessionStorage.setItem("cybershield_pending_verify_email", email)
+      const result = await authService.register({ name, email, password })
+
+      if (result.success) {
+        // Store pending verification email in sessionStorage (transient, cleared on tab close)
+        try {
+          sessionStorage.setItem("cyberpath_pending_verify_email", email.trim().toLowerCase())
+        } catch {
+          // Ignore
+        }
+        return { success: true, data: result.data }
+      } else {
+        const errorMsg = result.error || "Unable to register. Please try again."
+        setAuthError(errorMsg)
+        return { success: false, error: errorMsg }
+      }
     } catch {
-      // Ignore storage error
+      const errorMsg = "Registration failed due to a network or server issue."
+      setAuthError(errorMsg)
+      return { success: false, error: errorMsg }
+    } finally {
+      setIsLoading(false)
     }
-
-    return { success: true, user: newUser }
   }
 
   /**
-   * Mock email verification.
-   */
-  const verifyEmail = async (email) => {
-    setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    setIsLoading(false)
-
-    if (user && user.email === email) {
-      setUser((prev) => ({ ...prev, isEmailVerified: true }))
-    }
-
-    return { success: true }
-  }
-
-  /**
-   * Mock password reset request.
+   * Request password reset link
    */
   const requestPasswordReset = async (email) => {
     setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 600))
-    setIsLoading(false)
+    setAuthError(null)
 
-    return { success: true, email }
-  }
-
-  /**
-   * Mock password update.
-   */
-  const resetPassword = async (newPassword) => {
-    setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 700))
-    setIsLoading(false)
-
-    if (newPassword && user) {
-      setUser((prev) => ({ ...prev, passwordUpdated: true }))
-    }
-
-    return { success: true }
-  }
-
-  /**
-   * Logout.
-   */
-  const logout = () => {
-    setUser(null)
     try {
-      localStorage.removeItem("cybershield_auth_user")
-    } catch {
-      // Ignore
+      const result = await authService.requestPasswordReset({ email })
+      return result
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  /**
+   * Reset password with token
+   */
+  const resetPassword = async (token, newPassword) => {
+    setIsLoading(true)
+    setAuthError(null)
+
+    try {
+      const result = await authService.resetPassword({ token, newPassword })
+      return result
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  /**
+   * Verify email address
+   */
+  const verifyEmail = async (token, email) => {
+    setIsLoading(true)
+    setAuthError(null)
+
+    try {
+      const result = await authService.verifyEmail({ token, email })
+      if (result.success && user) {
+        setUser((prev) => (prev ? { ...prev, isEmailVerified: true } : prev))
+      }
+      return result
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  /**
+   * Resend verification email
+   */
+  const resendVerification = async (email) => {
+    setIsLoading(true)
+    try {
+      return await authService.resendVerification({ email })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  /**
+   * Log out and wipe all local session traces
+   */
+  const logout = async () => {
+    setIsLoading(true)
+    try {
+      await authService.logout()
+    } finally {
+      setUser(null)
+      setAuthError(null)
+      setIsLoading(false)
+      try {
+        localStorage.removeItem("cyberpath_user_profile")
+        sessionStorage.removeItem("cyberpath_pending_verify_email")
+      } catch {
+        // Ignore
+      }
     }
   }
 
@@ -147,13 +191,17 @@ export function AuthProvider({ children }) {
       value={{
         user,
         isAuthenticated: Boolean(user),
+        isInitializing,
         isLoading,
+        authError,
+        clearAuthError,
         login,
         register,
-        verifyEmail,
+        logout,
         requestPasswordReset,
         resetPassword,
-        logout,
+        verifyEmail,
+        resendVerification,
       }}
     >
       {children}

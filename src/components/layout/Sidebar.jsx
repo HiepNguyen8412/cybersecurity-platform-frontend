@@ -15,6 +15,7 @@ import {
   PanelLeftOpen,
 } from "lucide-react"
 import useLayout from "../../hooks/useLayout"
+import useAuth from "../../hooks/useAuth"
 import { Avatar } from "../common"
 
 /**
@@ -28,6 +29,10 @@ export function Sidebar() {
     isMobileMenuOpen,
     closeMobileMenu,
   } = useLayout()
+
+  const { user } = useAuth()
+  const displayName = user?.name || "Alex Morgan"
+  const displayRole = user?.role || "Security Analyst"
 
   // Navigation structure: LEARN, PROGRESS, ACCOUNT
   const navigationGroups = [
@@ -196,17 +201,17 @@ export function Sidebar() {
           className={`flex items-center rounded-xl hover:bg-slate-100/80 transition-colors group cursor-pointer ${
             isCollapsed ? "justify-center p-2" : "justify-between p-2"
           }`}
-          title="Alex Morgan (Security Analyst) - View profile"
+          title={`${displayName} (${displayRole}) - View profile`}
         >
           <div className={`flex items-center ${isCollapsed ? "justify-center" : "gap-2.5 min-w-0"}`}>
-            <Avatar name="Alex Morgan" size="sm" status="online" />
+            <Avatar name={displayName} size="sm" status="online" />
             {!isCollapsed && (
               <div className="flex flex-col min-w-0 text-left">
                 <span className="text-xs font-semibold text-slate-800 leading-tight truncate group-hover:text-blue-600 transition-colors">
-                  Alex Morgan
+                  {displayName}
                 </span>
                 <span className="text-[11px] text-slate-500 leading-tight truncate">
-                  Security Analyst
+                  {displayRole}
                 </span>
               </div>
             )}

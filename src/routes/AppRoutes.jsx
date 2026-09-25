@@ -1,11 +1,13 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 import PublicLayout from "../layouts/PublicLayout/PublicLayout"
 import AppLayout from "../layouts/AppLayout/AppLayout"
+import ProtectedRoute from "./ProtectedRoute"
+import PublicOnlyRoute from "./PublicOnlyRoute"
 
 // Public Pages
 import LandingPage from "../pages/public/LandingPage"
 
-// Auth Pages (Preserved)
+// Auth Pages (Protected from already-logged-in users)
 import Login from "../pages/auth/Login"
 import Register from "../pages/auth/Register"
 import ForgotPassword from "../pages/auth/ForgotPassword"
@@ -33,26 +35,30 @@ function AppRoutes() {
       </Route>
 
       {/* ====================================================================
-          2. Authentication Routes (Isolated, not wrapped in AppLayout)
+          2. Authentication Routes (Isolated, PublicOnly - redirected if logged in)
          ==================================================================== */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
-      <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route element={<PublicOnlyRoute />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+      </Route>
 
       {/* ====================================================================
-          3. Authenticated Platform Layout Route (Persistent AppLayout with <Outlet />)
+          3. Authenticated Platform Layout Route (Protected by ProtectedRoute)
          ==================================================================== */}
-      <Route element={<AppLayout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/learning" element={<Learning />} />
-        <Route path="/learning-paths" element={<LearningPaths />} />
-        <Route path="/labs" element={<Labs />} />
-        <Route path="/progress" element={<Progress />} />
-        <Route path="/achievements" element={<Achievements />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/settings" element={<Settings />} />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<AppLayout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/learning" element={<Learning />} />
+          <Route path="/learning-paths" element={<LearningPaths />} />
+          <Route path="/labs" element={<Labs />} />
+          <Route path="/progress" element={<Progress />} />
+          <Route path="/achievements" element={<Achievements />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
+        </Route>
       </Route>
 
       {/* ====================================================================

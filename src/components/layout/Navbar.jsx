@@ -13,6 +13,7 @@ import {
   PanelLeftOpen,
 } from "lucide-react"
 import useLayout from "../../hooks/useLayout"
+import useAuth from "../../hooks/useAuth"
 import {
   Avatar,
   Badge,
@@ -35,6 +36,11 @@ export function Navbar() {
     pageTitle,
     breadcrumbs: customBreadcrumbs,
   } = useLayout()
+
+  const { user, logout } = useAuth()
+  const displayName = user?.name || "Alex Morgan"
+  const displayEmail = user?.email || "alex.morgan@cyberpath.edu"
+  const displayRole = user?.role || "Security Analyst"
 
   const [searchQuery, setSearchQuery] = useState("")
   const location = useLocation()
@@ -282,13 +288,13 @@ export function Navbar() {
                 }`}
                 aria-label="Open user menu"
               >
-                <Avatar name="Alex Morgan" size="sm" status="online" />
+                <Avatar name={displayName} size="sm" status="online" />
                 <div className="hidden lg:flex flex-col text-left">
                   <span className="text-xs font-semibold text-slate-900 leading-tight">
-                    Alex Morgan
+                    {displayName}
                   </span>
                   <span className="text-[10px] text-slate-500 leading-tight">
-                    Security Analyst
+                    {displayRole}
                   </span>
                 </div>
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400 hidden sm:inline-block" />
@@ -298,13 +304,13 @@ export function Navbar() {
             {({ close }) => (
               <div>
                 <div className="px-3 py-2.5 border-b border-slate-100">
-                  <p className="text-xs font-semibold text-slate-900 leading-tight">Alex Morgan</p>
+                  <p className="text-xs font-semibold text-slate-900 leading-tight">{displayName}</p>
                   <p className="text-[11px] text-slate-500 truncate mt-0.5">
-                    alex.morgan@cyberpath.edu
+                    {displayEmail}
                   </p>
                   <div className="mt-2">
                     <Badge variant="primary" size="sm">
-                      Learner Account
+                      {displayRole}
                     </Badge>
                   </div>
                 </div>
@@ -337,9 +343,10 @@ export function Navbar() {
                   <DropdownItem
                     danger
                     icon={<LogOut className="h-4 w-4" />}
-                    onClick={() => {
+                    onClick={async () => {
                       close()
-                      navigate("/login")
+                      await logout()
+                      navigate("/login", { replace: true })
                     }}
                   >
                     Log out

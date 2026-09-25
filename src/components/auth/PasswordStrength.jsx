@@ -1,57 +1,39 @@
 import { Check, X } from "lucide-react"
+import { calculatePasswordStrength } from "../../utils/validators"
 
 /**
  * Reusable Password Strength Indicator component.
- * Displays progressive strength meter and clear, unobtrusive requirements checklist.
+ * Displays progressive strength meter and clean, unobtrusive requirements checklist.
  */
 export function PasswordStrength({ password = "" }) {
   if (!password) return null
 
-  // Requirements tests
-  const hasMinLength = password.length >= 8
-  const hasUpperLower = /[a-z]/.test(password) && /[A-Z]/.test(password)
-  const hasNumber = /[0-9]/.test(password)
-  const hasSpecial = /[^A-Za-z0-9]/.test(password)
-
-  // Calculate score from 1 to 4
-  let score = 0
-  if (password.length > 0) score += 1
-  if (hasMinLength) score += 1
-  if (hasUpperLower && (hasNumber || hasSpecial)) score += 1
-  if (hasMinLength && hasUpperLower && hasNumber && hasSpecial) score += 1
-
-  const strengthConfig = [
-    { label: "", color: "bg-slate-200" },
-    { label: "Weak", color: "bg-rose-500", text: "text-rose-600" },
-    { label: "Fair", color: "bg-amber-500", text: "text-amber-600" },
-    { label: "Good", color: "bg-blue-600", text: "text-blue-600" },
-    { label: "Strong", color: "bg-emerald-600", text: "text-emerald-600" },
-  ]
-
-  const current = strengthConfig[score] || strengthConfig[1]
+  const strength = calculatePasswordStrength(password)
 
   const requirements = [
-    { label: "At least 8 characters", met: hasMinLength },
-    { label: "Includes numbers or special symbols", met: hasNumber || hasSpecial },
+    { label: "At least 8 characters", met: strength.hasMinLength },
+    { label: "Upper and lower case letters", met: strength.hasUpperLower },
+    { label: "At least one number (0-9)", met: strength.hasNumber },
+    { label: "At least one special symbol (!@#$)", met: strength.hasSpecial },
   ]
 
   return (
-    <div className="space-y-2 pt-1 animate-in fade-in duration-150">
+    <div className="space-y-2 pt-1 animate-in fade-in duration-150" aria-live="polite">
       {/* 4-Segment Progress Bar */}
       <div className="space-y-1">
         <div className="flex items-center justify-between text-[11px]">
           <span className="text-slate-500">Password strength:</span>
-          <span className={`font-semibold ${current.text}`}>
-            {current.label}
+          <span className={`font-semibold ${strength.textColor}`}>
+            {strength.label}
           </span>
         </div>
 
-        <div className="grid grid-cols-4 gap-1.5 h-1.5">
+        <div className="grid grid-cols-4 gap-1.5 h-1.5" role="progressbar" aria-valuenow={strength.score * 25} aria-valuemin={0} aria-valuemax={100}>
           {[1, 2, 3, 4].map((step) => (
             <div
               key={step}
               className={`rounded-full transition-colors duration-200 ${
-                score >= step ? current.color : "bg-slate-200"
+                strength.score >= step ? strength.color : "bg-slate-200"
               }`}
             />
           ))}
@@ -68,9 +50,9 @@ export function PasswordStrength({ password = "" }) {
             }`}
           >
             {req.met ? (
-              <Check className="h-3 w-3 stroke-[3] shrink-0" />
+              <Check className="h-3 w-3 stroke-[3] shrink-0 text-emerald-600" aria-hidden="true" />
             ) : (
-              <X className="h-3 w-3 shrink-0 text-slate-300" />
+              <X className="h-3 w-3 shrink-0 text-slate-300" aria-hidden="true" />
             )}
             <span>{req.label}</span>
           </div>

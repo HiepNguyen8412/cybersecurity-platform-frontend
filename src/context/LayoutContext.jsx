@@ -5,7 +5,7 @@ const LayoutContext = createContext(null)
 export function LayoutProvider({ children }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
     try {
-      const saved = localStorage.getItem("cybershield_sidebar_collapsed")
+      const saved = localStorage.getItem("cyberpath_sidebar_collapsed")
       return saved ? JSON.parse(saved) : false
     } catch {
       return false
@@ -20,7 +20,7 @@ export function LayoutProvider({ children }) {
     setIsSidebarCollapsed((prev) => {
       const next = !prev
       try {
-        localStorage.setItem("cybershield_sidebar_collapsed", JSON.stringify(next))
+        localStorage.setItem("cyberpath_sidebar_collapsed", JSON.stringify(next))
       } catch {
         // Ignore storage errors
       }
