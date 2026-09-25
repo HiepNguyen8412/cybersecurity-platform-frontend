@@ -1,101 +1,205 @@
+import { NavLink, Link } from "react-router-dom"
 import {
-    LayoutDashboard,
-    ShieldAlert,
-    Bug,
-    Siren,
-    FlaskConical,
-    GraduationCap,
-    User,
-    Settings,
+  LayoutDashboard,
+  BookOpen,
+  Compass,
+  FlaskConical,
+  TrendingUp,
+  Award,
+  User,
+  Settings,
+  ShieldCheck,
+  ChevronRight,
+  X,
 } from "lucide-react"
-import { NavLink } from "react-router-dom"
+import useLayout from "../../hooks/useLayout"
+import { Avatar } from "../common"
 
-const menuItems = [
-    { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-    { label: "Threats", icon: ShieldAlert, path: "/threats" },
-    { label: "Vulnerabilities", icon: Bug, path: "/vulnerabilities" },
-    { label: "Incidents", icon: Siren, path: "/incidents" },
-    { label: "Security Labs", icon: FlaskConical, path: "/security-labs" },
-    { label: "Learning", icon: GraduationCap, path: "/learning" },
-]
+/**
+ * Friendly, human, modern EdTech Sidebar.
+ * Clean navigation with icon + label, readable group headers, and user profile summary at bottom.
+ */
+export function Sidebar() {
+  const { isMobileMenuOpen, closeMobileMenu } = useLayout()
 
-function Sidebar() {
-    return (
-        <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r border-slate-800 bg-slate-950 text-slate-200">
-            {/* Logo */}
-            <div className="flex h-16 items-center border-b border-slate-800 px-6">
-                <ShieldAlert className="mr-3 h-7 w-7 text-blue-500" />
+  // Navigation structure specified: LEARN, PROGRESS, ACCOUNT
+  const navigationGroups = [
+    {
+      group: "LEARN",
+      items: [
+        { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+        { label: "Learning", icon: BookOpen, path: "/learning" },
+        { label: "Learning Paths", icon: Compass, path: "/learning-paths" },
+        { label: "Labs", icon: FlaskConical, path: "/labs" },
+      ],
+    },
+    {
+      group: "PROGRESS",
+      items: [
+        { label: "Progress", icon: TrendingUp, path: "/progress" },
+        { label: "Achievements", icon: Award, path: "/achievements" },
+      ],
+    },
+    {
+      group: "ACCOUNT",
+      items: [
+        { label: "Profile", icon: User, path: "/profile" },
+        { label: "Settings", icon: Settings, path: "/settings" },
+      ],
+    },
+  ]
 
-                <div>
-                    <h1 className="text-sm font-bold text-white">
-                        Cybersecurity
-                    </h1>
+  const sidebarBody = (
+    <div className="flex h-full flex-col bg-white border-r border-slate-200/80">
+      {/* Brand Header */}
+      <div className="flex h-16 items-center justify-between border-b border-slate-200/80 px-5">
+        <Link
+          to="/dashboard"
+          className="flex items-center gap-2.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg"
+          onClick={closeMobileMenu}
+        >
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-2xs">
+            <ShieldCheck className="h-5 w-5 stroke-[2.2]" />
+          </div>
 
-                    <p className="text-xs text-slate-500">
-                        Interactive Platform
-                    </p>
-                </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-bold tracking-tight text-slate-900 leading-tight">
+              CyberShield
+            </span>
+            <span className="text-[11px] font-medium text-slate-500 leading-tight">
+              Learning Platform
+            </span>
+          </div>
+        </Link>
+
+        {/* Mobile close button */}
+        <button
+          type="button"
+          onClick={closeMobileMenu}
+          className="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
+          aria-label="Close menu"
+        >
+          <X className="h-5 w-5" />
+        </button>
+      </div>
+
+      {/* Navigation Sections */}
+      <nav
+        aria-label="Application Navigation"
+        className="flex-1 overflow-y-auto px-3.5 py-4 space-y-4"
+      >
+        {navigationGroups.map((group) => (
+          <div key={group.group} className="space-y-1">
+            <p className="px-2.5 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 select-none">
+              {group.group}
+            </p>
+
+            <div className="space-y-0.5">
+              {group.items.map((item) => {
+                const Icon = item.icon
+
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    onClick={closeMobileMenu}
+                    className={({ isActive }) => `
+                      group relative flex items-center gap-3 rounded-lg px-2.5 py-2 text-sm font-medium transition-all duration-150 select-none
+                      ${
+                        isActive
+                          ? "bg-blue-50 text-blue-700 font-semibold"
+                          : "text-slate-600 hover:bg-slate-100/70 hover:text-slate-900"
+                      }
+                    `.trim()}
+                  >
+                    {({ isActive }) => (
+                      <>
+                        {/* Subtle active left indicator */}
+                        {isActive && (
+                          <span
+                            className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-blue-600"
+                            aria-hidden="true"
+                          />
+                        )}
+
+                        <Icon
+                          className={`h-4.5 w-4.5 shrink-0 transition-colors ${
+                            isActive
+                              ? "text-blue-600 stroke-[2.2]"
+                              : "text-slate-400 group-hover:text-slate-700 stroke-[1.8]"
+                          }`}
+                        />
+
+                        <span className="truncate leading-none">{item.label}</span>
+                      </>
+                    )}
+                  </NavLink>
+                )
+              })}
             </div>
+          </div>
+        ))}
+      </nav>
 
-            {/* Menu */}
-            <nav className="p-4">
-                <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Platform
-                </p>
-
-                <div className="space-y-1">
-                    {menuItems.map((item) => {
-                        const Icon = item.icon
-
-                        return (
-                            <NavLink
-                                key={item.path}
-                                to={item.path}
-                                className={({ isActive }) =>
-                                    `flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition ${isActive
-                                        ? "bg-blue-600 text-white"
-                                        : "text-slate-400 hover:bg-slate-800 hover:text-white"
-                                    }`
-                                }
-                            >
-                                <Icon className="mr-3 h-5 w-5" />
-                                {item.label}
-                            </NavLink>
-                        )
-                    })}
-                </div>
-            </nav>
-
-            {/* Bottom menu */}
-            <div className="absolute bottom-0 left-0 w-full border-t border-slate-800 p-4">
-                <NavLink
-                    to="/profile"
-                    className={({ isActive }) =>
-                        `mb-1 flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition ${isActive
-                            ? "bg-blue-600 text-white"
-                            : "text-slate-400 hover:bg-slate-800 hover:text-white"
-                        }`
-                    }
-                >
-                    <User className="mr-3 h-5 w-5" />
-                    Profile
-                </NavLink>
-
-                <NavLink
-                    to="/settings"
-                    className={({ isActive }) =>
-                        `flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition ${isActive
-                            ? "bg-blue-600 text-white"
-                            : "text-slate-400 hover:bg-slate-800 hover:text-white"
-                        }`
-                    }
-                >
-                    <Settings className="mr-3 h-5 w-5" />
-                    Settings
-                </NavLink>
+      {/* Bottom User Profile Summary */}
+      <div className="border-t border-slate-200/80 p-3">
+        <Link
+          to="/profile"
+          onClick={closeMobileMenu}
+          className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-100/80 transition-colors group cursor-pointer"
+          title="View profile and settings"
+        >
+          <div className="flex items-center gap-2.5 min-w-0">
+            <Avatar name="Alex Morgan" size="sm" status="online" />
+            <div className="flex flex-col min-w-0 text-left">
+              <span className="text-xs font-semibold text-slate-800 leading-tight truncate group-hover:text-blue-600 transition-colors">
+                Alex Morgan
+              </span>
+              <span className="text-[11px] text-slate-500 leading-tight truncate">
+                Security Analyst
+              </span>
             </div>
-        </aside>
-    )
+          </div>
+
+          <ChevronRight className="h-4 w-4 text-slate-400 group-hover:text-slate-600 shrink-0" />
+        </Link>
+      </div>
+    </div>
+  )
+
+  return (
+    <>
+      {/* Desktop / Tablet Sidebar (Fixed Left) */}
+      <aside
+        aria-label="Platform Sidebar"
+        className="hidden md:block fixed left-0 top-0 bottom-0 w-60 z-40 transition-all duration-200 ease-in-out"
+      >
+        {sidebarBody}
+      </aside>
+
+      {/* Mobile Drawer (Offcanvas Overlay) */}
+      {isMobileMenuOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile Navigation Drawer"
+          className="fixed inset-0 z-50 md:hidden"
+        >
+          {/* Backdrop overlay */}
+          <div
+            className="fixed inset-0 bg-slate-900/30 backdrop-blur-xs transition-opacity animate-in fade-in"
+            onClick={closeMobileMenu}
+            aria-hidden="true"
+          />
+
+          {/* Offcanvas Drawer Content */}
+          <aside className="fixed left-0 top-0 bottom-0 w-64 max-w-[85vw] bg-white shadow-xl transition-transform animate-in slide-in-from-left duration-200 z-10">
+            {sidebarBody}
+          </aside>
+        </div>
+      )}
+    </>
+  )
 }
 
 export default Sidebar

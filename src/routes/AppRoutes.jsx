@@ -1,164 +1,220 @@
 import { Routes, Route, Navigate } from "react-router-dom"
+import AppLayout from "../layouts/AppLayout/AppLayout"
 
-import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout"
-
+// Auth Pages (Preserved)
 import Login from "../pages/auth/Login"
 import Register from "../pages/auth/Register"
 import ForgotPassword from "../pages/auth/ForgotPassword"
 
-function Placeholder({ title }) {
-    return (
-        <div>
-            <h1 className="text-3xl font-bold text-white">
-                {title}
-            </h1>
-
-            <p className="mt-2 text-slate-400">
-                This page is under development.
-            </p>
-        </div>
-    )
-}
+// Learning-First Page Shell
+import PageShell from "../components/layout/PageShell"
+import {
+  LayoutDashboard,
+  BookOpen,
+  Compass,
+  FlaskConical,
+  TrendingUp,
+  Award,
+  User,
+  Settings,
+} from "lucide-react"
 
 function AppRoutes() {
-    return (
-        <Routes>
-            {/* ==================== */}
-            {/* Authentication */}
-            {/* ==================== */}
+  return (
+    <Routes>
+      {/* ====================================================================
+          1. Authentication Routes (Preserved)
+         ==================================================================== */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
 
-            <Route path="/login" element={<Login />} />
+      {/* ====================================================================
+          2. Root Default Redirect
+         ==================================================================== */}
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-            <Route path="/register" element={<Register />} />
-
-            <Route
-                path="/forgot-password"
-                element={<ForgotPassword />}
+      {/* ====================================================================
+          3. Learning Platform Shell Routes (Wrapped in AppLayout)
+         ==================================================================== */}
+      {/* Dashboard (Home Overview) */}
+      <Route
+        path="/dashboard"
+        element={
+          <AppLayout>
+            <PageShell
+              title="Welcome back, Alex"
+              area="Learn"
+              subtitle="Daily Learning Overview"
+              description="Track your daily learning streak, continue your current module, or practice in hands-on defense labs."
+              activeModule="Defensive Security Essentials"
+              currentTopic="SQL Injection & Sanitization"
+              progressPercent={65}
+              nextActionLabel="Continue Lesson"
+              nextActionPath="/learning"
+              icon={LayoutDashboard}
             />
+          </AppLayout>
+        }
+      />
 
-            {/* ==================== */}
-            {/* Default */}
-            {/* ==================== */}
-
-            <Route
-                path="/"
-                element={<Navigate to="/dashboard" replace />}
+      {/* Learn Group */}
+      <Route
+        path="/learning"
+        element={
+          <AppLayout>
+            <PageShell
+              title="Learning Modules"
+              area="Learn"
+              subtitle="Interactive Courses"
+              description="Step-by-step interactive courses covering defensive security, penetration testing, and incident response."
+              activeModule="Web Application Security"
+              currentTopic="Cross-Site Scripting (XSS) Mitigation"
+              progressPercent={40}
+              nextActionLabel="Start Next Lesson"
+              nextActionPath="/learning"
+              icon={BookOpen}
             />
+          </AppLayout>
+        }
+      />
 
-            {/* ==================== */}
-            {/* Dashboard */}
-            {/* ==================== */}
-
-            <Route
-                path="/dashboard"
-                element={
-                    <DashboardLayout>
-                        <Placeholder title="Dashboard" />
-                    </DashboardLayout>
-                }
+      <Route
+        path="/learning-paths"
+        element={
+          <AppLayout>
+            <PageShell
+              title="Learning Paths"
+              area="Learn"
+              subtitle="Career Trajectories"
+              description="Curated multi-course career tracks designed to take you from fundamentals to certified security practitioner."
+              activeModule="SOC Analyst Career Track"
+              currentTopic="Security Incident & Event Management"
+              progressPercent={28}
+              nextActionLabel="Resume Career Path"
+              nextActionPath="/learning-paths"
+              icon={Compass}
             />
+          </AppLayout>
+        }
+      />
 
-            {/* ==================== */}
-            {/* Threats */}
-            {/* ==================== */}
-
-            <Route
-                path="/threats"
-                element={
-                    <DashboardLayout>
-                        <Placeholder title="Threats" />
-                    </DashboardLayout>
-                }
+      <Route
+        path="/labs"
+        element={
+          <AppLayout>
+            <PageShell
+              title="Hands-on Labs"
+              area="Learn"
+              subtitle="Isolated Browser Sandboxes"
+              description="Real-world simulated vulnerability environments. Practice defensive hardening and attack forensics with zero setup."
+              activeModule="Server-Side Defense Sandbox"
+              currentTopic="Firewall Rules & Packet Filtering"
+              progressPercent={80}
+              nextActionLabel="Launch Lab Sandbox"
+              nextActionPath="/labs"
+              icon={FlaskConical}
             />
+          </AppLayout>
+        }
+      />
 
-            {/* ==================== */}
-            {/* Vulnerabilities */}
-            {/* ==================== */}
-
-            <Route
-                path="/vulnerabilities"
-                element={
-                    <DashboardLayout>
-                        <Placeholder title="Vulnerabilities" />
-                    </DashboardLayout>
-                }
+      {/* Progress Group */}
+      <Route
+        path="/progress"
+        element={
+          <AppLayout>
+            <PageShell
+              title="My Progress"
+              area="Progress"
+              subtitle="Skill Mastery & Activity"
+              description="Review your mastery across security domains, completed modules, and weekly study streaks."
+              activeModule="Junior Analyst Progress Matrix"
+              currentTopic="Network Protocols & Vulnerabilities"
+              progressPercent={72}
+              nextActionLabel="View Full Assessment"
+              nextActionPath="/progress"
+              icon={TrendingUp}
             />
+          </AppLayout>
+        }
+      />
 
-            {/* ==================== */}
-            {/* Incidents */}
-            {/* ==================== */}
-
-            <Route
-                path="/incidents"
-                element={
-                    <DashboardLayout>
-                        <Placeholder title="Incidents" />
-                    </DashboardLayout>
-                }
+      <Route
+        path="/achievements"
+        element={
+          <AppLayout>
+            <PageShell
+              title="Achievements & Credentials"
+              area="Progress"
+              subtitle="Earned Badges"
+              description="Verified certificates, challenge trophies, and skill badges earned throughout your learning journey."
+              activeModule="Credential Milestone 2"
+              currentTopic="Certified Web Defender Apprentice"
+              progressPercent={90}
+              nextActionLabel="Claim Next Badge"
+              nextActionPath="/achievements"
+              icon={Award}
             />
+          </AppLayout>
+        }
+      />
 
-            {/* ==================== */}
-            {/* Security Labs */}
-            {/* ==================== */}
-
-            <Route
-                path="/security-labs"
-                element={
-                    <DashboardLayout>
-                        <Placeholder title="Security Labs" />
-                    </DashboardLayout>
-                }
+      {/* Account Group */}
+      <Route
+        path="/profile"
+        element={
+          <AppLayout>
+            <PageShell
+              title="Learner Profile"
+              area="Account"
+              subtitle="Public Portfolio & Credentials"
+              description="Manage your learning identity, verified skill certificates, and learning preferences."
+              activeModule="Public Analyst Profile"
+              currentTopic="Profile Verification"
+              progressPercent={100}
+              nextActionLabel="Edit Preferences"
+              nextActionPath="/settings"
+              icon={User}
             />
+          </AppLayout>
+        }
+      />
 
-            {/* ==================== */}
-            {/* Learning */}
-            {/* ==================== */}
-
-            <Route
-                path="/learning"
-                element={
-                    <DashboardLayout>
-                        <Placeholder title="Learning" />
-                    </DashboardLayout>
-                }
+      <Route
+        path="/settings"
+        element={
+          <AppLayout>
+            <PageShell
+              title="Platform Settings"
+              area="Account"
+              subtitle="Preferences & Security"
+              description="Configure notifications, display preferences, and account security options."
+              activeModule="Account Security"
+              currentTopic="Multi-Factor Authentication & Sessions"
+              progressPercent={100}
+              nextActionLabel="Save Changes"
+              nextActionPath="/settings"
+              icon={Settings}
             />
+          </AppLayout>
+        }
+      />
 
-            {/* ==================== */}
-            {/* Profile */}
-            {/* ==================== */}
+      {/* ====================================================================
+          4. Legacy Aliases / Backwards Compatibility
+         ==================================================================== */}
+      <Route path="/security-labs" element={<Navigate to="/labs" replace />} />
+      <Route path="/threats" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/vulnerabilities" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/incidents" element={<Navigate to="/dashboard" replace />} />
 
-            <Route
-                path="/profile"
-                element={
-                    <DashboardLayout>
-                        <Placeholder title="Profile" />
-                    </DashboardLayout>
-                }
-            />
-
-            {/* ==================== */}
-            {/* Settings */}
-            {/* ==================== */}
-
-            <Route
-                path="/settings"
-                element={
-                    <DashboardLayout>
-                        <Placeholder title="Settings" />
-                    </DashboardLayout>
-                }
-            />
-
-            {/* ==================== */}
-            {/* 404 */}
-            {/* ==================== */}
-
-            <Route
-                path="*"
-                element={<Navigate to="/dashboard" replace />}
-            />
-        </Routes>
-    )
+      {/* ====================================================================
+          5. Fallback 404
+         ==================================================================== */}
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
+  )
 }
 
 export default AppRoutes

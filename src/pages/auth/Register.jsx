@@ -1,111 +1,109 @@
-import { Link } from "react-router-dom"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout"
+import { Button, Input } from "../../components/common"
 
 function Register() {
-    return (
-        <AuthLayout>
-            <div>
-                <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-white">
-                        Create account
-                    </h2>
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
 
-                    <p className="mt-1 text-sm text-slate-400">
-                        Create your security platform account
-                    </p>
-                </div>
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+      navigate("/dashboard")
+    }, 400)
+  }
 
-                <form className="space-y-5">
-                    {/* Full name */}
-                    <div>
-                        <label
-                            htmlFor="name"
-                            className="mb-2 block text-sm font-medium text-slate-300"
-                        >
-                            Full name
-                        </label>
+  return (
+    <AuthLayout>
+      <div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+            Create account
+          </h2>
 
-                        <input
-                            id="name"
-                            type="text"
-                            placeholder="Your name"
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-blue-500"
-                        />
-                    </div>
+          <p className="mt-1 text-sm text-slate-500">
+            Create your security platform account
+          </p>
+        </div>
 
-                    {/* Email */}
-                    <div>
-                        <label
-                            htmlFor="email"
-                            className="mb-2 block text-sm font-medium text-slate-300"
-                        >
-                            Email
-                        </label>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Full name */}
+          <Input
+            id="name"
+            label="Full name"
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name"
+          />
 
-                        <input
-                            id="email"
-                            type="email"
-                            placeholder="you@example.com"
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-blue-500"
-                        />
-                    </div>
+          {/* Email */}
+          <Input
+            id="email"
+            label="Email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+          />
 
-                    {/* Password */}
-                    <div>
-                        <label
-                            htmlFor="password"
-                            className="mb-2 block text-sm font-medium text-slate-300"
-                        >
-                            Password
-                        </label>
+          {/* Password */}
+          <Input
+            id="password"
+            label="Password"
+            type="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+          />
 
-                        <input
-                            id="password"
-                            type="password"
-                            placeholder="••••••••"
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-blue-500"
-                        />
-                    </div>
+          {/* Confirm password */}
+          <Input
+            id="confirmPassword"
+            label="Confirm password"
+            type="password"
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="••••••••"
+          />
 
-                    {/* Confirm password */}
-                    <div>
-                        <label
-                            htmlFor="confirmPassword"
-                            className="mb-2 block text-sm font-medium text-slate-300"
-                        >
-                            Confirm password
-                        </label>
+          {/* Submit */}
+          <div className="pt-2">
+            <Button
+              type="submit"
+              fullWidth
+              isLoading={isLoading}
+              loadingText="Creating account..."
+            >
+              Create account
+            </Button>
+          </div>
+        </form>
 
-                        <input
-                            id="confirmPassword"
-                            type="password"
-                            placeholder="••••••••"
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-blue-500"
-                        />
-                    </div>
-
-                    {/* Submit */}
-                    <button
-                        type="submit"
-                        className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500"
-                    >
-                        Create account
-                    </button>
-                </form>
-
-                {/* Login */}
-                <p className="mt-6 text-center text-sm text-slate-400">
-                    Already have an account?{" "}
-                    <Link
-                        to="/login"
-                        className="font-medium text-blue-500 hover:text-blue-400"
-                    >
-                        Sign in
-                    </Link>
-                </p>
-            </div>
-        </AuthLayout>
-    )
+        {/* Login link */}
+        <p className="mt-6 text-center text-xs text-slate-500">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+          >
+            Sign in
+          </Link>
+        </p>
+      </div>
+    </AuthLayout>
+  )
 }
 
 export default Register

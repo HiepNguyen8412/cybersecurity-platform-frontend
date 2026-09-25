@@ -1,86 +1,103 @@
-import { Link } from "react-router-dom"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout"
+import { Button, Input } from "../../components/common"
 
 function Login() {
-    return (
-        <AuthLayout>
-            <div>
-                <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-white">
-                        Welcome back
-                    </h2>
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
 
-                    <p className="mt-1 text-sm text-slate-400">
-                        Sign in to your security platform
-                    </p>
-                </div>
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+      navigate("/dashboard")
+    }, 400)
+  }
 
-                <form className="space-y-5">
-                    {/* Email */}
-                    <div>
-                        <label
-                            htmlFor="email"
-                            className="mb-2 block text-sm font-medium text-slate-300"
-                        >
-                            Email
-                        </label>
+  return (
+    <AuthLayout>
+      <div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+            Welcome back
+          </h2>
 
-                        <input
-                            id="email"
-                            type="email"
-                            placeholder="you@example.com"
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-blue-500"
-                        />
-                    </div>
+          <p className="mt-1 text-sm text-slate-500">
+            Sign in to your security platform
+          </p>
+        </div>
 
-                    {/* Password */}
-                    <div>
-                        <div className="mb-2 flex items-center justify-between">
-                            <label
-                                htmlFor="password"
-                                className="block text-sm font-medium text-slate-300"
-                            >
-                                Password
-                            </label>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Email */}
+          <Input
+            id="email"
+            label="Email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+          />
 
-                            <Link
-                                to="/forgot-password"
-                                className="text-xs text-blue-500 hover:text-blue-400"
-                            >
-                                Forgot password?
-                            </Link>
-                        </div>
+          {/* Password */}
+          <div>
+            <div className="mb-1 flex items-center justify-between">
+              <label
+                htmlFor="password"
+                className="text-xs font-semibold text-slate-700 tracking-wide"
+              >
+                Password <span className="text-rose-500">*</span>
+              </label>
 
-                        <input
-                            id="password"
-                            type="password"
-                            placeholder="••••••••"
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-blue-500"
-                        />
-                    </div>
-
-                    {/* Submit */}
-                    <button
-                        type="submit"
-                        className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500"
-                    >
-                        Sign in
-                    </button>
-                </form>
-
-                {/* Register */}
-                <p className="mt-6 text-center text-sm text-slate-400">
-                    Don't have an account?{" "}
-                    <Link
-                        to="/register"
-                        className="font-medium text-blue-500 hover:text-blue-400"
-                    >
-                        Create account
-                    </Link>
-                </p>
+              <Link
+                to="/forgot-password"
+                className="text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors"
+              >
+                Forgot password?
+              </Link>
             </div>
-        </AuthLayout>
-    )
+
+            <input
+              id="password"
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-400 transition-all focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+            />
+          </div>
+
+          {/* Submit */}
+          <div className="pt-2">
+            <Button
+              type="submit"
+              fullWidth
+              isLoading={isLoading}
+              loadingText="Signing in..."
+            >
+              Sign in
+            </Button>
+          </div>
+        </form>
+
+        {/* Register link */}
+        <p className="mt-6 text-center text-xs text-slate-500">
+          Don't have an account?{" "}
+          <Link
+            to="/register"
+            className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+          >
+            Create account
+          </Link>
+        </p>
+      </div>
+    </AuthLayout>
+  )
 }
 
 export default Login
