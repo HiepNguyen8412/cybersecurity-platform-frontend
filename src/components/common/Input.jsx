@@ -1,8 +1,9 @@
-import { forwardRef } from "react"
-import { AlertCircle, CheckCircle2, X } from "lucide-react"
+import { forwardRef, useState } from "react"
+import { AlertCircle, CheckCircle2, X, Eye, EyeOff } from "lucide-react"
 
 /**
- * Reusable Input component supporting states: default, hover, focus, disabled, error, success.
+ * Reusable Input component supporting states: default, hover, focus, disabled, error, success,
+ * and built-in password visibility toggle.
  */
 const Input = forwardRef(function Input(
   {
@@ -25,13 +26,18 @@ const Input = forwardRef(function Input(
     className = "",
     wrapperClassName = "",
     clearable = false,
+    showPasswordToggle = false,
     ...props
   },
   ref
 ) {
+  const [showPassword, setShowPassword] = useState(false)
   const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined)
   const isError = Boolean(errorMessage)
   const isSuccess = Boolean(successMessage) && !isError
+
+  const isPasswordType = type === "password"
+  const resolvedType = isPasswordType ? (showPassword ? "text" : "password") : type
 
   const sizeStyles = {
     sm: "text-xs px-2.5 py-1.5 h-8",
@@ -71,7 +77,7 @@ const Input = forwardRef(function Input(
         <input
           ref={ref}
           id={inputId}
-          type={type}
+          type={resolvedType}
           value={value}
           defaultValue={defaultValue}
           onChange={onChange}
@@ -89,7 +95,7 @@ const Input = forwardRef(function Input(
             ${sizeStyles[size] || sizeStyles.md}
             ${stateStyles}
             ${leftIcon ? "pl-9" : ""}
-            ${rightIcon || clearable || isError || isSuccess ? "pr-9" : ""}
+            ${rightIcon || clearable || isError || isSuccess || (isPasswordType && showPasswordToggle) ? "pr-9" : ""}
             ${className}
           `.trim()}
           {...props}
@@ -107,6 +113,22 @@ const Input = forwardRef(function Input(
             </button>
           )}
 
+          {isPasswordType && showPasswordToggle && !disabled && (
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="text-slate-400 hover:text-slate-600 p-0.5 rounded cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              title={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          )}
+
           {isError && (
             <AlertCircle className="h-4 w-4 text-rose-500 shrink-0" aria-hidden="true" />
           )}
@@ -115,7 +137,7 @@ const Input = forwardRef(function Input(
             <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" aria-hidden="true" />
           )}
 
-          {rightIcon && !isError && !isSuccess && (
+          {rightIcon && !isError && !isSuccess && !(isPasswordType && showPasswordToggle) && (
             <span className="text-slate-400 flex items-center">{rightIcon}</span>
           )}
         </div>

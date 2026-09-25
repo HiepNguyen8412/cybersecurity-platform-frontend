@@ -1,10 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 import AppLayout from "../layouts/AppLayout/AppLayout"
 
-// Auth Pages (Preserved)
+// Auth Pages
 import Login from "../pages/auth/Login"
 import Register from "../pages/auth/Register"
 import ForgotPassword from "../pages/auth/ForgotPassword"
+import ResetPassword from "../pages/auth/ResetPassword"
+import VerifyEmail from "../pages/auth/VerifyEmail"
 
 // Learning-First Page Shell
 import PageShell from "../components/layout/PageShell"
@@ -23,11 +25,13 @@ function AppRoutes() {
   return (
     <Routes>
       {/* ====================================================================
-          1. Authentication Routes (Preserved)
+          1. Authentication Routes
          ==================================================================== */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/verify-email" element={<VerifyEmail />} />
 
       {/* ====================================================================
           2. Root Default Redirect
