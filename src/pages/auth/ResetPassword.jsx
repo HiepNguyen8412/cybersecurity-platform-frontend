@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { Lock, CheckCircle2, ArrowRight, AlertTriangle, AlertCircle, KeyRound, Shield } from "lucide-react"
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout"
@@ -16,7 +16,7 @@ import { validatePassword } from "../../utils/validators"
  */
 function ResetPassword() {
   const [searchParams] = useSearchParams()
-  const token = searchParams.get("token")
+  const [token] = useState(() => searchParams.get("token") || "")
 
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -28,6 +28,13 @@ function ResetPassword() {
 
   const { resetPassword, isLoading } = useAuth()
   const navigate = useNavigate()
+
+  // Scrub sensitive single-use token from the URL bar to prevent history/referer leakage
+  useEffect(() => {
+    if (token && window.history && window.history.replaceState) {
+      window.history.replaceState({}, document.title, window.location.pathname)
+    }
+  }, [token])
 
   const validate = () => {
     const errors = {}

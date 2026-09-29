@@ -29,14 +29,19 @@ function VerifyEmail() {
   const navigate = useNavigate()
   const { verifyEmail, resendVerification, isLoading } = useAuth()
 
-  const urlToken = searchParams.get("token")
-  const urlEmail = searchParams.get("email")
+  const rawUrlToken = searchParams.get("token")
+  const rawUrlEmail = searchParams.get("email")
+
+  // Sanitize and validate email from URL query to prevent input injection
+  const validatedUrlEmail =
+    rawUrlEmail && validateEmail(rawUrlEmail).isValid ? rawUrlEmail.trim().toLowerCase() : null
 
   const initialEmail =
-    urlEmail ||
+    validatedUrlEmail ||
     (() => {
       try {
-        return sessionStorage.getItem("cyberpath_pending_verify_email") || ""
+        const stored = sessionStorage.getItem("cyberpath_pending_verify_email")
+        return stored && validateEmail(stored).isValid ? stored : ""
       } catch {
         return ""
       }
@@ -44,7 +49,8 @@ function VerifyEmail() {
     "alex.morgan@cyberpath.edu"
 
   const [email, setEmail] = useState(initialEmail)
-  const [status, setStatus] = useState(() => (urlToken ? "verifying" : "waiting"))
+  const [token] = useState(() => (rawUrlToken ? rawUrlToken.trim() : ""))
+  const [status, setStatus] = useState(() => (rawUrlToken ? "verifying" : "waiting"))
   const [isEditingEmail, setIsEditingEmail] = useState(false)
   const [tempEmail, setTempEmail] = useState(initialEmail)
   const [editError, setEditError] = useState("")
@@ -60,13 +66,18 @@ function VerifyEmail() {
     return () => clearTimeout(timer)
   }, [cooldown])
 
-  // Automatically attempt token verification if a token is present in the URL query
+  // Automatically attempt token verification and scrub token from URL bar to prevent history/referer leakage
   useEffect(() => {
-    if (!urlToken) return
+    if (!token) return
     let isMounted = true
 
+    // Scrub token from address bar to protect single-use token from shoulder surfing and browser history
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState({}, document.title, window.location.pathname)
+    }
+
     const runVerification = async () => {
-      const result = await verifyEmail(urlToken, urlEmail || email)
+      const result = await verifyEmail(token, validatedUrlEmail || email)
       if (!isMounted) return
 
       if (result.success) {
@@ -81,7 +92,7 @@ function VerifyEmail() {
     return () => {
       isMounted = false
     }
-  }, [urlToken, urlEmail, email, verifyEmail])
+  }, [token, validatedUrlEmail, email, verifyEmail])
 
   // Manual simulation / token verification trigger
   const triggerTokenVerification = async (tokenVal, emailVal) => {
@@ -243,21 +254,24 @@ function VerifyEmail() {
 
             {/* Actions */}
             <div className="space-y-2.5 pt-1">
-              {/* Demo Action: Simulate token verification for review */}
-              <Button
-                variant="primary"
-                size="md"
-                fullWidth
-                onClick={() => triggerTokenVerification("mock_demo_token", email)}
-                rightIcon={<ArrowRight className="h-4 w-4" />}
-              >
-                Simulate: Confirm Email Token
-              </Button>
+              {/* Dev-only Action: Simulate token verification for evaluation/review */}
+              {Boolean(import.meta.env?.DEV) && (
+                <Button
+                  variant="primary"
+                  size="md"
+                  fullWidth
+                  onClick={() => triggerTokenVerification("mock_demo_token", email)}
+                  rightIcon={<ArrowRight className="h-4 w-4" />}
+                >
+                  [Dev Simulation] Confirm Email Token
+                </Button>
+              )}
 
-              <div className="grid grid-cols-2 gap-2.5">
+              <div className={import.meta.env?.DEV ? "grid grid-cols-2 gap-2.5" : "w-full"}>
                 <Button
                   variant="outline"
                   size="md"
+                  fullWidth={!import.meta.env?.DEV}
                   onClick={handleResend}
                   disabled={cooldown > 0 || isLoading}
                   leftIcon={<RefreshCw className="h-3.5 w-3.5" />}
@@ -265,14 +279,16 @@ function VerifyEmail() {
                   {cooldown > 0 ? `Resend (${cooldown}s)` : "Resend email"}
                 </Button>
 
-                <Button
-                  variant="ghost"
-                  size="md"
-                  onClick={() => setStatus("expired")}
-                  className="text-slate-600 hover:text-amber-700"
-                >
-                  Test Expired Link
-                </Button>
+                {import.meta.env?.DEV && (
+                  <Button
+                    variant="ghost"
+                    size="md"
+                    onClick={() => setStatus("expired")}
+                    className="text-slate-600 hover:text-amber-700"
+                  >
+                    [Dev] Test Expired
+                  </Button>
+                )}
               </div>
             </div>
           </div>

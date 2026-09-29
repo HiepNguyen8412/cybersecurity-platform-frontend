@@ -66,7 +66,7 @@ function Login() {
 
       if (result.success) {
         // Sanitize redirect target to prevent open redirect vulnerabilities
-        const destination = sanitizeReturnUrl(location.state?.from?.pathname, "/dashboard")
+        const destination = sanitizeReturnUrl(location.state?.from, "/dashboard")
         navigate(destination, { replace: true })
       } else {
         // Generic failure message that prevents user enumeration

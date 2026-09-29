@@ -39,18 +39,35 @@ const mockUsersDb = new Map([
   ],
 ])
 
+// Mock adapter is strictly limited to local development when the backend is offline.
+// In production or when VITE_USE_MOCK=false, the app ALWAYS fails closed.
+const isDevEnvironment = typeof import.meta !== "undefined" && Boolean(import.meta.env?.DEV)
+const isMockDisabled = typeof import.meta !== "undefined" && import.meta.env?.VITE_USE_MOCK === "false"
+const allowMockFallback = isDevEnvironment && !isMockDisabled
+
 /**
- * Executes an API call with automatic fallback to mock adapter if backend is offline.
+ * Executes an API call with fail-closed security.
+ * Falls back to mock adapter ONLY in local development mode when backend is unreachable.
  */
 async function callApiOrFallback(apiCall, fallbackHandler) {
   try {
     const response = await apiCall()
     return { success: true, data: response.data }
   } catch (err) {
-    // If backend is unreachable (ECONNREFUSED, network timeout, 404), use fallback
+    // In production or when mock is disabled, ALWAYS fail closed - never bypass real auth with mock data
+    if (!allowMockFallback) {
+      return {
+        success: false,
+        error: parseApiError(err),
+        statusCode: err.response?.status,
+      }
+    }
+
+    // Local development only: if backend is unreachable (ECONNREFUSED, network timeout, 404), allow mock simulation
     if (!err.response || err.code === "ECONNABORTED" || err.response.status === 404) {
       return await fallbackHandler()
     }
+
     // If backend gave a real auth rejection (400, 401, 403, 429), respect it
     return {
       success: false,
@@ -163,9 +180,11 @@ export const authService = {
     return callApiOrFallback(
       () => api.get("/auth/me"),
       async () => {
-        // Check safe local storage profile cache (contains only non-sensitive profile)
+        // Check safe storage profile cache (sessionStorage takes precedence for active tab)
         try {
-          const cached = localStorage.getItem("cyberpath_user_profile")
+          const cached =
+            sessionStorage.getItem("cyberpath_user_profile") ||
+            localStorage.getItem("cyberpath_user_profile")
           if (cached) {
             const parsed = JSON.parse(cached)
             return { success: true, data: { user: parsed } }
@@ -310,6 +329,7 @@ export const authService = {
     }
     try {
       localStorage.removeItem("cyberpath_user_profile")
+      sessionStorage.removeItem("cyberpath_user_profile")
       sessionStorage.removeItem("cyberpath_pending_verify_email")
     } catch {
       // Ignore storage errors

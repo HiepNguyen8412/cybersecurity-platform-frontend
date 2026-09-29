@@ -189,17 +189,19 @@ function ForgotPassword() {
 
             {/* Actions */}
             <div className="space-y-2.5 pt-1">
-              {/* Direct link for demonstration / QA testing */}
-              <Link to={`/reset-password?token=mock_demo_token&email=${encodeURIComponent(email)}`}>
-                <Button
-                  variant="primary"
-                  size="md"
-                  fullWidth
-                  rightIcon={<ArrowRight className="h-4 w-4" />}
-                >
-                  Simulate: Open Reset Token Link
-                </Button>
-              </Link>
+              {/* Dev-only simulation helper for evaluation and QA testing */}
+              {Boolean(import.meta.env?.DEV) && (
+                <Link to={`/reset-password?token=mock_demo_token&email=${encodeURIComponent(email)}`}>
+                  <Button
+                    variant="primary"
+                    size="md"
+                    fullWidth
+                    rightIcon={<ArrowRight className="h-4 w-4" />}
+                  >
+                    [Dev Simulation] Open Reset Token Link
+                  </Button>
+                </Link>
+              )}
 
               <Button
                 variant="outline"

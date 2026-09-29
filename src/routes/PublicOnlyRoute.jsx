@@ -32,7 +32,7 @@ export function PublicOnlyRoute({ children }) {
   }
 
   if (isAuthenticated) {
-    const destination = sanitizeReturnUrl(location.state?.from?.pathname, "/dashboard")
+    const destination = sanitizeReturnUrl(location.state?.from, "/dashboard")
     return <Navigate to={destination} replace />
   }
 

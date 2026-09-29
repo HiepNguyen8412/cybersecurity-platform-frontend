@@ -107,31 +107,76 @@ export function validatePassword(password) {
   return { isValid: true, error: null }
 }
 
+const AUTH_PAGES = new Set([
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/reset-password",
+  "/verify-email",
+])
+
 /**
  * Sanitizes return URL to prevent Open Redirect attacks.
- * Only allows relative paths on the same origin starting with "/" but not "//".
+ * - Accepts both string paths and React Router location objects ({ pathname, search, hash }).
+ * - Only allows relative paths on the same origin starting with a single "/" (never "//" or "/\").
+ * - Rejects protocol-relative, encoded, or scheme-based exploits (javascript:, data:, etc.).
+ * - Strips query/hash when validating against authentication routes to prevent redirect loops.
  */
 export function sanitizeReturnUrl(returnUrl, defaultUrl = "/dashboard") {
-  if (!returnUrl || typeof returnUrl !== "string") {
+  let rawUrl
+  if (typeof returnUrl === "string") {
+    rawUrl = returnUrl
+  } else if (returnUrl && typeof returnUrl === "object" && typeof returnUrl.pathname === "string") {
+    rawUrl = `${returnUrl.pathname}${returnUrl.search || ""}${returnUrl.hash || ""}`
+  } else {
     return defaultUrl
   }
 
-  const trimmed = returnUrl.trim()
+  // Remove ASCII control characters (including \0, \r, \n, \t) without triggering no-control-regex
+  let sanitized = ""
+  for (let i = 0; i < rawUrl.length; i++) {
+    const code = rawUrl.charCodeAt(i)
+    if (code >= 32 && code !== 127) {
+      sanitized += rawUrl[i]
+    }
+  }
+  const trimmed = sanitized.trim()
+
+  if (!trimmed) {
+    return defaultUrl
+  }
 
   // Must begin with single "/" and not "//" (protocol-relative URL) or contain backslashes
-  if (trimmed.startsWith("/") && !trimmed.startsWith("//") && !trimmed.includes("\\")) {
-    // Prevent redirecting back to authentication pages
+  if (!trimmed.startsWith("/") || trimmed.startsWith("//") || trimmed.startsWith("/\\") || trimmed.includes("\\")) {
+    return defaultUrl
+  }
+
+  // Verify decoded URL doesn't introduce protocol schemes or double slashes
+  try {
+    const decoded = decodeURIComponent(trimmed)
     if (
-      trimmed === "/login" ||
-      trimmed === "/register" ||
-      trimmed === "/forgot-password" ||
-      trimmed === "/reset-password" ||
-      trimmed === "/verify-email"
+      decoded.startsWith("//") ||
+      decoded.startsWith("/\\") ||
+      decoded.includes("\\") ||
+      /^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(decoded.slice(1)) ||
+      /javascript:/i.test(decoded) ||
+      /data:/i.test(decoded)
     ) {
       return defaultUrl
     }
-    return trimmed
+  } catch {
+    // Malformed URI encoding
+    return defaultUrl
   }
 
-  return defaultUrl
+  // Extract base pathname (excluding query parameters and hash) to check against auth routes
+  const [pathnamePart] = trimmed.split(/[?#]/)
+  const normalizedPath = pathnamePart.replace(/\/+$/, "").toLowerCase() || "/"
+
+  // Prevent redirecting back to authentication pages (prevents infinite redirect loops)
+  if (AUTH_PAGES.has(normalizedPath)) {
+    return defaultUrl
+  }
+
+  return trimmed
 }
