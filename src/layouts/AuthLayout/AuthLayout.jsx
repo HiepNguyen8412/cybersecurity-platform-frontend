@@ -1,19 +1,23 @@
 import { Link } from "react-router-dom"
-import { ShieldCheck, Lock, Activity } from "lucide-react"
+import { Lock } from "lucide-react"
+import PublicHeader from "../PublicLayout/PublicHeader"
 
 /**
  * Centered, Color-Harmonized Cybersecurity AuthLayout.
- * - Single-column centered layout aligned with the CyberPath visual language (Slate-50 canvas, Blue & Indigo accents).
- * - Eliminates harsh black-and-white contrast for comfortable visual ergonomics.
+ * - Retains full sticky PublicHeader so navigation is persistent across pages.
+ * - Single-column centered layout aligned with the CyberPath visual language.
  * - Retains subtle cybersecurity elements (soft grid matrix, telemetry indicators, security badges).
  */
 export function AuthLayout({ children }) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-blue-50/30 to-slate-100/80 text-slate-900 flex flex-col justify-between relative overflow-x-hidden selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen cyber-grid-canvas text-slate-900 flex flex-col justify-between relative overflow-x-hidden selection:bg-blue-100 selection:text-blue-900">
+      {/* 1. Persistent Public Header */}
+      <PublicHeader />
+
       {/* ====================================================================
           BACKGROUND CYBERSECURITY MOTIF (SOFT & EYE-FRIENDLY)
          ==================================================================== */}
-      {/* 1. Soft Cyber Dot Matrix Grid Overlay */}
+      {/* Soft Cyber Dot Matrix Grid Overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-40"
         style={{
@@ -23,68 +27,24 @@ export function AuthLayout({ children }) {
         aria-hidden="true"
       />
 
-      {/* 2. Soft Ambient Radial Glows */}
+      {/* Soft Ambient Radial Glows */}
       <div
         className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[380px] bg-gradient-to-b from-blue-200/25 via-indigo-100/15 to-transparent blur-3xl pointer-events-none"
         aria-hidden="true"
       />
-      <div
-        className="fixed bottom-0 left-0 w-[400px] h-[350px] bg-gradient-to-tr from-cyan-100/20 via-blue-100/10 to-transparent blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
-      <div
-        className="fixed bottom-0 right-0 w-[400px] h-[350px] bg-gradient-to-tl from-indigo-100/20 via-blue-100/10 to-transparent blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
 
-      {/* 3. Subtle Cyber Telemetry Corner Accents (Desktop only) */}
-      <div className="hidden lg:flex fixed top-5 left-6 items-center gap-2 text-[11px] font-mono text-slate-400 pointer-events-none select-none">
-        <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
-        <span>NODE // 10.240.0.1</span>
-        <span className="text-slate-300">&bull;</span>
-        <span>ZONE: DEFENSE_RANGE</span>
-      </div>
-
-      <div className="hidden lg:flex fixed top-5 right-6 items-center gap-2 text-[11px] font-mono text-slate-400 pointer-events-none select-none">
-        <Activity className="h-3 w-3 text-emerald-500 animate-pulse" />
-        <span className="text-emerald-600 font-semibold">GATEWAY ACTIVE</span>
-        <span className="text-slate-300">&bull;</span>
-        <span>ZERO-TRUST ENFORCED</span>
-      </div>
-
-      {/* ====================================================================
-          TOP BRAND HEADER (CENTERED)
-         ==================================================================== */}
-      <header className="relative z-10 pt-8 sm:pt-10 pb-4 flex flex-col items-center justify-center text-center px-4">
-        <Link
-          to="/"
-          className="group inline-flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl p-1"
-          title="CyberPath Platform"
-        >
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
-            <ShieldCheck className="h-6 w-6 stroke-[2.2]" />
-          </div>
-          <div className="flex flex-col text-left">
-            <span className="text-xl font-extrabold tracking-tight text-slate-900 leading-tight">
-              CyberPath
-            </span>
-            <span className="text-xs font-medium text-slate-500 leading-tight">
-              Security Learning Platform
-            </span>
-          </div>
-        </Link>
-
-        {/* Security Badge Pill */}
-        <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-slate-200/90 shadow-xs backdrop-blur-md text-[11px] font-mono text-slate-600">
+      {/* Subtle Security Badge Pill */}
+      <div className="relative z-10 pt-4 flex justify-center px-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 border border-slate-200/90 shadow-2xs backdrop-blur-md text-[11px] font-mono-tech text-slate-600">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <span className="text-emerald-700 font-semibold">256-BIT TLS ENCRYPTED</span>
+          <span className="text-emerald-700 font-bold">256-BIT TLS ENCRYPTED</span>
           <span className="text-slate-300">&bull;</span>
-          <span className="text-slate-500">ISOLATED SANDBOX</span>
+          <span className="text-slate-500 font-semibold">ISOLATED SANDBOX</span>
         </div>
-      </header>
+      </div>
 
       {/* ====================================================================
           MAIN AUTH CARD (CENTERED IN THE MIDDLE)
@@ -132,11 +92,11 @@ export function AuthLayout({ children }) {
             Platform Home
           </Link>
           <span>&middot;</span>
-          <span className="hover:text-blue-600 transition-colors cursor-pointer">
+          <span className="text-slate-600">
             Privacy Policy
           </span>
           <span>&middot;</span>
-          <span className="hover:text-blue-600 transition-colors cursor-pointer">
+          <span className="text-slate-600">
             Terms of Service
           </span>
           <span>&middot;</span>

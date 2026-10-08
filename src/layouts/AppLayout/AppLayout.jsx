@@ -12,7 +12,7 @@ export function AppLayout({ children, maxWidth = "max-w-[1240px]", className = "
   const { isSidebarCollapsed } = useLayout()
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased">
+    <div className="min-h-screen cyber-grid-canvas text-slate-900 flex flex-col antialiased">
       {/* 1. Sidebar (Fixed left: expanded 240px / collapsed 72px) */}
       <Sidebar />
 

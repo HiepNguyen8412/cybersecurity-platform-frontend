@@ -10,11 +10,13 @@ export function Card({
   ...props
 }) {
   const variantStyles = {
-    default: "bg-white border border-slate-200/80 shadow-sm",
-    flat: "bg-white border border-slate-200",
+    default: "cyber-card",
+    flat: "bg-white/95 border border-slate-200/90 shadow-2xs",
     interactive:
-      "bg-white border border-slate-200/80 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-200 cursor-pointer",
-    subtle: "bg-slate-50/80 border border-slate-200/60",
+      "cyber-card hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-200 cursor-pointer",
+    focal: "cyber-card-focal",
+    subtle: "bg-slate-50/70 border border-slate-200/60",
+    terminal: "cyber-terminal text-slate-100",
   }
 
   const paddingStyles = {

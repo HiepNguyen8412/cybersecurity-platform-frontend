@@ -11,8 +11,6 @@ import {
   ShieldCheck,
   ChevronRight,
   X,
-  PanelLeftClose,
-  PanelLeftOpen,
 } from "lucide-react"
 import useLayout from "../../hooks/useLayout"
 import useAuth from "../../hooks/useAuth"
@@ -25,13 +23,12 @@ import { Avatar } from "../common"
 export function Sidebar() {
   const {
     isSidebarCollapsed,
-    toggleSidebarCollapse,
     isMobileMenuOpen,
     closeMobileMenu,
   } = useLayout()
 
   const { user } = useAuth()
-  const displayName = user?.name || "Alex Morgan"
+  const displayName = user?.fullName || user?.name || "Learner"
   const displayRole = user?.role || "Security Analyst"
 
   // Navigation structure: LEARN, PROGRESS, ACCOUNT
@@ -70,10 +67,10 @@ export function Sidebar() {
         }`}
       >
         <Link
-          to="/dashboard"
+          to="/"
           className="flex items-center gap-2.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg"
           onClick={closeMobileMenu}
-          title="CyberPath Platform"
+          title="CyberPath — Home"
         >
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-2xs">
             <ShieldCheck className="h-5 w-5 stroke-[2.2]" />
@@ -91,25 +88,13 @@ export function Sidebar() {
           )}
         </Link>
 
-        {/* Action button in header */}
+        {/* Mobile close button (mobile drawer only) */}
         {!isCollapsed && (
-          <div className="flex items-center">
-            {/* Desktop collapse toggle */}
-            <button
-              type="button"
-              onClick={toggleSidebarCollapse}
-              className="hidden md:flex p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
-              title="Collapse sidebar"
-              aria-label="Collapse sidebar"
-            >
-              <PanelLeftClose className="h-4 w-4" />
-            </button>
-
-            {/* Mobile close button */}
+          <div className="flex items-center md:hidden">
             <button
               type="button"
               onClick={closeMobileMenu}
-              className="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
               aria-label="Close menu"
             >
               <X className="h-5 w-5" />
@@ -130,7 +115,7 @@ export function Sidebar() {
             {isCollapsed ? (
               <div className="my-2 border-t border-slate-100" />
             ) : (
-              <p className="px-2.5 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 select-none">
+              <p className="px-2.5 pb-1 text-[10px] font-mono-tech font-bold uppercase tracking-widest text-slate-400 select-none">
                 {group.group}
               </p>
             )}
@@ -147,16 +132,16 @@ export function Sidebar() {
                     title={item.label}
                     aria-label={item.label}
                     className={({ isActive }) => `
-                      group relative flex items-center rounded-lg text-sm font-medium transition-all duration-150 select-none
+                      group relative flex items-center rounded-xl text-sm font-medium transition-all duration-150 select-none
                       ${
                         isCollapsed
                           ? "justify-center px-0 py-2.5"
-                          : "gap-3 px-2.5 py-2"
+                          : "gap-3 px-3 py-2"
                       }
                       ${
                         isActive
-                          ? "bg-blue-50 text-blue-700 font-semibold"
-                          : "text-slate-600 hover:bg-slate-100/70 hover:text-slate-900"
+                          ? "bg-blue-50/90 text-blue-700 font-semibold border border-blue-200/70 shadow-2xs"
+                          : "text-slate-600 hover:bg-slate-100/70 hover:text-slate-900 border border-transparent"
                       }
                     `.trim()}
                   >
@@ -165,7 +150,7 @@ export function Sidebar() {
                         {/* Subtle active left indicator */}
                         {isActive && (
                           <span
-                            className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-blue-600"
+                            className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-blue-600 shadow-sm shadow-blue-500/50"
                             aria-hidden="true"
                           />
                         )}
@@ -192,6 +177,24 @@ export function Sidebar() {
           </div>
         ))}
       </nav>
+
+      {/* Cyber Sandbox Telemetry Widget (Desktop expanded only) */}
+      {!isCollapsed && (
+        <div className="mx-3.5 mb-2 p-2.5 rounded-xl bg-slate-50/90 border border-slate-200/80 font-mono-tech text-[10px] space-y-1">
+          <div className="flex items-center justify-between">
+            <span className="text-slate-400 font-bold uppercase tracking-wider">LAB SANDBOX</span>
+            <span className="flex items-center gap-1 text-emerald-600 font-bold">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              READY
+            </span>
+          </div>
+          <div className="text-slate-600 flex items-center justify-between pt-0.5">
+            <span>NODE: #412</span>
+            <span>PING: 18ms</span>
+            <span className="text-blue-600 font-bold">ISOLATED</span>
+          </div>
+        </div>
+      )}
 
       {/* Bottom User Profile Summary */}
       <div className={`border-t border-slate-200/80 ${isCollapsed ? "p-2" : "p-3"}`}>
@@ -221,21 +224,6 @@ export function Sidebar() {
             <ChevronRight className="h-4 w-4 text-slate-400 group-hover:text-slate-600 shrink-0" />
           )}
         </Link>
-
-        {/* Collapsed desktop expand button */}
-        {isCollapsed && (
-          <div className="pt-2 border-t border-slate-100 mt-2">
-            <button
-              type="button"
-              onClick={toggleSidebarCollapse}
-              className="w-full flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
-              title="Expand sidebar"
-              aria-label="Expand sidebar"
-            >
-              <PanelLeftOpen className="h-4 w-4" />
-            </button>
-          </div>
-        )}
       </div>
     </div>
   )

@@ -24,13 +24,26 @@ import api, { parseApiError } from "./api.js"
  * to a secure mock adapter so frontend development and testing remain 100% functional.
  */
 
+// Default development/mock authenticated user
+const defaultMockUser = {
+  id: "usr_hiep_001",
+  fullName: "Hiệp Nguyễn",
+  name: "Hiệp Nguyễn",
+  email: "hiep.nguyen@cyberpath.edu",
+  role: "Security Analyst",
+  isEmailVerified: true,
+  createdAt: "2026-01-15T08:00:00Z",
+}
+
 // In-memory demo store (never stores passwords or sensitive credentials)
 const mockUsersDb = new Map([
+  ["hiep.nguyen@cyberpath.edu", defaultMockUser],
   [
     "alex.morgan@cyberpath.edu",
     {
       id: "usr_alex_001",
-      name: "Alex Morgan",
+      fullName: "Hiệp Nguyễn",
+      name: "Hiệp Nguyễn",
       email: "alex.morgan@cyberpath.edu",
       role: "Security Analyst",
       isEmailVerified: true,
@@ -110,9 +123,12 @@ export const authService = {
         }
 
         const existing = mockUsersDb.get(cleanEmail)
+        const computedName =
+          cleanEmail.split("@")[0].replace(/[._]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) || "Hiệp Nguyễn"
         const user = existing || {
           id: `usr_${Date.now()}`,
-          name: cleanEmail.split("@")[0].replace(/[._]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) || "Alex Morgan",
+          fullName: computedName,
+          name: computedName,
           email: cleanEmail,
           role: "Security Analyst",
           isEmailVerified: true,
@@ -155,6 +171,7 @@ export const authService = {
 
         const newUser = {
           id: `usr_${Date.now()}`,
+          fullName: name.trim(),
           name: name.trim(),
           email: cleanEmail,
           role: "Learner",
@@ -192,6 +209,7 @@ export const authService = {
         } catch {
           // Ignore
         }
+
         return { success: false, error: "No active session." }
       }
     )

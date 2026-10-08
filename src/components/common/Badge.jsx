@@ -19,6 +19,9 @@ export function Badge({
     info: "bg-sky-50 text-sky-700 border-sky-200/60",
     purple: "bg-purple-50 text-purple-700 border-purple-200/60",
     outline: "bg-white text-slate-700 border-slate-300",
+    cyber: "font-mono-tech bg-blue-50/90 text-blue-700 border-blue-200 shadow-2xs font-semibold tracking-tight",
+    live: "font-mono-tech bg-emerald-50/90 text-emerald-800 border-emerald-200 shadow-2xs font-semibold tracking-tight",
+    alert: "font-mono-tech bg-rose-50/90 text-rose-700 border-rose-200 shadow-2xs font-semibold tracking-tight",
   }
 
   const dotColors = {
@@ -30,6 +33,9 @@ export function Badge({
     info: "bg-sky-500",
     purple: "bg-purple-500",
     outline: "bg-slate-400",
+    cyber: "bg-blue-600",
+    live: "bg-emerald-500",
+    alert: "bg-rose-500",
   }
 
   const sizeStyles = {

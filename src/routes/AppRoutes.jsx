@@ -1,79 +1,86 @@
+import { lazy, Suspense } from "react"
 import { Routes, Route, Navigate } from "react-router-dom"
 import PublicLayout from "../layouts/PublicLayout/PublicLayout"
 import AppLayout from "../layouts/AppLayout/AppLayout"
 import ProtectedRoute from "./ProtectedRoute"
 import PublicOnlyRoute from "./PublicOnlyRoute"
+import PageLoadingFallback from "../components/common/PageLoadingFallback"
 
-// Public Pages
-import LandingPage from "../pages/public/LandingPage"
+// Lazy-Loaded Route Components for high-performance code splitting
+const LandingPage = lazy(() => import("../pages/public/LandingPage"))
+const Learning = lazy(() => import("../pages/learning/Learning"))
+const LearningPaths = lazy(() => import("../pages/learning/LearningPaths"))
+const Labs = lazy(() => import("../pages/labs/Labs"))
+const Pricing = lazy(() => import("../pages/public/Pricing"))
 
-// Auth Pages (Protected from already-logged-in users)
-import Login from "../pages/auth/Login"
-import Register from "../pages/auth/Register"
-import ForgotPassword from "../pages/auth/ForgotPassword"
-import ResetPassword from "../pages/auth/ResetPassword"
-import VerifyEmail from "../pages/auth/VerifyEmail"
+// Auth Pages (PublicOnly)
+const Login = lazy(() => import("../pages/auth/Login"))
+const Register = lazy(() => import("../pages/auth/Register"))
+const ForgotPassword = lazy(() => import("../pages/auth/ForgotPassword"))
+const ResetPassword = lazy(() => import("../pages/auth/ResetPassword"))
+const VerifyEmail = lazy(() => import("../pages/auth/VerifyEmail"))
 
-// Platform Pages (Authenticated workspace)
-import Dashboard from "../pages/dashboard/Dashboard"
-import Learning from "../pages/learning/Learning"
-import LearningPaths from "../pages/learning/LearningPaths"
-import Labs from "../pages/labs/Labs"
-import Progress from "../pages/progress/Progress"
-import Achievements from "../pages/progress/Achievements"
-import Profile from "../pages/profile/Profile"
-import Settings from "../pages/settings/Settings"
+// Platform Authenticated Pages (Protected)
+const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"))
+const Progress = lazy(() => import("../pages/progress/Progress"))
+const Achievements = lazy(() => import("../pages/progress/Achievements"))
+const Profile = lazy(() => import("../pages/profile/Profile"))
+const Settings = lazy(() => import("../pages/settings/Settings"))
 
 function AppRoutes() {
   return (
-    <Routes>
-      {/* ====================================================================
-          1. Public Marketing Routes (PublicLayout)
-         ==================================================================== */}
-      <Route element={<PublicLayout />}>
-        <Route path="/" element={<LandingPage />} />
-      </Route>
-
-      {/* ====================================================================
-          2. Authentication Routes (Isolated, PublicOnly - redirected if logged in)
-         ==================================================================== */}
-      <Route element={<PublicOnlyRoute />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-      </Route>
-
-      {/* ====================================================================
-          3. Authenticated Platform Layout Route (Protected by ProtectedRoute)
-         ==================================================================== */}
-      <Route element={<ProtectedRoute />}>
-        <Route element={<AppLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+    <Suspense fallback={<PageLoadingFallback />}>
+      <Routes>
+        {/* ====================================================================
+            1. Public Exploration & Marketing Routes (PublicLayout with Header)
+            Accessible by everyone, preserves sticky header across all tabs
+           ==================================================================== */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/learning" element={<Learning />} />
           <Route path="/learning-paths" element={<LearningPaths />} />
           <Route path="/labs" element={<Labs />} />
-          <Route path="/progress" element={<Progress />} />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/pricing" element={<Pricing />} />
         </Route>
-      </Route>
 
-      {/* ====================================================================
-          4. Legacy Aliases / Backwards Compatibility
-         ==================================================================== */}
-      <Route path="/security-labs" element={<Navigate to="/labs" replace />} />
-      <Route path="/threats" element={<Navigate to="/dashboard" replace />} />
-      <Route path="/vulnerabilities" element={<Navigate to="/dashboard" replace />} />
-      <Route path="/incidents" element={<Navigate to="/dashboard" replace />} />
+        {/* ====================================================================
+            2. Authentication Routes (Isolated, PublicOnly - Redirects if logged in)
+           ==================================================================== */}
+        <Route element={<PublicOnlyRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+        </Route>
 
-      {/* ====================================================================
-          5. Fallback 404
-         ==================================================================== */}
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
-    </Routes>
+        {/* ====================================================================
+            3. Authenticated Platform Layout Route (Protected Workspace)
+           ==================================================================== */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/progress" element={<Progress />} />
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+          </Route>
+        </Route>
+
+        {/* ====================================================================
+            4. Legacy Aliases / Backwards Compatibility
+           ==================================================================== */}
+        <Route path="/security-labs" element={<Navigate to="/labs" replace />} />
+        <Route path="/threats" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/vulnerabilities" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/incidents" element={<Navigate to="/dashboard" replace />} />
+
+        {/* ====================================================================
+            5. Fallback 404
+           ==================================================================== */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Suspense>
   )
 }
 

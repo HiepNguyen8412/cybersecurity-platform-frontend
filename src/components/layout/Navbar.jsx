@@ -38,8 +38,8 @@ export function Navbar() {
   } = useLayout()
 
   const { user, logout } = useAuth()
-  const displayName = user?.name || "Alex Morgan"
-  const displayEmail = user?.email || "alex.morgan@cyberpath.edu"
+  const displayName = user?.fullName || user?.name || "Learner"
+  const displayEmail = user?.email || "hiep.nguyen@cyberpath.edu"
   const displayRole = user?.role || "Security Analyst"
 
   const [searchQuery, setSearchQuery] = useState("")
@@ -178,8 +178,8 @@ export function Navbar() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search lessons, paths, labs..."
-              className="w-full rounded-lg border border-slate-200 bg-slate-50/80 py-1.5 pl-9 pr-14 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 outline-none transition duration-150 focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100"
+              placeholder="Search modules, MITRE techniques, CVEs..."
+              className="w-full rounded-xl border border-slate-200/90 bg-slate-50/70 py-1.5 pl-9 pr-14 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 outline-none transition duration-150 focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 shadow-2xs"
             />
             {searchQuery ? (
               <button
@@ -192,7 +192,7 @@ export function Navbar() {
               </button>
             ) : (
               <div className="absolute right-2.5 hidden sm:flex items-center pointer-events-none">
-                <kbd className="px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 bg-white border border-slate-200 rounded shadow-2xs">
+                <kbd className="px-1.5 py-0.5 text-[10px] font-mono-tech font-semibold text-slate-400 bg-white border border-slate-200 rounded shadow-2xs">
                   Ctrl K
                 </kbd>
               </div>
@@ -200,8 +200,13 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Right: Notifications & User Menu */}
+        {/* Right: Security Status + Notifications & User Menu */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Live SOC Status Pill */}
+          <div className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50/90 border border-emerald-200/80 text-emerald-800 text-[11px] font-mono-tech">
+            <span className="cyber-pulse-dot text-emerald-500" />
+            <span className="font-semibold">DEFENSE: ACTIVE</span>
+          </div>
           {/* Notifications Dropdown */}
           <Dropdown
             align="right"

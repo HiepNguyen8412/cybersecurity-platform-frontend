@@ -25,7 +25,7 @@ function Register() {
   const [formError, setFormError] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const { register, isLoading, authError, clearAuthError } = useAuth()
+  const { register, login, isLoading, authError, clearAuthError } = useAuth()
   const navigate = useNavigate()
 
   const validate = () => {
@@ -80,8 +80,13 @@ function Register() {
       })
 
       if (result.success) {
-        // Direct transition to email verification
-        navigate(`/verify-email?email=${encodeURIComponent(cleanEmail)}`, { replace: true })
+        // Automatically authenticate user and redirect to home page (/)
+        try {
+          await login(cleanEmail, password, true)
+        } catch {
+          // Continue redirect even if auto-login threw
+        }
+        navigate("/", { replace: true })
       } else {
         setFormError(result.error || "Unable to complete registration. Please verify your details.")
       }
@@ -245,11 +250,11 @@ function Register() {
               label={
                 <span className="text-xs text-slate-600 leading-normal">
                   I agree to the{" "}
-                  <span className="font-semibold text-blue-600 hover:text-blue-700 cursor-pointer">
+                  <span className="font-semibold text-slate-800">
                     Terms of Service
                   </span>
                   ,{" "}
-                  <span className="font-semibold text-blue-600 hover:text-blue-700 cursor-pointer">
+                  <span className="font-semibold text-slate-800">
                     Privacy Policy
                   </span>
                   , and responsible security lab ethics.

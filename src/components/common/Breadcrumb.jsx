@@ -16,9 +16,9 @@ export function Breadcrumb({
         {showHome && (
           <li className="inline-flex items-center">
             <Link
-              to="/dashboard"
+              to="/"
               className="text-slate-400 hover:text-slate-600 transition-colors inline-flex items-center"
-              title="Dashboard"
+              title="Home"
             >
               <Home className="h-3.5 w-3.5" />
             </Link>

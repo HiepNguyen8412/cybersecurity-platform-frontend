@@ -26,22 +26,24 @@ const Button = forwardRef(function Button(
 
   // Base styles: semantic typography, transition, focus ring, interactive states
   const baseStyles =
-    "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+    "group inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:transform-none disabled:hover:shadow-none"
 
   // Variant definitions
   const variantStyles = {
     primary:
-      "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 shadow-sm hover:shadow focus-visible:ring-blue-600 border border-transparent",
+      "cyber-btn-primary btn-cyber-interactive font-semibold focus-visible:ring-blue-600 rounded-xl",
     secondary:
-      "bg-slate-100 text-slate-800 hover:bg-slate-200 active:bg-slate-300 focus-visible:ring-slate-400 border border-slate-200",
+      "bg-slate-100/90 text-slate-800 hover:bg-slate-200 active:bg-slate-300 hover:-translate-y-0.5 hover:shadow-sm focus-visible:ring-slate-400 border border-slate-200/80 rounded-xl",
     outline:
-      "bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 hover:text-slate-900 active:bg-slate-100 shadow-xs focus-visible:ring-blue-600",
+      "bg-white/95 backdrop-blur-xs text-slate-700 border border-slate-200 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50/50 hover:-translate-y-0.5 hover:shadow-md hover:shadow-blue-500/10 active:bg-slate-100 shadow-2xs focus-visible:ring-blue-600 rounded-xl",
     ghost:
-      "bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 focus-visible:ring-slate-400 border border-transparent",
+      "bg-transparent text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 hover:-translate-y-0.5 active:bg-slate-200 focus-visible:ring-slate-400 border border-transparent rounded-xl",
     danger:
-      "bg-rose-600 text-white hover:bg-rose-700 active:bg-rose-800 shadow-sm hover:shadow focus-visible:ring-rose-600 border border-transparent",
+      "bg-rose-600 text-white hover:bg-rose-700 active:bg-rose-800 shadow-sm hover:shadow-md hover:shadow-rose-500/25 hover:-translate-y-0.5 focus-visible:ring-rose-600 border border-transparent rounded-xl",
     subtle:
-      "bg-blue-50 text-blue-700 hover:bg-blue-100 active:bg-blue-200 focus-visible:ring-blue-500 border border-blue-100",
+      "bg-blue-50/80 text-blue-700 hover:bg-blue-100 hover:text-blue-800 hover:-translate-y-0.5 active:bg-blue-200 focus-visible:ring-blue-500 border border-blue-200/60 rounded-xl",
+    tech:
+      "font-mono-tech bg-slate-900 text-white hover:bg-slate-800 hover:border-blue-500/50 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/20 border border-slate-700/80 shadow-sm rounded-xl tracking-tight",
   }
 
   // Size definitions
@@ -76,9 +78,17 @@ const Button = forwardRef(function Button(
         </>
       ) : (
         <>
-          {leftIcon && <span className="inline-flex shrink-0">{leftIcon}</span>}
-          {children}
-          {rightIcon && <span className="inline-flex shrink-0">{rightIcon}</span>}
+          {leftIcon && (
+            <span className="inline-flex shrink-0 transition-transform duration-200 group-hover:scale-110">
+              {leftIcon}
+            </span>
+          )}
+          <span>{children}</span>
+          {rightIcon && (
+            <span className="inline-flex shrink-0 transition-transform duration-200 group-hover:translate-x-1">
+              {rightIcon}
+            </span>
+          )}
         </>
       )}
     </button>

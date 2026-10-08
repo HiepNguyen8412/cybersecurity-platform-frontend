@@ -50,3 +50,322 @@
   outline: 2px solid #2563eb;
   outline-offset: 2px;
 }
+
+/* ==========================================================================
+   Bespoke Cyber White & Electric Blue Design System
+   High-Tech Cybersecurity Theme Tokens & Utilities
+   ========================================================================== */
+
+/* Technical Monospace Font Utility */
+.font-mono-tech {
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
+}
+
+/* Atmospheric Cyber Grid Canvas */
+.cyber-grid-canvas {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+    linear-gradient(to right, rgba(37, 99, 235, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(37, 99, 235, 0.045) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+}
+
+/* Subtle Glowing Tech Dot Grid (for cards & hero backgrounds) */
+.cyber-dots-pattern {
+  background-image: radial-gradient(rgba(37, 99, 235, 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Bespoke Cyber Glass Card */
+.cyber-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 
+    0 1px 3px 0 rgba(15, 23, 42, 0.04),
+    0 6px 16px -2px rgba(15, 23, 42, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-card:hover {
+  border-color: rgba(59, 130, 246, 0.45);
+  box-shadow: 
+    0 4px 12px 0 rgba(15, 23, 42, 0.04),
+    0 16px 32px -6px rgba(37, 99, 235, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  transform: translateY(-1.5px);
+}
+
+/* Elevated Cyber Focal Card (For Next Step & Hero) */
+.cyber-card-focal {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 247, 255, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(191, 219, 254, 0.85);
+  box-shadow: 
+    0 2px 4px 0 rgba(15, 23, 42, 0.04),
+    0 12px 28px -4px rgba(37, 99, 235, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* Cyber Glow Buttons */
+.cyber-btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 2px 4px rgba(37, 99, 235, 0.2),
+    0 8px 18px -2px rgba(37, 99, 235, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.18s ease;
+}
+
+.cyber-btn-primary:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  box-shadow: 
+    0 4px 8px rgba(37, 99, 235, 0.25),
+    0 12px 24px -2px rgba(37, 99, 235, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.cyber-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* High-Tech Terminal Simulation Box */
+.cyber-terminal {
+  background: #090e17;
+  border: 1px solid rgba(30, 41, 59, 0.8);
+  box-shadow: 
+    0 20px 40px -15px rgba(15, 23, 42, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Terminal Blinking Block Cursor Animation */
+@keyframes terminalCursorBlink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background-color: #38bdf8;
+  vertical-align: -2px;
+  margin-left: 3px;
+  animation: terminalCursorBlink 0.9s steps(1) infinite;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+}
+
+/* Pulsing Cyber Radar Signal Dot */
+.cyber-pulse-dot {
+  position: relative;
+  display: inline-flex;
+  height: 8px;
+  width: 8px;
+}
+.cyber-pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  background-color: currentColor;
+  opacity: 0.4;
+  animation: cyberPing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes cyberPing {
+  75%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* Tech Pill Badge */
+.cyber-badge-tech {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: -0.01em;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  border: 1px solid;
+}
+
+/* Shimmer Highlight */
+@keyframes cyberGlowLine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+.cyber-scan-highlight {
+  position: relative;
+  overflow: hidden;
+}
+.cyber-scan-highlight::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.08), transparent);
+  animation: cyberGlowLine 3.5s infinite;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Page Entrance & Motion Animations
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes cyberSkeletonShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes topLoaderLaser {
+  0% {
+    left: -35%;
+    width: 30%;
+  }
+  50% {
+    left: 40%;
+    width: 50%;
+  }
+  100% {
+    left: 100%;
+    width: 30%;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s ease both;
+}
+
+.animate-float {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+.stagger-1 { animation-delay: 60ms; }
+.stagger-2 { animation-delay: 120ms; }
+.stagger-3 { animation-delay: 180ms; }
+.stagger-4 { animation-delay: 240ms; }
+
+/* ==========================================================================
+   Lazy Loading Skeleton Styles
+   ========================================================================== */
+
+.cyber-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(241, 245, 249, 0.9) 0%,
+    rgba(219, 234, 254, 0.7) 50%,
+    rgba(241, 245, 249, 0.9) 100%
+  );
+  background-size: 200% 100%;
+  animation: cyberSkeletonShimmer 1.8s ease-in-out infinite;
+  border-radius: 12px;
+}
+
+.cyber-top-loader-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(37, 99, 235, 0.15);
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.cyber-top-loader-laser {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4, #2563eb);
+  box-shadow: 0 0 10px #3b82f6, 0 0 5px #06b6d4;
+  animation: topLoaderLaser 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* ==========================================================================
+   Rich Button Hover Micro-Interactions
+   ========================================================================== */
+
+/* Universal Button Hover Enhancement */
+.btn-cyber-interactive {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-cyber-interactive::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 100%
+  );
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.btn-cyber-interactive:hover::before {
+  left: 100%;
+}
+
+.btn-cyber-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -2px rgba(37, 99, 235, 0.35);
+}
+
+.btn-cyber-interactive:active {
+  transform: translateY(0) scale(0.98);
+}
+

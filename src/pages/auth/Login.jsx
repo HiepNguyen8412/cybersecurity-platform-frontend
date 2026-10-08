@@ -66,7 +66,7 @@ function Login() {
 
       if (result.success) {
         // Sanitize redirect target to prevent open redirect vulnerabilities
-        const destination = sanitizeReturnUrl(location.state?.from, "/dashboard")
+        const destination = sanitizeReturnUrl(location.state?.from, "/")
         navigate(destination, { replace: true })
       } else {
         // Generic failure message that prevents user enumeration
@@ -79,7 +79,7 @@ function Login() {
 
   // Quick fill helper for evaluation & testing
   const handleFillDemo = () => {
-    setEmail("alex.morgan@cyberpath.edu")
+    setEmail("hiep.nguyen@cyberpath.edu")
     setPassword("P@ssword123!")
     setFieldErrors({})
     setFormError("")
@@ -218,10 +218,10 @@ function Login() {
             </div>
             <div className="flex flex-col text-left min-w-0">
               <span className="text-[11px] font-semibold text-slate-800 truncate">
-                Demo Account &bull; Alex Morgan
+                Demo Account &bull; Hiệp Nguyễn
               </span>
               <span className="text-[10px] text-slate-500 truncate">
-                alex.morgan@cyberpath.edu (Security Analyst)
+                hiep.nguyen@cyberpath.edu (Security Analyst)
               </span>
             </div>
           </div>

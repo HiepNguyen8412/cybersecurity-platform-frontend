@@ -122,7 +122,7 @@ const AUTH_PAGES = new Set([
  * - Rejects protocol-relative, encoded, or scheme-based exploits (javascript:, data:, etc.).
  * - Strips query/hash when validating against authentication routes to prevent redirect loops.
  */
-export function sanitizeReturnUrl(returnUrl, defaultUrl = "/dashboard") {
+export function sanitizeReturnUrl(returnUrl, defaultUrl = "/") {
   let rawUrl
   if (typeof returnUrl === "string") {
     rawUrl = returnUrl

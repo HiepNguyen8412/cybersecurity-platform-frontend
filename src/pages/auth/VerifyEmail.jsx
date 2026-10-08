@@ -328,9 +328,9 @@ function VerifyEmail() {
                 size="lg"
                 fullWidth
                 rightIcon={<ArrowRight className="h-4 w-4" />}
-                onClick={() => navigate("/dashboard", { replace: true })}
+                onClick={() => navigate("/", { replace: true })}
               >
-                Continue to Dashboard
+                Return to Home
               </Button>
             </div>
           </div>

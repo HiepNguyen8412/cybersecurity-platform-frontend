@@ -89,8 +89,8 @@ const Input = forwardRef(function Input(
             isError ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined
           }
           className={`
-            w-full rounded-lg border bg-white text-slate-900 transition-all duration-150
-            placeholder:text-slate-400 outline-none
+            w-full rounded-xl border bg-white/95 text-slate-900 transition-all duration-150
+            placeholder:text-slate-400 outline-none shadow-2xs
             disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed
             ${sizeStyles[size] || sizeStyles.md}
             ${stateStyles}
