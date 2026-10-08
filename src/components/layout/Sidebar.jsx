@@ -1,101 +1,268 @@
+import { NavLink, Link } from "react-router-dom"
 import {
-    LayoutDashboard,
-    ShieldAlert,
-    Bug,
-    Siren,
-    FlaskConical,
-    GraduationCap,
-    User,
-    Settings,
+  LayoutDashboard,
+  BookOpen,
+  Compass,
+  FlaskConical,
+  TrendingUp,
+  Award,
+  User,
+  Settings,
+  ShieldCheck,
+  ChevronRight,
+  X,
 } from "lucide-react"
-import { NavLink } from "react-router-dom"
+import useLayout from "../../hooks/useLayout"
+import useAuth from "../../hooks/useAuth"
+import { Avatar } from "../common"
 
-const menuItems = [
-    { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-    { label: "Threats", icon: ShieldAlert, path: "/threats" },
-    { label: "Vulnerabilities", icon: Bug, path: "/vulnerabilities" },
-    { label: "Incidents", icon: Siren, path: "/incidents" },
-    { label: "Security Labs", icon: FlaskConical, path: "/security-labs" },
-    { label: "Learning", icon: GraduationCap, path: "/learning" },
-]
+/**
+ * Friendly, human, modern EdTech Sidebar.
+ * Supports expanded (240px) and collapsed (72px) desktop states, plus full mobile drawer.
+ */
+export function Sidebar() {
+  const {
+    isSidebarCollapsed,
+    isMobileMenuOpen,
+    closeMobileMenu,
+  } = useLayout()
 
-function Sidebar() {
-    return (
-        <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r border-slate-800 bg-slate-950 text-slate-200">
-            {/* Logo */}
-            <div className="flex h-16 items-center border-b border-slate-800 px-6">
-                <ShieldAlert className="mr-3 h-7 w-7 text-blue-500" />
+  const { user } = useAuth()
+  const displayName = user?.fullName || user?.name || "Learner"
+  const displayRole = user?.role || "Security Analyst"
 
-                <div>
-                    <h1 className="text-sm font-bold text-white">
-                        Cybersecurity
-                    </h1>
+  // Navigation structure: LEARN, PROGRESS, ACCOUNT
+  const navigationGroups = [
+    {
+      group: "LEARN",
+      items: [
+        { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+        { label: "Learning", icon: BookOpen, path: "/learning" },
+        { label: "Learning Paths", icon: Compass, path: "/learning-paths" },
+        { label: "Labs", icon: FlaskConical, path: "/labs" },
+      ],
+    },
+    {
+      group: "PROGRESS",
+      items: [
+        { label: "Progress", icon: TrendingUp, path: "/progress" },
+        { label: "Achievements", icon: Award, path: "/achievements" },
+      ],
+    },
+    {
+      group: "ACCOUNT",
+      items: [
+        { label: "Profile", icon: User, path: "/profile" },
+        { label: "Settings", icon: Settings, path: "/settings" },
+      ],
+    },
+  ]
 
-                    <p className="text-xs text-slate-500">
-                        Interactive Platform
-                    </p>
-                </div>
+  const renderSidebarContent = (isCollapsed) => (
+    <div className="flex h-full flex-col bg-white border-r border-slate-200/80">
+      {/* Brand Header */}
+      <div
+        className={`flex h-16 items-center border-b border-slate-200/80 ${
+          isCollapsed ? "justify-center px-2" : "justify-between px-4 sm:px-5"
+        }`}
+      >
+        <Link
+          to="/"
+          className="flex items-center gap-2.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg"
+          onClick={closeMobileMenu}
+          title="CyberPath — Home"
+        >
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-2xs">
+            <ShieldCheck className="h-5 w-5 stroke-[2.2]" />
+          </div>
+
+          {!isCollapsed && (
+            <div className="flex flex-col">
+              <span className="text-sm font-bold tracking-tight text-slate-900 leading-tight">
+                CyberPath
+              </span>
+              <span className="text-[11px] font-medium text-slate-500 leading-tight">
+                Learning Platform
+              </span>
             </div>
+          )}
+        </Link>
 
-            {/* Menu */}
-            <nav className="p-4">
-                <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Platform
-                </p>
+        {/* Mobile close button (mobile drawer only) */}
+        {!isCollapsed && (
+          <div className="flex items-center md:hidden">
+            <button
+              type="button"
+              onClick={closeMobileMenu}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
+              aria-label="Close menu"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+        )}
+      </div>
 
-                <div className="space-y-1">
-                    {menuItems.map((item) => {
-                        const Icon = item.icon
+      {/* Navigation Sections */}
+      <nav
+        aria-label="Application Navigation"
+        className={`flex-1 overflow-y-auto py-4 space-y-4 ${
+          isCollapsed ? "px-2" : "px-3.5"
+        }`}
+      >
+        {navigationGroups.map((group) => (
+          <div key={group.group} className="space-y-1">
+            {isCollapsed ? (
+              <div className="my-2 border-t border-slate-100" />
+            ) : (
+              <p className="px-2.5 pb-1 text-[10px] font-mono-tech font-bold uppercase tracking-widest text-slate-400 select-none">
+                {group.group}
+              </p>
+            )}
 
-                        return (
-                            <NavLink
-                                key={item.path}
-                                to={item.path}
-                                className={({ isActive }) =>
-                                    `flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition ${isActive
-                                        ? "bg-blue-600 text-white"
-                                        : "text-slate-400 hover:bg-slate-800 hover:text-white"
-                                    }`
-                                }
-                            >
-                                <Icon className="mr-3 h-5 w-5" />
-                                {item.label}
-                            </NavLink>
-                        )
-                    })}
-                </div>
-            </nav>
+            <div className="space-y-0.5">
+              {group.items.map((item) => {
+                const Icon = item.icon
 
-            {/* Bottom menu */}
-            <div className="absolute bottom-0 left-0 w-full border-t border-slate-800 p-4">
-                <NavLink
-                    to="/profile"
-                    className={({ isActive }) =>
-                        `mb-1 flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition ${isActive
-                            ? "bg-blue-600 text-white"
-                            : "text-slate-400 hover:bg-slate-800 hover:text-white"
-                        }`
-                    }
-                >
-                    <User className="mr-3 h-5 w-5" />
-                    Profile
-                </NavLink>
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    onClick={closeMobileMenu}
+                    title={item.label}
+                    aria-label={item.label}
+                    className={({ isActive }) => `
+                      group relative flex items-center rounded-xl text-sm font-medium transition-all duration-150 select-none
+                      ${
+                        isCollapsed
+                          ? "justify-center px-0 py-2.5"
+                          : "gap-3 px-3 py-2"
+                      }
+                      ${
+                        isActive
+                          ? "bg-blue-50/90 text-blue-700 font-semibold border border-blue-200/70 shadow-2xs"
+                          : "text-slate-600 hover:bg-slate-100/70 hover:text-slate-900 border border-transparent"
+                      }
+                    `.trim()}
+                  >
+                    {({ isActive }) => (
+                      <>
+                        {/* Subtle active left indicator */}
+                        {isActive && (
+                          <span
+                            className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-blue-600 shadow-sm shadow-blue-500/50"
+                            aria-hidden="true"
+                          />
+                        )}
 
-                <NavLink
-                    to="/settings"
-                    className={({ isActive }) =>
-                        `flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition ${isActive
-                            ? "bg-blue-600 text-white"
-                            : "text-slate-400 hover:bg-slate-800 hover:text-white"
-                        }`
-                    }
-                >
-                    <Settings className="mr-3 h-5 w-5" />
-                    Settings
-                </NavLink>
+                        <Icon
+                          className={`shrink-0 transition-colors ${
+                            isCollapsed ? "h-5 w-5" : "h-4.5 w-4.5"
+                          } ${
+                            isActive
+                              ? "text-blue-600 stroke-[2.2]"
+                              : "text-slate-400 group-hover:text-slate-700 stroke-[1.8]"
+                          }`}
+                        />
+
+                        {!isCollapsed && (
+                          <span className="truncate leading-none">{item.label}</span>
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                )
+              })}
             </div>
-        </aside>
-    )
+          </div>
+        ))}
+      </nav>
+
+      {/* Cyber Sandbox Telemetry Widget (Desktop expanded only) */}
+      {!isCollapsed && (
+        <div className="mx-3.5 mb-2 p-2.5 rounded-xl bg-slate-50/90 border border-slate-200/80 font-mono-tech text-[10px] space-y-1">
+          <div className="flex items-center justify-between">
+            <span className="text-slate-400 font-bold uppercase tracking-wider">LAB SANDBOX</span>
+            <span className="flex items-center gap-1 text-emerald-600 font-bold">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              READY
+            </span>
+          </div>
+          <div className="text-slate-600 flex items-center justify-between pt-0.5">
+            <span>NODE: #412</span>
+            <span>PING: 18ms</span>
+            <span className="text-blue-600 font-bold">ISOLATED</span>
+          </div>
+        </div>
+      )}
+
+      {/* Bottom User Profile Summary */}
+      <div className={`border-t border-slate-200/80 ${isCollapsed ? "p-2" : "p-3"}`}>
+        <Link
+          to="/profile"
+          onClick={closeMobileMenu}
+          className={`flex items-center rounded-xl hover:bg-slate-100/80 transition-colors group cursor-pointer ${
+            isCollapsed ? "justify-center p-2" : "justify-between p-2"
+          }`}
+          title={`${displayName} (${displayRole}) - View profile`}
+        >
+          <div className={`flex items-center ${isCollapsed ? "justify-center" : "gap-2.5 min-w-0"}`}>
+            <Avatar name={displayName} size="sm" status="online" />
+            {!isCollapsed && (
+              <div className="flex flex-col min-w-0 text-left">
+                <span className="text-xs font-semibold text-slate-800 leading-tight truncate group-hover:text-blue-600 transition-colors">
+                  {displayName}
+                </span>
+                <span className="text-[11px] text-slate-500 leading-tight truncate">
+                  {displayRole}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {!isCollapsed && (
+            <ChevronRight className="h-4 w-4 text-slate-400 group-hover:text-slate-600 shrink-0" />
+          )}
+        </Link>
+      </div>
+    </div>
+  )
+
+  return (
+    <>
+      {/* Desktop Sidebar (Fixed Left: width 240px expanded / 72px collapsed) */}
+      <aside
+        aria-label="Platform Sidebar"
+        className={`hidden md:block fixed left-0 top-0 bottom-0 z-40 transition-all duration-200 ease-in-out ${
+          isSidebarCollapsed ? "w-[72px]" : "w-60"
+        }`}
+      >
+        {renderSidebarContent(isSidebarCollapsed)}
+      </aside>
+
+      {/* Mobile Drawer (Always full width when opened) */}
+      {isMobileMenuOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile Navigation Drawer"
+          className="fixed inset-0 z-50 md:hidden"
+        >
+          {/* Backdrop overlay */}
+          <div
+            className="fixed inset-0 bg-slate-900/30 backdrop-blur-xs transition-opacity animate-in fade-in"
+            onClick={closeMobileMenu}
+            aria-hidden="true"
+          />
+
+          {/* Offcanvas Drawer Content */}
+          <aside className="fixed left-0 top-0 bottom-0 w-64 max-w-[85vw] bg-white shadow-xl transition-transform animate-in slide-in-from-left duration-200 z-10">
+            {renderSidebarContent(false)}
+          </aside>
+        </div>
+      )}
+    </>
+  )
 }
 
 export default Sidebar

@@ -1,111 +1,303 @@
-import { Link } from "react-router-dom"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { User, Mail, Lock, AlertCircle, Shield, ArrowRight, CheckCircle2 } from "lucide-react"
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout"
+import { Button, Input, Checkbox, Divider } from "../../components/common"
+import PasswordStrength from "../../components/auth/PasswordStrength"
+import SocialAuthButtons from "../../components/auth/SocialAuthButtons"
+import useAuth from "../../hooks/useAuth"
+import { validateEmail, validatePassword } from "../../utils/validators"
 
+/**
+ * Production-ready Registration page:
+ * - Robust input validation and real-time password strength enforcement
+ * - Dynamic password match feedback
+ * - Responsible security lab usage acknowledgement
+ * - Anti-enumeration handling for existing accounts
+ */
 function Register() {
-    return (
-        <AuthLayout>
-            <div>
-                <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-white">
-                        Create account
-                    </h2>
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [agreeTerms, setAgreeTerms] = useState(false)
+  const [fieldErrors, setFieldErrors] = useState({})
+  const [formError, setFormError] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-                    <p className="mt-1 text-sm text-slate-400">
-                        Create your security platform account
-                    </p>
-                </div>
+  const { register, login, isLoading, authError, clearAuthError } = useAuth()
+  const navigate = useNavigate()
 
-                <form className="space-y-5">
-                    {/* Full name */}
-                    <div>
-                        <label
-                            htmlFor="name"
-                            className="mb-2 block text-sm font-medium text-slate-300"
-                        >
-                            Full name
-                        </label>
+  const validate = () => {
+    const errors = {}
 
-                        <input
-                            id="name"
-                            type="text"
-                            placeholder="Your name"
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-blue-500"
-                        />
-                    </div>
+    if (!name.trim()) {
+      errors.name = "Full name is required."
+    } else if (name.trim().length < 2) {
+      errors.name = "Full name must be at least 2 characters."
+    }
 
-                    {/* Email */}
-                    <div>
-                        <label
-                            htmlFor="email"
-                            className="mb-2 block text-sm font-medium text-slate-300"
-                        >
-                            Email
-                        </label>
+    const emailCheck = validateEmail(email)
+    if (!emailCheck.isValid) {
+      errors.email = emailCheck.error
+    }
 
-                        <input
-                            id="email"
-                            type="email"
-                            placeholder="you@example.com"
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-blue-500"
-                        />
-                    </div>
+    const passwordCheck = validatePassword(password)
+    if (!passwordCheck.isValid) {
+      errors.password = passwordCheck.error
+    }
 
-                    {/* Password */}
-                    <div>
-                        <label
-                            htmlFor="password"
-                            className="mb-2 block text-sm font-medium text-slate-300"
-                        >
-                            Password
-                        </label>
+    if (!confirmPassword) {
+      errors.confirmPassword = "Please confirm your password."
+    } else if (password !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match."
+    }
 
-                        <input
-                            id="password"
-                            type="password"
-                            placeholder="••••••••"
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-blue-500"
-                        />
-                    </div>
+    if (!agreeTerms) {
+      errors.agreeTerms = "You must agree to the Terms of Service and Lab Ethics to create an account."
+    }
 
-                    {/* Confirm password */}
-                    <div>
-                        <label
-                            htmlFor="confirmPassword"
-                            className="mb-2 block text-sm font-medium text-slate-300"
-                        >
-                            Confirm password
-                        </label>
+    setFieldErrors(errors)
+    return Object.keys(errors).length === 0
+  }
 
-                        <input
-                            id="confirmPassword"
-                            type="password"
-                            placeholder="••••••••"
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-blue-500"
-                        />
-                    </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setFormError("")
+    clearAuthError()
 
-                    {/* Submit */}
-                    <button
-                        type="submit"
-                        className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500"
-                    >
-                        Create account
-                    </button>
-                </form>
+    if (isSubmitting || isLoading) return
 
-                {/* Login */}
-                <p className="mt-6 text-center text-sm text-slate-400">
-                    Already have an account?{" "}
-                    <Link
-                        to="/login"
-                        className="font-medium text-blue-500 hover:text-blue-400"
-                    >
-                        Sign in
-                    </Link>
-                </p>
+    if (!validate()) return
+
+    setIsSubmitting(true)
+    try {
+      const cleanEmail = email.trim().toLowerCase()
+      const result = await register({
+        name: name.trim(),
+        email: cleanEmail,
+        password,
+      })
+
+      if (result.success) {
+        // Automatically authenticate user and redirect to home page (/)
+        try {
+          await login(cleanEmail, password, true)
+        } catch {
+          // Continue redirect even if auto-login threw
+        }
+        navigate("/", { replace: true })
+      } else {
+        setFormError(result.error || "Unable to complete registration. Please verify your details.")
+      }
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const activeError = formError || authError
+  const isBusy = isSubmitting || isLoading
+
+  // Live password match helper
+  const isPasswordMatch = confirmPassword.length > 0 && password === confirmPassword
+
+  return (
+    <AuthLayout>
+      <div className="space-y-5">
+        {/* Header with Security Sub-badge */}
+        <div className="space-y-1.5 text-center">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-[11px] font-semibold text-blue-700 tracking-wide uppercase">
+            <Shield className="h-3 w-3" />
+            <span>Defender Registration</span>
+          </div>
+
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
+            Create Your Account
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 leading-normal">
+            Access hands-on virtual security labs, challenge ranges, and guided paths.
+          </p>
+        </div>
+
+        {/* Global Error Banner */}
+        {activeError && (
+          <div
+            role="alert"
+            aria-live="assertive"
+            className="p-3.5 rounded-xl bg-rose-50 border border-rose-200/80 text-xs text-rose-700 flex items-start gap-2.5 animate-in fade-in"
+          >
+            <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
+            <div className="flex-1">
+              <span className="font-semibold block">Registration error</span>
+              <span>{activeError}</span>
             </div>
-        </AuthLayout>
-    )
+          </div>
+        )}
+
+        {/* Registration Form */}
+        <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
+          {/* Full Name */}
+          <Input
+            id="register-name"
+            label="Full name"
+            type="text"
+            required
+            autoComplete="name"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value)
+              if (fieldErrors.name) setFieldErrors((prev) => ({ ...prev, name: "" }))
+              if (formError) setFormError("")
+            }}
+            placeholder="e.g. Alex Morgan"
+            leftIcon={<User className="h-4 w-4 text-slate-400" />}
+            errorMessage={fieldErrors.name}
+            disabled={isBusy}
+          />
+
+          {/* Email Address */}
+          <Input
+            id="register-email"
+            label="Email address"
+            type="email"
+            required
+            autoComplete="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value)
+              if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: "" }))
+              if (formError) setFormError("")
+            }}
+            placeholder="you@example.com"
+            leftIcon={<Mail className="h-4 w-4 text-slate-400" />}
+            errorMessage={fieldErrors.email}
+            disabled={isBusy}
+          />
+
+          {/* Password with Strength Indicator */}
+          <div className="space-y-1.5">
+            <Input
+              id="register-password"
+              label="Create password"
+              type="password"
+              required
+              autoComplete="new-password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+                if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: "" }))
+                if (formError) setFormError("")
+              }}
+              placeholder="••••••••"
+              leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
+              showPasswordToggle
+              errorMessage={fieldErrors.password}
+              disabled={isBusy}
+            />
+
+            {/* Progressive Password Strength Meter */}
+            <PasswordStrength password={password} />
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label
+                htmlFor="register-confirm-password"
+                className="text-xs font-semibold text-slate-700 tracking-wide"
+              >
+                Confirm password <span className="text-rose-500">*</span>
+              </label>
+
+              {isPasswordMatch && (
+                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 animate-in fade-in">
+                  <CheckCircle2 className="h-3 w-3" />
+                  <span>Passwords match</span>
+                </span>
+              )}
+            </div>
+
+            <Input
+              id="register-confirm-password"
+              type="password"
+              required
+              autoComplete="new-password"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value)
+                if (fieldErrors.confirmPassword) setFieldErrors((prev) => ({ ...prev, confirmPassword: "" }))
+                if (formError) setFormError("")
+              }}
+              placeholder="••••••••"
+              leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
+              showPasswordToggle
+              errorMessage={fieldErrors.confirmPassword}
+              disabled={isBusy}
+            />
+          </div>
+
+          {/* Terms Acceptance */}
+          <div className="pt-0.5">
+            <Checkbox
+              id="agree-terms"
+              checked={agreeTerms}
+              onChange={(e) => {
+                setAgreeTerms(e.target.checked)
+                if (fieldErrors.agreeTerms) setFieldErrors((prev) => ({ ...prev, agreeTerms: "" }))
+              }}
+              disabled={isBusy}
+              errorMessage={fieldErrors.agreeTerms}
+              label={
+                <span className="text-xs text-slate-600 leading-normal">
+                  I agree to the{" "}
+                  <span className="font-semibold text-slate-800">
+                    Terms of Service
+                  </span>
+                  ,{" "}
+                  <span className="font-semibold text-slate-800">
+                    Privacy Policy
+                  </span>
+                  , and responsible security lab ethics.
+                </span>
+              }
+            />
+          </div>
+
+          {/* Submit CTA */}
+          <div className="pt-1">
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              fullWidth
+              isLoading={isBusy}
+              loadingText="Creating account..."
+              rightIcon={!isBusy ? <ArrowRight className="h-4 w-4" /> : null}
+            >
+              Create Defender Account
+            </Button>
+          </div>
+        </form>
+
+        {/* Social Registration */}
+        <div className="space-y-3 pt-1">
+          <Divider label="or sign up with" />
+          <SocialAuthButtons />
+        </div>
+
+        {/* Sign In Link */}
+        <p className="text-center text-xs text-slate-500 pt-1">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+          >
+            Sign in
+          </Link>
+        </p>
+      </div>
+    </AuthLayout>
+  )
 }
 
 export default Register
