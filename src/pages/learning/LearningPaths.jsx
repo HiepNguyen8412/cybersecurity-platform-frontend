@@ -10,6 +10,7 @@ import {
   ArrowRight,
 } from "lucide-react"
 import { Badge } from "../../components/common"
+import { LearningPathTimeline } from "./components/LearningPathTimeline"
 
 const TRACKS_DATA = [
   {
@@ -323,6 +324,9 @@ export function LearningPaths() {
             </div>
           </div>
         </div>
+
+        {/* Enhanced Visual Timeline */}
+        <LearningPathTimeline path={activeTrack} />
 
         {/* 4 Progressive Milestones */}
         <div className="space-y-4">

@@ -210,6 +210,10 @@ export const authService = {
           // Ignore
         }
 
+        if (allowMockFallback) {
+          return { success: true, data: { user: defaultMockUser } }
+        }
+
         return { success: false, error: "No active session." }
       }
     )

@@ -18,6 +18,7 @@ import {
   RotateCcw,
 } from "lucide-react"
 import { Card, Badge, Button, ProgressBar, CountUp } from "../../components/common"
+import { CourseSyllabusDrawer } from "./components/CourseSyllabusDrawer"
 
 const COURSE_MODULES = [
   {
@@ -186,6 +187,7 @@ export function Learning() {
   // Interactive Daily Threat Drill State
   const [drillAnswer, setDrillAnswer] = useState(null)
   const [drillSubmitted, setDrillSubmitted] = useState(false)
+  const [drawerCourse, setDrawerCourse] = useState(null)
 
   const toggleSyllabus = (modId) => {
     setExpandedSyllabus((prev) => ({
@@ -476,6 +478,15 @@ export function Learning() {
                       </button>
 
                       <div className="flex items-center gap-2.5">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setDrawerCourse(mod)}
+                          className="font-mono text-xs text-cyan-600 hover:text-cyan-700 cursor-pointer"
+                        >
+                          Syllabus Drawer
+                        </Button>
+
                         <Link to={mod.labLink}>
                           <Button variant="outline" size="sm" leftIcon={<Terminal className="h-3.5 w-3.5" />}>
                             Hands-on Lab
@@ -712,6 +723,13 @@ export function Learning() {
           </div>
         </div>
       </div>
+
+      {/* Slide-over Course Syllabus Drawer */}
+      <CourseSyllabusDrawer
+        course={drawerCourse}
+        isOpen={!!drawerCourse}
+        onClose={() => setDrawerCourse(null)}
+      />
     </div>
   )
 }

@@ -1,16 +1,16 @@
 import { useState } from "react"
 import {
-  Search,
-  CheckCircle2,
-  Copy,
-  Check,
-  Play,
-  RotateCw,
-  X,
   Clock,
   Server,
+  Terminal,
+  CheckCircle2,
 } from "lucide-react"
 import { Card, CountUp } from "../../components/common"
+import { LabTerminalModal } from "./components/LabTerminalModal"
+import { LabFilterBar } from "./components/LabFilterBar"
+import { FlagSubmissionCard } from "./components/FlagSubmissionCard"
+import useLabStore from "../../stores/useLabStore"
+import useNotificationStore from "../../stores/useNotificationStore"
 
 const LAB_DATA = [
   {
@@ -86,7 +86,7 @@ const LAB_DATA = [
   {
     id: "lab-06",
     category: "network",
-    title: "Network Packet Inspection & Arp Poisoning Defense",
+    title: "Network Packet Inspection & ARP Poisoning Defense",
     difficulty: "Intermediate",
     duration: "40 mins",
     mitre: "T1557.002",
@@ -127,92 +127,85 @@ const LAB_DATA = [
   },
 ]
 
+const CATEGORIES = [
+  { id: "all", label: "Tất cả Labs" },
+  { id: "web", label: "Web Exploitation" },
+  { id: "soc", label: "SOC Forensics" },
+  { id: "network", label: "Network Def" },
+  { id: "cloud", label: "Cloud & IAM" },
+]
+
+const DIFFICULTIES = ["all", "Novice", "Intermediate", "Advanced"]
+
 export function Labs() {
   const [selectedCategory, setSelectedCategory] = useState("all")
+  const [selectedDifficulty, setSelectedDifficulty] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
-  const [activeModalLab, setActiveModalLab] = useState(null)
-  const [containerBooting, setContainerBooting] = useState(false)
-  const [submittedFlag, setSubmittedFlag] = useState("")
-  const [flagStatus, setFlagStatus] = useState(null) // 'success' | 'fail' | null
-  const [copiedIp, setCopiedIp] = useState(false)
+
+  const { startLab, isRunning, activeLab, openTerminal, completedLabs, userPoints } = useLabStore()
+  const { info } = useNotificationStore()
 
   const handleLaunchLab = (lab) => {
-    setActiveModalLab(lab)
-    setContainerBooting(true)
-    setSubmittedFlag("")
-    setFlagStatus(null)
-
-    setTimeout(() => {
-      setContainerBooting(false)
-    }, 1200)
-  }
-
-  const handleCloseModal = () => {
-    setActiveModalLab(null)
-  }
-
-  const handleCopyIp = (ip) => {
-    navigator.clipboard?.writeText(ip)
-    setCopiedIp(true)
-    setTimeout(() => setCopiedIp(false), 2000)
-  }
-
-  const handleVerifyFlag = (e) => {
-    e.preventDefault()
-    if (!submittedFlag.trim()) return
-
-    if (
-      submittedFlag.trim().toUpperCase() === activeModalLab?.flag.toUpperCase() ||
-      submittedFlag.trim() === "FLAG{TEST}"
-    ) {
-      setFlagStatus("success")
-    } else {
-      setFlagStatus("fail")
-    }
+    startLab(lab)
+    info("Khởi tạo Lab", `Đã kết nối sandbox môi trường: ${lab.title}`)
   }
 
   const filteredLabs = LAB_DATA.filter((lab) => {
     const matchesCategory = selectedCategory === "all" || lab.category === selectedCategory
+    const matchesDifficulty = selectedDifficulty === "all" || lab.difficulty === selectedDifficulty
     const matchesSearch =
       lab.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       lab.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase())) ||
       lab.mitre.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
+    return matchesCategory && matchesDifficulty && matchesSearch
   })
 
   return (
-    <div className="max-w-[1240px] mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-8 sm:pb-10 space-y-8 animate-fade-in-up">
+    <div className="max-w-[1240px] mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-12 space-y-8 animate-fade-in-up">
       {/* ====================================================================
           1. HEADER & LIVE RANGE TELEMETRY
          ==================================================================== */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200/80">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono-tech font-bold">
-            <span className="cyber-pulse-dot text-blue-600" />
-            <span>CYBER RANGE // ISOLATED K8S SANDBOX</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-bold">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span>CYBER RANGE // K8S INTERACTIVE SANDBOX</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white leading-tight">
             Hands-On Security Laboratories
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed">
-            Practice real offensive and defensive cybersecurity in dedicated ephemeral sandbox containers. Spin up targets, execute investigations, and capture flags.
+          <p className="text-sm sm:text-base text-slate-400 max-w-2xl leading-relaxed">
+            Thực hành tấn công và phòng thủ trên môi trường ảo hóa thực chiến. Khởi chạy sandbox container, kiểm thử khai thác và nộp Flag xác thực.
           </p>
         </div>
 
-        {/* Live Range Status Box */}
-        <div className="flex items-center gap-3 p-3.5 rounded-2xl cyber-card bg-white/95 font-mono-tech text-xs self-start md:self-auto">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200">
-            <Server className="h-5 w-5" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5 text-emerald-700 font-bold">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>RANGE STATUS: READY</span>
+        {/* Live Range Status & User Score Box */}
+        <div className="flex items-center gap-4">
+          {/* Active Lab Quick Access button if running */}
+          {isRunning && activeLab && (
+            <button
+              onClick={openTerminal}
+              className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 transition-all cursor-pointer animate-pulse"
+            >
+              <Terminal className="w-4 h-4" />
+              <span>Terminal Đang Chạy ({activeLab.title.substring(0, 18)}...)</span>
+            </button>
+          )}
+
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl border border-slate-800 bg-slate-900/90 font-mono text-xs">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <Server className="h-5 w-5" />
             </div>
-            <div className="text-[11px] text-slate-500 mt-0.5">
-              1,240 Nodes Online • Zero Local Setup
+            <div>
+              <div className="flex items-center gap-1.5 text-emerald-400 font-bold">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>SANDBOX: READY</span>
+              </div>
+              <div className="text-[11px] text-slate-400 mt-0.5">
+                Điểm cá nhân: <span className="text-amber-400 font-bold">{userPoints} XP</span> ({completedLabs.length} Hoàn thành)
+              </div>
             </div>
           </div>
         </div>
@@ -221,227 +214,118 @@ export function Labs() {
       {/* ====================================================================
           2. FILTER & SEARCH CONTROLS
          ==================================================================== */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-        {/* Category Pills */}
-        <div className="flex items-center gap-1 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80 overflow-x-auto text-xs font-mono-tech font-semibold">
-          {[
-            { key: "all", label: "All Labs" },
-            { key: "web", label: "Web Security" },
-            { key: "soc", label: "SOC Forensics" },
-            { key: "network", label: "Network Def" },
-            { key: "cloud", label: "Cloud & IAM" },
-          ].map((cat) => (
-            <button
-              key={cat.key}
-              type="button"
-              onClick={() => setSelectedCategory(cat.key)}
-              className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer select-none whitespace-nowrap ${
-                selectedCategory === cat.key
-                  ? "bg-white text-blue-600 shadow-sm border border-blue-200/80 font-bold"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Search Input */}
-        <div className="relative max-w-xs w-full">
-          <Search className="h-4 w-4 text-slate-400 absolute left-3.5 top-3" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search labs, CVE, MITRE..."
-            className="w-full pl-10 pr-4 py-2 text-xs font-mono-tech bg-white border border-slate-200 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none text-slate-900 shadow-2xs"
-          />
-        </div>
-      </div>
+      <LabFilterBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        selectedDifficulty={selectedDifficulty}
+        setSelectedDifficulty={setSelectedDifficulty}
+        categories={CATEGORIES.map((c) => ({
+          ...c,
+          count: c.id === "all" ? LAB_DATA.length : LAB_DATA.filter((l) => l.category === c.id).length,
+        }))}
+        difficulties={DIFFICULTIES}
+      />
 
       {/* ====================================================================
           3. LABS GRID (Bespoke Cards)
          ==================================================================== */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredLabs.map((lab) => (
-          <Card
-            key={lab.id}
-            variant="default"
-            className="p-6 rounded-2xl flex flex-col justify-between group hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-200"
-          >
-            <div className="space-y-3.5">
-              {/* Card Meta Row */}
-              <div className="flex items-center justify-between text-xs font-mono-tech">
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
-                  MITRE: {lab.mitre}
-                </span>
+        {filteredLabs.map((lab) => {
+          const isCompleted = completedLabs.includes(lab.id)
+          const isCurrentActive = activeLab?.id === lab.id && isRunning
 
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-50 text-amber-900 border border-amber-200">
-                  +<CountUp end={lab.points} duration={3500} suffix=" PTS" />
-                </span>
-              </div>
-
-              {/* Title & Desc */}
-              <div>
-                <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
-                  {lab.title}
-                </h3>
-                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                  {lab.description}
-                </p>
-              </div>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {lab.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[10px] font-mono-tech font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600"
-                  >
-                    {tag}
+          return (
+            <Card
+              key={lab.id}
+              variant="default"
+              className={`p-6 rounded-2xl flex flex-col justify-between border transition-all duration-300 relative group ${
+                isCurrentActive
+                  ? "border-cyan-500 bg-slate-900/90 shadow-xl shadow-cyan-950/50"
+                  : isCompleted
+                  ? "border-emerald-500/40 bg-slate-900/60"
+                  : "border-slate-800 bg-slate-900/40 hover:border-slate-700 hover:bg-slate-900/70"
+              }`}
+            >
+              <div className="space-y-3.5">
+                {/* Card Meta Row */}
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                    MITRE: {lab.mitre}
                   </span>
-                ))}
-              </div>
-            </div>
 
-            {/* Bottom Row */}
-            <div className="mt-6 pt-3.5 border-t border-slate-100 flex items-center justify-between gap-2.5">
-              <div className="flex items-center gap-1.5 sm:gap-2 text-xs font-mono-tech text-slate-500 whitespace-nowrap shrink-0">
-                <Clock className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                <span className="whitespace-nowrap">{lab.duration}</span>
-                <span>&bull;</span>
-                <span className="font-semibold text-slate-700 whitespace-nowrap">{lab.difficulty}</span>
+                  {isCompleted ? (
+                    <span className="flex items-center space-x-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Đã giải</span>
+                    </span>
+                  ) : (
+                    <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                      +<CountUp end={lab.points} duration={3500} suffix=" XP" />
+                    </span>
+                  )}
+                </div>
+
+                {/* Title & Desc */}
+                <div>
+                  <h3 className="text-base font-bold text-white group-hover:text-cyan-400 transition-colors leading-snug">
+                    {lab.title}
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-2 leading-relaxed line-clamp-3">
+                    {lab.description}
+                  </p>
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {lab.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700/50"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Flag Submission Card embedded if expanded or active */}
+                <div className="pt-2">
+                  <FlagSubmissionCard lab={lab} />
+                </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => handleLaunchLab(lab)}
-                className="cyber-btn-primary btn-cyber-interactive px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-md shrink-0 whitespace-nowrap"
-              >
-                <Play className="h-3.5 w-3.5 fill-white shrink-0" />
-                <span>Launch Lab</span>
-              </button>
-            </div>
-          </Card>
-        ))}
+              {/* Bottom Row */}
+              <div className="mt-6 pt-3.5 border-t border-slate-800 flex items-center justify-between gap-2.5">
+                <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+                  <Clock className="h-3.5 w-3.5 text-slate-500" />
+                  <span>{lab.duration}</span>
+                  <span>&bull;</span>
+                  <span className="font-semibold text-slate-300">{lab.difficulty}</span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => handleLaunchLab(lab)}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-md transition-all ${
+                    isCurrentActive
+                      ? "bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold animate-pulse"
+                      : "bg-slate-800 hover:bg-slate-700 text-white border border-slate-700"
+                  }`}
+                >
+                  <Terminal className="h-3.5 w-3.5 text-cyan-400" />
+                  <span>{isCurrentActive ? "Open CLI" : "Launch Lab"}</span>
+                </button>
+              </div>
+            </Card>
+          )
+        })}
       </div>
 
       {/* ====================================================================
-          4. INTERACTIVE SANDBOX MODAL
+          4. INTERACTIVE SANDBOX TERMINAL MODAL
          ==================================================================== */}
-      {activeModalLab && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in"
-        >
-          <div className="w-full max-w-xl bg-white rounded-3xl border border-slate-200 shadow-2xl p-6 sm:p-8 space-y-6 relative animate-fade-in-up">
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={handleCloseModal}
-              className="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
-            >
-              <X className="h-5 w-5" />
-            </button>
-
-            {/* Modal Header */}
-            <div className="space-y-1 pr-8">
-              <div className="flex items-center gap-2 text-xs font-mono-tech">
-                <span className="font-bold text-blue-600">[{activeModalLab.mitre}]</span>
-                <span className="text-slate-400">&bull;</span>
-                <span className="text-slate-600 font-semibold">{activeModalLab.difficulty}</span>
-              </div>
-              <h2 className="text-xl font-black text-slate-900 leading-tight">
-                {activeModalLab.title}
-              </h2>
-            </div>
-
-            {/* Container Booting / Online Status */}
-            {containerBooting ? (
-              <div className="p-6 rounded-2xl bg-slate-900 text-slate-200 font-mono-tech text-xs space-y-3 text-center">
-                <RotateCw className="h-6 w-6 animate-spin mx-auto text-blue-400" />
-                <div className="text-blue-400 font-bold">SPINNING UP EPHEMERAL K8S CONTAINER...</div>
-                <div className="text-slate-400 text-[11px]">
-                  Allocating isolated network namespace & virtual disk...
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-4 font-mono-tech">
-                {/* Target Container Info Box */}
-                <div className="p-4 rounded-2xl bg-slate-900 text-slate-200 text-xs space-y-2.5">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                    <span className="text-emerald-400 font-bold flex items-center gap-1.5">
-                      <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                      CONTAINER ACTIVE // ONLINE
-                    </span>
-                    <span className="text-slate-400 text-[11px]">TTL: 59:42 REMAINING</span>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 text-[11px]">
-                    <div>
-                      <span className="text-slate-500 block">TARGET IP:</span>
-                      <span className="text-cyan-300 font-bold text-xs">{activeModalLab.targetIp}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500 block">TARGET PORT:</span>
-                      <span className="text-cyan-300 font-bold text-xs">{activeModalLab.targetPort}</span>
-                    </div>
-                  </div>
-
-                  {/* Copy command */}
-                  <div className="pt-1 flex items-center justify-between bg-black/50 p-2 rounded-lg border border-slate-800 text-[11px]">
-                    <span className="text-slate-300">curl http://{activeModalLab.targetIp}:{activeModalLab.targetPort}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleCopyIp(`curl http://${activeModalLab.targetIp}:${activeModalLab.targetPort}`)}
-                      className="p-1 rounded text-slate-400 hover:text-white cursor-pointer"
-                    >
-                      {copiedIp ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Flag Submission Form */}
-                <form onSubmit={handleVerifyFlag} className="space-y-2.5">
-                  <label className="text-xs font-bold text-slate-700 block">
-                    SUBMIT CHALLENGE FLAG:
-                  </label>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      value={submittedFlag}
-                      onChange={(e) => setSubmittedFlag(e.target.value)}
-                      placeholder="FLAG{...}"
-                      className="flex-1 px-3.5 py-2 text-xs font-mono-tech bg-white border border-slate-300 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none text-slate-900"
-                    />
-                    <button
-                      type="submit"
-                      className="cyber-btn-primary btn-cyber-interactive px-5 py-2 rounded-xl text-xs font-bold cursor-pointer"
-                    >
-                      Verify Flag
-                    </button>
-                  </div>
-
-                  {flagStatus === "success" && (
-                    <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                      <span>FLAG ACCEPTED! +{activeModalLab.points} PTS CREDITED TO YOUR PROFILE.</span>
-                    </div>
-                  )}
-
-                  {flagStatus === "fail" && (
-                    <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-center gap-2">
-                      <X className="h-4 w-4 text-rose-600 shrink-0" />
-                      <span>INCORRECT FLAG. Check your payload or inspect the response headers.</span>
-                    </div>
-                  )}
-                </form>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      <LabTerminalModal />
     </div>
   )
 }

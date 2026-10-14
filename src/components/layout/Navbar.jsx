@@ -22,6 +22,7 @@ import {
   DropdownDivider,
   Breadcrumb,
 } from "../common"
+import ThemeToggle from "./ThemeToggle"
 
 /**
  * Topbar for authenticated application.
@@ -207,6 +208,9 @@ export function Navbar() {
             <span className="cyber-pulse-dot text-emerald-500" />
             <span className="font-semibold">DEFENSE: ACTIVE</span>
           </div>
+          {/* Theme Mode Toggle Button */}
+          <ThemeToggle />
+
           {/* Notifications Dropdown */}
           <Dropdown
             align="right"
