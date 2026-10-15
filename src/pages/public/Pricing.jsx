@@ -6,7 +6,7 @@ import {
   Building2,
   ChevronRight,
   ChevronDown,
-  Sparkles,
+  Zap,
 } from "lucide-react"
 import useAuth from "../../hooks/useAuth"
 
@@ -151,7 +151,7 @@ export function Pricing() {
            ==================================================================== */}
         <div className="text-center max-w-3xl mx-auto space-y-5">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-mono-tech shadow-2xs">
-            <Sparkles className="h-3.5 w-3.5 text-blue-600" />
+            <Zap className="h-3.5 w-3.5 text-blue-600 fill-blue-600/30" />
             <span className="font-semibold uppercase tracking-wider text-[11px]">
               Predictable Pricing • Zero Hidden Infrastructure Costs
             </span>

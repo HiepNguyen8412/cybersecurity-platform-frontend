@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { Sparkles, ChevronRight } from "lucide-react"
+import { Target, ChevronRight } from "lucide-react"
 import RecommendedCard from "./RecommendedCard"
 
 /**
@@ -28,7 +28,7 @@ export function RecommendedSection({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
         <div className="flex items-center gap-2">
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-100">
-            <Sparkles className="h-4 w-4" aria-hidden="true" />
+            <Target className="h-4 w-4" aria-hidden="true" />
           </div>
           <div>
             <h2

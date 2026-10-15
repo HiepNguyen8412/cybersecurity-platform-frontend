@@ -19,7 +19,7 @@ import {
   Award,
   ArrowRight,
   Clock,
-  Sparkles,
+  Target,
   Flame,
   CheckCircle2,
 } from "lucide-react"
@@ -183,7 +183,7 @@ export function PageShell({
           <Card variant="subtle">
             <CardHeader className="mb-2">
               <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-blue-600" />
+                <Target className="h-4 w-4 text-blue-600" />
                 <CardTitle className="text-sm font-semibold text-slate-800">
                   Learning Milestone
                 </CardTitle>

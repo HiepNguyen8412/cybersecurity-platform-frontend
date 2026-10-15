@@ -4,7 +4,7 @@ import {
   CheckCircle2,
   FlaskConical,
   Award,
-  Sparkles,
+  Zap,
   Compass,
   ArrowRight,
 } from "lucide-react"
@@ -15,7 +15,7 @@ const activityIconMap = {
   CheckCircle2,
   FlaskConical,
   Award,
-  Sparkles,
+  Zap,
   Compass,
 }
 

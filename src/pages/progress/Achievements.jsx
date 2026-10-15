@@ -6,7 +6,6 @@ import {
   Lock,
   Download,
   ExternalLink,
-  Sparkles,
   FileCheck,
   Check,
   Copy,
@@ -278,7 +277,7 @@ export function Achievements() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-amber-500" />
+              <Award className="h-5 w-5 text-amber-500" />
               Tactical Mastery Badges
             </h2>
             <p className="text-xs text-slate-500">

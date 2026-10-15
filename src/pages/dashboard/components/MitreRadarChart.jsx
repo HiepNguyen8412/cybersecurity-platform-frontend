@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts"
-import { Shield, Sparkles } from "lucide-react"
+import { Shield, Target } from "lucide-react"
 
 const DEFAULT_MITRE_DATA = [
   { domain: "Reconnaissance", score: 85, fullMark: 100 },
@@ -52,7 +52,7 @@ export function MitreRadarChart({ data = DEFAULT_MITRE_DATA }) {
         </div>
 
         <span className="flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-          <Sparkles className="w-3 h-3" />
+          <Target className="w-3 h-3" />
           <span>Tier: Advanced</span>
         </span>
       </div>

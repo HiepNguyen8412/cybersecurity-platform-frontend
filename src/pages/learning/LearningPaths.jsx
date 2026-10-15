@@ -8,7 +8,7 @@ import {
   Key,
   ChevronRight,
   ArrowRight,
-  Sparkles,
+  Target,
   Terminal,
 } from "lucide-react"
 import { LearningPathTimeline } from "./components/LearningPathTimeline"
@@ -193,7 +193,7 @@ export function LearningPaths() {
       {/* ====================================================================
           1. HEADER & CAREER ROADMAP BRIEFING
          ==================================================================== */}
-      <section className="relative rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl p-6 sm:p-8 overflow-hidden text-white">
+      <section className="relative rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/90 border border-slate-700/60 dark:border-slate-800 shadow-xl p-6 sm:p-8 overflow-hidden text-white">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500" />
         <div className="absolute -right-8 -bottom-8 opacity-5 pointer-events-none select-none text-cyan-400">
           <Shield className="w-96 h-96" />
@@ -216,7 +216,7 @@ export function LearningPaths() {
           </div>
 
           {/* Career Stats Pill */}
-          <div className="flex items-center gap-4 font-mono text-xs text-slate-300 p-4 rounded-2xl bg-slate-950 border border-slate-800 self-start md:self-auto shadow-xl shrink-0">
+          <div className="flex items-center gap-4 font-mono text-xs text-slate-300 p-4 rounded-2xl bg-slate-950/80 border border-slate-700/50 dark:border-slate-800 self-start md:self-auto shadow-xl shrink-0 backdrop-blur-sm">
             <div>
               <span className="text-cyan-400 font-extrabold text-base block">4 TRACKS</span>
               <span className="text-[10px] text-slate-400">PRACTITIONER PIPELINE</span>
@@ -245,8 +245,8 @@ export function LearningPaths() {
               onClick={() => setSelectedTrackId(track.id)}
               className={`text-left p-5 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
                 isSelected
-                  ? "bg-slate-900 border-cyan-500 shadow-xl shadow-cyan-950/50 ring-2 ring-cyan-500/30 text-white"
-                  : "bg-slate-900/90 hover:bg-slate-800/90 border-slate-800 text-slate-300"
+                  ? "bg-blue-50/90 dark:bg-slate-900 border-blue-500 dark:border-cyan-500 shadow-md ring-2 ring-blue-500/20 dark:ring-cyan-500/30 text-slate-900 dark:text-white"
+                  : "bg-white dark:bg-slate-900/90 hover:bg-slate-50 dark:hover:bg-slate-800/90 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 shadow-2xs"
               }`}
             >
               <div className="space-y-3">
@@ -254,32 +254,32 @@ export function LearningPaths() {
                   <div
                     className={`flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${
                       isSelected
-                        ? "bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/30"
-                        : "bg-slate-800 text-cyan-400 border border-slate-700"
+                        ? "bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 shadow-md shadow-blue-500/25 dark:shadow-cyan-500/30"
+                        : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-cyan-400 border border-slate-200 dark:border-slate-700"
                     }`}
                   >
                     <Icon className="h-5 w-5 stroke-[2.2]" />
                   </div>
 
-                  <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">
+                  <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800">
                     {track.level.split(" ")[0]}
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-bold text-white leading-snug">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-snug">
                     {track.title}
                   </h3>
-                  <p className="text-[11px] text-slate-400 font-mono mt-0.5">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">
                     {track.role}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-400">
+              <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400">
                 <span>{track.duration}</span>
                 {isSelected && (
-                  <span className="text-cyan-400 font-bold flex items-center gap-0.5">
+                  <span className="text-blue-600 dark:text-cyan-400 font-bold flex items-center gap-0.5">
                     <span>Active</span>
                     <ChevronRight className="h-3 w-3" />
                   </span>
@@ -291,40 +291,40 @@ export function LearningPaths() {
       </div>
 
       {/* ====================================================================
-          3. ACTIVE TRACK DEEP-DIVE & PROGRESSION STAGES
+          3. ACTIVE TRACK DEEP-DIVE & PROGRESSION STAGES (Adaptive Light/Dark)
          ==================================================================== */}
-      <div className="p-6 sm:p-8 rounded-3xl border border-slate-800 bg-slate-900 shadow-2xl space-y-8 text-white">
+      <div className="p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl space-y-8 text-slate-900 dark:text-white">
         {/* Active Track Top Banner */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-800">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
           <div className="space-y-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="px-2.5 py-0.5 rounded font-mono text-xs font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+              <span className="px-2.5 py-0.5 rounded font-mono text-xs font-bold bg-blue-50 dark:bg-cyan-500/10 text-blue-700 dark:text-cyan-400 border border-blue-200 dark:border-cyan-500/30">
                 ACTIVE ROADMAP PIPELINE
               </span>
-              <span className="text-xs font-mono text-slate-400">
+              <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
                 {activeTrack.duration} &bull; {activeTrack.labsCount} Sandbox Labs
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
               {activeTrack.title}
             </h2>
 
-            <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
               {activeTrack.summary}
             </p>
           </div>
 
           {/* Industry Certifications Mapped */}
-          <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 shrink-0 font-mono">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2 shrink-0 font-mono shadow-xs">
+            <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
               CHỨNG CHỈ QUỐC TẾ MỤC TIÊU
             </span>
             <div className="flex flex-wrap gap-1.5">
               {activeTrack.certifications.map((cert) => (
                 <span
                   key={cert}
-                  className="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-cyan-400 shadow-sm"
+                  className="text-xs font-bold px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-blue-700 dark:text-cyan-400 shadow-xs"
                 >
                   {cert}
                 </span>
@@ -339,11 +339,11 @@ export function LearningPaths() {
         {/* 4 Progressive Milestones */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-white font-mono uppercase tracking-wider flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white font-mono uppercase tracking-wider flex items-center gap-2">
+              <Target className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
               <span>CÁC CHẶNG THỬ THÁCH & CHUYÊN ĐỀ ({activeTrack.stages.length} CHẶNG)</span>
             </h3>
-            <span className="text-xs font-mono text-slate-400">
+            <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
               Kiến thức lũy tiến thực chiến
             </span>
           </div>
@@ -352,28 +352,28 @@ export function LearningPaths() {
             {activeTrack.stages.map((stage) => (
               <div
                 key={stage.number}
-                className="p-5 rounded-2xl border border-slate-800 bg-slate-950/70 hover:border-cyan-500/40 transition-all flex flex-col justify-between group space-y-4"
+                className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/70 hover:border-blue-400 dark:hover:border-cyan-500/40 transition-all flex flex-col justify-between group space-y-4"
               >
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between">
-                    <span className="text-xl font-black font-mono text-cyan-400">
+                    <span className="text-xl font-black font-mono text-blue-600 dark:text-cyan-400">
                       STAGE {stage.number}
                     </span>
 
                     <span
                       className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
                         stage.status === "completed"
-                          ? "bg-emerald-950/60 text-emerald-300 border border-emerald-800/40"
+                          ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40"
                           : stage.status === "in-progress"
-                          ? "bg-cyan-950/60 text-cyan-300 border border-cyan-800/40"
-                          : "bg-slate-900 text-slate-500"
+                          ? "bg-blue-50 dark:bg-cyan-950/60 text-blue-700 dark:text-cyan-300 border border-blue-200 dark:border-cyan-800/40"
+                          : "bg-slate-100 dark:bg-slate-900 text-slate-500"
                       }`}
                     >
                       {stage.status.toUpperCase()}
                     </span>
                   </div>
 
-                  <h4 className="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors">
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
                     {stage.title}
                   </h4>
 
@@ -381,7 +381,7 @@ export function LearningPaths() {
                     {stage.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800"
+                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800"
                       >
                         {skill}
                       </span>
@@ -389,11 +389,11 @@ export function LearningPaths() {
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-400">
+                <div className="pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
                   <span>{stage.labs} Phòng Lab Thực Hành</span>
                   <Link
                     to="/learning"
-                    className="text-cyan-400 font-bold hover:text-cyan-300 inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
+                    className="text-blue-600 dark:text-cyan-400 font-bold hover:underline inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
                   >
                     <span>Vào Học Chặng Này</span>
                     <ArrowRight className="h-3 w-3" />
@@ -405,12 +405,12 @@ export function LearningPaths() {
         </div>
 
         {/* Bottom Track CTA Bar */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-cyan-600 via-blue-700 to-indigo-800 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-700 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
           <div className="space-y-1">
             <h4 className="text-base font-bold">
               Sẵn sàng gia nhập lộ trình {activeTrack.title}?
             </h4>
-            <p className="text-xs text-cyan-100">
+            <p className="text-xs text-blue-100">
               Ghi danh vào pipeline để mở khóa toàn bộ bài giảng thực chiến, code audit và phòng lab tương tác.
             </p>
           </div>

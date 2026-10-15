@@ -15,7 +15,7 @@ import {
   Server,
   Radio,
   Terminal,
-  Sparkles,
+  Zap,
 } from "lucide-react"
 import useAuth from "../../hooks/useAuth"
 import { CountUp } from "../../components/common"
@@ -1297,7 +1297,7 @@ export function LandingPage() {
 
               <div className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-start gap-3">
                 <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
-                  <Sparkles className="h-4 w-4" />
+                  <Zap className="h-4 w-4" />
                 </div>
                 <div>
                   <div className="text-xs font-bold text-slate-100">Free to Join</div>

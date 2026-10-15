@@ -311,7 +311,7 @@ export const mockRecentActivity = [
     title: 'Earned "Packet Inspector" badge',
     description: "Awarded for analyzing live PCAP packet traces and identifying anomalous traffic.",
     timestamp: "3 days ago",
-    iconName: "Sparkles",
+    iconName: "Zap",
     badgeVariant: "indigo",
     badgeText: "Achievement",
   },

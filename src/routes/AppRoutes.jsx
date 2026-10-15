@@ -40,7 +40,9 @@ function AppRoutes() {
           <Route element={<PublicLayout />}>
             <Route path="/" element={<LandingPage />} />
             <Route path="/learning" element={<Learning />} />
+            <Route path="/courses" element={<Navigate to="/learning" replace />} />
             <Route path="/learning-paths" element={<LearningPaths />} />
+            <Route path="/paths" element={<Navigate to="/learning-paths" replace />} />
             <Route path="/labs" element={<Labs />} />
             <Route path="/pricing" element={<Pricing />} />
           </Route>

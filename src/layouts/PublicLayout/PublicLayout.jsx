@@ -12,7 +12,7 @@ export function PublicLayout({ children }) {
   const [isHelpOpen, setIsHelpOpen] = useState(false)
 
   return (
-    <div className="min-h-screen cyber-grid-canvas text-slate-900 flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen cyber-grid-canvas text-slate-900 dark:text-slate-100 flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-cyan-900 dark:selection:text-cyan-100">
       {/* 1. Sticky Public Header */}
       <PublicHeader />
 
@@ -30,7 +30,7 @@ export function PublicLayout({ children }) {
         onClick={() => setIsHelpOpen(true)}
         title="Need help? Click for Quick Guide & FAQs"
         aria-label="Need help? Click for Quick Guide & FAQs"
-        className="fixed bottom-5 right-5 z-40 h-10 w-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-lg hover:bg-slate-800 transition-all hover:scale-105 active:scale-95 cursor-pointer border border-slate-700/80 group"
+        className="fixed bottom-5 right-5 z-40 h-10 w-10 rounded-full bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center font-bold text-sm shadow-lg hover:bg-slate-800 dark:hover:bg-slate-700 transition-all hover:scale-105 active:scale-95 cursor-pointer border border-slate-700/80 dark:border-slate-600 group"
       >
         <span className="group-hover:rotate-12 transition-transform">?</span>
       </button>

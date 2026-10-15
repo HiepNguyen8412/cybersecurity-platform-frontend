@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Flag, Send, CheckCircle2, Sparkles } from "lucide-react"
+import { Flag, Send, CheckCircle2, Zap } from "lucide-react"
 import useLabStore from "../../../stores/useLabStore"
 import useNotificationStore from "../../../stores/useNotificationStore"
 
@@ -42,7 +42,7 @@ export function FlagSubmissionCard({ lab }) {
           </span>
         ) : (
           <span className="flex items-center space-x-1 px-2 py-0.5 rounded-md text-xs font-medium text-amber-400 bg-amber-500/10 border border-amber-500/20">
-            <Sparkles className="w-3 h-3" />
+            <Zap className="w-3 h-3 fill-amber-400 text-amber-400" />
             <span>+{lab.points || 400} XP</span>
           </span>
         )}
