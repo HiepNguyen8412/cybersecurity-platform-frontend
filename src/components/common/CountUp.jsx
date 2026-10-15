@@ -66,25 +66,11 @@ export function CountUp({
     const currentElem = elementRef.current
     if (!currentElem) return
 
-    // Intersection Observer to trigger on scroll-in
     let isObserved = true
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            startAnimation()
-            if (currentElem) observer.unobserve(currentElem)
-          }
-        })
-      },
-      { threshold: 0.15 }
-    )
-
-    observer.observe(currentElem)
+    let animationFrameId = null
 
     const startAnimation = () => {
       let startTime = null
-      let animationFrameId = null
 
       const animate = (timestamp) => {
         if (!startTime) startTime = timestamp
@@ -103,14 +89,40 @@ export function CountUp({
       }
 
       animationFrameId = requestAnimationFrame(animate)
-
-      return () => {
-        if (animationFrameId) cancelAnimationFrame(animationFrameId)
-      }
     }
+
+    // Check if element is already in viewport
+    const rect = currentElem.getBoundingClientRect()
+    if (rect.top < window.innerHeight && rect.bottom > 0 && !hasAnimated) {
+      startAnimation()
+    }
+
+    // Intersection Observer to trigger on scroll-in
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            startAnimation()
+            if (currentElem) observer.unobserve(currentElem)
+          }
+        })
+      },
+      { threshold: 0.05 }
+    )
+
+    observer.observe(currentElem)
+
+    // Fallback timer to guarantee numbers display within 400ms
+    const fallbackTimer = setTimeout(() => {
+      if (!hasAnimated && isObserved) {
+        startAnimation()
+      }
+    }, 400)
 
     return () => {
       isObserved = false
+      clearTimeout(fallbackTimer)
+      if (animationFrameId) cancelAnimationFrame(animationFrameId)
       if (currentElem) observer.unobserve(currentElem)
     }
   }, [parsedEnd, parsedStart, duration, hasAnimated, prefersReducedMotion])

@@ -8,8 +8,9 @@ import {
   Key,
   ChevronRight,
   ArrowRight,
+  Sparkles,
+  Terminal,
 } from "lucide-react"
-import { Badge } from "../../components/common"
 import { LearningPathTimeline } from "./components/LearningPathTimeline"
 
 const TRACKS_DATA = [
@@ -192,35 +193,42 @@ export function LearningPaths() {
       {/* ====================================================================
           1. HEADER & CAREER ROADMAP BRIEFING
          ==================================================================== */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200/80">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono-tech font-bold">
-            <Compass className="h-3.5 w-3.5 text-blue-600" />
-            <span>STRUCTURED CAREER ROADMAPS</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 leading-tight">
-            Cybersecurity Learning Pathways
-          </h1>
-
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed">
-            Curated progressive tracks engineered to guide you from foundational principles to industry-recognized security roles.
-          </p>
+      <section className="relative rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl p-6 sm:p-8 overflow-hidden text-white">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500" />
+        <div className="absolute -right-8 -bottom-8 opacity-5 pointer-events-none select-none text-cyan-400">
+          <Shield className="w-96 h-96" />
         </div>
 
-        {/* Career Stats Pill */}
-        <div className="flex items-center gap-4 font-mono-tech text-xs text-slate-600 p-3.5 rounded-2xl cyber-card bg-white/95 self-start md:self-auto">
-          <div>
-            <span className="text-blue-600 font-extrabold text-base block">4 TRACKS</span>
-            <span className="text-[10px] text-slate-400">PRACTITIONER CURRICULUM</span>
+        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-bold">
+              <Compass className="h-3.5 w-3.5 text-cyan-400" />
+              <span>LỘ TRÌNH CHUYÊN GIA AN NINH MẠNG</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white leading-tight">
+              Cybersecurity Career Roadmaps & Pipelines
+            </h1>
+
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
+              Các lộ trình chuẩn hóa từ nhập môn đến kỹ sư tác chiến chuyên sâu, tích hợp hoàn hảo với hệ thống Cyber Range Sandbox và chứng chỉ quốc tế.
+            </p>
           </div>
-          <div className="h-7 w-px bg-slate-200" />
-          <div>
-            <span className="text-emerald-600 font-extrabold text-base block">100%</span>
-            <span className="text-[10px] text-slate-400">HANDS-ON LAB COVERAGE</span>
+
+          {/* Career Stats Pill */}
+          <div className="flex items-center gap-4 font-mono text-xs text-slate-300 p-4 rounded-2xl bg-slate-950 border border-slate-800 self-start md:self-auto shadow-xl shrink-0">
+            <div>
+              <span className="text-cyan-400 font-extrabold text-base block">4 TRACKS</span>
+              <span className="text-[10px] text-slate-400">PRACTITIONER PIPELINE</span>
+            </div>
+            <div className="h-7 w-px bg-slate-800" />
+            <div>
+              <span className="text-emerald-400 font-extrabold text-base block">100%</span>
+              <span className="text-[10px] text-slate-400">HANDS-ON COVERAGE</span>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ====================================================================
           2. CAREER TRACK SELECTOR CARDS (Top Horizontal Grid)
@@ -237,8 +245,8 @@ export function LearningPaths() {
               onClick={() => setSelectedTrackId(track.id)}
               className={`text-left p-5 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
                 isSelected
-                  ? "bg-gradient-to-br from-blue-50/90 via-white to-blue-50/40 border-blue-400 shadow-md shadow-blue-500/10 ring-2 ring-blue-500/20"
-                  : "cyber-card hover:border-slate-300"
+                  ? "bg-slate-900 border-cyan-500 shadow-xl shadow-cyan-950/50 ring-2 ring-cyan-500/30 text-white"
+                  : "bg-slate-900/90 hover:bg-slate-800/90 border-slate-800 text-slate-300"
               }`}
             >
               <div className="space-y-3">
@@ -246,32 +254,32 @@ export function LearningPaths() {
                   <div
                     className={`flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${
                       isSelected
-                        ? "bg-blue-600 text-white shadow-sm shadow-blue-500/30"
-                        : "bg-blue-50 text-blue-600 border border-blue-100"
+                        ? "bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/30"
+                        : "bg-slate-800 text-cyan-400 border border-slate-700"
                     }`}
                   >
                     <Icon className="h-5 w-5 stroke-[2.2]" />
                   </div>
 
-                  <span className="text-[10px] font-mono-tech font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                  <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">
                     {track.level.split(" ")[0]}
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900 leading-snug">
+                  <h3 className="text-sm font-bold text-white leading-snug">
                     {track.title}
                   </h3>
-                  <p className="text-[11px] text-slate-500 font-mono-tech mt-0.5">
+                  <p className="text-[11px] text-slate-400 font-mono mt-0.5">
                     {track.role}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-slate-100/80 flex items-center justify-between text-[11px] font-mono-tech text-slate-400">
+              <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-400">
                 <span>{track.duration}</span>
                 {isSelected && (
-                  <span className="text-blue-600 font-bold flex items-center gap-0.5">
+                  <span className="text-cyan-400 font-bold flex items-center gap-0.5">
                     <span>Active</span>
                     <ChevronRight className="h-3 w-3" />
                   </span>
@@ -285,38 +293,38 @@ export function LearningPaths() {
       {/* ====================================================================
           3. ACTIVE TRACK DEEP-DIVE & PROGRESSION STAGES
          ==================================================================== */}
-      <div className="cyber-card p-6 sm:p-8 rounded-3xl border border-blue-200 bg-white/95 shadow-xl space-y-8">
+      <div className="p-6 sm:p-8 rounded-3xl border border-slate-800 bg-slate-900 shadow-2xl space-y-8 text-white">
         {/* Active Track Top Banner */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-100">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-800">
           <div className="space-y-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <Badge variant="cyber" size="sm">
-                SELECTED ROADMAP
-              </Badge>
-              <span className="text-xs font-mono-tech text-slate-500">
+              <span className="px-2.5 py-0.5 rounded font-mono text-xs font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                ACTIVE ROADMAP PIPELINE
+              </span>
+              <span className="text-xs font-mono text-slate-400">
                 {activeTrack.duration} &bull; {activeTrack.labsCount} Sandbox Labs
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
               {activeTrack.title}
             </h2>
 
-            <p className="text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
               {activeTrack.summary}
             </p>
           </div>
 
           {/* Industry Certifications Mapped */}
-          <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-2 shrink-0 font-mono-tech">
+          <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 shrink-0 font-mono">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-              ALIGNED CERTIFICATIONS
+              CHỨNG CHỈ QUỐC TẾ MỤC TIÊU
             </span>
             <div className="flex flex-wrap gap-1.5">
               {activeTrack.certifications.map((cert) => (
                 <span
                   key={cert}
-                  className="text-xs font-bold px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-blue-700 shadow-2xs"
+                  className="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-cyan-400 shadow-sm"
                 >
                   {cert}
                 </span>
@@ -331,11 +339,12 @@ export function LearningPaths() {
         {/* 4 Progressive Milestones */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-slate-900 font-mono-tech uppercase tracking-wider">
-              CURRICULUM MILESTONES & STAGES
+            <h3 className="text-sm font-bold text-white font-mono uppercase tracking-wider flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <span>CÁC CHẶNG THỬ THÁCH & CHUYÊN ĐỀ ({activeTrack.stages.length} CHẶNG)</span>
             </h3>
-            <span className="text-xs font-mono-tech text-slate-400">
-              Structured progressive advancement
+            <span className="text-xs font-mono text-slate-400">
+              Kiến thức lũy tiến thực chiến
             </span>
           </div>
 
@@ -343,28 +352,28 @@ export function LearningPaths() {
             {activeTrack.stages.map((stage) => (
               <div
                 key={stage.number}
-                className="p-5 rounded-2xl border border-slate-200/90 bg-white/80 hover:border-blue-300 transition-all flex flex-col justify-between group space-y-4"
+                className="p-5 rounded-2xl border border-slate-800 bg-slate-950/70 hover:border-cyan-500/40 transition-all flex flex-col justify-between group space-y-4"
               >
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between">
-                    <span className="text-xl font-black font-mono-tech text-blue-600">
+                    <span className="text-xl font-black font-mono text-cyan-400">
                       STAGE {stage.number}
                     </span>
 
                     <span
-                      className={`text-[10px] font-mono-tech font-bold px-2 py-0.5 rounded ${
+                      className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
                         stage.status === "completed"
-                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          ? "bg-emerald-950/60 text-emerald-300 border border-emerald-800/40"
                           : stage.status === "in-progress"
-                          ? "bg-blue-50 text-blue-700 border border-blue-200"
-                          : "bg-slate-100 text-slate-500"
+                          ? "bg-cyan-950/60 text-cyan-300 border border-cyan-800/40"
+                          : "bg-slate-900 text-slate-500"
                       }`}
                     >
                       {stage.status.toUpperCase()}
                     </span>
                   </div>
 
-                  <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                  <h4 className="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors">
                     {stage.title}
                   </h4>
 
@@ -372,7 +381,7 @@ export function LearningPaths() {
                     {stage.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-50 text-slate-600 border border-slate-200/60"
+                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800"
                       >
                         {skill}
                       </span>
@@ -380,13 +389,13 @@ export function LearningPaths() {
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono-tech text-slate-500">
-                  <span>{stage.labs} Hands-on Sandbox Labs</span>
+                <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-400">
+                  <span>{stage.labs} Phòng Lab Thực Hành</span>
                   <Link
-                    to="/labs"
-                    className="text-blue-600 font-bold hover:text-blue-700 inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
+                    to="/learning"
+                    className="text-cyan-400 font-bold hover:text-cyan-300 inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
                   >
-                    <span>Practice Stage</span>
+                    <span>Vào Học Chặng Này</span>
                     <ArrowRight className="h-3 w-3" />
                   </Link>
                 </div>
@@ -396,21 +405,22 @@ export function LearningPaths() {
         </div>
 
         {/* Bottom Track CTA Bar */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-cyan-600 via-blue-700 to-indigo-800 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
           <div className="space-y-1">
             <h4 className="text-base font-bold">
-              Ready to pursue the {activeTrack.title}?
+              Sẵn sàng gia nhập lộ trình {activeTrack.title}?
             </h4>
-            <p className="text-xs text-blue-100">
-              Enroll into the guided roadmap to unlock automated checkpoint validation and milestone badges.
+            <p className="text-xs text-cyan-100">
+              Ghi danh vào pipeline để mở khóa toàn bộ bài giảng thực chiến, code audit và phòng lab tương tác.
             </p>
           </div>
 
           <Link
-            to="/dashboard"
-            className="btn-cyber-interactive px-5 py-2.5 rounded-xl bg-white text-blue-700 font-bold text-xs shrink-0 cursor-pointer shadow-md hover:bg-blue-50"
+            to="/learning"
+            className="px-5 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-900 text-cyan-300 font-bold text-xs shrink-0 cursor-pointer shadow-md border border-cyan-400/30 transition-all flex items-center gap-1.5"
           >
-            Start Track Now
+            <Terminal className="w-4 h-4" />
+            <span>Mở Giáo Trình Tác Chiến</span>
           </Link>
         </div>
       </div>

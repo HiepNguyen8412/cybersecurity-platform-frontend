@@ -8,34 +8,31 @@
 - **Senior QA / Tester:** Gemini 3.8 Flash High (`qa_engineer`)
 **Workspace:** `C:\Users\Admin\OneDrive\Desktop\cybersecurity-platform-frontend`  
 **Nhánh Git:** `develop`  
-**Cập nhật lần cuối:** 2026-10-15 00:07:00  
-**Trạng thái Dự án:** 🟢 **HOÀN TẤT 100% — QA SIGN-OFF & PM ACCEPTED — READY FOR DEMO**
+**Cập nhật lần cuối:** 2026-10-15 13:42:00  
+**Trạng thái Dự án:** 🟢 **HOÀN TẤT SPRINT 2: XÓA BỎ GIAO DIỆN ĐẠI TRÀ & FIX BUG BÀI HỌC — QA SIGN-OFF & PM ACCEPTED**
 
 ---
 
-## 🎯 1. TỔNG HỢP KẾT QUẢ TRIỂN KHAI THEO NHIỆM VỤ ĐƯỢC GIAO
+## 🎯 1. TỔNG HỢP KẾT QUẢ TRIỂN KHAI SPRINT 2 (NÂNG CẤP PHẦN BÀI HỌC)
 
 | Mã Task | Hạng mục công việc | Người thực hiện | Kết quả bàn giao | Đánh giá |
 |---|---|---|---|:---:|
-| **FE-01** | Zustand stores (`useNotificationStore`, `useLabStore`, `useThemeStore`) & `ToastContainer` | Claude Opus | `src/stores/`, `ToastContainer.jsx`, `App.jsx` | ✅ ĐẠT |
-| **FE-02** | Virtual Lab Terminal Modal & Flag Submission Card trong `Labs.jsx` | Claude Opus | `LabTerminalModal.jsx`, `FlagSubmissionCard.jsx`, `LabFilterBar.jsx`, `Labs.jsx` | ✅ ĐẠT |
-| **FE-03** | Trực quan hóa dữ liệu: MITRE Radar Chart & Weekly Activity Chart | Claude Opus | `MitreRadarChart.jsx`, `ActivityHeatmapChart.jsx`, `Dashboard.jsx` | ✅ ĐẠT |
-| **FE-04** | Bộ lọc nâng cao, Course Syllabus Drawer & Learning Timeline | Claude Opus | `CourseSyllabusDrawer.jsx`, `LearningPathTimeline.jsx`, `Learning.jsx`, `LearningPaths.jsx` | ✅ ĐẠT |
-| **FE-05** | Error Boundary, Theme Toggle trên Navbar, tích hợp toàn diện | Claude Opus | `ErrorBoundary.jsx`, `ThemeToggle.jsx`, `Navbar.jsx`, `AppRoutes.jsx` | ✅ ĐẠT |
-| **QA-TEST** | Kiểm thử Build, Lint, Chạy Dev Server & Chụp ảnh Screenshots | QA Lead | Build OK (751ms), Lint OK (0 warnings/errors), 5 Screenshots | ✅ ĐẠT |
-| **GIT-CM**  | Kiểm tra diff & Thực hiện Git Commit nhánh `develop` | Dev / QA | Đã commit sạch sẽ lên nhánh `develop` | ✅ ĐẠT |
-| **PM-SIGNOFF** | Đánh giá tổng thể & Ký biên bản nghiệm thu sáng mai | PM Lead | Ký duyệt nghiệm thu xuất sắc (APPROVED) | ✅ ĐẠT |
+| **FE-06** | Zustand store `useLearningStore.js` quản lý khóa học, tiến độ, bài học hoàn thành, tính %, mở bài học | Claude Opus | `src/stores/useLearningStore.js` | ✅ ĐẠT |
+| **FE-07** | Flagship `InteractiveLessonModal.jsx`: Cyber Mission Console với Exploit Walkthrough, Code/Payload Audit, Tactical Quiz & Sandbox Bridge | Claude Opus | `src/pages/learning/components/InteractiveLessonModal.jsx` | ✅ ĐẠT |
+| **FE-08** | Lột xác toàn diện `Learning.jsx` chuẩn Cyber Range: Dark HUD, CVSS Badges, Clickable Syllabus, Daily Threat Drill nhận XP | Claude Opus | `src/pages/learning/Learning.jsx` | ✅ ĐẠT |
+| **FE-09** | Tối ưu `CourseSyllabusDrawer.jsx` (click mở bài học, toggle completion, launch sandbox) & fix `LearningPathTimeline.jsx` | Claude Opus | `CourseSyllabusDrawer.jsx`, `LearningPathTimeline.jsx` | ✅ ĐẠT |
+| **FE-10** | Đồng bộ `LearningPaths.jsx` giao diện Cyber Range tương phản cao & fix `CountUp.jsx` hiển thị mượt mà | Claude Opus | `LearningPaths.jsx`, `CountUp.jsx` | ✅ ĐẠT |
+| **QA-02** | Kiểm thử Lint (`eslint .`), Build (`vite build`), Dev Server HMR & Chụp 3 ảnh màn hình nghiệm thu | QA Lead | Build OK (1.35s), Lint OK (0 warnings/errors), 3 Screenshots | ✅ ĐẠT |
+| **PM-02** | Nghiệm thu chất lượng, đóng gói báo cáo hoàn chỉnh phục vụ gửi nhóm Telegram | PM Lead | Ký duyệt nghiệm thu xuất sắc (APPROVED) | ✅ ĐẠT |
 
 ---
 
-## 📸 2. DANH MỤC ẢNH CHỤP MÀN HÌNH NGHIỆM THU (QA SCREENSHOTS)
-1. `screenshots/01_landing_page.png`: Giao diện Landing Page chuẩn Cyber Range.
-2. `screenshots/02_labs_page.png`: Giao diện Hands-on Security Labs với bộ lọc danh mục, form nộp Flag và nút Launch Sandbox CLI.
-3. `screenshots/03_learning_page.png`: Giao diện Academy Curriculum với nút mở Syllabus Drawer và bộ lọc.
-4. `screenshots/04_learning_paths.png`: Lộ trình phát triển kỹ năng (Timeline roadmap) chuyên nghiệp.
-5. `screenshots/05_dashboard_page.png`: Trung tâm điều hành với ma trận Radar MITRE ATT&CK và Biểu đồ hoạt động tuần Recharts.
+## 📸 2. DANH MỤC ẢNH CHỤP MÀN HÌNH NGHIỆM THU MỚI NHẤT
+1. `screenshots/03_learning_page.png`: Giao diện Giáo trình thực chiến chuẩn Cyber Range với Dark HUD, CVSS 9.8 Badges, tiến độ động % và Daily Threat Drill.
+2. `screenshots/04_learning_paths.png`: Giao diện Lộ trình chuyên gia an ninh mạng với Hero tương phản cao, thẻ Track phát sáng và timeline chặng.
+3. `screenshots/06_interactive_lesson_modal.png`: Flagship Cyber Mission Console bài học chi tiết với cơ chế khai thác, phân tích code/payload, và bài tập đánh giá nhận XP.
 
 ---
 
 ## 🏁 3. KÝ DUYỆT CỦA QUẢN LÝ DỰ ÁN (PM SIGN-OFF)
-Toàn bộ mã nguồn đã sẵn sàng bàn giao cho người dùng để nghiệm thu vào sáng mai!
+Toàn bộ phần bài học đã thoát khỏi giao diện đại trà, chuyển đổi hoàn toàn sang phong cách trung tâm tác chiến không gian mạng chuyên nghiệp. Sẵn sàng bàn giao và báo cáo vào nhóm Telegram của người dùng!
