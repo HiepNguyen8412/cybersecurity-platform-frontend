@@ -178,7 +178,7 @@ function VerifyEmail() {
             <div className="space-y-1.5 text-center">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-[11px] font-semibold text-blue-700 tracking-wide uppercase">
                 <Shield className="h-3 w-3" />
-                <span>Verification Pending</span>
+                <span>Đang Chờ Xác Nhận Email</span>
               </div>
 
               <div className="flex items-center justify-center gap-2">
@@ -204,7 +204,7 @@ function VerifyEmail() {
                       setEditError("")
                     }}
                     className="text-xs text-blue-600 hover:text-blue-800 p-0.5 rounded cursor-pointer"
-                    title="Change email address"
+                    title="Thay đổi địa chỉ email"
                     aria-label="Change email address"
                   >
                     <Edit2 className="h-3.5 w-3.5" />
@@ -295,7 +295,7 @@ function VerifyEmail() {
         )}
 
         {/* ====================================================================
-            STATE: Email Verified
+            TRẠNG THÁI: Email Đã Được Xác Thực
            ==================================================================== */}
         {status === "verified" && (
           <div className="space-y-5 text-center animate-in fade-in duration-200">
@@ -306,12 +306,12 @@ function VerifyEmail() {
             <div className="space-y-1.5">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-100 text-[11px] font-semibold text-emerald-700 tracking-wide uppercase">
                 <ShieldCheck className="h-3 w-3" />
-                <span>Verification Complete</span>
+                <span>Xác Thực Email Thành Công</span>
               </div>
 
               <div className="flex items-center justify-center gap-2">
                 <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
-                  Email Verified!
+                  Đã Xác Thực Email!
                 </h2>
                 <Badge variant="success" size="sm">
                   Verified
@@ -347,7 +347,7 @@ function VerifyEmail() {
 
             <div className="space-y-1.5">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 border border-amber-100 text-[11px] font-semibold text-amber-700 tracking-wide uppercase">
-                <span>Security Notice</span>
+                <span>Lưu Ý An Ninh</span>
               </div>
 
               <div className="flex items-center justify-center gap-2">

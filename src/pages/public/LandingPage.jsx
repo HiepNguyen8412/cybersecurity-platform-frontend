@@ -597,7 +597,7 @@ export function LandingPage() {
 
             <div className="hidden lg:flex items-center gap-1.5 shrink-0 text-slate-400 pl-2 border-l border-slate-800">
               <Radio className="h-3 w-3 text-cyan-400 animate-pulse" />
-              <span>EGRESS: ISOLATED</span>
+              <span>LƯU LƯỢNG RA: ĐÃ CÔ LẬP</span>
             </div>
           </div>
         </div>
@@ -732,7 +732,7 @@ export function LandingPage() {
                         setCycleCount(0)
                       }}
                       className="p-1 sm:p-1.5 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
-                      title="Replay sequence"
+                      title="Phát lại chuỗi thao tác"
                       aria-label="Replay terminal animation"
                     >
                       <RotateCw className="h-3.5 w-3.5" />
@@ -808,7 +808,7 @@ export function LandingPage() {
                 <button
                   type="button"
                   onClick={handleResetPackets}
-                  title="Click to reload live stream"
+                  title="Tải lại luồng trực tiếp"
                   className="font-mono-tech text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded whitespace-nowrap shrink-0 self-start sm:self-auto cursor-pointer transition-colors"
                 >
                   INTERFACE: eth0 [PROMISCUOUS]
@@ -973,11 +973,11 @@ export function LandingPage() {
 
                 <div className="grid grid-cols-2 gap-2 text-xs font-mono-tech">
                   <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 cyberpunk:bg-[#071329] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-200">
-                    <span className="font-bold text-blue-600 dark:text-cyan-400 block">Decompiler Engine</span>
+                    <span className="font-bold text-blue-600 dark:text-cyan-400 block">Bộ Dịch Ngược Mã Nguồn</span>
                     <span className="text-[11px] text-slate-500 dark:text-slate-400">Phân tích assembly x86 & luồng thực thi CFG</span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 cyberpunk:bg-[#071329] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-200">
-                    <span className="font-bold text-blue-600 block">Code Remediation</span>
+                    <span className="font-bold text-blue-600 block">Khắc Phục Mã Nguồn</span>
                     <span className="text-[11px] text-slate-500 dark:text-slate-400">Đề xuất cú pháp phòng thủ chuẩn hóa NIST</span>
                   </div>
                 </div>

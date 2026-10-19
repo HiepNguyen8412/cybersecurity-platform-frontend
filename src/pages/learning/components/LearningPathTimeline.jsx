@@ -47,7 +47,7 @@ export function LearningPathTimeline({ path, onSelectStage }) {
 
         <span className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">
           <Compass className="w-3.5 h-3.5" />
-          <span>Stage 02 Active</span>
+          <span>Giai Đoạn 02 Đang Mở</span>
         </span>
       </div>
 

@@ -19,7 +19,7 @@ export function Breadcrumb({
             <Link
               to="/"
               className="text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400 hover:text-slate-600 dark:hover:text-slate-200 cyberpunk:hover:text-cyan-200 transition-colors inline-flex items-center"
-              title="Home"
+              title="Trang chủ"
             >
               <Home className="h-3.5 w-3.5" />
             </Link>

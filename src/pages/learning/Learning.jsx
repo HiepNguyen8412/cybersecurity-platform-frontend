@@ -165,7 +165,7 @@ export function Learning() {
               </span>
               <span className="font-mono text-[11px] font-bold px-2.5 py-1 rounded-md bg-emerald-950/60 text-emerald-300 border border-emerald-800/40 flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>6 LIVE TACTICAL MODULES ONLINE</span>
+                <span>6 CHUYÊN ĐỀ TÁC CHIẾN TRỰC TUYẾN</span>
               </span>
               <span className="font-mono text-[10px] text-slate-400 hidden sm:inline-block">
                 MITRE ATT&CK & NIST SP 800-181 COMPLIANT
@@ -204,7 +204,7 @@ export function Learning() {
             </div>
             <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-700/50 dark:border-slate-800/80">
               <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Mùa Diễn Tập</span>
-              <span className="text-lg font-mono font-extrabold text-indigo-400">Tier-2 Range</span>
+              <span className="text-lg font-mono font-extrabold text-indigo-400">Cyber Range Cấp 2</span>
             </div>
           </div>
         </div>
@@ -600,7 +600,7 @@ export function Learning() {
                     Nguyên Nhân Gốc Rễ & Bản Vá Phòng Thủ
                   </span>
                   <p className="text-slate-700 dark:text-slate-300 text-[11px] leading-relaxed">
-                    <strong>Root Cause:</strong> {currentCaseStudy.rootCause}
+                    <strong>Nguyên nhân cốt lõi:</strong> {currentCaseStudy.rootCause}
                   </p>
                   <p className="text-slate-700 dark:text-slate-300 text-[11px] leading-relaxed pt-1">
                     <strong>Giải pháp vá:</strong> {currentCaseStudy.remediation}
@@ -769,7 +769,7 @@ export function Learning() {
           <div className="p-5 rounded-3xl bg-gradient-to-br from-slate-900 to-blue-950 text-white shadow-xl space-y-3 border border-blue-500/30">
             <div className="flex items-center gap-2 font-mono text-xs text-cyan-300 font-bold">
               <Terminal className="h-4 w-4" />
-              <span>TERMINAL SANDBOX STANDBY</span>
+              <span>SANDBOX TERMINAL SẴN SÀNG</span>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed font-sans">
               Mỗi bài giảng liên kết trực tiếp với máy ảo Linux container có sẵn bộ công cụ pentest & phân tích gói tin.

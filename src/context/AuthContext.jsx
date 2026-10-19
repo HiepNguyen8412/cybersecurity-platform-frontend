@@ -101,13 +101,13 @@ export function AuthProvider({ children }) {
         }
         return { success: true, user: result.data.user }
       } else {
-        const errorMsg = result.error || "Invalid email or password."
+        const errorMsg = result.error || "Email hoặc mật khẩu không chính xác."
         setAuthError(errorMsg)
         return { success: false, error: errorMsg }
       }
     } catch {
       if (authActionSeq.current === currentSeq) {
-        const errorMsg = "Unable to sign in. Please verify your connection and try again."
+        const errorMsg = "Không thể đăng nhập. Vui lòng kiểm tra kết nối mạng và thử lại."
         setAuthError(errorMsg)
         return { success: false, error: errorMsg }
       }
@@ -143,13 +143,13 @@ export function AuthProvider({ children }) {
         }
         return { success: true, data: result.data }
       } else {
-        const errorMsg = result.error || "Unable to register. Please try again."
+        const errorMsg = result.error || "Không thể đăng ký tài khoản. Vui lòng thử lại."
         setAuthError(errorMsg)
         return { success: false, error: errorMsg }
       }
     } catch {
       if (authActionSeq.current === currentSeq) {
-        const errorMsg = "Registration failed due to a network or server issue."
+        const errorMsg = "Đăng ký thất bại do sự cố mạng hoặc máy chủ."
         setAuthError(errorMsg)
         return { success: false, error: errorMsg }
       }

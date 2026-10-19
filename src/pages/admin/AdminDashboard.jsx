@@ -212,7 +212,7 @@ export default function AdminDashboard() {
 
               <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                <span>K8s Cluster: Healthy</span>
+                <span>Cụm K8s: Hoạt Động Bình Thường</span>
               </span>
             </div>
 
@@ -221,7 +221,7 @@ export default function AdminDashboard() {
               <table className="w-full text-left text-xs">
                 <thead>
                   <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-400 font-mono text-[11px]">
-                    <th className="py-2.5 px-3">CONTAINER ID</th>
+                    <th className="py-2.5 px-3">MÃ CONTAINER</th>
                     <th className="py-2.5 px-3">HỌC VIÊN</th>
                     <th className="py-2.5 px-3">BÀI LAB</th>
                     <th className="py-2.5 px-3">TÀI NGUYÊN</th>
@@ -307,8 +307,8 @@ export default function AdminDashboard() {
             </div>
 
             <div className="pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
-              <span>Bandwidth: 142 Mbps</span>
-              <span>Storage I/O: 1,840 IOPS</span>
+              <span>Băng thông: 142 Mbps</span>
+              <span>I/O Lưu trữ: 1,840 IOPS</span>
             </div>
           </Card>
 
@@ -318,7 +318,7 @@ export default function AdminDashboard() {
               <span className="text-xs font-bold font-mono text-slate-400 uppercase tracking-wider">
                 SỰ KIỆN KIỂM TOÁN GẦN NHẤT
               </span>
-              <span className="text-[11px] font-mono text-cyan-400">SOC LOGS</span>
+              <span className="text-[11px] font-mono text-cyan-400">NHẬT KÝ SOC</span>
             </div>
 
             <div className="space-y-2.5">

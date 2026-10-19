@@ -45,9 +45,9 @@ function ResetPassword() {
     }
 
     if (!confirmPassword) {
-      errors.confirmPassword = "Please confirm your new password."
+      errors.confirmPassword = "Vui lòng xác nhận mật khẩu mới."
     } else if (password !== confirmPassword) {
-      errors.confirmPassword = "Passwords do not match."
+      errors.confirmPassword = "Mật khẩu xác nhận không khớp."
     }
 
     setFieldErrors(errors)
@@ -74,7 +74,7 @@ function ResetPassword() {
         if (result.statusCode === 400 || result.error?.toLowerCase().includes("expired") || result.error?.toLowerCase().includes("invalid")) {
           setIsTokenInvalid(true)
         }
-        setFormError(result.error || "Unable to reset password. The link may have expired.")
+        setFormError(result.error || "Không thể đặt lại mật khẩu. Liên kết có thể đã hết hạn hoặc không hợp lệ.")
       }
     } finally {
       setIsSubmitting(false)
@@ -96,7 +96,7 @@ function ResetPassword() {
 
             <div className="space-y-1.5">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 border border-amber-100 text-[11px] font-semibold text-amber-700 tracking-wide uppercase">
-                <span>Security Notice</span>
+                <span>Thông Báo An Ninh</span>
               </div>
 
               <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
@@ -131,7 +131,7 @@ function ResetPassword() {
             <div className="space-y-1.5 text-center">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-[11px] font-semibold text-blue-700 tracking-wide uppercase">
                 <KeyRound className="h-3 w-3" />
-                <span>Single-Use Token Verified</span>
+                <span>Mã Token Một Lần Đã Được Xác Thực</span>
               </div>
 
               <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
@@ -150,7 +150,7 @@ function ResetPassword() {
               >
                 <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
                 <div className="flex-1">
-                  <span className="font-semibold block">Update error</span>
+                  <span className="font-semibold block">Lỗi cập nhật mật khẩu</span>
                   <span>{formError}</span>
                 </div>
               </div>
@@ -194,7 +194,7 @@ function ResetPassword() {
                   {isPasswordMatch && (
                     <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 animate-in fade-in">
                       <CheckCircle2 className="h-3 w-3" />
-                      <span>Passwords match</span>
+                      <span>Mật khẩu trùng khớp</span>
                     </span>
                   )}
                 </div>
@@ -243,7 +243,7 @@ function ResetPassword() {
             <div className="space-y-1.5">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-100 text-[11px] font-semibold text-emerald-700 tracking-wide uppercase">
                 <Shield className="h-3 w-3" />
-                <span>Credentials Secured</span>
+                <span>Thông Tin Đã Được Bảo Vệ</span>
               </div>
 
               <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">

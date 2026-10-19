@@ -168,7 +168,7 @@ export function Profile() {
                     <span className="text-[11px] text-slate-500 font-mono">@hiepnguyen8412</span>
                   </div>
                 </div>
-                <Badge variant="success" size="sm">Connected</Badge>
+                <Badge variant="success" size="sm">Đã Kết Nối</Badge>
               </div>
 
               <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
@@ -176,7 +176,7 @@ export function Profile() {
                   <Globe className="h-5 w-5 text-blue-600" />
                   <div>
                     <span className="text-xs font-bold text-slate-900 block">Hack The Box</span>
-                    <span className="text-[11px] text-slate-500 font-mono">Rank: Pro Hacker</span>
+                    <span className="text-[11px] text-slate-500 font-mono">Cấp bậc: Chuyên gia Khai thác</span>
                   </div>
                 </div>
                 <Badge variant="primary" size="sm">Linked</Badge>
@@ -216,7 +216,7 @@ export function Profile() {
               leftIcon={copiedKey ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
               className="w-full justify-center"
             >
-              {copiedKey ? "Fingerprint Copied!" : "Copy PGP Fingerprint"}
+              {copiedKey ? "Đã sao chép Fingerprint!" : "Sao chép PGP Fingerprint"}
             </Button>
           </Card>
 
@@ -224,15 +224,15 @@ export function Profile() {
           <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-900 to-indigo-950 text-white shadow-md space-y-3">
             <div className="flex items-center gap-2 font-mono text-xs text-blue-300">
               <Lock className="h-4 w-4 text-emerald-400" />
-              <span>SECURITY AUDIT: CURRENT</span>
+              <span>KIỂM TOÁN BẢO MẬT: ĐẠT TIÊU CHUẨN</span>
             </div>
 
             <h4 className="text-sm font-bold text-white">
-              Two-Factor Authentication: FIDO2 Hardware Key
+              Xác thực Hai Yếu Tố: Khóa Phần Cứng FIDO2
             </h4>
 
             <p className="text-xs text-slate-300 leading-relaxed">
-              Your platform account is protected with hardware-enforced WebAuthn authentication. Session expiration is enforced every 8 hours.
+              Tài khoản của bạn được bảo vệ bằng xác thực WebAuthn khóa phần cứng. Phiên làm việc tự động làm mới sau mỗi 8 giờ.
             </p>
 
             <div className="pt-1">

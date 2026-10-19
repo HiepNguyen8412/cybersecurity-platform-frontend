@@ -22,9 +22,9 @@ export const useLabStore = create((set, get) => ({
     }
 
     const initialLogs = [
-      { text: `[SYSTEM] Provisioning secure sandbox environment for "${lab.title}"...`, type: "system" },
-      { text: `[NETWORK] Assigned virtual target IP: ${lab.targetIp || "10.10.14.89"} (Port: ${lab.targetPort || "8080"})`, type: "system" },
-      { text: `[STATUS] Attack container ready. Type 'help' for available CLI commands.`, type: "success" },
+      { text: `[HỆ THỐNG] Đang khởi tạo môi trường sandbox cô lập cho "${lab.title}"...`, type: "system" },
+      { text: `[MẠNG LƯỚI] Đã cấp phát IP mục tiêu ảo: ${lab.targetIp || "10.10.14.89"} (Cổng: ${lab.targetPort || "8080"})`, type: "system" },
+      { text: `[TRẠNG THÁI] Container tấn công sẵn sàng. Gõ 'help' để xem danh sách lệnh CLI.`, type: "success" },
       { text: `root@kali-sandbox:~# `, type: "prompt" },
     ]
 
@@ -57,7 +57,7 @@ export const useLabStore = create((set, get) => ({
       timerInterval: null,
       terminalLogs: [
         ...state.terminalLogs,
-        { text: "[SYSTEM] Lab session terminated and resources deallocated.", type: "system" },
+        { text: "[HỆ THỐNG] Phiên thực hành đã kết thúc và tài nguyên đã được giải phóng.", type: "system" },
       ],
     }))
   },

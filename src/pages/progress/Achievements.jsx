@@ -237,7 +237,7 @@ export function Achievements() {
                     <button
                       onClick={() => handleCopy(cert.id, cert.credentialId)}
                       className="hover:text-blue-600 cursor-pointer p-0.5"
-                      title="Copy Credential ID"
+                      title="Sao chép mã chứng chỉ"
                     >
                       {copiedId === cert.id ? (
                         <Check className="h-3 w-3 text-emerald-600" />
@@ -353,7 +353,7 @@ export function Achievements() {
                   ) : (
                     <div className="w-full space-y-1.5">
                       <div className="flex justify-between text-slate-500">
-                        <span>LOCKED PROGRESS</span>
+                        <span>TIẾN ĐỘ ĐANG KHÓA</span>
                         <span>{badge.progress}%</span>
                       </div>
                       <ProgressBar value={badge.progress} max={100} size="sm" variant="neutral" />

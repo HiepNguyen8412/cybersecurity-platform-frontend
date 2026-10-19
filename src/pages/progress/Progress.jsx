@@ -70,25 +70,25 @@ export function Progress() {
           {/* Quick Stats Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 shrink-0">
             <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/30 shadow-2xs text-center min-w-[100px]">
-              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Total XP</span>
+              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Tổng XP</span>
               <span className="text-lg font-mono-tech font-extrabold text-blue-600">
                 <CountUp end={8450} />
               </span>
             </div>
             <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/30 shadow-2xs text-center min-w-[100px]">
-              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Flags Solved</span>
+              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Flag Đã Giải</span>
               <span className="text-lg font-mono-tech font-extrabold text-emerald-600">
                 <CountUp end={38} />
               </span>
             </div>
             <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/30 shadow-2xs text-center min-w-[100px]">
-              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Lab Hours</span>
+              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Giờ Thực Hành</span>
               <span className="text-lg font-mono-tech font-extrabold text-indigo-600">
                 <CountUp end={142} suffix="h" />
               </span>
             </div>
             <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/30 shadow-2xs text-center min-w-[100px]">
-              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Completion</span>
+              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Tỷ Lệ Hoàn Thành</span>
               <span className="text-lg font-mono-tech font-extrabold text-amber-600">
                 <CountUp end={64} suffix="%" />
               </span>
@@ -207,7 +207,7 @@ export function Progress() {
               </div>
 
               <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1 font-mono-tech">
-                <span>Less Active</span>
+                <span>Ít Hoạt Động</span>
                 <div className="flex items-center gap-1.5">
                   <div className="h-3 w-3 rounded bg-slate-200" />
                   <div className="h-3 w-3 rounded bg-blue-200" />
@@ -215,7 +215,7 @@ export function Progress() {
                   <div className="h-3 w-3 rounded bg-blue-600" />
                   <div className="h-3 w-3 rounded bg-blue-800" />
                 </div>
-                <span>High Velocity</span>
+                <span>Cường Độ Cao</span>
               </div>
             </div>
           </Card>

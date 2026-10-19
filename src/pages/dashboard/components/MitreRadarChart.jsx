@@ -54,7 +54,7 @@ export function MitreRadarChart({ data = DEFAULT_MITRE_DATA }) {
 
         <span className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 font-mono">
           <UserCheck className="w-3 h-3" />
-          <span>Tier: Advanced</span>
+          <span>Cấp độ: Nâng cao</span>
         </span>
       </div>
 

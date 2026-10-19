@@ -194,7 +194,7 @@ export function Navbar() {
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50/90 dark:bg-emerald-950/60 cyberpunk:bg-[#042f2e] border border-emerald-200/80 dark:border-emerald-800/60 cyberpunk:border-emerald-500/60 text-emerald-800 dark:text-emerald-300 cyberpunk:text-emerald-300 text-[11px] font-mono-tech">
             <span className="cyber-pulse-dot text-emerald-500" />
-            <span className="font-semibold">DEFENSE: ACTIVE</span>
+            <span className="font-semibold">PHÒNG THỦ: ĐANG BẬT</span>
           </div>
 
           <ThemeToggle />

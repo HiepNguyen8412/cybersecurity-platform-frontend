@@ -143,10 +143,10 @@ export default function AdminLabs() {
               className="px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 focus:outline-none cursor-pointer"
             >
               <option value="all">Tất cả chuyên đề</option>
-              <option value="Web Application Defense">Web Application Defense</option>
-              <option value="SOC & SIEM Operations">SOC & SIEM Operations</option>
-              <option value="Network Forensics">Network Forensics</option>
-              <option value="Cloud Security & Infrastructure">Cloud Security & Infrastructure</option>
+              <option value="Web Application Defense">Phòng Thủ Ứng Dụng Web (Web Defense)</option>
+              <option value="SOC & SIEM Operations">Vận Hành SOC & Giám Sát SIEM</option>
+              <option value="Network Forensics">Điều Tra Sự Cố Mạng (Network Forensics)</option>
+              <option value="Cloud Security & Infrastructure">Bảo Mật Đám Mây (Cloud Security)</option>
             </select>
           </div>
         </div>
@@ -161,7 +161,7 @@ export default function AdminLabs() {
                 <th className="py-3 px-4">PHÒNG LAB & CHUYÊN ĐỀ</th>
                 <th className="py-3 px-4">ĐỘ KHÓ</th>
                 <th className="py-3 px-4">ĐIỂM XP</th>
-                <th className="py-3 px-4">DOCKER CONTAINER IMAGE</th>
+                <th className="py-3 px-4">ẢNH CONTAINER DOCKER</th>
                 <th className="py-3 px-4">TÀI NGUYÊN CẤP PHÁT</th>
                 <th className="py-3 px-4">FLAG XÁC THỰC</th>
                 <th className="py-3 px-4">TRẠNG THÁI</th>
@@ -243,11 +243,11 @@ export default function AdminLabs() {
                     {l.status === "published" ? (
                       <span className="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold font-mono">
                         <CheckCircle2 className="h-3 w-3" />
-                        <span>Published</span>
+                        <span>Đã Phát Hành</span>
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-1 text-[11px] text-slate-400 font-semibold font-mono">
-                        <span>Draft</span>
+                        <span>Bản Nháp</span>
                       </span>
                     )}
                   </td>

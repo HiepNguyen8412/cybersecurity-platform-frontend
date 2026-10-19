@@ -40,7 +40,7 @@ export class ErrorBoundary extends Component {
 
             <div className="space-y-2">
               <span className="text-[10px] uppercase font-bold tracking-widest text-rose-400 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20">
-                CRITICAL SYSTEM EXCEPTION
+                NGOẠI LỆ HỆ THỐNG NGHIÊM TRỌNG
               </span>
               <h1 className="text-xl font-bold text-white tracking-wide mt-2">
                 Sự Cố Gián Đoạn Ứng Dụng

@@ -11,10 +11,10 @@ export function PasswordStrength({ password = "" }) {
   const strength = calculatePasswordStrength(password)
 
   const requirements = [
-    { label: "At least 8 characters", met: strength.hasMinLength },
-    { label: "Upper and lower case letters", met: strength.hasUpperLower },
-    { label: "At least one number (0-9)", met: strength.hasNumber },
-    { label: "At least one special symbol (!@#$)", met: strength.hasSpecial },
+    { label: "Tối thiểu 8 ký tự", met: strength.hasMinLength },
+    { label: "Bao gồm chữ hoa và chữ thường", met: strength.hasUpperLower },
+    { label: "Ít nhất một chữ số (0-9)", met: strength.hasNumber },
+    { label: "Ít nhất một ký tự đặc biệt (!@#$)", met: strength.hasSpecial },
   ]
 
   return (
@@ -22,7 +22,7 @@ export function PasswordStrength({ password = "" }) {
       {/* 4-Segment Progress Bar */}
       <div className="space-y-1">
         <div className="flex items-center justify-between text-[11px]">
-          <span className="text-slate-500">Password strength:</span>
+          <span className="text-slate-500">Độ mạnh mật khẩu:</span>
           <span className={`font-semibold ${strength.textColor}`}>
             {strength.label}
           </span>

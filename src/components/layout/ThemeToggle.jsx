@@ -27,7 +27,7 @@ export function ThemeToggle() {
       {isLight ? (
         <>
           <Sun className="w-4 h-4 text-amber-500" />
-          <span className="font-semibold">Light</span>
+          <span className="font-semibold">Sáng</span>
         </>
       ) : isCyber ? (
         <>
@@ -37,7 +37,7 @@ export function ThemeToggle() {
       ) : (
         <>
           <Moon className="w-4 h-4 text-blue-400" />
-          <span className="font-semibold text-white">Dark</span>
+          <span className="font-semibold text-white">Tối</span>
         </>
       )}
     </button>

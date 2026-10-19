@@ -146,11 +146,11 @@ export default function AdminUsers() {
               className="px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 focus:outline-none cursor-pointer"
             >
               <option value="all">Tất cả vai trò</option>
-              <option value="Super Admin">Super Admin</option>
-              <option value="SOC Lead">SOC Lead</option>
-              <option value="Security Analyst">Security Analyst</option>
-              <option value="Instructor">Instructor</option>
-              <option value="Learner">Learner</option>
+              <option value="Super Admin">Quản Trị Viên Cấp Cao (Super Admin)</option>
+              <option value="SOC Lead">Trưởng Nhóm SOC (SOC Lead)</option>
+              <option value="Security Analyst">Chuyên Viên SOC (Security Analyst)</option>
+              <option value="Instructor">Giảng Viên (Instructor)</option>
+              <option value="Learner">Học Viên (Learner)</option>
             </select>
 
             {/* Status Filter */}

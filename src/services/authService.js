@@ -118,7 +118,7 @@ export const authService = {
         if (cleanEmail === "error@test.com" || password === "wrong") {
           return {
             success: false,
-            error: "Invalid email or password. Please verify your credentials and try again.",
+            error: "Email hoặc mật khẩu không chính xác. Vui lòng kiểm tra lại thông tin đăng nhập.",
           }
         }
 
@@ -176,7 +176,7 @@ export const authService = {
         if (cleanEmail === "taken@cyberpath.edu") {
           return {
             success: false,
-            error: "Unable to register this account. If you already have an account, please sign in.",
+            error: "Không thể đăng ký tài khoản này. Nếu bạn đã có tài khoản, vui lòng đăng nhập.",
           }
         }
 
@@ -194,7 +194,7 @@ export const authService = {
           success: true,
           data: {
             user: newUser,
-            message: "Account created successfully. Please verify your email.",
+            message: "Tài khoản đã được tạo thành công. Vui lòng xác thực email của bạn.",
           },
         }
       }
@@ -214,7 +214,7 @@ export const authService = {
             sessionStorage.getItem("cyberpath_logged_out") === "true" ||
             localStorage.getItem("cyberpath_logged_out") === "true"
           if (isLoggedOut) {
-            return { success: false, error: "No active session." }
+            return { success: false, error: "Không có phiên đăng nhập nào đang hoạt động." }
           }
 
           const cached =
@@ -232,7 +232,7 @@ export const authService = {
           return { success: true, data: { user: defaultMockUser } }
         }
 
-        return { success: false, error: "No active session." }
+        return { success: false, error: "Không có phiên đăng nhập nào đang hoạt động." }
       }
     )
   },
@@ -252,7 +252,7 @@ export const authService = {
         return {
           success: true,
           data: {
-            message: "If an account matches this email, a password reset link has been dispatched.",
+            message: "Nếu email tồn tại trong hệ thống, liên kết đặt lại mật khẩu đã được gửi đến bạn.",
             email: cleanEmail,
           },
         }
@@ -287,13 +287,13 @@ export const authService = {
         if (token === "expired" || token === "invalid") {
           return {
             success: false,
-            error: "This password reset link has expired or has already been used. Please request a new one.",
+            error: "Liên kết đặt lại mật khẩu đã hết hạn hoặc đã được sử dụng. Vui lòng gửi yêu cầu mới.",
           }
         }
 
         return {
           success: true,
-          data: { message: "Password updated successfully. You may now sign in." },
+          data: { message: "Mật khẩu đã được cập nhật thành công. Bạn có thể đăng nhập ngay bây giờ." },
         }
       }
     )
@@ -322,7 +322,7 @@ export const authService = {
         if (token === "expired" || token === "invalid") {
           return {
             success: false,
-            error: "This verification link is invalid or has expired. Please request a new link.",
+            error: "Liên kết xác thực này không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu liên kết mới.",
           }
         }
 
@@ -333,7 +333,7 @@ export const authService = {
 
         return {
           success: true,
-          data: { message: "Email verified successfully." },
+          data: { message: "Địa chỉ email đã được xác thực thành công." },
         }
       }
     )
@@ -352,7 +352,7 @@ export const authService = {
         await new Promise((resolve) => setTimeout(resolve, 500))
         return {
           success: true,
-          data: { message: "A new verification link has been sent to your email." },
+          data: { message: "Liên kết xác thực mới đã được gửi tới hộp thư của bạn." },
         }
       }
     )

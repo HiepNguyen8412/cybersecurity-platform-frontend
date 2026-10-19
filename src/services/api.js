@@ -79,7 +79,7 @@ api.interceptors.response.use(
  * Parses Axios errors into clean, security-hardened user-friendly error messages.
  * Prevents technical stack traces, database schema leaks, and user enumeration leaks from reaching the UI.
  */
-export function parseApiError(error, defaultMessage = "An unexpected error occurred. Please try again.") {
+export function parseApiError(error, defaultMessage = "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại.") {
   if (!error) return defaultMessage
 
   // Server responded with an HTTP status code outside 2xx
@@ -89,23 +89,23 @@ export function parseApiError(error, defaultMessage = "An unexpected error occur
 
     if (status === 401) {
       // Standardized message to prevent account enumeration / internal message exposure
-      return "Invalid credentials or session expired."
+      return "Thông tin đăng nhập không hợp lệ hoặc phiên làm việc đã hết hạn."
     }
 
     if (status === 403) {
-      return "You do not have permission to perform this action."
+      return "Bạn không có quyền thực hiện hành động này."
     }
 
     if (status === 404) {
-      return "The requested resource was not found."
+      return "Không tìm thấy tài nguyên yêu cầu."
     }
 
     if (status === 429) {
-      return "Too many requests. Please slow down and try again in a few moments."
+      return "Quá nhiều yêu cầu. Vui lòng giảm tần suất và thử lại sau giây lát."
     }
 
     if (status >= 500) {
-      return "The service is temporarily unavailable. Please try again later."
+      return "Dịch vụ tạm thời không khả dụng. Vui lòng thử lại sau."
     }
 
     // Client/validation errors from backend (400, 422)
@@ -114,13 +114,13 @@ export function parseApiError(error, defaultMessage = "An unexpected error occur
       if (!containsTechnicalLeak(data.message)) {
         return data.message
       }
-      return "The request could not be processed. Please check your input."
+      return "Không thể xử lý yêu cầu. Vui lòng kiểm tra lại thông tin đã nhập."
     }
   }
 
   // Request was made but no response was received (Network error / Backend down)
   if (error.request) {
-    return "Unable to connect to the server. Please check your network connection."
+    return "Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại đường truyền mạng."
   }
 
   // Never return raw error.message (which may contain internal network or runtime details)

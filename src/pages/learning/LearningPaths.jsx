@@ -218,7 +218,7 @@ export function LearningPaths() {
           {/* Career Stats Pill */}
           <div className="flex items-center gap-4 font-mono text-xs text-slate-300 p-4 rounded-2xl bg-slate-950/80 border border-slate-700/50 dark:border-slate-800 self-start md:self-auto shadow-xl shrink-0 backdrop-blur-sm">
             <div>
-              <span className="text-cyan-400 font-extrabold text-base block">4 TRACKS</span>
+              <span className="text-cyan-400 font-extrabold text-base block">4 LỘ TRÌNH</span>
               <span className="text-[10px] text-slate-400">LỘ TRÌNH THỰC CHIẾN</span>
             </div>
             <div className="h-7 w-px bg-slate-800" />

@@ -54,7 +54,7 @@ export function Settings() {
           {saveSuccess && (
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold animate-fade-in-up">
               <Check className="h-4 w-4 text-emerald-600" />
-              <span>Settings Synchronized</span>
+              <span>Cài Đặt Đã Đồng Bộ</span>
             </div>
           )}
         </div>
@@ -102,7 +102,7 @@ export function Settings() {
             </div>
 
             <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono-tech text-slate-600 flex items-center justify-between">
-              <span>PRIMARY METHOD: HARDWARE KEY (FIDO2)</span>
+              <span>PHƯƠNG THỨC CHÍNH: KHÓA PHẦN CỨNG (FIDO2)</span>
               <span className="text-emerald-700 font-bold">ACTIVE</span>
             </div>
           </Card>
@@ -175,13 +175,13 @@ export function Settings() {
                 <div>
                   <div className="font-semibold text-slate-900 flex items-center gap-1.5">
                     <span>Windows 11 &bull; Chrome 126</span>
-                    <span className="font-mono-tech text-[10px] px-1.5 py-0.2 rounded bg-blue-600 text-white">CURRENT</span>
+                    <span className="font-mono-tech text-[10px] px-1.5 py-0.2 rounded bg-blue-600 text-white">HIỆN TẠI</span>
                   </div>
                   <div className="text-[11px] text-slate-500 font-mono-tech">
                     IP: 192.168.111.69 &bull; Hanoi, Vietnam
                   </div>
                 </div>
-                <span className="text-emerald-700 font-mono-tech font-bold text-[11px]">ACTIVE NOW</span>
+                <span className="text-emerald-700 font-mono-tech font-bold text-[11px]">ĐANG HOẠT ĐỘNG</span>
               </div>
 
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
@@ -221,7 +221,7 @@ export function Settings() {
                   className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                 />
                 <div className="text-xs">
-                  <span className="font-bold text-slate-900 block">Critical Zero-Day & CVE Bulletins</span>
+                  <span className="font-bold text-slate-900 block">Bản Tin Lỗ Hổng Zero-Day & CVE Khẩn Cấp</span>
                   <span className="text-slate-500">Receive instant alerts when a critical CVSS &ge; 9.0 lab is deployed.</span>
                 </div>
               </label>
@@ -234,8 +234,8 @@ export function Settings() {
                   className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                 />
                 <div className="text-xs">
-                  <span className="font-bold text-slate-900 block">Lab Expiration & Teardown Warnings</span>
-                  <span className="text-slate-500">Ping 5 minutes before an inactive terminal sandbox terminates.</span>
+                  <span className="font-bold text-slate-900 block">Cảnh Báo Thu Hồi & Hết Hạn Phòng Lab</span>
+                  <span className="text-slate-500">Thông báo 5 phút trước khi phiên sandbox không hoạt động bị giải phóng.</span>
                 </div>
               </label>
             </div>

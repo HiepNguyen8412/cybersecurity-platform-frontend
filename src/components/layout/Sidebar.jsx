@@ -195,7 +195,7 @@ export function Sidebar() {
       {!isCollapsed && (
         <div className="mx-3.5 mb-2 p-2.5 rounded-xl bg-slate-50/90 dark:bg-slate-800/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-slate-700 cyberpunk:border-cyan-500/40 font-mono-tech text-[10px] space-y-1">
           <div className="flex items-center justify-between">
-            <span className="text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400 font-bold uppercase tracking-wider">LAB SANDBOX</span>
+            <span className="text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400 font-bold uppercase tracking-wider">MÔI TRƯỜNG SANDBOX</span>
             <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 cyberpunk:text-emerald-300 font-bold">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
               SẴN SÀNG

@@ -91,7 +91,7 @@ function ForgotPassword() {
           >
             <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
             <div className="flex-1">
-              <span className="font-semibold block">Request error</span>
+              <span className="font-semibold block">Lỗi yêu cầu</span>
               <span>{formError}</span>
             </div>
           </div>
@@ -129,7 +129,7 @@ function ForgotPassword() {
                   if (fieldError) setFieldError("")
                   if (formError) setFormError("")
                 }}
-                placeholder="you@example.com"
+                placeholder="chuyenvien@cyberpath.edu.vn"
                 leftIcon={<Mail className="h-4 w-4 text-slate-400" />}
                 errorMessage={fieldError}
                 disabled={isLoading}

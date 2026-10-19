@@ -59,26 +59,26 @@ export function LabTerminalModal() {
 
     switch (mainCmd) {
       case "help":
-        addLog("Available Sandbox CLI Commands:", "system")
-        addLog("  nmap [ip]         - Run aggressive vulnerability port scanner", "stdout")
-        addLog("  curl [url]        - Query HTTP target endpoint with custom headers", "stdout")
-        addLog("  cat [file]        - Read target configuration or exploit source", "stdout")
-        addLog("  exploit           - Trigger attack payload against discovered sink", "stdout")
-        addLog("  submit-flag [val] - Submit captured flag directly to validator", "stdout")
-        addLog("  status            - Display target sandbox container health & IP", "stdout")
-        addLog("  clear             - Reset terminal viewport", "stdout")
+        addLog("Danh sách lệnh Sandbox CLI khả dụng:", "system")
+        addLog("  nmap [ip]         - Quét cổng và nhận diện dịch vụ/lỗ hổng", "stdout")
+        addLog("  curl [url]        - Gửi truy vấn HTTP thăm dò endpoint mục tiêu", "stdout")
+        addLog("  cat [file]        - Đọc tệp cấu hình hoặc mã khai thác", "stdout")
+        addLog("  exploit           - Kích hoạt payload khai thác lỗ hổng mục tiêu", "stdout")
+        addLog("  submit-flag [val] - Nộp Flag đã thu hoạch để thẩm định điểm", "stdout")
+        addLog("  status            - Kiểm tra trạng thái container và IP mục tiêu", "stdout")
+        addLog("  clear             - Xóa sạch màn hình Terminal", "stdout")
         break
 
       case "nmap":
-        addLog(`Starting Nmap 7.94 scan against ${targetIp}...`, "system")
+        addLog(`Khởi chạy tiến trình quét Nmap 7.94 nhắm vào mục tiêu ${targetIp}...`, "system")
         setTimeout(() => {
-          addLog(`Nmap scan report for ${targetIp}:`, "stdout")
+          addLog(`Báo cáo kết quả quét Nmap cho mục tiêu ${targetIp}:`, "stdout")
           addLog(`PORT     STATE SERVICE VERSION`, "stdout")
           addLog(`22/tcp   open  ssh     OpenSSH 8.9p1 Ubuntu`, "stdout")
           addLog(`80/tcp   open  http    nginx/1.18.0`, "stdout")
           addLog(`${activeLab.targetPort || "8080"}/tcp open  http-api Vulnerable Service v1.4`, "stdout")
-          addLog(`Vulnerability detected: ${activeLab.mitre || "T1190"} (${activeLab.title})`, "warning")
-          addLog(`[HINT] Try inspect payload with 'curl http://${targetIp}:${activeLab.targetPort || "8080"}' or run 'exploit'`, "stdout")
+          addLog(`Phát hiện lỗ hổng tiềm năng: ${activeLab.mitre || "T1190"} (${activeLab.title})`, "warning")
+          addLog(`[GỢI Ý] Thăm dò phản hồi với 'curl http://${targetIp}:${activeLab.targetPort || "8080"}' hoặc chạy lệnh 'exploit'`, "stdout")
         }, 300)
         break
 
@@ -92,20 +92,20 @@ export function LabTerminalModal() {
       case "cat":
         if (parts[1]) {
           addLog(`[FILE: ${parts[1]}]`, "stdout")
-          addLog(`// Security Sandbox simulated filesystem`, "stdout")
-          addLog(`FLAG_HINT: Target memory dump reveals token prefix: FLAG{...}`, "stdout")
+          addLog(`// Hệ thống tệp mô phỏng Sandbox An toàn`, "stdout")
+          addLog(`GỢI_Ý_FLAG: Trích xuất memory dump phát hiện định dạng: FLAG{...}`, "stdout")
         } else {
-          addLog("Usage: cat <filename> (e.g., cat /var/log/auth.log)", "stdout")
+          addLog("Cú pháp: cat <tên_tệp> (ví dụ: cat /var/log/auth.log)", "stdout")
         }
         break
 
       case "exploit":
-        addLog(`[!] Injecting exploit vector targeting ${activeLab.mitre || "T1190"}...`, "warning")
+        addLog(`[!] Đang tiêm vector khai thác nhắm vào kỹ thuật ${activeLab.mitre || "T1190"}...`, "warning")
         setTimeout(() => {
-          addLog(`[+] Exploit payload successfully executed!`, "success")
-          addLog(`[+] Privilege escalated to root! Memory dump extracted:`, "success")
-          addLog(`>>> CAPTURED FLAG: ${activeLab.flag || "FLAG{EXP_V4L1D_2026}"}`, "success")
-          addLog(`[TIP] Copy the flag above and use 'submit-flag <FLAG>' or the form on the right!`, "system")
+          addLog(`[+] Payload khai thác đã kích hoạt thành công!`, "success")
+          addLog(`[+] Đã leo thang đặc quyền root! Đang trích xuất memory dump:`, "success")
+          addLog(`>>> ĐÃ THU HOẠCH FLAG: ${activeLab.flag || "FLAG{EXP_V4L1D_2026}"}`, "success")
+          addLog(`[GỢI Ý] Sao chép Flag ở trên và dùng lệnh 'submit-flag <FLAG>' hoặc biểu mẫu bên phải!`, "system")
         }, 400)
         break
 
@@ -120,7 +120,7 @@ export function LabTerminalModal() {
             error("Xác thực Flag thất bại", res.message)
           }
         } else {
-          addLog("Usage: submit-flag FLAG{...}", "stdout")
+          addLog("Cú pháp: submit-flag FLAG{...}", "stdout")
         }
         break
 
@@ -129,14 +129,14 @@ export function LabTerminalModal() {
         break
 
       case "status":
-        addLog(`Active Lab: ${activeLab.title} (ID: ${activeLab.id})`, "system")
-        addLog(`Target IP : ${targetIp}:${activeLab.targetPort || "8080"}`, "system")
-        addLog(`Status    : ${isRunning ? "RUNNING (Connected)" : "STOPPED"}`, "stdout")
-        addLog(`Remaining : ${formatTimer(timeRemaining)}`, "stdout")
+        addLog(`Bài thực hành : ${activeLab.title} (Mã: ${activeLab.id})`, "system")
+        addLog(`IP mục tiêu   : ${targetIp}:${activeLab.targetPort || "8080"}`, "system")
+        addLog(`Trạng thái    : ${isRunning ? "ĐANG CHẠY (Đã kết nối)" : "ĐÃ DỪNG"}`, "stdout")
+        addLog(`Thời gian còn : ${formatTimer(timeRemaining)}`, "stdout")
         break
 
       default:
-        addLog(`bash: command not found: ${mainCmd}. Type 'help' for command list.`, "stdout")
+        addLog(`bash: không tìm thấy lệnh: ${mainCmd}. Gõ 'help' để xem danh sách lệnh hỗ trợ.`, "stdout")
         break
     }
   }
@@ -169,7 +169,7 @@ export function LabTerminalModal() {
             <button
               onClick={handleCopyIp}
               className="hidden sm:flex items-center space-x-1 px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors"
-              title="Click to copy IP"
+              title="Sao chép địa chỉ IP mục tiêu"
             >
               <span>{activeLab.targetIp || "10.10.14.89"}</span>
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
@@ -179,7 +179,7 @@ export function LabTerminalModal() {
             <button
               onClick={clearTerminal}
               className="p-1.5 hover:bg-slate-800 text-slate-400 hover:text-white rounded-lg transition-colors"
-              title="Clear View"
+              title="Xóa màn hình Terminal"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
@@ -188,7 +188,7 @@ export function LabTerminalModal() {
             <button
               onClick={closeTerminal}
               className="p-1.5 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 rounded-lg transition-colors"
-              title="Close Terminal"
+              title="Đóng Terminal"
             >
               <X className="w-4 h-4" />
             </button>
@@ -237,7 +237,7 @@ export function LabTerminalModal() {
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
             onKeyDown={handleCommand}
-            placeholder="Type 'help', 'nmap', 'exploit', or 'submit-flag FLAG{...}'"
+            placeholder="Nhập lệnh 'help', 'nmap', 'exploit', hoặc 'submit-flag FLAG{...}'..."
             className="flex-1 bg-transparent text-white focus:outline-none font-mono text-sm caret-cyan-400 placeholder-slate-600"
             autoFocus
           />

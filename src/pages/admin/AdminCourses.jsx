@@ -250,10 +250,10 @@ export default function AdminCourses() {
                   onChange={(e) => setFormData({ ...formData, track: e.target.value })}
                   className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
                 >
-                  <option value="Web Application Defense">Web Application Defense</option>
-                  <option value="SOC & SIEM Operations">SOC & SIEM Operations</option>
-                  <option value="Network Forensics">Network Forensics</option>
-                  <option value="Cloud Security & Infrastructure">Cloud Security & Infrastructure</option>
+                  <option value="Web Application Defense">Phòng Thủ Ứng Dụng Web (Web Defense)</option>
+                  <option value="SOC & SIEM Operations">Vận Hành SOC & Giám Sát SIEM</option>
+                  <option value="Network Forensics">Điều Tra Sự Cố Mạng (Network Forensics)</option>
+                  <option value="Cloud Security & Infrastructure">Bảo Mật Đám Mây (Cloud Security)</option>
                 </select>
               </div>
 

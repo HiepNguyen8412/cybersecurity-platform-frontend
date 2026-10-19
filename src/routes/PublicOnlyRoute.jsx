@@ -24,7 +24,7 @@ export function PublicOnlyRoute({ children }) {
           </div>
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
             <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
-            <span>Checking authentication...</span>
+            <span>Đang kiểm tra quyền truy cập...</span>
           </div>
         </div>
       </div>

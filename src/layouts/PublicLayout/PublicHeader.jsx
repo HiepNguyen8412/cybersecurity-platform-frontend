@@ -103,7 +103,7 @@ export function PublicHeader() {
                 className="inline-flex items-center gap-1.5 text-sm font-semibold rounded-xl px-3.5 py-2 bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors shadow-2xs border border-blue-200/60 dark:border-blue-800/60"
               >
                 <LayoutDashboard className="h-4 w-4" />
-                <span>Dashboard</span>
+                <span>Bảng Điều Khiển</span>
               </Link>
 
               <Dropdown
@@ -263,7 +263,7 @@ export function PublicHeader() {
                 className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl transition-all shadow-xs"
               >
                 <LogIn className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
-                <span>Log in</span>
+                <span>Đăng Nhập</span>
               </Link>
               <Link
                 to="/register"

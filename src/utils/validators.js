@@ -8,18 +8,18 @@
  */
 export function validateEmail(email) {
   if (!email || typeof email !== "string") {
-    return { isValid: false, error: "Email address is required." }
+    return { isValid: false, error: "Vui lòng nhập địa chỉ email." }
   }
 
   const trimmed = email.trim()
   if (trimmed.length > 254) {
-    return { isValid: false, error: "Email address cannot exceed 254 characters." }
+    return { isValid: false, error: "Địa chỉ email không được vượt quá 254 ký tự." }
   }
 
   // Standard safe email pattern
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/
   if (!emailRegex.test(trimmed)) {
-    return { isValid: false, error: "Please enter a valid email address (e.g. name@domain.com)." }
+    return { isValid: false, error: "Vui lòng nhập địa chỉ email hợp lệ (ví dụ: ten@domain.com)." }
   }
 
   return { isValid: true, error: null }
@@ -62,10 +62,10 @@ export function calculatePasswordStrength(password = "") {
 
   const strengthMap = [
     { label: "", color: "bg-slate-200", textColor: "text-slate-400" },
-    { label: "Weak", color: "bg-rose-500", textColor: "text-rose-600" },
-    { label: "Fair", color: "bg-amber-500", textColor: "text-amber-600" },
-    { label: "Good", color: "bg-blue-600", textColor: "text-blue-600" },
-    { label: "Strong", color: "bg-emerald-600", textColor: "text-emerald-600" },
+    { label: "Yếu", color: "bg-rose-500", textColor: "text-rose-600" },
+    { label: "Trung bình", color: "bg-amber-500", textColor: "text-amber-600" },
+    { label: "Tốt", color: "bg-blue-600", textColor: "text-blue-600" },
+    { label: "Mạnh", color: "bg-emerald-600", textColor: "text-emerald-600" },
   ]
 
   const current = strengthMap[score] || strengthMap[1]
@@ -88,20 +88,20 @@ export function calculatePasswordStrength(password = "") {
  */
 export function validatePassword(password) {
   if (!password || typeof password !== "string") {
-    return { isValid: false, error: "Password is required." }
+    return { isValid: false, error: "Vui lòng nhập mật khẩu." }
   }
 
   if (password.length < 8) {
-    return { isValid: false, error: "Password must be at least 8 characters long." }
+    return { isValid: false, error: "Mật khẩu phải có độ dài tối thiểu 8 ký tự." }
   }
 
   if (password.length > 128) {
-    return { isValid: false, error: "Password cannot exceed 128 characters." }
+    return { isValid: false, error: "Mật khẩu không được vượt quá 128 ký tự." }
   }
 
   const strength = calculatePasswordStrength(password)
   if (!strength.hasMinLength) {
-    return { isValid: false, error: "Password does not meet minimum length requirement." }
+    return { isValid: false, error: "Mật khẩu chưa đáp ứng yêu cầu độ dài tối thiểu." }
   }
 
   return { isValid: true, error: null }

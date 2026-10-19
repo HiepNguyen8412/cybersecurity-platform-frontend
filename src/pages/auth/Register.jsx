@@ -34,7 +34,7 @@ function Register() {
     if (!name.trim()) {
       errors.name = "Vui lòng nhập họ và tên."
     } else if (name.trim().length < 2) {
-      errors.name = "Full name must be at least 2 characters."
+      errors.name = "Họ và tên phải có tối thiểu 2 ký tự."
     }
 
     const emailCheck = validateEmail(email)
@@ -54,7 +54,7 @@ function Register() {
     }
 
     if (!agreeTerms) {
-      errors.agreeTerms = "You must agree to the Điều Khoản Dịch Vụ and Lab Ethics to create an account."
+      errors.agreeTerms = "Bạn phải đồng ý với Điều Khoản Dịch Vụ và Quy Tắc Đạo Đức Phòng Lab để tạo tài khoản."
     }
 
     setFieldErrors(errors)
@@ -88,7 +88,7 @@ function Register() {
         }
         navigate("/", { replace: true })
       } else {
-        setFormError(result.error || "Unable to complete registration. Please verify your details.")
+        setFormError(result.error || "Không thể hoàn tất đăng ký. Vui lòng kiểm tra lại thông tin.")
       }
     } finally {
       setIsSubmitting(false)
@@ -128,7 +128,7 @@ function Register() {
           >
             <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
             <div className="flex-1">
-              <span className="font-semibold block">Registration error</span>
+              <span className="font-semibold block">Lỗi đăng ký tài khoản</span>
               <span>{activeError}</span>
             </div>
           </div>
@@ -168,7 +168,7 @@ function Register() {
               if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: "" }))
               if (formError) setFormError("")
             }}
-            placeholder="you@example.com"
+            placeholder="hocvien@cyberpath.edu.vn"
             leftIcon={<Mail className="h-4 w-4 text-slate-400" />}
             errorMessage={fieldErrors.email}
             disabled={isBusy}

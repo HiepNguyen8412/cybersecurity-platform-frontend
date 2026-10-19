@@ -133,7 +133,7 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
     if (!lesson.payloadExample) return
     navigator.clipboard.writeText(lesson.payloadExample)
     setCopiedPayload(true)
-    useNotificationStore.getState().info("Payload Copied", "Đã sao chép payload khai thác vào clipboard.")
+    useNotificationStore.getState().info("Đã Sao Chép Payload", "Đã sao chép payload khai thác vào clipboard.")
     setTimeout(() => setCopiedPayload(false), 2000)
   }
 
@@ -178,7 +178,7 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
             {isDone && (
               <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-950/50 text-emerald-300 border border-emerald-800/40 flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span>COMPLETED</span>
+                <span>ĐÃ HOÀN THÀNH</span>
               </span>
             )}
           </div>
@@ -333,7 +333,7 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
                       <Terminal className="w-3.5 h-3.5" />
                       <span>PHÂN TÍCH TÁC CHIẾN GIAI ĐOẠN {ATTACK_CHAIN_STAGES[selectedChainStep].step}: {ATTACK_CHAIN_STAGES[selectedChainStep].title}</span>
                     </span>
-                    <span className="text-[10px] text-slate-500">PACKET TELEMETRY AUDIT</span>
+                    <span className="text-[10px] text-slate-500">KIỂM TOÁN GÓI TIN TELEMETRY</span>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed font-sans">
                     {ATTACK_CHAIN_STAGES[selectedChainStep].desc}

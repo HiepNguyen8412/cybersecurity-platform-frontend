@@ -37,7 +37,7 @@ export function NextStepCard({
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-600 dark:bg-blue-500 cyberpunk:bg-cyan-500 text-white cyberpunk:text-slate-950 text-[11px] font-bold uppercase tracking-wider font-mono-tech select-none shadow-2xs cyberpunk:shadow-sm">
                 <Compass className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                <span>MISSION DISPATCH</span>
+                <span>ĐIỀU PHỐI TÁC CHIẾN</span>
               </span>
 
               <Badge variant="cyber" size="sm">

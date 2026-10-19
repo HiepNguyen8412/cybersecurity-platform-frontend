@@ -43,7 +43,7 @@ function Login() {
     }
 
     if (!password) {
-      errors.password = "Password is required."
+      errors.password = "Vui lòng nhập mật khẩu."
     }
 
     setFieldErrors(errors)
@@ -70,7 +70,7 @@ function Login() {
         navigate(destination, { replace: true })
       } else {
         // Generic failure message that prevents user enumeration
-        setFormError(result.error || "Invalid email or password. Please verify your credentials and try again.")
+        setFormError(result.error || "Email hoặc mật khẩu không chính xác. Vui lòng kiểm tra lại thông tin.")
       }
     } finally {
       setIsSubmitting(false)
@@ -97,7 +97,7 @@ function Login() {
         <div className="space-y-1.5 text-center">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-[11px] font-semibold text-blue-700 tracking-wide uppercase">
             <Shield className="h-3 w-3" />
-            <span>Secure Access Gateway</span>
+            <span>Cổng Truy Cập An Toàn SOC</span>
           </div>
 
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
@@ -117,7 +117,7 @@ function Login() {
           >
             <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
             <div className="flex-1">
-              <span className="font-semibold block">Authentication failed</span>
+              <span className="font-semibold block">Xác thực danh tính thất bại</span>
               <span>{activeError}</span>
             </div>
           </div>
@@ -139,7 +139,7 @@ function Login() {
               if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: "" }))
               if (formError) setFormError("")
             }}
-            placeholder="you@example.com"
+            placeholder="chuyenvien@cyberpath.edu.vn"
             leftIcon={<Mail className="h-4 w-4 text-slate-400" />}
             errorMessage={fieldErrors.email}
             disabled={isBusy}
@@ -235,10 +235,10 @@ function Login() {
             {isDemoCopied ? (
               <>
                 <Check className="h-3 w-3 text-emerald-600" />
-                <span className="text-emerald-700">Filled!</span>
+                <span className="text-emerald-700">Đã điền mẫu!</span>
               </>
             ) : (
-              <span>Auto-Fill</span>
+              <span>Điền Mẫu Thử Nghiệm</span>
             )}
           </button>
         </div>

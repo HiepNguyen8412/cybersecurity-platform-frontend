@@ -56,7 +56,7 @@ export function ActivityHeatmapChart({ data = WEEKLY_DATA }) {
 
         <span className="flex items-center space-x-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 font-mono">
           <Flame className="w-3.5 h-3.5 fill-amber-400" />
-          <span>7 Days Streak!</span>
+          <span>Chuỗi 7 ngày liên tiếp!</span>
         </span>
       </div>
 
