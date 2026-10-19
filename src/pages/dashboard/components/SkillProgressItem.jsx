@@ -1,6 +1,5 @@
-import { ProgressBar, Badge, CountUp } from "../../../components/common"
+﻿import { ProgressBar, Badge, CountUp } from "../../../components/common"
 
-// Level badge styles
 const levelBadgeVariants = {
   Novice: "secondary",
   Intermediate: "primary",
@@ -8,11 +7,6 @@ const levelBadgeVariants = {
   Advanced: "success",
 }
 
-/**
- * SkillProgressItem Component
- * 
- * Accessible, clean progress bar item for an individual cybersecurity skill domain.
- */
 export function SkillProgressItem({
   name,
   progress,
@@ -25,7 +19,7 @@ export function SkillProgressItem({
     <div className={`space-y-1.5 ${className}`.trim()}>
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="text-xs font-semibold text-slate-800 truncate">
+          <span className="text-xs font-semibold text-slate-800 dark:text-white cyberpunk:text-cyan-50 truncate">
             {name}
           </span>
           {level && (
@@ -35,8 +29,8 @@ export function SkillProgressItem({
           )}
         </div>
 
-        <span className="text-xs font-extrabold font-mono-tech text-blue-600 tabular-nums shrink-0">
-          <CountUp end={progress} suffix="%" />
+        <span className="text-xs font-extrabold font-mono-tech text-blue-600 dark:text-cyan-400 cyberpunk:text-cyan-300 tabular-nums shrink-0">
+          <CountUp end={progress} suffix="%" duration={2000} />
         </span>
       </div>
 
@@ -49,8 +43,8 @@ export function SkillProgressItem({
       />
 
       {category && (
-        <p className="text-[10px] text-slate-400 font-medium">
-          Domain: {category}
+        <p className="text-[10px] text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400/80 font-medium">
+          Lĩnh vực: {category}
         </p>
       )}
     </div>

@@ -28,6 +28,14 @@ const Achievements = lazy(() => import("../pages/progress/Achievements"))
 const Profile = lazy(() => import("../pages/profile/Profile"))
 const Settings = lazy(() => import("../pages/settings/Settings"))
 
+// Admin SOC Control Center Pages
+const AdminDashboard = lazy(() => import("../pages/admin/AdminDashboard"))
+const AdminUsers = lazy(() => import("../pages/admin/AdminUsers"))
+const AdminLabs = lazy(() => import("../pages/admin/AdminLabs"))
+const AdminCourses = lazy(() => import("../pages/admin/AdminCourses"))
+const AdminAuditLogs = lazy(() => import("../pages/admin/AdminAuditLogs"))
+const AdminSettings = lazy(() => import("../pages/admin/AdminSettings"))
+
 function AppRoutes() {
   return (
     <ErrorBoundary>
@@ -68,6 +76,15 @@ function AppRoutes() {
               <Route path="/achievements" element={<Achievements />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/settings" element={<Settings />} />
+
+              {/* Admin SOC Control Center Routes */}
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/dashboard" element={<Navigate to="/admin" replace />} />
+              <Route path="/admin/users" element={<AdminUsers />} />
+              <Route path="/admin/labs" element={<AdminLabs />} />
+              <Route path="/admin/courses" element={<AdminCourses />} />
+              <Route path="/admin/audit-logs" element={<AdminAuditLogs />} />
+              <Route path="/admin/settings" element={<AdminSettings />} />
             </Route>
           </Route>
 

@@ -1,25 +1,20 @@
-import { useState } from "react"
-import { Terminal, ShieldAlert, MessageSquare, ChevronRight, HelpCircle, Lightbulb, BookOpen, AlertCircle, X } from "lucide-react"
+﻿import { useState } from "react"
+import { UserCheck, BookOpen, FileText, CheckCircle2, AlertTriangle, ShieldCheck, X } from "lucide-react"
 
 /**
- * Contextual Tactical Security Advisor
+ * Tactical Security Intelligence & Field Advisory
  * 
- * Appears contextually inside learning workflows (Lessons, Quizzes, Lab Workspaces, Explanations).
- * Focused on defensive tactics, exploit triage, and secure architecture:
- * - "Explain simply"
- * - "Give me an example"
- * - "Give me a hint"
- * - "Explain my mistake"
- * - "Tactical Query"
+ * Replaces generic AI chatbot hype with authentic SOC defense intelligence,
+ * threat vector analysis, and concrete remediation patterns.
  */
 export function ContextualAIMentor({
-  topic = "Current Concept",
-  contextDescription = "Cần hỗ trợ phân tích chiến thuật an ninh mạng? Chọn câu hỏi gợi ý bên dưới hoặc tra cứu trực tiếp.",
+  topic = "Khái niệm hiện tại",
+  contextDescription = "Tình báo thực địa & hướng dẫn khắc phục lỗ hổng bảo mật trực tiếp theo chuẩn OWASP / MITRE ATT&CK.",
   suggestedActions = [
-    { label: "Giải thích đơn giản", icon: Lightbulb, id: "simple" },
-    { label: "Ví dụ thực chiến", icon: BookOpen, id: "example" },
-    { label: "Gợi ý chiến thuật", icon: HelpCircle, id: "hint" },
-    { label: "Lỗi thường gặp", icon: AlertCircle, id: "mistake" },
+    { label: "Nguyên lý phòng thủ", icon: ShieldCheck, id: "defense" },
+    { label: "Ghi chú thực địa", icon: FileText, id: "vector" },
+    { label: "Khắc phục chuẩn OWASP", icon: CheckCircle2, id: "remediation" },
+    { label: "Cạm bẫy cấu hình", icon: AlertTriangle, id: "pitfall" },
   ],
   compact = false,
   className = "",
@@ -28,23 +23,26 @@ export function ContextualAIMentor({
   const [customQuestion, setCustomQuestion] = useState("")
   const [isExpanded, setIsExpanded] = useState(false)
 
-  // Contextual simulated responses for visual demonstration
   const sampleResponses = {
-    simple: {
-      title: "Giải Thích Cốt Lõi Chiến Thuật",
-      text: "Hãy hình dung cơ chế này giống như một trạm kiểm soát an ninh nghiêm ngặt: thay vì chỉ tin tưởng thông tin người tới khai báo, hệ thống phải đối chiếu chữ ký số và phân quyền độc lập trước khi mở khóa tài nguyên.",
+    defense: {
+      title: "NGUYÊN LÝ PHÒNG THỦ CHUYÊN SÂU",
+      text: "Áp dụng cơ chế Defense-in-Depth: Tuyệt đối không tin tưởng dữ liệu đầu vào từ client. Sử dụng cơ chế Parameterized Queries & Prepared Statements để tách biệt hoàn toàn giữa cấu trúc lệnh thực thi và dữ liệu người dùng.",
+      code: "stmt = db.prepare('SELECT * FROM users WHERE id = ?');\nstmt.execute([userId]);",
     },
-    example: {
-      title: "Kịch Bản Khai Thác Thực Tế",
-      text: "Trong một form đăng nhập, nếu người dùng nhập 'admin' --' vào ô tài khoản, câu lệnh SQL chưa được tham số hóa sẽ coi hai dấu gạch ngang là ghi chú, bỏ qua hoàn toàn bước kiểm tra mật khẩu.",
+    vector: {
+      title: "CHUỖI TẤN CÔNG THỰC CHIẾN (TTPs)",
+      text: "Kẻ tấn công lợi dụng chuỗi nối chuỗi không an toàn để chèn ký tự đặc biệt (' OR 1=1 --) nhằm thay đổi cây cú pháp phân tích SQL Parser, bỏ qua kiểm tra mật khẩu và trích xuất dữ liệu nhạy cảm.",
+      code: "GET /api/user?id=1%27%20UNION%20SELECT%20username,password_hash%20FROM%20users--",
     },
-    hint: {
-      title: "Gợi Ý Phân Tích Phòng Thủ",
-      text: "Hãy xem xét kỹ vị trí thực thi mã. Dữ liệu đầu vào có được xác thực và lọc tại server-side hay chỉ đang phụ thuộc vào kiểm tra tại trình duyệt client?",
+    remediation: {
+      title: "QUY CHUẨN KHẮC PHỤC OWASP TOP 10",
+      text: "1. Sử dụng ORM hoặc Prepared Statements chuẩn hóa.\n2. Thực hiện whitelist validation trên các trường bắt buộc.\n3. Mã hóa đầu ra (Output Encoding) theo ngữ cảnh trước khi render lên DOM.",
+      code: "// Hardened Input Sanitization\nconst cleanInput = validator.escape(userInput.trim());",
     },
-    mistake: {
-      title: "Cạm Bẫy Bảo Mật Phổ Biến",
-      text: "Sai lầm thường gặp nhất là chỉ dùng Blacklist để chặn từ khóa nguy hiểm. Kẻ tấn công có thể dễ dàng dùng kỹ thuật nested comments (e.g. UN/**/ION) hoặc alternate encodings để vượt qua.",
+    pitfall: {
+      title: "CẠM BẪY BẢO MẬT PHỔ BIẾN",
+      text: "Chỉ sử dụng Blacklist Filter (loại bỏ từ khóa như 'SELECT', 'UNION') là sai lầm nguy hiểm. Kẻ tấn công có thể dễ dàng vượt qua bằng kỹ thuật lồng từ khóa (UN/**/ION) hoặc alternate character encodings.",
+      code: "// LỖI: str.replace('SELECT', '') => bypass bằng 'SELSELECTECT'",
     },
   }
 
@@ -63,45 +61,44 @@ export function ContextualAIMentor({
   return (
     <div
       className={`
-        rounded-2xl border border-blue-100 dark:border-slate-800 bg-gradient-to-b from-blue-50/50 via-white to-white dark:from-slate-900/90 dark:via-slate-900/90 dark:to-slate-950 p-4 sm:p-5
-        shadow-sm transition-all duration-200 text-slate-900 dark:text-white
+        rounded-2xl border border-blue-200/80 dark:border-slate-800 cyberpunk:border-cyan-500/50
+        bg-white dark:bg-[#111827] cyberpunk:bg-[#060e1d]
+        ${compact ? "p-3 sm:p-3.5" : "p-4 sm:p-5"} shadow-xs cyberpunk:shadow-sm
+        transition-all duration-200 text-slate-900 dark:text-white cyberpunk:text-cyan-50
         ${className}
       `.trim()}
     >
-      {/* Header: Tactical Advisor branding and current context */}
+      {/* Header: Tactical Intelligence branding */}
       <div className="flex items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 shadow-xs">
-            <ShieldAlert className="h-4 w-4" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 dark:bg-blue-500 cyberpunk:bg-cyan-500 text-white cyberpunk:text-slate-950 shadow-xs cyberpunk:shadow-sm">
+            <UserCheck className="h-4.5 w-4.5" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-slate-900 dark:text-white tracking-tight">Cố Vấn Tác Chiến An Ninh</span>
-              <span className="text-[10px] font-mono font-semibold text-blue-700 dark:text-cyan-400 bg-blue-100/70 dark:bg-cyan-950/60 border border-blue-200/60 dark:border-cyan-800/40 px-1.5 py-0.2 rounded-full">
-                SOC FIELD GUIDE
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white cyberpunk:text-cyan-50">
+                SỔ TAY TÁC CHIẾN // SOC INTEL
+              </h3>
+              <span className="text-[10px] font-mono-tech font-bold text-emerald-600 dark:text-emerald-400 cyberpunk:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 cyberpunk:bg-[#042f2e] border border-emerald-200 dark:border-emerald-800 cyberpunk:border-emerald-500/60 px-1.5 py-0.2 rounded">
+                LIVE
               </span>
             </div>
+            <p className="text-[11px] text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300/90 font-medium">
+              Chủ đề: <span className="font-semibold text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-100">{topic}</span>
+            </p>
           </div>
         </div>
-
-        {topic && (
-          <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
-            Chuyên đề: <span className="font-semibold text-slate-700 dark:text-slate-200">{topic}</span>
-          </span>
-        )}
       </div>
 
-      {!compact && (
-        <p className="text-xs text-slate-600 dark:text-slate-300 mb-3.5 leading-relaxed">
-          {contextDescription}
-        </p>
-      )}
+      <p className="text-xs text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-200/90 leading-relaxed mb-3.5">
+        {contextDescription}
+      </p>
 
-      {/* Contextual Action Chips */}
-      <div className="flex flex-wrap items-center gap-1.5 mb-3.5">
+      {/* Action Chips */}
+      <div className="grid grid-cols-2 gap-2 mb-3">
         {suggestedActions.map((action) => {
           const Icon = action.icon
-          const isSelected = selectedPrompt === action.id && isExpanded
+          const isCurrent = selectedPrompt === action.id
 
           return (
             <button
@@ -109,65 +106,66 @@ export function ContextualAIMentor({
               type="button"
               onClick={() => handleActionClick(action.id)}
               className={`
-                inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-150 cursor-pointer select-none
+                flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-left transition-all cursor-pointer border select-none
                 ${
-                  isSelected
-                    ? "bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 font-bold shadow-xs"
-                    : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-blue-400 dark:hover:border-cyan-500/50 hover:bg-blue-50/50 dark:hover:bg-slate-700"
+                  isCurrent
+                    ? "bg-blue-50 dark:bg-blue-950/70 cyberpunk:bg-cyan-950/80 text-blue-700 dark:text-blue-300 cyberpunk:text-cyan-300 border-blue-300 dark:border-blue-700 cyberpunk:border-cyan-400 font-semibold shadow-2xs cyberpunk:shadow-sm"
+                    : "bg-slate-50 dark:bg-slate-800/80 cyberpunk:bg-[#071329] text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-200 border-slate-200/80 dark:border-slate-700 cyberpunk:border-cyan-500/30 hover:border-blue-300 dark:hover:border-slate-600 cyberpunk:hover:border-cyan-400"
                 }
-              `}
+              `.trim()}
             >
-              <Icon className="h-3.5 w-3.5 shrink-0" />
-              <span>{action.label}</span>
+              <Icon className="h-3.5 w-3.5 shrink-0 text-blue-600 dark:text-blue-400 cyberpunk:text-cyan-400" />
+              <span className="truncate">{action.label}</span>
             </button>
           )
         })}
       </div>
 
-      {/* Contextual Mentor Response Card */}
+      {/* Expanded Knowledge Panel */}
       {isExpanded && selectedPrompt && (
-        <div className="mb-3.5 rounded-xl border border-blue-200/80 dark:border-cyan-500/30 bg-white dark:bg-slate-950 p-4 text-xs shadow-xs animate-in fade-in zoom-in-95 duration-150 space-y-1.5">
+        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/90 cyberpunk:bg-[#071329] border border-blue-200/80 dark:border-slate-700 cyberpunk:border-cyan-500/50 space-y-2.5 animate-in fade-in duration-150">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-blue-900 dark:text-cyan-400 flex items-center gap-1.5 font-mono text-xs">
-              <Terminal className="h-3.5 w-3.5 text-blue-600 dark:text-cyan-400" />
-              {selectedPrompt === "custom"
-                ? `Phân tích yêu cầu: "${customQuestion}"`
-                : sampleResponses[selectedPrompt]?.title}
+            <span className="text-[11px] font-mono-tech font-bold uppercase tracking-wider text-blue-700 dark:text-cyan-400 cyberpunk:text-cyan-300 flex items-center gap-1.5">
+              <BookOpen className="h-3.5 w-3.5" />
+              {sampleResponses[selectedPrompt]?.title || "TRA CỨU CHIẾN THUẬT"}
             </span>
             <button
               type="button"
               onClick={() => setIsExpanded(false)}
-              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-0.5 rounded cursor-pointer"
-              aria-label="Đóng phản hồi"
+              className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+              aria-label="Đóng"
             >
               <X className="h-3.5 w-3.5" />
             </button>
           </div>
 
-          <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-            {selectedPrompt === "custom"
-              ? "Theo nguyên tắc Defense-in-Depth của NIST, giải pháp phòng thủ tối ưu đòi hỏi kết hợp đồng thời Prepared Statements, phân quyền tối thiểu (Least Privilege) và cơ chế logging Suricata/SIEM để ngăn ngừa hoàn toàn nguy cơ leo thang đặc quyền."
-              : sampleResponses[selectedPrompt]?.text}
+          <p className="text-xs text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-100 leading-relaxed whitespace-pre-line">
+            {sampleResponses[selectedPrompt]?.text ||
+              `Hướng dẫn phòng thủ cho yêu cầu "${customQuestion}": Áp dụng nguyên tắc đặc quyền tối thiểu (Least Privilege) và kiểm tra toàn vẹn chữ ký dữ liệu.`}
           </p>
+
+          {sampleResponses[selectedPrompt]?.code && (
+            <div className="p-2.5 rounded-lg bg-slate-900 text-slate-100 dark:bg-black cyberpunk:bg-[#02050f] border border-slate-800 cyberpunk:border-cyan-500/40 font-mono text-[11px] overflow-x-auto text-emerald-400 dark:text-emerald-300 cyberpunk:text-cyan-300">
+              <pre className="m-0">{sampleResponses[selectedPrompt].code}</pre>
+            </div>
+          )}
         </div>
       )}
 
-      {/* Ask Input */}
-      <form onSubmit={handleCustomSubmit} className="relative flex items-center">
-        <MessageSquare className="absolute left-3 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+      {/* Quick Search Input */}
+      <form onSubmit={handleCustomSubmit} className="mt-3 flex gap-2">
         <input
           type="text"
           value={customQuestion}
           onChange={(e) => setCustomQuestion(e.target.value)}
-          placeholder="Đặt câu hỏi phân tích chiến thuật về bước này..."
-          className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/90 py-2 pl-9 pr-24 text-xs text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none transition focus:border-blue-500 dark:focus:border-cyan-400 focus:ring-2 focus:ring-blue-100 dark:focus:ring-cyan-950"
+          placeholder="Tra cứu mã lỗi, kỹ thuật bypass, rule..."
+          className="flex-1 rounded-xl border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 bg-slate-50 dark:bg-slate-800/90 cyberpunk:bg-[#071329] px-3 py-1.5 text-xs text-slate-900 dark:text-white cyberpunk:text-cyan-100 placeholder:text-slate-400 dark:placeholder:text-slate-400 cyberpunk:placeholder:text-cyan-500/60 outline-none focus:border-blue-600 dark:focus:border-cyan-400"
         />
         <button
           type="submit"
-          className="absolute right-1 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white dark:text-slate-950 text-xs font-bold transition cursor-pointer inline-flex items-center gap-1 shadow-xs"
+          className="px-3 py-1.5 rounded-xl bg-blue-600 dark:bg-blue-500 cyberpunk:bg-cyan-500 hover:bg-blue-700 cyberpunk:hover:bg-cyan-400 text-white cyberpunk:text-slate-950 text-xs font-semibold transition cursor-pointer select-none"
         >
-          <span>Tra cứu</span>
-          <ChevronRight className="h-3 w-3" />
+          Tra cứu
         </button>
       </form>
     </div>

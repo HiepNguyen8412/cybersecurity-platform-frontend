@@ -28,7 +28,7 @@ export function Settings() {
       {/* ====================================================================
           1. HEADER BANNER
          ==================================================================== */}
-      <section className="relative rounded-2xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 border border-slate-200/90 shadow-sm p-6 sm:p-8 overflow-hidden">
+      <section className="relative rounded-2xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/80 cyberpunk:from-[#071022] cyberpunk:via-[#09152b] cyberpunk:to-[#0c1e3d] border border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-sm p-6 sm:p-8 overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400" />
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -85,6 +85,7 @@ export function Settings() {
 
               <button
                 type="button"
+                aria-label="Kích hoạt xác thực hai yếu tố MFA"
                 onClick={() => setMfaEnabled(!mfaEnabled)}
                 className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                   mfaEnabled ? "bg-blue-600" : "bg-slate-300"
@@ -130,11 +131,11 @@ export function Settings() {
                 <select
                   value={sandboxTimeout}
                   onChange={(e) => setSandboxTimeout(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 font-mono"
+                  className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm bg-white dark:bg-slate-900 cyberpunk:bg-[#071329] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 text-slate-900 dark:text-slate-100 cyberpunk:text-cyan-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 font-mono"
                 >
-                  <option value="15">15 Minutes (Strictest memory reclaim)</option>
-                  <option value="30">30 Minutes (Recommended default)</option>
-                  <option value="60">60 Minutes (Long duration pentest)</option>
+                  <option value="15">15 Phút (Thu hồi RAM nghiêm ngặt)</option>
+                  <option value="30">30 Phút (Khuyến nghị mặc định)</option>
+                  <option value="60">60 Phút (Dành cho bài pentest dài)</option>
                 </select>
               </div>
 
@@ -151,7 +152,7 @@ export function Settings() {
                       className={`p-2.5 rounded-xl text-xs font-mono-tech uppercase font-semibold text-center border transition-all cursor-pointer ${
                         telemetryVerbosity === mode
                           ? "bg-blue-600 text-white border-blue-600 shadow-2xs"
-                          : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                          : "bg-white dark:bg-slate-900 cyberpunk:bg-[#071329] text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 hover:bg-slate-50 dark:hover:bg-slate-800"
                       }`}
                     >
                       {mode.replace("_", " ")}
@@ -241,7 +242,7 @@ export function Settings() {
           </Card>
 
           {/* SAVE CONTROLS */}
-          <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-3">
+          <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-sm space-y-3">
             <Button
               variant="primary"
               size="md"
@@ -249,7 +250,7 @@ export function Settings() {
               className="w-full justify-center"
               leftIcon={<Save className="h-4 w-4" />}
             >
-              Save Platform Configuration
+              Lưu Cấu Hình Nền Tảng
             </Button>
             <p className="text-[11px] text-slate-400 text-center font-mono-tech">
               Changes propagate to your isolated sandbox profile immediately.

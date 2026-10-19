@@ -1,5 +1,6 @@
-/**
+﻿/**
  * Reusable Card component and subcomponents.
+ * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
  */
 export function Card({
   children,
@@ -11,11 +12,11 @@ export function Card({
 }) {
   const variantStyles = {
     default: "cyber-card",
-    flat: "bg-white/95 border border-slate-200/90 shadow-2xs",
+    flat: "bg-white/95 dark:bg-slate-900 cyberpunk:bg-[#060e1d] border border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-2xs",
     interactive:
-      "cyber-card hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-200 cursor-pointer",
+      "cyber-card hover:border-blue-400 dark:hover:border-blue-400 cyberpunk:hover:border-cyan-400 hover:shadow-lg hover:shadow-blue-500/5 cyberpunk:hover:shadow-md transition-all duration-200 cursor-pointer",
     focal: "cyber-card-focal",
-    subtle: "bg-slate-50/70 border border-slate-200/60",
+    subtle: "bg-slate-50/70 dark:bg-slate-900/70 cyberpunk:bg-[#071329] border border-slate-200/60 dark:border-slate-800 cyberpunk:border-cyan-500/30",
     terminal: "cyber-terminal text-slate-100",
   }
 
@@ -47,7 +48,7 @@ export function CardHeader({ children, className = "", ...props }) {
 export function CardTitle({ children, className = "", as: Component = "h3", ...props }) {
   return (
     <Component
-      className={`text-base font-semibold leading-tight text-slate-900 tracking-tight ${className}`.trim()}
+      className={`text-base font-semibold leading-tight text-slate-900 dark:text-white cyberpunk:text-cyan-50 tracking-tight ${className}`.trim()}
       {...props}
     >
       {children}
@@ -57,7 +58,7 @@ export function CardTitle({ children, className = "", as: Component = "h3", ...p
 
 export function CardDescription({ children, className = "", ...props }) {
   return (
-    <p className={`text-sm text-slate-500 leading-normal ${className}`.trim()} {...props}>
+    <p className={`text-sm text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-200/90 leading-normal ${className}`.trim()} {...props}>
       {children}
     </p>
   )
@@ -65,7 +66,7 @@ export function CardDescription({ children, className = "", ...props }) {
 
 export function CardContent({ children, className = "", ...props }) {
   return (
-    <div className={`text-sm text-slate-600 ${className}`.trim()} {...props}>
+    <div className={`text-sm text-slate-600 dark:text-slate-200 cyberpunk:text-cyan-100 ${className}`.trim()} {...props}>
       {children}
     </div>
   )
@@ -74,7 +75,7 @@ export function CardContent({ children, className = "", ...props }) {
 export function CardFooter({ children, className = "", ...props }) {
   return (
     <div
-      className={`mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-sm ${className}`.trim()}
+      className={`mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 cyberpunk:border-cyan-500/30 flex items-center justify-between text-sm ${className}`.trim()}
       {...props}
     >
       {children}

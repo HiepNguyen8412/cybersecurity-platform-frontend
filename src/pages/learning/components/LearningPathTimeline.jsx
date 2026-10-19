@@ -1,4 +1,4 @@
-import { CheckCircle2, ShieldCheck, Lock, Target } from "lucide-react"
+import { CheckCircle2, ShieldCheck, Lock, Compass } from "lucide-react"
 
 export function LearningPathTimeline({ path, onSelectStage }) {
   const stages = path?.stages || [
@@ -46,7 +46,7 @@ export function LearningPathTimeline({ path, onSelectStage }) {
         </div>
 
         <span className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">
-          <Target className="w-3.5 h-3.5" />
+          <Compass className="w-3.5 h-3.5" />
           <span>Stage 02 Active</span>
         </span>
       </div>
@@ -77,7 +77,7 @@ export function LearningPathTimeline({ path, onSelectStage }) {
                 {isDone ? (
                   <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
                 ) : isCurrent ? (
-                  <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 ) : (
                   <Lock className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 )}

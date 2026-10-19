@@ -25,7 +25,7 @@ export function PublicFooter() {
             </Link>
 
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
-              Hands-on cybersecurity range and real-time sandbox training. Practice threat hunting, exploit reverse-engineering, and incident hotpatching directly in your browser.
+              Nền tảng diễn tập an ninh mạng và thao trường sandbox thời gian thực. Thực hành truy lùng mối đe dọa, kỹ thuật phân tích khai thác và vá lỗi nóng trực tiếp trên trình duyệt.
             </p>
 
             {/* Live Operational Status Pill */}
@@ -35,7 +35,7 @@ export function PublicFooter() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
                 </span>
-                <span className="font-medium">All systems operational &bull; 99.98% SLA</span>
+                <span className="font-medium">Hệ thống vận hành ổn định &bull; 99.98% SLA</span>
               </div>
             </div>
           </div>
@@ -150,13 +150,13 @@ export function PublicFooter() {
           <div className="flex items-center gap-2 cursor-default select-none text-[11px]">
             <span>&copy; {currentYear} CyberPath Security Inc.</span>
             <span className="text-slate-300 dark:text-slate-700">&bull;</span>
-            <span>All rights reserved.</span>
+            <span>Bảo lưu mọi quyền.</span>
           </div>
 
           <div className="flex items-center gap-3 text-[11px] font-mono-tech text-slate-400 dark:text-slate-500 cursor-default select-none">
             <span>REGION: AP-SOUTHEAST // US-EAST</span>
             <span className="text-slate-300 dark:text-slate-700">&bull;</span>
-            <span>TLS 1.3 ENFORCED</span>
+            <span>BẮT BUỘC TLS 1.3</span>
           </div>
         </div>
       </div>

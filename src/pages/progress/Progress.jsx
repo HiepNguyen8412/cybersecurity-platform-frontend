@@ -1,13 +1,12 @@
-import { useState } from "react"
+﻿import { useState } from "react"
 import { Link } from "react-router-dom"
 import {
   Shield,
-  Target,
   Calendar,
-  Zap,
-  ArrowRight,
   Flame,
+  ArrowRight,
   ChevronRight,
+  FileCheck,
 } from "lucide-react"
 import { Card, Button, CountUp } from "../../components/common"
 
@@ -41,7 +40,7 @@ export function Progress() {
       {/* ====================================================================
           1. HEADER TELEMETRY STRIP
          ==================================================================== */}
-      <section className="relative rounded-2xl bg-gradient-to-br from-white via-blue-50/30 to-slate-50 border border-slate-200/90 shadow-sm p-6 sm:p-8 overflow-hidden">
+      <section className="relative rounded-2xl bg-gradient-to-br from-white via-blue-50/30 to-slate-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/80 cyberpunk:from-[#071022] cyberpunk:via-[#09152b] cyberpunk:to-[#0c1e3d] border border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-sm p-6 sm:p-8 overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400" />
         
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
@@ -70,25 +69,25 @@ export function Progress() {
 
           {/* Quick Stats Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 shrink-0">
-            <div className="p-3 rounded-xl bg-white border border-slate-200/90 shadow-2xs text-center min-w-[100px]">
+            <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/30 shadow-2xs text-center min-w-[100px]">
               <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Total XP</span>
               <span className="text-lg font-mono-tech font-extrabold text-blue-600">
                 <CountUp end={8450} />
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-white border border-slate-200/90 shadow-2xs text-center min-w-[100px]">
+            <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/30 shadow-2xs text-center min-w-[100px]">
               <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Flags Solved</span>
               <span className="text-lg font-mono-tech font-extrabold text-emerald-600">
                 <CountUp end={38} />
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-white border border-slate-200/90 shadow-2xs text-center min-w-[100px]">
+            <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/30 shadow-2xs text-center min-w-[100px]">
               <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Lab Hours</span>
               <span className="text-lg font-mono-tech font-extrabold text-indigo-600">
                 <CountUp end={142} suffix="h" />
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-white border border-slate-200/90 shadow-2xs text-center min-w-[100px]">
+            <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/30 shadow-2xs text-center min-w-[100px]">
               <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Completion</span>
               <span className="text-lg font-mono-tech font-extrabold text-amber-600">
                 <CountUp end={64} suffix="%" />
@@ -127,12 +126,12 @@ export function Progress() {
                   onClick={() => setSelectedDomain(domain)}
                   className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
                     selectedDomain.id === domain.id
-                      ? "bg-blue-50/50 border-blue-300 ring-2 ring-blue-500/10 shadow-2xs"
-                      : "bg-white hover:bg-slate-50/80 border-slate-200"
+                      ? "bg-blue-50/50 border-blue-300  shadow-2xs"
+                      : "bg-white dark:bg-slate-800/80 cyberpunk:bg-[#071329] hover:bg-slate-50/80 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-800 dark:text-slate-100 cyberpunk:text-cyan-200"
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
-                    <span className="text-slate-800">{domain.name}</span>
+                    <span className="text-slate-800 dark:text-slate-100 cyberpunk:text-cyan-50">{domain.name}</span>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
                         {domain.level}
@@ -228,7 +227,7 @@ export function Progress() {
           <Card className="p-6 border-slate-200/90 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Target className="h-4 w-4 text-emerald-600" />
+                <FileCheck className="h-4 w-4 text-emerald-600" />
                 <h3 className="text-base font-bold text-slate-900">
                   Validated Flag Submissions
                 </h3>
@@ -254,7 +253,7 @@ export function Progress() {
                   </div>
 
                   <div className="flex items-center justify-between text-[11px] text-slate-500 font-mono-tech">
-                    <span className="px-1.5 py-0.2 rounded bg-white border border-slate-200 text-slate-600">
+                    <span className="px-1.5 py-0.2 rounded bg-white dark:bg-slate-800 cyberpunk:bg-[#0a1628] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300">
                       {flag.cve}
                     </span>
                     <span>{flag.date}</span>
@@ -277,8 +276,8 @@ export function Progress() {
           {/* RECOMMENDED TARGET FOCUS */}
           <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-900 to-indigo-950 text-white shadow-md space-y-3">
             <div className="flex items-center gap-2 font-mono text-xs text-blue-300">
-              <Zap className="h-4 w-4 text-amber-400" />
-              <span>AI COPILOT RECOMMENDATION</span>
+              <Flame className="h-4 w-4 text-amber-400" />
+              <span>LỘ TRÌNH KHUYẾN NGHỊ // TACTICAL SKILL GAP</span>
             </div>
 
             <h4 className="text-sm font-bold text-white">
@@ -307,3 +306,4 @@ export function Progress() {
 }
 
 export default Progress
+

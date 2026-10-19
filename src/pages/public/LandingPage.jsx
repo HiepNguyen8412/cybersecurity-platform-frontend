@@ -2,9 +2,8 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { Link } from "react-router-dom"
 import {
   FlaskConical,
-  Brain,
+  Activity,
   Shield,
-  Crosshair,
   ChevronRight,
   ChevronLeft,
   Code2,
@@ -15,7 +14,9 @@ import {
   Server,
   Radio,
   Terminal,
-  Zap,
+  Compass,
+  UserCheck,
+  FileText,
 } from "lucide-react"
 import useAuth from "../../hooks/useAuth"
 import { CountUp } from "../../components/common"
@@ -616,7 +617,7 @@ export function LandingPage() {
               {/* Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-black tracking-tight text-slate-900 leading-[1.08]">
                 Offensive Mastery. <br />
-                <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 dark:from-cyan-300 dark:via-blue-400 dark:to-indigo-300 cyberpunk:from-[#38bdf8] cyberpunk:via-[#22d3ee] cyberpunk:to-[#34d399] bg-clip-text text-transparent drop-shadow-xs">
                   Defensive Precision.
                 </span> <br />
                 Real Attack Forensics.
@@ -629,11 +630,11 @@ export function LandingPage() {
 
               {/* Interactive Tool Chips (Clickable Quick Prompts) */}
               <div className="flex flex-wrap items-center gap-2 pt-1">
-                <span className="text-xs font-mono-tech text-slate-400 font-bold uppercase">Target Tools:</span>
+                <span className="text-xs font-mono-tech text-slate-400 font-bold uppercase">Công Cụ Diễn Tập:</span>
                 {["Burp Suite", "Wireshark", "SQLMap", "Suricata", "Ghidra"].map((tool) => (
                   <span
                     key={tool}
-                    className="text-[11px] font-mono-tech font-semibold px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-700 shadow-2xs hover:border-blue-400 hover:text-blue-600 transition-colors select-none"
+                    className="text-[11px] font-mono-tech font-semibold px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-300 shadow-2xs hover:border-blue-400 dark:hover:border-cyan-400 hover:text-blue-600 dark:hover:text-cyan-300 transition-colors select-none"
                   >
                     {tool}
                   </span>
@@ -644,33 +645,33 @@ export function LandingPage() {
               <div className="flex flex-wrap items-center gap-3.5 pt-2">
                 <Link
                   to={isAuthenticated ? "/dashboard" : "/register"}
-                  className="cyber-btn-primary btn-cyber-interactive inline-flex items-center justify-center font-bold rounded-xl px-6 py-3.5 text-sm gap-2.5 cursor-pointer group shadow-lg shadow-blue-500/25"
+                  className="cyber-btn-primary btn-cyber-interactive inline-flex items-center justify-center font-bold rounded-xl px-6 py-3.5 text-sm gap-2.5 cursor-pointer group shadow-md shadow-blue-500/15"
                 >
                   <Play className="h-4 w-4 fill-white group-hover:scale-110 transition-transform" />
-                  <span>{isAuthenticated ? "Enter Mission Dashboard" : "Deploy Free Lab Sandbox"}</span>
+                  <span>{isAuthenticated ? "Vào Bảng Điều Khiển Tác Chiến" : "Khởi Động Sandbox Miễn Phí"}</span>
                 </Link>
                 <Link
                   to="/labs"
-                  className="btn-cyber-interactive inline-flex items-center justify-center gap-2 font-semibold rounded-xl px-5 py-3.5 text-sm bg-white/95 text-slate-700 border border-slate-200 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50/50 shadow-2xs transition-all cursor-pointer"
+                  className="btn-cyber-interactive inline-flex items-center justify-center gap-2 font-semibold rounded-xl px-5 py-3.5 text-sm bg-white dark:bg-slate-900 cyberpunk:bg-[#071329] text-slate-800 dark:text-slate-100 cyberpunk:text-cyan-300 border border-slate-200 dark:border-slate-800 cyberpunk:border-cyan-500/40 hover:border-blue-400 dark:hover:border-cyan-400 hover:text-blue-600 dark:hover:text-cyan-400 hover:bg-blue-50/50 dark:hover:bg-slate-800 shadow-2xs transition-all cursor-pointer"
                 >
-                  <FlaskConical className="h-4 w-4 text-blue-600" />
-                  <span>Explore 120+ Labs</span>
+                  <FlaskConical className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
+                  <span>Khám Phá 120+ Phòng Lab</span>
                 </Link>
               </div>
 
               {/* Telemetry Counter Strip */}
               <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80">
                 <div className="space-y-0.5">
-                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-slate-900">
+                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white cyberpunk:text-cyan-50">
                     <CountUp end={2400} suffix="+" />
                   </div>
-                  <div className="text-xs font-medium text-slate-500">Active Analysts</div>
+                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Chuyên Viên Tác Chiến</div>
                 </div>
                 <div className="space-y-0.5">
                   <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-blue-600">
                     <CountUp end={120} suffix="+" />
                   </div>
-                  <div className="text-xs font-medium text-slate-500">Sandboxed Labs</div>
+                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Phòng Lab Thực Địa</div>
                 </div>
                 <div className="space-y-0.5">
                   <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-emerald-600">
@@ -759,7 +760,7 @@ export function LandingPage() {
                     to="/labs"
                     className="text-blue-400 hover:text-cyan-300 font-mono-tech font-semibold flex items-center gap-1 transition-colors shrink-0 text-[11px] sm:text-xs whitespace-nowrap"
                   >
-                    <span>Launch Lab</span>
+                    <span>Vào Phòng Lab</span>
                     <ChevronRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
@@ -775,13 +776,13 @@ export function LandingPage() {
       <section className="max-w-[1240px] mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <div className="text-center max-w-2xl mx-auto space-y-2 mb-10">
           <span className="text-xs font-mono-tech font-bold text-blue-600 uppercase tracking-widest">
-            THE PLATFORM ARCHITECTURE
+            KIẾN TRÚC NỀN TẢNG TÁC CHIẾN
           </span>
           <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            Engineered For True Security Proficiency
+            Thiết Kế Chuẩn Hóa Cho Năng Lực An Ninh Thực Chiến
           </h2>
           <p className="text-sm sm:text-base text-slate-600">
-            A comprehensive sandbox ecosystem combining real packet inspection, adversary mapping, and guided AI reasoning.
+            Hệ sinh thái Sandbox toàn diện kết hợp phân tích gói tin mạng thực tế, sơ đồ đối thủ APT và điều tra pháp chứng SOC tự động.
           </p>
         </div>
 
@@ -797,10 +798,10 @@ export function LandingPage() {
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-slate-900">
-                      Live Packet Forensics Engine
+                      Bộ Phân Tích Gói Tin Mạng Thời Gian Thực
                     </h3>
                     <p className="text-[11px] text-slate-500">
-                      Real-time packet capture stream with interactive inspection
+                      Luồng bắt gói tin trực tiếp với cơ chế bóc tách & chặn lọc tương tác
                     </p>
                   </div>
                 </div>
@@ -839,7 +840,7 @@ export function LandingPage() {
                             ? "bg-sky-100/90 border-sky-200 text-sky-800"
                             : pkt.protocol === "TLSv1.3"
                             ? "bg-emerald-100/90 border-emerald-200 text-emerald-800"
-                            : "bg-white border-slate-200 text-slate-700"
+                            : "bg-white dark:bg-slate-800 cyberpunk:bg-[#0a1628] border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-300"
                         }`}
                       >
                         {pkt.protocol}
@@ -883,7 +884,7 @@ export function LandingPage() {
                           MITIGATED
                         </span>
                       ) : (
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/80 border border-slate-200/60 text-slate-500 whitespace-nowrap">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/80 dark:bg-slate-800/80 cyberpunk:bg-[#0a1628] border border-slate-200/60 dark:border-slate-700/60 cyberpunk:border-cyan-500/30 text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 whitespace-nowrap">
                           {pkt.statusLabel || "PASSED"}
                         </span>
                       )}
@@ -894,9 +895,9 @@ export function LandingPage() {
             </div>
 
             <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500">
-              <span className="cursor-default">Interactive Wireshark & PCAP analysis incorporated in every lab.</span>
+              <span className="cursor-default">Môi trường Wireshark & phân tích PCAP được tích hợp sẵn trong mọi phòng lab.</span>
               <span className="font-mono-tech font-bold text-blue-600 shrink-0 whitespace-nowrap cursor-default">
-                ZERO EGRESS BREACH
+                CÔ LẬP KHÔNG RÒ RỈ DỮ LIỆU
               </span>
             </div>
           </div>
@@ -906,11 +907,11 @@ export function LandingPage() {
             <div className="space-y-3">
               <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-50 text-cyan-600 border border-cyan-200">
-                  <Crosshair className="h-4 w-4" />
+                  <Compass className="h-4 w-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">MITRE ATT&CK Mapping</h3>
-                  <p className="text-[11px] text-slate-500">Enterprise adversary tactics</p>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50">Ánh Xạ MITRE ATT&CK</h3>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300">Chiến thuật tấn công thực tế từ các nhóm APT</p>
                 </div>
               </div>
 
@@ -939,52 +940,52 @@ export function LandingPage() {
 
             {/* Active MITRE Defense Note */}
             <div className="mt-4 pt-3 border-t border-slate-100 font-mono-tech text-[11px] text-slate-600">
-              <span className="text-emerald-600 font-bold">Countermeasure: </span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-bold">Biện pháp phòng thủ: </span>
               {mitreTechniques.find((m) => m.id === selectedMitre)?.mitigation}
             </div>
           </div>
 
-          {/* BENTO 3: Autonomous AI Security Mentor - 6 cols */}
+          {/* BENTO 3: Automated SOC Telemetry & Defense Engine - 6 cols */}
           <div className="md:col-span-12 lg:col-span-6 cyber-card p-6 rounded-2xl flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-200">
-                    <Brain className="h-4 w-4" />
+                    <FileText className="h-4 w-4" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900">Security AI Co-Pilot</h3>
-                    <p className="text-[11px] text-slate-500">Autonomous reasoning companion</p>
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50">Hệ thống Đo kiểm Tác chiến SOC</h3>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300">Phân tích telemetry & bóc tách payload tự động</p>
                   </div>
                 </div>
                 <span className="font-mono-tech text-[10px] text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded font-bold">
-                  LLM REASONER
+                  TELEMETRY ENGINE
                 </span>
               </div>
 
               <div className="space-y-2">
                 <div className="p-3 rounded-xl bg-slate-900 text-slate-200 font-mono-tech text-xs space-y-1.5">
-                  <div className="text-cyan-400 text-[11px] font-bold">CYBER-AI // ADVICE ON LAB #04:</div>
+                  <div className="text-cyan-400 text-[11px] font-bold">SOC-TELEMETRY // PHÂN TÍCH VECTOR LAB #04:</div>
                   <p className="text-slate-300 text-[11px] leading-relaxed">
-                    "Notice the Base64 cookie in the HTTP request. Decode it and look for the padding byte length to calculate the oracle injection point."
+                    "Phát hiện Session Token mã hóa Base64 trong HTTP Header. Đang giải mã phân tích độ dài khối padding để xác định điểm khai thác Padding Oracle (CVE-2023-41892)."
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-xs font-mono-tech">
-                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700">
-                    <span className="font-bold text-blue-600 block">Decompiler Assistant</span>
-                    <span className="text-[11px] text-slate-500">Explains x86 assembly & ASM jumps</span>
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 cyberpunk:bg-[#071329] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-200">
+                    <span className="font-bold text-blue-600 dark:text-cyan-400 block">Decompiler Engine</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">Phân tích assembly x86 & luồng thực thi CFG</span>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700">
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 cyberpunk:bg-[#071329] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-200">
                     <span className="font-bold text-blue-600 block">Code Remediation</span>
-                    <span className="text-[11px] text-slate-500">Suggests hardened defense syntax</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">Đề xuất cú pháp phòng thủ chuẩn hóa NIST</span>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-              <span>Hints unlocked only when you need them. No answers spoiled.</span>
+              <span>Gợi ý tác chiến mở từng bước theo ngữ cảnh. Đảm bảo tính thử thách và rèn luyện tư duy.</span>
             </div>
           </div>
 
@@ -997,8 +998,8 @@ export function LandingPage() {
                     <Server className="h-4 w-4" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900">Zero-Trust Browser Sandbox</h3>
-                    <p className="text-[11px] text-slate-500">Ephemeral container orchestration</p>
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50">Sandbox Zero-Trust Trên Trình Duyệt</h3>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300">Điều phối container siêu nhẹ tức thì</p>
                   </div>
                 </div>
                 <span className="font-mono-tech text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-bold">
@@ -1012,29 +1013,29 @@ export function LandingPage() {
                   <div className="text-xl font-black text-slate-900">
                     <CountUp end={12} suffix="ms" />
                   </div>
-                  <div className="text-[10px] font-bold text-slate-400 mt-0.5">PING LATENCY</div>
+                  <div className="text-[10px] font-bold text-slate-400 mt-0.5">ĐỘ TRỄ PING</div>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50/80 border border-slate-200">
                   <div className="text-xl font-black text-blue-600">
                     <CountUp end={100} suffix="%" />
                   </div>
-                  <div className="text-[10px] font-bold text-slate-400 mt-0.5">ISOLATION</div>
+                  <div className="text-[10px] font-bold text-slate-400 mt-0.5">MỨC CÔ LẬP</div>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50/80 border border-slate-200">
                   <div className="text-xl font-black text-emerald-600">
                     <CountUp end={3} prefix="< " suffix="s" />
                   </div>
-                  <div className="text-[10px] font-bold text-slate-400 mt-0.5">CONTAINER BOOT</div>
+                  <div className="text-[10px] font-bold text-slate-400 mt-0.5">KHỞI ĐỘNG LAB</div>
                 </div>
               </div>
 
               <p className="text-xs text-slate-600 leading-relaxed">
-                Every practice scenario runs inside an isolated micro-virtualized container with automated snapshot restore and zero threat to your local machine.
+                Mọi kịch bản thực hành đều chạy trong container ảo hóa cô lập hoàn toàn, hỗ trợ snapshot khôi phục tự động và an toàn tuyệt đối cho thiết bị của bạn.
               </p>
             </div>
 
             <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-              <span>Runs seamlessly in standard Chrome, Edge, Firefox, and Safari.</span>
+              <span>Hoạt động mượt mà trên mọi trình duyệt Chrome, Edge, Firefox và Safari.</span>
             </div>
           </div>
         </div>
@@ -1044,18 +1045,18 @@ export function LandingPage() {
           4. INTERACTIVE PLAYGROUND: LIVE PAYLOAD ANALYZER
          ==================================================================== */}
       <section className="max-w-[1240px] mx-auto px-4 sm:px-6 py-10">
-        <div className="cyber-card p-6 sm:p-8 rounded-3xl border border-blue-200 bg-gradient-to-r from-white via-blue-50/30 to-white shadow-lg relative overflow-hidden">
+        <div className="cyber-card p-6 sm:p-8 rounded-3xl border border-blue-200 dark:border-slate-800 cyberpunk:border-cyan-500/40 bg-gradient-to-r from-white via-blue-50/30 to-white dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/80 cyberpunk:from-[#071022] cyberpunk:via-[#09152b] cyberpunk:to-[#0c1e3d] shadow-lg relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-2">
               <div className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 uppercase tracking-wider font-mono-tech">
                 <Code2 className="h-4 w-4" />
-                <span>INTERACTIVE AST PARSER</span>
+                <span>BỘ PHÂN TÍCH CÚ PHÁP AST TRỰC TIẾP</span>
               </div>
               <h2 className="text-2xl font-black text-slate-900 tracking-tight">
-                Test Our Defense Scanner Live
+                Kiểm Thử Trình Quét Phòng Thủ Trực Tiếp
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Input any raw SQL injection or XSS string to observe real-time lexical tokenization and immediate remediation guidance.
+                Nhập bất kỳ chuỗi tấn công SQL Injection hoặc XSS để quan sát phân tích token từ vựng và đề xuất cách vá lỗi ngay lập tức.
               </p>
             </div>
 
@@ -1067,8 +1068,8 @@ export function LandingPage() {
                     type="text"
                     value={testPayload}
                     onChange={(e) => setTestPayload(e.target.value)}
-                    className="w-full pl-18 pr-3 py-2.5 text-xs font-mono-tech bg-white border border-slate-300 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none text-slate-900 shadow-2xs"
-                    placeholder="Enter SQL/XSS payload..."
+                    className="w-full pl-18 pr-3 py-2.5 text-xs font-mono-tech bg-white dark:bg-slate-800 cyberpunk:bg-[#030712] border border-slate-300 dark:border-slate-700 cyberpunk:border-cyan-500/40 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none text-slate-900 dark:text-white shadow-2xs"
+                    placeholder="Nhập chuỗi payload SQL/XSS kiểm thử..."
                   />
                 </div>
                 <button
@@ -1082,7 +1083,7 @@ export function LandingPage() {
                   ) : (
                     <Shield className="h-4 w-4" />
                   )}
-                  <span>{isScanning ? "Scanning..." : "Analyze Payload"}</span>
+                  <span>{isScanning ? "Đang Quét..." : "Phân Tích Payload"}</span>
                 </button>
               </div>
 
@@ -1093,7 +1094,7 @@ export function LandingPage() {
                     <span className="text-amber-400 text-[11px]">{scanResult.severity}</span>
                   </div>
                   <div className="text-slate-300 text-[11px]">
-                    Remediation: <span className="text-emerald-400 font-semibold">{scanResult.remediation}</span>
+                    Khắc phục: <span className="text-emerald-400 font-semibold">{scanResult.remediation}</span>
                   </div>
                 </div>
               )}
@@ -1109,13 +1110,13 @@ export function LandingPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
             <span className="text-xs font-mono-tech font-bold text-blue-600 uppercase tracking-widest">
-              HANDS-ON SIMULATION CATALOG
+              DANH MỤC PHÒNG LAB THỰC CHIẾN
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
-              Explore Practice Laboratories
+              Hệ Thống Phòng Lab Thực Chiến
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Real vulnerability sandboxes mapped to industry CVEs and MITRE tactics.
+              Các môi trường khai thác lỗ hổng thực tế được ánh xạ với chuẩn CVE và ma trận MITRE ATT&CK.
             </p>
           </div>
 
@@ -1127,12 +1128,12 @@ export function LandingPage() {
                 type="text"
                 value={labSearch}
                 onChange={(e) => setLabSearch(e.target.value)}
-                placeholder="Search labs, CVEs..."
-                className="pl-9 pr-3 py-1.5 text-xs font-mono-tech rounded-xl border border-slate-200 bg-white text-slate-900 focus:border-blue-600 outline-none w-full sm:w-48 shadow-2xs"
+                placeholder="Tìm kiếm phòng lab, mã CVE..."
+                className="pl-9 pr-3 py-1.5 text-xs font-mono-tech rounded-xl border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 bg-white dark:bg-slate-800 cyberpunk:bg-[#030712] text-slate-900 dark:text-white focus:border-blue-600 outline-none w-full sm:w-48 shadow-2xs"
               />
             </div>
 
-            <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200/80 text-xs">
+            <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-slate-800 cyberpunk:bg-[#0d1e3d] rounded-xl border border-slate-200/80 dark:border-slate-700 cyberpunk:border-cyan-500/40 text-xs">
               {[
                 { key: "all", label: "All" },
                 { key: "web", label: "Web" },
@@ -1146,8 +1147,8 @@ export function LandingPage() {
                   onClick={() => setLabFilter(cat.key)}
                   className={`px-3 py-1 rounded-lg font-mono-tech text-xs font-semibold transition-all cursor-pointer ${
                     labFilter === cat.key
-                      ? "bg-white text-blue-600 shadow-2xs font-bold"
-                      : "text-slate-600 hover:text-slate-900"
+                      ? "bg-white dark:bg-slate-700 cyberpunk:bg-cyan-500/20 text-blue-600 dark:text-cyan-300 shadow-2xs font-bold"
+                      : "text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-400/80 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   {cat.label}
@@ -1164,9 +1165,9 @@ export function LandingPage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
             </span>
-            <span className="font-semibold">Filtered Scenarios:</span>
+            <span className="font-semibold">Kịch Bản Đang Lọc:</span>
             <span className="font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-              <CountUp end={filteredLabs.length} duration={3500} /> Labs Available
+              <CountUp end={filteredLabs.length} duration={3500} /> Phòng Lab Khả Dụng
             </span>
           </div>
 
@@ -1186,7 +1187,7 @@ export function LandingPage() {
             <span className="hidden sm:inline">
               Cloud VM Automation:{" "}
               <strong className="text-emerald-700 font-bold">
-                <CountUp end={100} duration={3500} suffix="%" /> Zero-Config
+                <CountUp end={100} duration={3500} suffix="%" /> Cấu Hình Tự Động
               </strong>
             </span>
           </div>
@@ -1222,7 +1223,7 @@ export function LandingPage() {
               <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between gap-2.5">
                 <div className="flex items-center gap-2 text-xs font-mono-tech text-slate-500 whitespace-nowrap shrink-0">
                   <span className="whitespace-nowrap">
-                    <CountUp end={lab.durationMins || parseInt(lab.duration)} duration={3500} suffix=" mins" />
+                    <CountUp end={lab.durationMins || parseInt(lab.duration)} duration={3500} suffix=" phút" />
                   </span>
                   <span>&bull;</span>
                   <span className="whitespace-nowrap">{lab.difficulty}</span>
@@ -1232,7 +1233,7 @@ export function LandingPage() {
                   to="/labs"
                   className="cyber-btn-primary btn-cyber-interactive px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 cursor-pointer shrink-0 whitespace-nowrap"
                 >
-                  <span>Launch</span>
+                  <span>Khởi Chạy</span>
                   <ChevronRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -1259,17 +1260,17 @@ export function LandingPage() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
               <span className="text-[11px] font-semibold text-slate-300 tracking-wider uppercase">
-                Instant Access Range • Zero Local Setup
+                Truy Cập Tức Thì • Không Cần Cài Đặt Máy Ảo
               </span>
             </div>
 
             {/* Main Headline */}
             <div className="space-y-2">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug">
-                Start your cybersecurity journey today
+                Bắt đầu hành trình an ninh mạng thực chiến ngay hôm nay
               </h2>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
-                Free to join. No credit card required. Launch isolated cloud targets in your browser and practice defensive & offensive drills at your own pace.
+                Tham gia miễn phí. Không cần thẻ tín dụng. Khởi chạy các mục tiêu đám mây cô lập ngay trên trình duyệt và rèn luyện kỹ năng theo tiến độ của bạn.
               </p>
             </div>
 
@@ -1280,8 +1281,8 @@ export function LandingPage() {
                   <Terminal className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-slate-100">Browser Sandboxes</div>
-                  <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">Zero VM setup or download</div>
+                  <div className="text-xs font-bold text-slate-100">Sandbox Trên Trình Duyệt</div>
+                  <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">Không cần tải về hay cài máy ảo</div>
                 </div>
               </div>
 
@@ -1290,18 +1291,18 @@ export function LandingPage() {
                   <Shield className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-slate-100">120+ Real-World Labs</div>
+                  <div className="text-xs font-bold text-slate-100">120+ Phòng Lab Thực Chiến</div>
                   <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">MITRE ATT&CK & OWASP</div>
                 </div>
               </div>
 
               <div className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-start gap-3">
                 <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
-                  <Zap className="h-4 w-4" />
+                  <UserCheck className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-slate-100">Free to Join</div>
-                  <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">No credit card required</div>
+                  <div className="text-xs font-bold text-slate-100">Kích Hoạt Tức Thì</div>
+                  <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">Không yêu cầu thẻ tín dụng</div>
                 </div>
               </div>
             </div>
@@ -1310,9 +1311,9 @@ export function LandingPage() {
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 to={isAuthenticated ? "/dashboard" : "/register"}
-                className="cyber-btn-primary btn-cyber-interactive w-full sm:w-auto inline-flex items-center justify-center gap-2 font-bold text-sm px-7 py-3.5 rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 transition-all cursor-pointer"
+                className="cyber-btn-primary btn-cyber-interactive w-full sm:w-auto inline-flex items-center justify-center gap-2 font-bold text-sm px-7 py-3.5 rounded-xl shadow-md shadow-blue-500/15 hover:shadow-blue-500/25 transition-all cursor-pointer"
               >
-                <span>{isAuthenticated ? "Launch Dashboard" : "Create Free Account"}</span>
+                <span>{isAuthenticated ? "Vào Bảng Điều Khiển" : "Tạo Tài Khoản Thực Chiến"}</span>
                 <ChevronRight className="h-4 w-4" />
               </Link>
 
@@ -1321,7 +1322,7 @@ export function LandingPage() {
                 className="btn-cyber-interactive w-full sm:w-auto inline-flex items-center justify-center gap-2 font-semibold text-sm px-5 py-3.5 rounded-xl text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 transition-all cursor-pointer"
               >
                 <Search className="h-4 w-4 text-sky-400" />
-                <span>Explore Live Labs</span>
+                <span>Khám Phá Phòng Lab Trực Tiếp</span>
               </Link>
             </div>
 
@@ -1329,7 +1330,7 @@ export function LandingPage() {
             <div className="pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-mono-tech text-slate-400">
               <span className="flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
-                <CountUp end={2400} suffix="+" /> Active Analysts
+                <CountUp end={2400} suffix="+" /> Học Viên Tác Chiến
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -1337,7 +1338,7 @@ export function LandingPage() {
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
-                <CountUp end={120} suffix="+" /> Sandboxed Labs
+                <CountUp end={120} suffix="+" /> Máy Ảo Diễn Tập
               </span>
             </div>
           </div>

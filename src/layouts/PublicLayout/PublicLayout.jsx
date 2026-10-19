@@ -3,16 +3,22 @@ import { Outlet } from "react-router-dom"
 import PublicHeader from "./PublicHeader"
 import PublicFooter from "./PublicFooter"
 import QuickHelpModal from "../../components/common/QuickHelpModal"
+import { LabTerminalModal } from "../../pages/labs/components/LabTerminalModal"
 
 /**
  * PublicLayout for unauthenticated marketing and informational pages.
  * Independent from AppLayout (authenticated platform workspace) and AuthLayout.
+ * Mounts LabTerminalModal so hands-on sandbox lab execution works seamlessly from /learning and /labs.
  */
 export function PublicLayout({ children }) {
   const [isHelpOpen, setIsHelpOpen] = useState(false)
 
   return (
-    <div className="min-h-screen cyber-grid-canvas text-slate-900 dark:text-slate-100 flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-cyan-900 dark:selection:text-cyan-100">
+    <div className="min-h-screen cyber-grid-canvas text-slate-900 dark:text-slate-100 flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-cyan-900 dark:selection:text-cyan-100 relative overflow-x-hidden">
+      {/* 3D Spatial Depth Ambient Glow Fields */}
+      <div className="ambient-glow-sphere-top" aria-hidden="true" />
+      <div className="ambient-glow-sphere-bottom" aria-hidden="true" />
+      
       {/* 1. Sticky Public Header */}
       <PublicHeader />
 
@@ -40,6 +46,9 @@ export function PublicLayout({ children }) {
         isOpen={isHelpOpen}
         onClose={() => setIsHelpOpen(false)}
       />
+
+      {/* Global Interactive Cyber Range Sandbox Terminal Modal */}
+      <LabTerminalModal />
     </div>
   )
 }

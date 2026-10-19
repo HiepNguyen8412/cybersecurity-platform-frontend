@@ -12,12 +12,11 @@ import {
   ArrowRight,
   Terminal,
   Flame,
-  HelpCircle,
   Check,
   AlertTriangle,
   RotateCcw,
   Play,
-  Crosshair,
+  BookOpen,
   FileText,
 } from "lucide-react"
 import { Badge, Button, CountUp } from "../../components/common"
@@ -115,6 +114,7 @@ export function Learning() {
     const matchesCategory = activeCategory === "all" || mod.category === activeCategory
     const matchesDifficulty =
       selectedDifficulty === "all" ||
+      (mod.difficultyKey && mod.difficultyKey.toLowerCase() === selectedDifficulty.toLowerCase()) ||
       mod.difficulty.toLowerCase() === selectedDifficulty.toLowerCase()
     const matchesSearch =
       mod.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -184,26 +184,26 @@ export function Learning() {
           {/* Quick HUD Metrics Card */}
           <div className="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-slate-950/80 border border-slate-700/60 dark:border-slate-800 shadow-xl backdrop-blur-md shrink-0 min-w-[280px]">
             <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-700/50 dark:border-slate-800/80">
-              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Active Learners</span>
+              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Học Viên Trực Chiến</span>
               <span className="text-lg font-mono font-extrabold text-cyan-400">
                 <CountUp end={14820} duration={200} />
               </span>
             </div>
             <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-700/50 dark:border-slate-800/80">
-              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Labs Mapped</span>
+              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Hạ Tầng Labs Thực Địa</span>
               <span className="text-lg font-mono font-extrabold text-emerald-400">
                 <CountUp end={68} duration={200} suffix=" VMs" />
               </span>
             </div>
             <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-700/50 dark:border-slate-800/80">
-              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Total Academy XP</span>
+              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Tổng Điểm XP Tích Lũy</span>
               <span className="text-lg font-mono font-extrabold text-amber-400 flex items-center gap-1">
                 <Flame className="w-4 h-4 fill-amber-400 text-amber-400" />
                 <span>{userXp} XP</span>
               </span>
             </div>
             <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-700/50 dark:border-slate-800/80">
-              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Active Season</span>
+              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase block">Mùa Diễn Tập</span>
               <span className="text-lg font-mono font-extrabold text-indigo-400">Tier-2 Range</span>
             </div>
           </div>
@@ -222,7 +222,7 @@ export function Learning() {
               onClick={() => setActiveCategory(cat.id)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-2 ${
                 activeCategory === cat.id
-                  ? "bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 font-bold shadow-md shadow-blue-500/20 dark:shadow-cyan-500/20"
+                  ? "bg-blue-600 dark:bg-cyan-500 text-white dark:text-slate-950 font-bold shadow-2xs"
                   : "bg-white dark:bg-slate-900/70 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 shadow-2xs"
               }`}
             >
@@ -255,17 +255,22 @@ export function Learning() {
 
           <div className="flex items-center gap-2 shrink-0">
             <span className="text-xs text-slate-500 dark:text-slate-400 font-mono hidden sm:inline">ĐỘ KHÓ:</span>
-            {["all", "novice", "intermediate", "specialist"].map((diff) => (
+            {[
+              { id: "all", label: "Tất Cả" },
+              { id: "novice", label: "Cơ Bản" },
+              { id: "intermediate", label: "Trung Cấp" },
+              { id: "specialist", label: "Chuyên Gia" },
+            ].map(({ id, label }) => (
               <button
-                key={diff}
-                onClick={() => setSelectedDifficulty(diff)}
+                key={id}
+                onClick={() => setSelectedDifficulty(id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase font-semibold transition-all cursor-pointer ${
-                  selectedDifficulty === diff
+                  selectedDifficulty === id
                     ? "bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 shadow-sm font-bold"
                     : "bg-white dark:bg-slate-900/70 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 shadow-2xs"
                 }`}
               >
-                {diff}
+                {label}
               </button>
             ))}
           </div>
@@ -280,7 +285,7 @@ export function Learning() {
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xs font-bold font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
-              <Crosshair className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
+              <BookOpen className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
               <span>GIÁO TRÌNH TÁC CHIẾN ({filteredModules.length} MODULES)</span>
             </h2>
             <span className="text-[11px] text-blue-600 dark:text-cyan-400 font-mono font-semibold">
@@ -290,7 +295,7 @@ export function Learning() {
 
           {filteredModules.length === 0 ? (
             <div className="p-12 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3 shadow-sm">
-              <HelpCircle className="h-10 w-10 text-slate-400 dark:text-slate-500 mx-auto" />
+              <Search className="h-10 w-10 text-slate-400 dark:text-slate-500 mx-auto" />
               <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Không tìm thấy module phù hợp với bộ lọc hiện tại.</p>
               <Button
                 variant="outline"
@@ -331,9 +336,9 @@ export function Learning() {
 
                         <Badge
                           variant={
-                            mod.difficulty === "Novice"
+                            mod.difficulty === "Cơ Bản" || mod.difficulty === "Novice"
                               ? "success"
-                              : mod.difficulty === "Intermediate"
+                              : mod.difficulty === "Trung Cấp" || mod.difficulty === "Intermediate"
                               ? "primary"
                               : "warning"
                           }
@@ -433,7 +438,7 @@ export function Learning() {
 
                         <button
                           onClick={() => openLessonModal(mod.id)}
-                          className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white dark:text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-500/20 dark:shadow-cyan-500/20 transition-all cursor-pointer"
+                          className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white dark:text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer"
                         >
                           <Play className="h-3.5 w-3.5 fill-current" />
                           <span>
@@ -749,10 +754,11 @@ export function Learning() {
             </div>
 
             <div className="pt-2">
-              <Link to="/learning-paths" className="w-full block">
-                <button className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-mono text-xs transition-colors cursor-pointer border border-slate-200 dark:border-slate-700">
-                  Khám Phá Lộ Trình Sự Nghiệp &rarr;
-                </button>
+              <Link
+                to="/learning-paths"
+                className="w-full block text-center py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-mono text-xs transition-colors cursor-pointer border border-slate-200 dark:border-slate-700"
+              >
+                Khám Phá Lộ Trình Sự Nghiệp &rarr;
               </Link>
             </div>
           </div>
@@ -768,12 +774,11 @@ export function Learning() {
             <p className="text-xs text-slate-300 leading-relaxed font-sans">
               Mỗi bài giảng liên kết trực tiếp với máy ảo Linux container có sẵn bộ công cụ pentest & phân tích gói tin.
             </p>
-            <Link to="/labs" className="inline-block w-full">
-              <button
-                className="w-full py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 transition-all cursor-pointer"
-              >
-                Khởi Động Cyber Range Labs
-              </button>
+            <Link
+              to="/labs"
+              className="inline-block w-full text-center py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 transition-all cursor-pointer"
+            >
+              Khởi Động Cyber Range Labs
             </Link>
           </div>
         </div>

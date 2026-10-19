@@ -134,6 +134,17 @@ export const authService = {
           isEmailVerified: true,
         }
 
+        try {
+          localStorage.removeItem("cyberpath_logged_out")
+          sessionStorage.removeItem("cyberpath_logged_out")
+          if (rememberMe) {
+            localStorage.setItem("cyberpath_user_profile", JSON.stringify(user))
+          } else {
+            sessionStorage.setItem("cyberpath_user_profile", JSON.stringify(user))
+          }
+        } catch {
+          // Ignore storage errors
+        }
         return { success: true, data: { user } }
       }
     )
@@ -199,6 +210,13 @@ export const authService = {
       async () => {
         // Check safe storage profile cache (sessionStorage takes precedence for active tab)
         try {
+          const isLoggedOut =
+            sessionStorage.getItem("cyberpath_logged_out") === "true" ||
+            localStorage.getItem("cyberpath_logged_out") === "true"
+          if (isLoggedOut) {
+            return { success: false, error: "No active session." }
+          }
+
           const cached =
             sessionStorage.getItem("cyberpath_user_profile") ||
             localStorage.getItem("cyberpath_user_profile")
@@ -350,6 +368,8 @@ export const authService = {
       // Backend may be offline, ignore network errors on logout
     }
     try {
+      localStorage.setItem("cyberpath_logged_out", "true")
+      sessionStorage.setItem("cyberpath_logged_out", "true")
       localStorage.removeItem("cyberpath_user_profile")
       sessionStorage.removeItem("cyberpath_user_profile")
       sessionStorage.removeItem("cyberpath_pending_verify_email")

@@ -64,7 +64,7 @@ const Select = forwardRef(function Select(
           required={required}
           aria-invalid={isError}
           className={`
-            w-full appearance-none rounded-lg border bg-white text-slate-900 transition-all duration-150
+            w-full appearance-none rounded-lg border bg-white dark:bg-slate-900 cyberpunk:bg-[#071329] text-slate-900 dark:text-slate-100 cyberpunk:text-cyan-200 border-slate-300 dark:border-slate-700 cyberpunk:border-cyan-500/40 transition-all duration-150
             outline-none cursor-pointer
             disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed
             ${sizeStyles[size] || sizeStyles.md}

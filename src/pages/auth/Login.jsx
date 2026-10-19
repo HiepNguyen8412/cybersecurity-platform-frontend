@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
-import { Mail, Lock, AlertCircle, Shield, ArrowRight, Zap, Check } from "lucide-react"
+import { Mail, Lock, AlertCircle, Shield, ArrowRight, KeyRound, Check } from "lucide-react"
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout"
 import { Button, Input, Checkbox, Divider } from "../../components/common"
 import SocialAuthButtons from "../../components/auth/SocialAuthButtons"
@@ -101,10 +101,10 @@ function Login() {
           </div>
 
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
-            Sign In to Platform
+            Đăng Nhập Vào Nền Tảng
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 leading-normal">
-            Enter your credentials to continue your security practice.
+            Nhập thông tin xác thực để tiếp tục phiên tác chiến an ninh mạng.
           </p>
         </div>
 
@@ -129,7 +129,7 @@ function Login() {
           <Input
             ref={emailInputRef}
             id="login-email"
-            label="Email address"
+            label="Địa chỉ Email"
             type="email"
             required
             autoComplete="email"
@@ -187,7 +187,7 @@ function Login() {
           <div className="flex items-center justify-between pt-0.5">
             <Checkbox
               id="remember-me"
-              label="Remember me on this trusted device"
+              label="Ghi nhớ phiên đăng nhập trên thiết bị này"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
               disabled={isBusy}
@@ -202,10 +202,10 @@ function Login() {
               size="lg"
               fullWidth
               isLoading={isBusy}
-              loadingText="Verifying credentials..."
+              loadingText="Đang xác thực thông tin..."
               rightIcon={!isBusy ? <ArrowRight className="h-4 w-4" /> : null}
             >
-              Sign In to Platform
+              Đăng Nhập Ngay
             </Button>
           </div>
         </form>
@@ -214,7 +214,7 @@ function Login() {
         <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-between text-xs transition-colors hover:bg-slate-100/70">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
-              <Zap className="h-3.5 w-3.5" />
+              <KeyRound className="h-3.5 w-3.5" />
             </div>
             <div className="flex flex-col text-left min-w-0">
               <span className="text-[11px] font-semibold text-slate-800 truncate">
@@ -229,8 +229,8 @@ function Login() {
           <button
             type="button"
             onClick={handleFillDemo}
-            className="shrink-0 ml-2 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-[11px] font-bold text-blue-600 hover:text-blue-700 hover:bg-blue-50 transition-all cursor-pointer shadow-2xs"
-            title="Auto-fill demo test credentials"
+            className="shrink-0 ml-2 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 text-[11px] font-bold text-blue-600 dark:text-cyan-400 cyberpunk:text-cyan-300 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-slate-700 transition-all cursor-pointer shadow-2xs"
+            title="Tự động điền tài khoản mẫu"
           >
             {isDemoCopied ? (
               <>

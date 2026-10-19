@@ -1,8 +1,8 @@
-import { create } from "zustand"
+﻿import { create } from "zustand"
 
 /**
  * useThemeStore
- * Manages active application visual theme (dark, light, cyberpunk) and applies classes to document.
+ * Manages active application visual theme (light, dark, cyberpunk) and applies classes & data-theme to document.
  */
 export const useThemeStore = create((set, get) => ({
   theme: localStorage.getItem("cyber_theme") || "dark",
@@ -16,17 +16,21 @@ export const useThemeStore = create((set, get) => ({
     localStorage.setItem("cyber_theme", newTheme)
     const root = document.documentElement
 
-    // Clean old theme classes
+    // Clean old theme classes and attributes
     root.classList.remove("light", "dark", "cyberpunk")
+    root.removeAttribute("data-theme")
 
     if (newTheme === "light") {
       root.classList.add("light")
+      root.setAttribute("data-theme", "light")
       root.style.colorScheme = "light"
     } else if (newTheme === "cyberpunk") {
       root.classList.add("dark", "cyberpunk")
+      root.setAttribute("data-theme", "cyberpunk")
       root.style.colorScheme = "dark"
     } else {
       root.classList.add("dark")
+      root.setAttribute("data-theme", "dark")
       root.style.colorScheme = "dark"
     }
 

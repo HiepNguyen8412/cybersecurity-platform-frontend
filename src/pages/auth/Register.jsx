@@ -32,7 +32,7 @@ function Register() {
     const errors = {}
 
     if (!name.trim()) {
-      errors.name = "Full name is required."
+      errors.name = "Vui lòng nhập họ và tên."
     } else if (name.trim().length < 2) {
       errors.name = "Full name must be at least 2 characters."
     }
@@ -48,13 +48,13 @@ function Register() {
     }
 
     if (!confirmPassword) {
-      errors.confirmPassword = "Please confirm your password."
+      errors.confirmPassword = "Vui lòng xác nhận mật khẩu."
     } else if (password !== confirmPassword) {
-      errors.confirmPassword = "Passwords do not match."
+      errors.confirmPassword = "Mật khẩu xác nhận không khớp."
     }
 
     if (!agreeTerms) {
-      errors.agreeTerms = "You must agree to the Terms of Service and Lab Ethics to create an account."
+      errors.agreeTerms = "You must agree to the Điều Khoản Dịch Vụ and Lab Ethics to create an account."
     }
 
     setFieldErrors(errors)
@@ -108,14 +108,14 @@ function Register() {
         <div className="space-y-1.5 text-center">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-[11px] font-semibold text-blue-700 tracking-wide uppercase">
             <Shield className="h-3 w-3" />
-            <span>Defender Registration</span>
+            <span>Đăng Ký Tài Khoản Tác Chiến</span>
           </div>
 
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
-            Create Your Account
+            Tạo Tài Khoản Học Viên
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 leading-normal">
-            Access hands-on virtual security labs, challenge ranges, and guided paths.
+            Truy cập hệ thống phòng lab ảo thực chiến, đấu trường an ninh và lộ trình chuyên sâu.
           </p>
         </div>
 
@@ -139,7 +139,7 @@ function Register() {
           {/* Full Name */}
           <Input
             id="register-name"
-            label="Full name"
+            label="Họ và tên"
             type="text"
             required
             autoComplete="name"
@@ -149,7 +149,7 @@ function Register() {
               if (fieldErrors.name) setFieldErrors((prev) => ({ ...prev, name: "" }))
               if (formError) setFormError("")
             }}
-            placeholder="e.g. Alex Morgan"
+            placeholder="Ví dụ: Nguyễn Văn A"
             leftIcon={<User className="h-4 w-4 text-slate-400" />}
             errorMessage={fieldErrors.name}
             disabled={isBusy}
@@ -158,7 +158,7 @@ function Register() {
           {/* Email Address */}
           <Input
             id="register-email"
-            label="Email address"
+            label="Địa chỉ Email"
             type="email"
             required
             autoComplete="email"
@@ -178,7 +178,7 @@ function Register() {
           <div className="space-y-1.5">
             <Input
               id="register-password"
-              label="Create password"
+              label="Tạo mật khẩu"
               type="password"
               required
               autoComplete="new-password"
@@ -206,13 +206,13 @@ function Register() {
                 htmlFor="register-confirm-password"
                 className="text-xs font-semibold text-slate-700 tracking-wide"
               >
-                Confirm password <span className="text-rose-500">*</span>
+                Xác nhận mật khẩu <span className="text-rose-500">*</span>
               </label>
 
               {isPasswordMatch && (
                 <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 animate-in fade-in">
                   <CheckCircle2 className="h-3 w-3" />
-                  <span>Passwords match</span>
+                  <span>Mật khẩu khớp</span>
                 </span>
               )}
             </div>
@@ -249,15 +249,15 @@ function Register() {
               errorMessage={fieldErrors.agreeTerms}
               label={
                 <span className="text-xs text-slate-600 leading-normal">
-                  I agree to the{" "}
+                  Tôi đồng ý với{" "}
                   <span className="font-semibold text-slate-800">
-                    Terms of Service
+                    Điều Khoản Dịch Vụ
                   </span>
                   ,{" "}
                   <span className="font-semibold text-slate-800">
-                    Privacy Policy
+                    Chính Sách Bảo Mật
                   </span>
-                  , and responsible security lab ethics.
+                  , và Quy tắc đạo đức diễn tập an ninh mạng.
                 </span>
               }
             />
@@ -271,23 +271,23 @@ function Register() {
               size="lg"
               fullWidth
               isLoading={isBusy}
-              loadingText="Creating account..."
+              loadingText="Đang tạo tài khoản..."
               rightIcon={!isBusy ? <ArrowRight className="h-4 w-4" /> : null}
             >
-              Create Defender Account
+              Tạo Tài Khoản Thực Chiến
             </Button>
           </div>
         </form>
 
         {/* Social Registration */}
         <div className="space-y-3 pt-1">
-          <Divider label="or sign up with" />
+          <Divider label="hoặc đăng ký bằng" />
           <SocialAuthButtons />
         </div>
 
         {/* Sign In Link */}
         <p className="text-center text-xs text-slate-500 pt-1">
-          Already have an account?{" "}
+          Đã có tài khoản?{" "}
           <Link
             to="/login"
             className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"

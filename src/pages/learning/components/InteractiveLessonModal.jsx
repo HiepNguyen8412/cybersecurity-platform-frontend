@@ -11,14 +11,14 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
-  HelpCircle,
   AlertTriangle,
   BookOpen,
   Code2,
-  Target,
   ShieldAlert,
   ShieldCheck,
-  Zap,
+  Flame,
+  FileText,
+  Compass,
 } from "lucide-react"
 import useLearningStore from "../../../stores/useLearningStore"
 import useNotificationStore from "../../../stores/useNotificationStore"
@@ -242,7 +242,7 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
           {[
             { id: "theory", label: "Kiến Thức & Luồng Tấn Công", icon: BookOpen },
             { id: "code", label: "So Sánh Code (Lỗi vs Đã Vá)", icon: Code2 },
-            { id: "quiz", label: "Tactical Quiz (+50 XP)", icon: HelpCircle },
+            { id: "quiz", label: "Trắc Nghiệm Tác Chiến (+50 XP)", icon: FileText },
           ].map((tab) => {
             const Icon = tab.icon
             const isActive = activeTab === tab.id
@@ -285,7 +285,7 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <h3 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-                    <Target className="w-4 h-4 text-cyan-400" />
+                    <Compass className="w-4 h-4 text-cyan-400" />
                     <span>Mô Phỏng Chuỗi Khai Thác Đa Tầng (Threat Vector Chain)</span>
                   </h3>
                   <span className="text-[11px] font-mono text-cyan-400">
@@ -392,7 +392,7 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
                       <span>VULNERABLE IMPLEMENTATION (CODE LỖI)</span>
                     </span>
                     <span className="text-[10px] px-1.5 py-0.5 rounded bg-rose-900/60 text-rose-200">
-                      EXPLOITABLE SINK
+                      ĐIỂM YẾU DỄ KHAI THÁC
                     </span>
                   </div>
 
@@ -413,7 +413,7 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
                       <span>HARDENED DEFENSE (BẢN VÁ AN TOÀN)</span>
                     </span>
                     <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-900/60 text-emerald-200">
-                      OWASP COMPLIANT
+                      CHUẨN AN TOÀN OWASP
                     </span>
                   </div>
 
@@ -469,12 +469,12 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
                 <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
-                      <HelpCircle className="w-4 h-4" />
+                      <FileText className="w-4 h-4" />
                       <span>Thử Thách Đánh Giá Chiến Thuật</span>
                     </span>
 
                     <span className="text-xs font-mono text-amber-400 font-bold flex items-center gap-1">
-                      <Zap className="w-3.5 h-3.5 fill-amber-400" />
+                      <Flame className="w-3.5 h-3.5 fill-amber-400" />
                       <span>+50 XP</span>
                     </span>
                   </div>

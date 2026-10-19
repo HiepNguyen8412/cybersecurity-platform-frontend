@@ -8,7 +8,7 @@ import {
   ArrowRight,
   AlertCircle,
   KeyRound,
-  ShieldAlert,
+  FileText,
 } from "lucide-react"
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout"
 import { Button, Input } from "../../components/common"
@@ -59,7 +59,7 @@ function ForgotPassword() {
       setIsSuccess(true)
       setResendCooldown(30)
     } else {
-      setFormError(result.error || "Unable to process password reset request. Please try again.")
+      setFormError(result.error || "Không thể xử lý yêu cầu đặt lại mật khẩu. Vui lòng thử lại sau.")
     }
   }
 
@@ -80,7 +80,7 @@ function ForgotPassword() {
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          <span>Back to sign in</span>
+          <span>Quay lại trang đăng nhập</span>
         </Link>
 
         {formError && (
@@ -105,21 +105,21 @@ function ForgotPassword() {
             <div className="space-y-1.5 text-center">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-[11px] font-semibold text-blue-700 tracking-wide uppercase">
                 <KeyRound className="h-3 w-3" />
-                <span>Credential Recovery</span>
+                <span>Khôi Phục Thông Tin Đăng Nhập</span>
               </div>
 
               <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
-                Reset Your Password
+                Đặt Lại Mật Khẩu
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 leading-normal">
-                Enter your registered email and we'll dispatch a cryptographic, single-use recovery link.
+                Nhập địa chỉ email đã đăng ký để nhận liên kết khôi phục an toàn sử dụng một lần.
               </p>
             </div>
 
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
               <Input
                 id="reset-email"
-                label="Email address"
+                label="Địa chỉ email"
                 type="email"
                 required
                 autoComplete="email"
@@ -136,9 +136,9 @@ function ForgotPassword() {
               />
 
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-[11px] text-slate-500 flex items-start gap-2">
-                <ShieldAlert className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
+                <FileText className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
                 <span>
-                  For your security, reset links are single-use credentials that automatically expire in 15 minutes.
+                  Lưu ý an ninh: Liên kết đặt lại mật khẩu là thông tin xác thực sử dụng một lần và tự động hết hạn sau 15 phút.
                 </span>
               </div>
 
@@ -149,17 +149,17 @@ function ForgotPassword() {
                   size="lg"
                   fullWidth
                   isLoading={isLoading}
-                  loadingText="Dispatching recovery link..."
+                  loadingText="Đang gửi liên kết..."
                   rightIcon={!isLoading ? <ArrowRight className="h-4 w-4" /> : null}
                 >
-                  Send Recovery Link
+                  Gửi Liên Kết Khôi Phục
                 </Button>
               </div>
             </form>
           </div>
         ) : (
           /* ====================================================================
-             Anti-Enumeration "Check Your Email" Success State
+             Anti-Enumeration "Kiểm Tra Hộp Thư Của Bạn" Success State
              ==================================================================== */
           <div className="space-y-5 animate-in fade-in duration-200">
             {/* Visual Icon */}
@@ -169,21 +169,21 @@ function ForgotPassword() {
 
             <div className="space-y-1.5 text-center">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-100 text-[11px] font-semibold text-emerald-700 tracking-wide uppercase">
-                <span>Dispatch Completed</span>
+                <span>Đã Gửi Thành Công</span>
               </div>
 
               <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
                 Check Your Email
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                If an account matches <span className="font-semibold text-slate-900">{email}</span>, a secure password reset link has been dispatched.
+                Nếu tài khoản trùng khớp với <span className="font-semibold text-slate-900">{email}</span>, liên kết đặt lại mật khẩu an toàn đã được gửi tới hòm thư của bạn.
               </p>
             </div>
 
             <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-500 space-y-1">
-              <p className="font-medium text-slate-700">Security Notice:</p>
+              <p className="font-medium text-slate-700">Lưu ý bảo mật:</p>
               <p>
-                Links are single-use and expire within 15 minutes. Check both your inbox and quarantine/spam folders.
+                Liên kết chỉ có hiệu lực một lần trong 15 phút. Vui lòng kiểm tra cả hộp thư đến và thư mục spam/rác.
               </p>
             </div>
 
@@ -212,8 +212,8 @@ function ForgotPassword() {
                 leftIcon={<RefreshCw className="h-3.5 w-3.5" />}
               >
                 {resendCooldown > 0
-                  ? `Resend available in ${resendCooldown}s`
-                  : "Resend instructions"}
+                  ? `Gửi lại sau ${resendCooldown}s`
+                  : "Gửi lại liên kết khôi phục"}
               </Button>
             </div>
           </div>
@@ -221,12 +221,12 @@ function ForgotPassword() {
 
         {/* Back to sign in prompt */}
         <p className="text-center text-xs text-slate-500 pt-2 border-t border-slate-100">
-          Remember your password?{" "}
+          Bạn đã nhớ lại mật khẩu?{" "}
           <Link
             to="/login"
             className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
           >
-            Sign in
+            Đăng nhập ngay
           </Link>
         </p>
       </div>

@@ -59,7 +59,7 @@ const Checkbox = forwardRef(function Checkbox(
               ${
                 checked || indeterminate
                   ? "bg-blue-600 border-blue-600 text-white"
-                  : "bg-white border-slate-300 hover:border-slate-400"
+                  : "bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] border-slate-300 dark:border-slate-700 cyberpunk:border-cyan-500/40 hover:border-slate-400 dark:hover:border-slate-500"
               }
               ${errorMessage ? "border-rose-500" : ""}
               ${className}

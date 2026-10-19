@@ -10,7 +10,7 @@ import PublicHeader from "../PublicLayout/PublicHeader"
  */
 export function AuthLayout({ children }) {
   return (
-    <div className="min-h-screen cyber-grid-canvas text-slate-900 flex flex-col justify-between relative overflow-x-hidden selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen cyber-grid-canvas text-slate-900 dark:text-white cyberpunk:text-cyan-50 flex flex-col justify-between relative overflow-x-hidden selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-cyan-950 dark:selection:text-cyan-200">
       {/* 1. Persistent Public Header */}
       <PublicHeader />
 
@@ -35,14 +35,14 @@ export function AuthLayout({ children }) {
 
       {/* Subtle Security Badge Pill */}
       <div className="relative z-10 pt-4 flex justify-center px-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 border border-slate-200/90 shadow-2xs backdrop-blur-md text-[11px] font-mono-tech text-slate-600">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 dark:bg-slate-900/90 cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-2xs backdrop-blur-md text-[11px] font-mono-tech text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <span className="text-emerald-700 font-bold">256-BIT TLS ENCRYPTED</span>
+          <span className="text-emerald-700 font-bold">MÃ HÓA TLS 256-BIT</span>
           <span className="text-slate-300">&bull;</span>
-          <span className="text-slate-500 font-semibold">ISOLATED SANDBOX</span>
+          <span className="text-slate-500 font-semibold">SANDBOX CÔ LẬP</span>
         </div>
       </div>
 
@@ -52,14 +52,14 @@ export function AuthLayout({ children }) {
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-4 sm:py-6">
         <div className="w-full max-w-[460px] mx-auto">
           {/* Card Container with soft elevation */}
-          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xl shadow-slate-200/60 p-6 sm:p-8 relative">
+          <div className="bg-white dark:bg-slate-900 cyberpunk:bg-[#071022] rounded-2xl border border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-xl dark:shadow-2xl dark:shadow-black/70 cyberpunk:shadow-sm p-6 sm:p-8 relative">
             {children}
           </div>
 
           {/* Under-Card Security Assurance */}
           <div className="mt-4 flex items-center justify-center gap-2 text-center text-[11px] text-slate-400 select-none">
             <Lock className="h-3 w-3 text-slate-400 shrink-0" />
-            <span>Zero-Knowledge Session &bull; Anti-Brute Force Active &bull; No Log Retention</span>
+            <span>Phiên Zero-Knowledge &bull; Phòng Chống Brute Force &bull; Không Lưu Log</span>
           </div>
         </div>
       </main>
@@ -67,19 +67,19 @@ export function AuthLayout({ children }) {
       {/* ====================================================================
           FOOTER (CENTERED)
          ==================================================================== */}
-      <footer className="relative z-10 py-5 px-4 flex flex-col items-center justify-center gap-2.5 text-xs text-slate-500 text-center border-t border-slate-200/70 bg-white/50 backdrop-blur-xs">
+      <footer className="relative z-10 py-5 px-4 flex flex-col items-center justify-center gap-2.5 text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 text-center border-t border-slate-200/70 dark:border-slate-800 cyberpunk:border-cyan-500/30 bg-white/50 dark:bg-slate-950/70 cyberpunk:bg-[#030712]/80 backdrop-blur-xs">
         {/* Compliance Standards Badges */}
         <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-mono text-slate-500">
-          <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 shadow-2xs">
+          <span className="px-2 py-0.5 rounded bg-white dark:bg-slate-800 cyberpunk:bg-[#0d1e3d] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 shadow-2xs">
             MITRE ATT&CK
           </span>
-          <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 shadow-2xs">
+          <span className="px-2 py-0.5 rounded bg-white dark:bg-slate-800 cyberpunk:bg-[#0d1e3d] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 shadow-2xs">
             NIST CSF
           </span>
-          <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 shadow-2xs">
+          <span className="px-2 py-0.5 rounded bg-white dark:bg-slate-800 cyberpunk:bg-[#0d1e3d] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 shadow-2xs">
             OWASP TOP 10
           </span>
-          <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 shadow-2xs">
+          <span className="px-2 py-0.5 rounded bg-white dark:bg-slate-800 cyberpunk:bg-[#0d1e3d] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/30 text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 shadow-2xs">
             ISO 27001
           </span>
         </div>
@@ -102,7 +102,7 @@ export function AuthLayout({ children }) {
           <span>&middot;</span>
           <span className="inline-flex items-center gap-1 text-emerald-600 font-medium">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 inline-block" />
-            <span>Systems Normal</span>
+            <span>Hệ Thống Bình Thường</span>
           </span>
         </div>
       </footer>

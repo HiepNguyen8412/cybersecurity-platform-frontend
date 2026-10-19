@@ -21,7 +21,7 @@ export function Tabs({
 
     if (variant === "segmented") {
       return isActive
-        ? "bg-white text-slate-900 shadow-xs font-semibold"
+        ? "bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] text-slate-900 dark:text-slate-100 cyberpunk:text-cyan-300 shadow-xs font-semibold"
         : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50"
     }
 

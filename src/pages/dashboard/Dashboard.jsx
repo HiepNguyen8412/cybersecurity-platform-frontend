@@ -35,7 +35,7 @@ import { Loader2 } from "lucide-react"
 export function Dashboard() {
   const { user, isInitializing } = useAuth()
 
-  const learnerName = user?.fullName || user?.name || "Học viên"
+  const learnerName = user?.fullName || user?.name || "Chuyên viên SOC"
   const currentPath = mockLearningPaths.find((p) => p.isCurrent) || mockLearningPaths[0]
 
   if (isInitializing) {
@@ -47,7 +47,7 @@ export function Dashboard() {
       >
         <Loader2 className="h-8 w-8 animate-spin text-cyan-500" aria-hidden="true" />
         <p className="text-xs font-semibold text-slate-400">
-          Đang tải dữ liệu Trung tâm Điều hành...
+          Đang tải dữ liệu Trung tâm Điều hành SOC...
         </p>
       </div>
     )
@@ -84,7 +84,7 @@ export function Dashboard() {
 
       {/* ====================================================================
           MAIN DASHBOARD TWO-COLUMN LAYOUT
-          Desktop: 7 cols (Learning content) / 5 cols (AI, Skills, Activity)
+          Desktop: 7 cols (Learning content) / 5 cols (SOC Intel, Skills, Activity)
          ==================================================================== */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column (7 cols): Primary Curriculum & Next Milestones */}

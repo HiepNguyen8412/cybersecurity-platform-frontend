@@ -24,10 +24,10 @@ export function PublicHeader() {
   const navigate = useNavigate()
 
   const navLinks = [
-    { label: "Courses", to: "/learning" },
-    { label: "Labs", to: "/labs" },
-    { label: "Paths", to: "/learning-paths" },
-    { label: "Pricing", to: "/pricing" },
+    { label: "Khóa học", to: "/learning" },
+    { label: "Phòng Lab", to: "/labs" },
+    { label: "Lộ trình", to: "/learning-paths" },
+    { label: "Bảng giá", to: "/pricing" },
   ]
 
   const displayName = user?.fullName || user?.name || "Learner"
@@ -177,13 +177,13 @@ export function PublicHeader() {
                 className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold rounded-xl px-3.5 py-2 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-cyan-400 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-all cursor-pointer shadow-2xs"
               >
                 <LogIn className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
-                <span>Log in</span>
+                <span>Đăng nhập</span>
               </Link>
               <Link
                 to="/register"
                 className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold rounded-xl px-4 py-2 cyber-btn-primary hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer shadow-sm"
               >
-                <span>Get started</span>
+                <span>Bắt đầu ngay</span>
               </Link>
             </div>
           )}

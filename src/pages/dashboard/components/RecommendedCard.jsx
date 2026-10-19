@@ -12,8 +12,7 @@ const difficultyVariants = {
 /**
  * RecommendedCard Component
  * 
- * Compact card for recommended learning courses, labs, and modules.
- * Highly scannable, clean typography, comfortable touch targets.
+ * High-contrast card with crisp text for all 3 themes.
  */
 export function RecommendedCard({ item, className = "" }) {
   const {
@@ -24,7 +23,7 @@ export function RecommendedCard({ item, className = "" }) {
     duration = "45 mins",
     progress = 0,
     status = "Not Started",
-    ctaLabel = "Start",
+    ctaLabel = "Bắt đầu",
     path = "/learning",
   } = item
 
@@ -46,14 +45,18 @@ export function RecommendedCard({ item, className = "" }) {
             <span
               className={`
                 flex h-6 w-6 shrink-0 items-center justify-center rounded-md
-                ${isLab ? "bg-emerald-50 text-emerald-600" : "bg-blue-50 text-blue-600"}
+                ${
+                  isLab
+                    ? "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400 cyberpunk:bg-emerald-950/60 cyberpunk:text-emerald-300"
+                    : "bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 cyberpunk:bg-cyan-950/60 cyberpunk:text-cyan-300"
+                }
               `}
               aria-hidden="true"
             >
               {isLab ? <FlaskConical className="h-3.5 w-3.5" /> : <BookOpen className="h-3.5 w-3.5" />}
             </span>
 
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300/80 font-mono-tech">
               {type}
             </span>
           </div>
@@ -65,28 +68,28 @@ export function RecommendedCard({ item, className = "" }) {
 
         {/* Title & Description */}
         <div className="space-y-1">
-          <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors line-clamp-1">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-snug group-hover:text-blue-600 dark:group-hover:text-cyan-400 cyberpunk:group-hover:text-cyan-300 transition-colors line-clamp-1">
             {title}
           </h3>
-          <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
+          <p className="text-xs text-slate-500 dark:text-slate-300 cyberpunk:text-slate-300 leading-relaxed line-clamp-2">
             {description}
           </p>
         </div>
       </div>
 
       {/* Bottom Metadata & CTA */}
-      <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1 text-[11px] font-medium text-slate-400">
+      <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80 cyberpunk:border-cyan-500/20 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-1 text-[11px] font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 font-mono-tech">
           <Clock className="h-3 w-3" aria-hidden="true" />
           <span>{duration}</span>
           {isStarted && (
-            <span className="text-blue-600 font-semibold ml-1">
-              &bull; {progress}%
+            <span className="text-blue-600 dark:text-cyan-400 cyberpunk:text-cyan-300 font-semibold ml-1">
+              • {progress}%
             </span>
           )}
           {isCompleted && (
-            <span className="text-emerald-600 font-semibold ml-1 flex items-center gap-0.5">
-              <CheckCircle2 className="h-3 w-3" /> Done
+            <span className="text-emerald-600 dark:text-emerald-400 cyberpunk:text-emerald-300 font-semibold ml-1 flex items-center gap-0.5">
+              <CheckCircle2 className="h-3 w-3" /> Hoàn thành
             </span>
           )}
         </div>
@@ -106,4 +109,3 @@ export function RecommendedCard({ item, className = "" }) {
 }
 
 export default RecommendedCard
-

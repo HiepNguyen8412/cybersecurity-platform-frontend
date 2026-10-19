@@ -65,7 +65,7 @@ export function Modal({
       {/* Modal Dialog Box */}
       <div
         className={`
-          relative w-full rounded-2xl bg-white p-6 shadow-2xl border border-slate-200/80 z-10
+          relative w-full rounded-2xl bg-white dark:bg-slate-900 cyberpunk:bg-[#071022] p-6 shadow-2xl dark:shadow-black/70 cyberpunk:shadow-sm border border-slate-200/80 dark:border-slate-800 cyberpunk:border-cyan-500/50 z-10
           transition-all animate-in zoom-in-95 fade-in duration-200
           ${sizeStyles[size] || sizeStyles.md}
           ${className}
@@ -75,12 +75,12 @@ export function Modal({
         <div className="flex items-start justify-between gap-4 mb-4">
           <div className="flex flex-col space-y-1">
             {title && (
-              <h2 id="modal-title" className="text-lg font-bold text-slate-900 leading-tight">
+              <h2 id="modal-title" className="text-lg font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
                 {title}
               </h2>
             )}
             {description && (
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80 leading-relaxed">
                 {description}
               </p>
             )}
@@ -97,11 +97,11 @@ export function Modal({
         </div>
 
         {/* Content Body */}
-        <div className="text-sm text-slate-600 mb-6">{children}</div>
+        <div className="text-sm text-slate-600 dark:text-slate-300 cyberpunk:text-slate-200 mb-6">{children}</div>
 
         {/* Footer */}
         {footer && (
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-2.5">
+          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 cyberpunk:border-cyan-500/20 flex items-center justify-end gap-2.5">
             {footer}
           </div>
         )}

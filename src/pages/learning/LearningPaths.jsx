@@ -8,49 +8,49 @@ import {
   Key,
   ChevronRight,
   ArrowRight,
-  Target,
   Terminal,
+  UserCheck,
 } from "lucide-react"
 import { LearningPathTimeline } from "./components/LearningPathTimeline"
 
 const TRACKS_DATA = [
   {
     id: "soc-analyst",
-    title: "SOC Security Analyst Track",
-    role: "Defensive Security & Blue Team",
-    icon: Shield,
-    level: "Entry to Intermediate",
-    duration: "42 Hours Hands-on",
+    title: "Chuyên Viên Phân Tích SOC (Blue Team)",
+    role: "Phòng Thủ & Tác Chiến SOC",
+    icon: UserCheck,
+    level: "Nhập Môn - Trung Cấp",
+    duration: "42 Giờ Thực Hành",
     labsCount: 24,
-    enrolledCount: "1,240 Analysts",
+    enrolledCount: "1,240 Chuyên Viên",
     certifications: ["CompTIA Security+", "CySA+", "BTL1"],
-    summary: "Master real-time threat detection, packet analysis, and enterprise incident triage in modern Security Operations Centers.",
+    summary: "Làm chủ kỹ thuật phát hiện mối đe dọa thời gian thực, phân tích gói tin mạng và ứng phó sự cố an ninh trong trung tâm điều hành SOC hiện đại.",
     stages: [
       {
         number: "01",
-        title: "Network Fundamentals & Traffic Forensics",
-        skills: ["TCP/IP", "Wireshark", "Packet Decoding", "ARP Spoofing"],
+        title: "Nền Tảng Mạng & Pháp Chứng Lưu Lượng",
+        skills: ["TCP/IP", "Wireshark", "Giải Mã Gói Tin", "Ngăn Chặn ARP Spoofing"],
         status: "completed",
         labs: 6,
       },
       {
         number: "02",
-        title: "Endpoint Telemetry & Sysmon Auditing",
-        skills: ["Windows Event Logs", "Linux Auth Logs", "Process Trees", "Volatility"],
+        title: "Thu Thập Telemetry Điểm Cuối & Kiểm Toán Sysmon",
+        skills: ["Windows Event Logs", "Linux Auth Logs", "Cây Tiến Trình", "Pháp Chứng Volatility"],
         status: "in-progress",
         labs: 7,
       },
       {
         number: "03",
-        title: "SIEM Operations & Suricata Rule Engineering",
-        skills: ["Splunk Query Language", "Suricata IDS", "Snort Signatures", "Alert Tuning"],
+        title: "Vận Hành SIEM & Kỹ Thuật Viết Luật Suricata",
+        skills: ["Truy Vấn Splunk SPL", "Suricata IDS", "Chữ Ký Snort", "Tinh Chỉnh Cảnh Báo"],
         status: "locked",
         labs: 6,
       },
       {
         number: "04",
-        title: "Active Adversary Incident Response Capstone",
-        skills: ["MITRE ATT&CK Mapping", "Ransomware Triage", "Forensic Reporting"],
+        title: "Đồ Án Tốt Nghiệp: Ứng Cứu Sự Cố Tấn Công Thực Địa",
+        skills: ["Ánh Xạ MITRE ATT&CK", "Xử Lý Ransomware", "Báo Cáo Pháp Chứng"],
         status: "locked",
         labs: 5,
       },
@@ -58,41 +58,41 @@ const TRACKS_DATA = [
   },
   {
     id: "web-pentester",
-    title: "Web Penetration Tester Track",
-    role: "Offensive Security & Red Team",
+    title: "Chuyên Gia Đánh Giá & Kiểm Thử Xâm Nhập Web",
+    role: "Tấn Công & Diễn Tập Red Team",
     icon: Globe,
-    level: "Intermediate to Advanced",
-    duration: "38 Hours Hands-on",
+    level: "Trung Cấp - Nâng Cao",
+    duration: "38 Giờ Thực Hành",
     labsCount: 22,
-    enrolledCount: "980 Pentesters",
+    enrolledCount: "980 Kiểm Thử Viên",
     certifications: ["eJPT", "OSCP", "Burp Suite Certified"],
-    summary: "Learn to systematically discover, exploit, and remediate high-severity web vulnerabilities across modern distributed architectures.",
+    summary: "Phương pháp luận chuẩn quốc tế để phát hiện, khai thác và khắc phục triệt để các lỗ hổng nghiêm trọng trên ứng dụng web phân tán.",
     stages: [
       {
         number: "01",
-        title: "Web Architecture & Reconnaissance",
-        skills: ["HTTP/2 & HTTP/3", "Burp Suite Pro", "Directory Bruteforcing", "Subdomain Takeover"],
+        title: "Kiến Trúc Web & Do Thám Thu Thập Mục Tiêu",
+        skills: ["HTTP/2 & HTTP/3", "Burp Suite Pro", "Quét Thư Mục Nhạy Cảm", "Chiếm Quyền Subdomain"],
         status: "completed",
         labs: 5,
       },
       {
         number: "02",
-        title: "OWASP Top 10 Core Exploitation",
-        skills: ["SQL Injection", "Stored/DOM XSS", "SSRF", "CSRF", "File Upload Bypass"],
+        title: "Khai Thác Lỗ Hổng Cốt Lõi OWASP Top 10",
+        skills: ["SQL Injection", "Stored/DOM XSS", "SSRF", "CSRF", "Bypass Tải File"],
         status: "in-progress",
         labs: 8,
       },
       {
         number: "03",
-        title: "Authentication Flaws & Cryptographic Breaks",
-        skills: ["JWT Algorithm Confusion", "OAuth 2.0 Hijacking", "SAML Flaws", "IDOR"],
+        title: "Lỗ Hổng Xác Thực & Phá Vỡ Cơ Chế Mật Mã",
+        skills: ["Nhầm Lẫn Thuật Toán JWT", "Chiếm Đoạt OAuth 2.0", "Lỗi Cấu Hình SAML", "IDOR"],
         status: "locked",
         labs: 5,
       },
       {
         number: "04",
-        title: "Real Enterprise Application Pentest Exam",
-        skills: ["Multi-Stage Exploitation", "Chained Zero-Days", "Executive Remediation Report"],
+        title: "Đồ Án Tốt Nghiệp: Đánh Giá Pentest Doanh Nghiệp",
+        skills: ["Khai Thác Đa Tầng", "Chuỗi Lỗ Hổng Zero-Day", "Báo Cáo Khắc Phục Lãnh Đạo"],
         status: "locked",
         labs: 4,
       },
@@ -100,41 +100,41 @@ const TRACKS_DATA = [
   },
   {
     id: "cloud-security",
-    title: "Cloud & DevSecOps Security Engineer",
-    role: "Infrastructure & Identity Defense",
+    title: "Kỹ Sư An Ninh Đám Mây & DevSecOps",
+    role: "Bảo Vệ Hạ Tầng & Danh Tính",
     icon: Lock,
-    level: "Advanced",
-    duration: "35 Hours Hands-on",
+    level: "Nâng Cao",
+    duration: "35 Giờ Thực Hành",
     labsCount: 18,
-    enrolledCount: "640 Engineers",
+    enrolledCount: "640 Kỹ Sư",
     certifications: ["AWS Certified Security", "CCSP", "CKS"],
-    summary: "Harden multi-tenant cloud accounts, enforce zero-trust identity architectures, and secure containerized Kubernetes microservices.",
+    summary: "Gia cố tài khoản Cloud đa người dùng, thiết lập kiến trúc Zero-Trust và bảo mật vi dịch vụ container Kubernetes.",
     stages: [
       {
         number: "01",
-        title: "Cloud IAM & Least-Privilege Governance",
-        skills: ["AWS STS", "IAM Boundary Auditing", "Metadata IMDSv2", "Policy Enforcement"],
+        title: "Quản Trị IAM Cloud & Nguyên Tắc Đặc Quyền Tối Thiểu",
+        skills: ["AWS STS", "Kiểm Toán Ranh Giới IAM", "Bảo Vệ Metadata IMDSv2", "Thực Thi Chính Sách"],
         status: "locked",
         labs: 5,
       },
       {
         number: "02",
-        title: "Kubernetes & Microservice Hardening",
-        skills: ["Pod Security Standards", "NetworkPolicies", "Falco Runtime", "Trivy Scanning"],
+        title: "Gia Cố Cụm Kubernetes & Vi Dịch Vụ",
+        skills: ["Chuẩn An Toàn Pod", "NetworkPolicies", "Giám Sát Falco Runtime", "Quét Lỗ Hổng Trivy"],
         status: "locked",
         labs: 5,
       },
       {
         number: "03",
-        title: "Automated DevSecOps Pipeline CI/CD",
-        skills: ["SAST/DAST", "Secret Scanning", "OPA Gatekeeper", "Cosign Signature Verification"],
+        title: "Tự Động Hóa Pipeline DevSecOps CI/CD",
+        skills: ["Phân Tích SAST/DAST", "Quét Lộ Bí Mật", "Bộ Lọc OPA Gatekeeper", "Xác Thực Chữ Ký Cosign"],
         status: "locked",
         labs: 4,
       },
       {
         number: "04",
-        title: "Cloud Breach Simulation & Recovery",
-        skills: ["S3 Ransomware Response", "CloudTrail Forensics", "GuardDuty Automation"],
+        title: "Mô Phỏng Xâm Nhập Đám Mây & Khôi Phục Hệ Thống",
+        skills: ["Ứng Phó Ransomware S3", "Pháp Chứng CloudTrail", "Tự Động Hóa GuardDuty"],
         status: "locked",
         labs: 4,
       },
@@ -142,41 +142,41 @@ const TRACKS_DATA = [
   },
   {
     id: "cryptography",
-    title: "Applied Cryptography & Protocol Defense",
-    role: "Cryptographic Engineering",
+    title: "Mật Mã Ứng Dụng & Phòng Thủ Giao Thức",
+    role: "Kỹ Thuật Mật Mã Học",
     icon: Key,
-    level: "Foundation to Advanced",
-    duration: "26 Hours Hands-on",
+    level: "Cơ Bản - Chuyên Sâu",
+    duration: "26 Giờ Thực Hành",
     labsCount: 14,
-    enrolledCount: "420 Researchers",
+    enrolledCount: "420 Nhà Nghiên Cứu",
     certifications: ["GIAC Defending Cryptography", "NIST Standards"],
-    summary: "Implement and audit modern cryptographic primitives, inspect protocol handshakes, and prevent timing and side-channel leaks.",
+    summary: "Triển khai và kiểm toán các thuật toán mật mã hiện đại, kiểm tra bắt tay giao thức bảo mật và phòng chống tấn công dò rỉ kênh phụ.",
     stages: [
       {
         number: "01",
-        title: "Symmetric Ciphers & Block Modes",
-        skills: ["AES-GCM", "ChaCha20-Poly1305", "Padding Oracles", "IV Replay Flaws"],
+        title: "Mật Mã Đối Xứng & Chế Độ Mã Hóa Khối",
+        skills: ["AES-GCM", "ChaCha20-Poly1305", "Tấn Công Padding Oracle", "Lỗ Hổng Tái Sử Dụng IV"],
         status: "locked",
         labs: 4,
       },
       {
         number: "02",
-        title: "Asymmetric Key Exchange & Signatures",
-        skills: ["RSA Parameter Hardening", "ECDH & Ed25519", "Certificates & X.509"],
+        title: "Trao Đổi Khóa Bất Đối Xứng & Chữ Ký Số",
+        skills: ["Gia Cố Tham Số RSA", "ECDH & Ed25519", "Chứng Thư X.509"],
         status: "locked",
         labs: 4,
       },
       {
         number: "03",
-        title: "TLS 1.3 Protocol Analysis",
-        skills: ["Forward Secrecy", "Zero-RTT Replay Defense", "SNI Encrypted Client Hello"],
+        title: "Phân Tích Chuyên Sâu Giao Thức TLS 1.3",
+        skills: ["Bảo Mật Tiến Tuyến (FS)", "Phòng Thủ Replay 0-RTT", "Mã Hóa SNI ECH"],
         status: "locked",
         labs: 3,
       },
       {
         number: "04",
-        title: "Post-Quantum Cryptography Primitives",
-        skills: ["Kyber Lattice Key Exchange", "Dilithium Digital Signatures", "Quantum Resistance"],
+        title: "Mật Mã Học Kháng Lượng Tử (Post-Quantum)",
+        skills: ["Trao Đổi Khóa Kyber", "Chữ Ký Số Dilithium", "Kháng Máy Tính Lượng Tử"],
         status: "locked",
         labs: 3,
       },
@@ -207,7 +207,7 @@ export function LearningPaths() {
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white leading-tight">
-              Cybersecurity Career Roadmaps & Pipelines
+              Lộ Trình & Khung Năng Lực An Ninh Mạng Chuyên Nghiệp
             </h1>
 
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
@@ -219,12 +219,12 @@ export function LearningPaths() {
           <div className="flex items-center gap-4 font-mono text-xs text-slate-300 p-4 rounded-2xl bg-slate-950/80 border border-slate-700/50 dark:border-slate-800 self-start md:self-auto shadow-xl shrink-0 backdrop-blur-sm">
             <div>
               <span className="text-cyan-400 font-extrabold text-base block">4 TRACKS</span>
-              <span className="text-[10px] text-slate-400">PRACTITIONER PIPELINE</span>
+              <span className="text-[10px] text-slate-400">LỘ TRÌNH THỰC CHIẾN</span>
             </div>
             <div className="h-7 w-px bg-slate-800" />
             <div>
               <span className="text-emerald-400 font-extrabold text-base block">100%</span>
-              <span className="text-[10px] text-slate-400">HANDS-ON COVERAGE</span>
+              <span className="text-[10px] text-slate-400">THỰC HÀNH LAB 100%</span>
             </div>
           </div>
         </div>
@@ -245,7 +245,7 @@ export function LearningPaths() {
               onClick={() => setSelectedTrackId(track.id)}
               className={`text-left p-5 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
                 isSelected
-                  ? "bg-blue-50/90 dark:bg-slate-900 border-blue-500 dark:border-cyan-500 shadow-md ring-2 ring-blue-500/20 dark:ring-cyan-500/30 text-slate-900 dark:text-white"
+                  ? "bg-blue-50/90 dark:bg-slate-900 border-blue-500 dark:border-cyan-500 shadow-md border-blue-500 dark:border-cyan-500 text-slate-900 dark:text-white"
                   : "bg-white dark:bg-slate-900/90 hover:bg-slate-50 dark:hover:bg-slate-800/90 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 shadow-2xs"
               }`}
             >
@@ -280,7 +280,7 @@ export function LearningPaths() {
                 <span>{track.duration}</span>
                 {isSelected && (
                   <span className="text-blue-600 dark:text-cyan-400 font-bold flex items-center gap-0.5">
-                    <span>Active</span>
+                    <span>Đang chọn</span>
                     <ChevronRight className="h-3 w-3" />
                   </span>
                 )}
@@ -299,7 +299,7 @@ export function LearningPaths() {
           <div className="space-y-2">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="px-2.5 py-0.5 rounded font-mono text-xs font-bold bg-blue-50 dark:bg-cyan-500/10 text-blue-700 dark:text-cyan-400 border border-blue-200 dark:border-cyan-500/30">
-                ACTIVE ROADMAP PIPELINE
+                LỘ TRÌNH ĐANG KÍCH HOẠT
               </span>
               <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
                 {activeTrack.duration} &bull; {activeTrack.labsCount} Sandbox Labs
@@ -340,7 +340,7 @@ export function LearningPaths() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-slate-900 dark:text-white font-mono uppercase tracking-wider flex items-center gap-2">
-              <Target className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
+              <Compass className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
               <span>CÁC CHẶNG THỬ THÁCH & CHUYÊN ĐỀ ({activeTrack.stages.length} CHẶNG)</span>
             </h3>
             <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
@@ -369,7 +369,7 @@ export function LearningPaths() {
                           : "bg-slate-100 dark:bg-slate-900 text-slate-500"
                       }`}
                     >
-                      {stage.status.toUpperCase()}
+                      {stage.status === "completed" ? "ĐÃ HOÀN THÀNH" : stage.status === "in-progress" ? "ĐANG HỌC" : "CHƯA MỞ KHÓA"}
                     </span>
                   </div>
 

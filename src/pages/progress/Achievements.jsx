@@ -124,7 +124,7 @@ export function Achievements() {
       {/* ====================================================================
           1. HEADER BANNER
          ==================================================================== */}
-      <section className="relative rounded-2xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 border border-slate-200/90 shadow-sm p-6 sm:p-8 overflow-hidden">
+      <section className="relative rounded-2xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/80 cyberpunk:from-[#071022] cyberpunk:via-[#09152b] cyberpunk:to-[#0c1e3d] border border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-sm p-6 sm:p-8 overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400" />
         
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
@@ -144,25 +144,25 @@ export function Achievements() {
             </h1>
 
             <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-              Cryptographically verifiable certificates and practical challenge badges earned through hands-on virtual lab demonstrations.
+              Chứng chỉ an ninh mạng có mã băm xác thực mật mã và huy hiệu chiến tích đạt được qua các bài kiểm tra thực chiến trong sandbox.
             </p>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 shrink-0">
-            <div className="p-3 rounded-xl bg-white border border-slate-200/90 shadow-2xs text-center min-w-[110px]">
-              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Badges Unlocked</span>
+            <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/40 shadow-2xs text-center min-w-[110px]">
+              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Huy Hiệu Đã Mở</span>
               <span className="text-lg font-mono-tech font-extrabold text-blue-600">
                 <CountUp end={4} /> / 6
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-white border border-slate-200/90 shadow-2xs text-center min-w-[110px]">
-              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Diplomas</span>
+            <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/40 shadow-2xs text-center min-w-[110px]">
+              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Chứng Chỉ Số</span>
               <span className="text-lg font-mono-tech font-extrabold text-emerald-600">
-                <CountUp end={2} suffix=" Official" />
+                <CountUp end={2} suffix=" Chứng Chỉ" />
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-white border border-slate-200/90 shadow-2xs text-center min-w-[110px] col-span-2 sm:col-span-1">
-              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Leaderboard</span>
+            <div className="p-3 rounded-xl bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] border border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/40 shadow-2xs text-center min-w-[110px] col-span-2 sm:col-span-1">
+              <span className="text-[10px] font-mono-tech text-slate-400 uppercase block font-bold">Bảng Xếp Hạng</span>
               <span className="text-lg font-mono-tech font-extrabold text-amber-600">
                 Top <CountUp end={5} suffix="%" />
               </span>
@@ -194,7 +194,7 @@ export function Achievements() {
           {CERTIFICATES.map((cert) => (
             <Card
               key={cert.id}
-              className="p-6 border-slate-200/90 shadow-sm relative overflow-hidden bg-gradient-to-br from-white via-white to-blue-50/20 group hover:shadow-md transition-all"
+              className="p-6 border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-sm relative overflow-hidden bg-gradient-to-br from-white via-white to-blue-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/80 cyberpunk:from-[#071022] cyberpunk:via-[#09152b] cyberpunk:to-[#0c1e3d] group hover:shadow-md transition-all"
             >
               {/* Top certificate border accent */}
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600" />
@@ -294,7 +294,7 @@ export function Achievements() {
                 className={`px-3 py-1 rounded-lg text-xs font-mono-tech uppercase font-semibold transition-all cursor-pointer ${
                   activeCategory === cat
                     ? "bg-slate-900 text-white shadow-2xs"
-                    : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
+                    : "bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 hover:bg-slate-50 dark:hover:bg-slate-750 border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40"
                 }`}
               >
                 {cat}

@@ -1,4 +1,4 @@
-import { Moon, Sun, Terminal } from "lucide-react"
+﻿import { Moon, Sun, Terminal } from "lucide-react"
 import useThemeStore from "../../stores/useThemeStore"
 
 export function ThemeToggle() {
@@ -11,24 +11,33 @@ export function ThemeToggle() {
     <button
       onClick={toggleTheme}
       type="button"
-      className="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 transition-all cursor-pointer flex items-center space-x-1.5 text-xs font-mono shadow-xs"
-      title={`Chuyển giao diện (Hiện tại: ${theme.toUpperCase()})`}
+      className={`
+        px-3 py-1.5 rounded-xl border transition-all cursor-pointer flex items-center space-x-2 text-xs font-mono shadow-xs select-none
+        ${
+          isLight
+            ? "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800"
+            : isCyber
+            ? "bg-cyan-950/90 hover:bg-cyan-900 border-cyan-500/80 text-cyan-300 shadow-xs border-cyan-500/50"
+            : "bg-slate-800 hover:bg-slate-700 border-slate-600 text-slate-100"
+        }
+      `.trim()}
+      title={`Chuyển giao diện: Hiện tại là ${isLight ? "LIGHT" : isCyber ? "CYBER RANGE (NEON)" : "DARK (STEALTH)"}`}
       aria-label="Toggle visual theme"
     >
       {isLight ? (
         <>
           <Sun className="w-4 h-4 text-amber-500" />
-          <span className="hidden sm:inline-block font-semibold">Light</span>
+          <span className="font-semibold">Light</span>
         </>
       ) : isCyber ? (
         <>
-          <Terminal className="w-4 h-4 text-emerald-400" />
-          <span className="hidden sm:inline-block font-semibold text-emerald-400">Cyber</span>
+          <Terminal className="w-4 h-4 text-cyan-300 animate-pulse" />
+          <span className="font-bold text-cyan-300 tracking-wider">CYBER</span>
         </>
       ) : (
         <>
-          <Moon className="w-4 h-4 text-cyan-400" />
-          <span className="hidden sm:inline-block font-semibold">Dark</span>
+          <Moon className="w-4 h-4 text-blue-400" />
+          <span className="font-semibold text-white">Dark</span>
         </>
       )}
     </button>

@@ -17,13 +17,13 @@ export function ProtectedRoute({ children }) {
       <div
         role="status"
         aria-live="polite"
-        className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 antialiased"
+        className="min-h-screen bg-slate-50 dark:bg-slate-950 cyberpunk:bg-[#030712] text-slate-900 dark:text-white cyberpunk:text-cyan-50 flex flex-col items-center justify-center p-4 antialiased"
       >
         <div className="flex flex-col items-center space-y-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md animate-pulse">
             <ShieldCheck className="h-6 w-6 stroke-[2.2]" />
           </div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300">
             <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
             <span>Verifying session...</span>
           </div>

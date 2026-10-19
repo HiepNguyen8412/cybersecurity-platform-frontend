@@ -69,7 +69,7 @@ export function Dropdown({
           role="menu"
           aria-orientation="vertical"
           className={`
-            absolute top-full mt-2 z-50 rounded-xl bg-white p-1.5 shadow-lg border border-slate-200/80
+            absolute top-full mt-2 z-50 rounded-xl bg-white dark:bg-slate-900 cyberpunk:bg-[#071022] p-1.5 shadow-lg dark:shadow-2xl dark:shadow-black/80 cyberpunk:shadow-sm border border-slate-200/80 dark:border-slate-800 cyberpunk:border-cyan-500/40
             focus:outline-none animate-in fade-in zoom-in-95
             ${alignStyles[align] || alignStyles.right}
             ${width}
@@ -106,7 +106,7 @@ export function DropdownItem({
         ${
           danger
             ? "text-rose-600 hover:bg-rose-50 active:bg-rose-100"
-            : "text-slate-700 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200"
+            : "text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white cyberpunk:hover:bg-[#0d1e3d] active:bg-slate-200"
         }
         ${className}
       `.trim()}
@@ -127,7 +127,7 @@ export function DropdownHeader({ children, className = "" }) {
 }
 
 export function DropdownDivider({ className = "" }) {
-  return <div className={`my-1 border-t border-slate-100 ${className}`} />
+  return <div className={`my-1 border-t border-slate-100 dark:border-slate-800 cyberpunk:border-cyan-500/20 ${className}`} />
 }
 
 export default Dropdown

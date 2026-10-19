@@ -58,7 +58,7 @@ const Input = forwardRef(function Input(
       {label && (
         <label
           htmlFor={inputId}
-          className="text-xs font-semibold text-slate-700 tracking-wide flex items-center justify-between"
+          className="text-xs font-semibold text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-200 tracking-wide flex items-center justify-between"
         >
           <span>
             {label}
@@ -89,8 +89,8 @@ const Input = forwardRef(function Input(
             isError ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined
           }
           className={`
-            w-full rounded-xl border bg-white/95 text-slate-900 transition-all duration-150
-            placeholder:text-slate-400 outline-none shadow-2xs
+            w-full rounded-xl border bg-white/95 dark:bg-slate-900 cyberpunk:bg-[#060e1d] text-slate-900 dark:text-white cyberpunk:text-cyan-50 transition-all duration-150
+            placeholder:text-slate-400 dark:placeholder:text-slate-500 cyberpunk:placeholder:text-cyan-500/50 outline-none shadow-2xs border-slate-300 dark:border-slate-700 cyberpunk:border-cyan-500/40
             disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed
             ${sizeStyles[size] || sizeStyles.md}
             ${stateStyles}

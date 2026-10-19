@@ -1,13 +1,14 @@
-import { Link } from "react-router-dom"
+﻿import { Link } from "react-router-dom"
 import { ChevronRight, Home } from "lucide-react"
 
 /**
  * Reusable Breadcrumb component.
+ * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
  */
 export function Breadcrumb({
   items = [],
   showHome = false,
-  separator = <ChevronRight className="h-3.5 w-3.5 text-slate-400 shrink-0" />,
+  separator = <ChevronRight className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500 cyberpunk:text-cyan-500 shrink-0" />,
   className = "",
 }) {
   return (
@@ -17,7 +18,7 @@ export function Breadcrumb({
           <li className="inline-flex items-center">
             <Link
               to="/"
-              className="text-slate-400 hover:text-slate-600 transition-colors inline-flex items-center"
+              className="text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400 hover:text-slate-600 dark:hover:text-slate-200 cyberpunk:hover:text-cyan-200 transition-colors inline-flex items-center"
               title="Home"
             >
               <Home className="h-3.5 w-3.5" />
@@ -34,7 +35,7 @@ export function Breadcrumb({
               {item.href && !isLast ? (
                 <Link
                   to={item.href}
-                  className="font-medium text-slate-500 hover:text-slate-800 transition-colors inline-flex items-center gap-1.5"
+                  className="font-medium text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300 hover:text-slate-800 dark:hover:text-white cyberpunk:hover:text-cyan-100 transition-colors inline-flex items-center gap-1.5"
                 >
                   {item.icon && <span className="shrink-0">{item.icon}</span>}
                   <span>{item.label}</span>
@@ -43,7 +44,9 @@ export function Breadcrumb({
                 <span
                   aria-current={isLast ? "page" : undefined}
                   className={`font-semibold inline-flex items-center gap-1.5 ${
-                    isLast ? "text-slate-900" : "text-slate-500"
+                    isLast
+                      ? "text-slate-900 dark:text-white cyberpunk:text-cyan-50"
+                      : "text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80"
                   }`}
                 >
                   {item.icon && <span className="shrink-0">{item.icon}</span>}

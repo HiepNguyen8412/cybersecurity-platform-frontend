@@ -41,7 +41,7 @@ export function Profile() {
       {/* ====================================================================
           1. DOSSIER IDENTITY BANNER
          ==================================================================== */}
-      <section className="relative rounded-2xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 border border-slate-200/90 shadow-sm p-6 sm:p-8 overflow-hidden">
+      <section className="relative rounded-2xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/80 cyberpunk:from-[#071022] cyberpunk:via-[#09152b] cyberpunk:to-[#0c1e3d] border border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-sm p-6 sm:p-8 overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">

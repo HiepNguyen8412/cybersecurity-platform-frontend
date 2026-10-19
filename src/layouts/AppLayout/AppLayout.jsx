@@ -2,17 +2,23 @@ import { Outlet } from "react-router-dom"
 import Navbar from "../../components/layout/Navbar"
 import Sidebar from "../../components/layout/Sidebar"
 import useLayout from "../../hooks/useLayout"
+import { LabTerminalModal } from "../../pages/labs/components/LabTerminalModal"
 
 /**
  * Persistent AppLayout for the authenticated cybersecurity learning platform.
  * Supports both React Router <Outlet /> for nested layout routes and {children} wrapper usage.
  * Dynamically responds to expanded and collapsed sidebar states.
+ * Mounts global LabTerminalModal to allow seamless CLI sandbox access from any platform view.
  */
 export function AppLayout({ children, maxWidth = "max-w-[1240px]", className = "" }) {
   const { isSidebarCollapsed } = useLayout()
 
   return (
-    <div className="min-h-screen cyber-grid-canvas text-slate-900 dark:text-slate-100 flex flex-col antialiased">
+    <div className="min-h-screen cyber-grid-canvas text-slate-900 dark:text-slate-100 flex flex-col antialiased relative overflow-x-hidden">
+      {/* 3D Spatial Depth Ambient Glow Fields */}
+      <div className="ambient-glow-sphere-top" aria-hidden="true" />
+      <div className="ambient-glow-sphere-bottom" aria-hidden="true" />
+      
       {/* 1. Sidebar (Fixed left: expanded 240px / collapsed 72px) */}
       <Sidebar />
 
@@ -37,6 +43,9 @@ export function AppLayout({ children, maxWidth = "max-w-[1240px]", className = "
           {children || <Outlet />}
         </div>
       </main>
+
+      {/* 4. Global Interactive Cyber Range Sandbox Terminal Modal */}
+      <LabTerminalModal />
     </div>
   )
 }
