@@ -1,6 +1,9 @@
 import { create } from "zustand"
 import useNotificationStore from "./useNotificationStore"
 import useLabStore from "./useLabStore"
+import courseService from "../services/courseService"
+import progressService from "../services/progressService"
+import certificationService from "../services/certificationService"
 
 export const INITIAL_COURSES = [
   {
@@ -910,21 +913,33 @@ export const INITIAL_COURSES = [
  * Quản lý danh mục giáo trình, tiến độ bài học, điểm thưởng XP và tương tác Sandbox.
  */
 export const useLearningStore = create((set, get) => {
-  // Load saved state from localStorage if available
+  // Load saved state from localStorage if available (used as fast-render cache only)
   const savedEnrolled = JSON.parse(
-    localStorage.getItem("cyber_enrolled_courses") || '["mod-web201", "mod-soc101"]'
+    localStorage.getItem("cyber_enrolled_courses") || '["mod-web201"]'
   )
   const savedCompleted = JSON.parse(
-    localStorage.getItem("cyber_completed_lessons") ||
-      '{"mod-web201": ["s1", "s2"], "mod-soc101": ["s1", "s2"], "mod-sec101": ["s1", "s2", "s3", "s4"]}'
+    localStorage.getItem("cyber_completed_lessons") || '{}'
   )
-  const savedXp = parseInt(localStorage.getItem("cyber_user_learning_xp") || "850", 10)
+  const savedCapstone = JSON.parse(
+    localStorage.getItem("cyber_capstone_completed") || '{}'
+  )
+  const savedXp = parseInt(localStorage.getItem("cyber_user_learning_xp") || "0", 10)
 
   return {
     courses: INITIAL_COURSES,
     enrolledCourses: savedEnrolled,
-    completedLessons: savedCompleted, // { [courseId]: string[] }
+    completedLessons: savedCompleted, // { [courseId]: string[] } (Backend is source of truth)
+    capstoneCompleted: savedCapstone, // { [courseId]: boolean }
+    capstoneSubmissions: {}, // { [courseId]: submissionData }
+    quizSummaries: {}, // { [courseId]: summaryData }
+    certificates: {}, // { [courseId]: certificateData }
+    isClaimingCert: false,
+    isSubmittingCapstone: false,
     userXp: savedXp,
+
+    // Synchronization state with Backend API
+    syncStatus: "idle", // "idle" | "syncing" | "synced" | "error"
+    syncError: null,
 
     // Interactive Lesson Modal state
     activeLessonModal: null, // { course, lesson, lessonIndex }
@@ -943,63 +958,446 @@ export const useLearningStore = create((set, get) => {
       return Math.round((completed.length / course.syllabus.length) * 100)
     },
 
+    // Check if lesson is unlocked based on prerequisite sequence
+    isLessonUnlocked: (courseId, lessonIndex) => {
+      if (lessonIndex <= 0) return true
+      const { courses, completedLessons } = get()
+      const course = courses.find((c) => c.id === courseId)
+      if (!course || !course.syllabus) return false
+      const prevLesson = course.syllabus[lessonIndex - 1]
+      if (!prevLesson) return true
+      const doneList = completedLessons[courseId] || []
+      return doneList.includes(prevLesson.id)
+    },
+
+    // Submit Quiz Attempt to Backend
+    submitQuizAttempt: async (lesson, selectedOption, correctOption) => {
+      try {
+        const lessonBackendId = lesson?.backendId
+        if (lessonBackendId) {
+          await certificationService.submitQuiz(lessonBackendId, selectedOption, correctOption)
+        }
+      } catch {
+        // Fallback silently if offline or token expired
+      }
+    },
+
+    // Fetch quiz summary for course from server
+    fetchQuizSummary: async (courseId, backendCourseId) => {
+      if (!backendCourseId) return null
+      try {
+        const summary = await certificationService.getCourseQuizSummary(backendCourseId)
+        if (summary) {
+          set((state) => ({
+            quizSummaries: { ...state.quizSummaries, [courseId]: summary },
+          }))
+          return summary
+        }
+      } catch {
+        // Ignore if error
+      }
+      return null
+    },
+
+    // Submit Capstone Project with NIST NICE Rubric evaluation
+    submitCapstoneProject: async (courseId, backendCourseId, payload = {}) => {
+      set({ isSubmittingCapstone: true })
+      try {
+        const submissionPayload = {
+          reportContent: payload.reportContent || "Báo cáo thực hành Capstone: Đã hoàn tất diễn tập chuỗi tấn công và cấu hình phòng thủ theo chuẩn NIST.",
+          solutionUrl: payload.solutionUrl || "https://github.com/cybersecurity-lab/capstone-defense",
+          reconScore: payload.reconScore || 18,
+          exploitScore: payload.exploitScore || 32,
+          remediationScore: payload.remediationScore || 28,
+          reportScore: payload.reportScore || 14,
+        }
+
+        const res = await certificationService.submitCapstone(backendCourseId, submissionPayload)
+        const updated = { ...get().capstoneCompleted, [courseId]: true }
+        localStorage.setItem("cyber_capstone_completed", JSON.stringify(updated))
+
+        set((state) => ({
+          capstoneCompleted: updated,
+          capstoneSubmissions: { ...state.capstoneSubmissions, [courseId]: res },
+          isSubmittingCapstone: false,
+        }))
+
+        useNotificationStore.getState().success(
+          "Nghiệm Thu Đồ Án Capstone Thành Công!",
+          `Điểm Rubric NIST NICE: ${res.totalScore}/100 (Trạng thái: ${res.status}).`
+        )
+        return res
+      } catch (err) {
+        set({ isSubmittingCapstone: false })
+        const errMsg = err.response?.data?.message || err.message || "Lỗi khi nộp đồ án Capstone."
+        useNotificationStore.getState().error("Nộp Capstone Thất Bại", errMsg)
+        throw err
+      }
+    },
+
+    // Claim official verifiable digital certificate from backend
+    claimOfficialCertificate: async (courseId, backendCourseId) => {
+      set({ isClaimingCert: true })
+      try {
+        const cert = await certificationService.claimCertificate(backendCourseId)
+        set((state) => ({
+          certificates: { ...state.certificates, [courseId]: cert },
+          isClaimingCert: false,
+        }))
+        useNotificationStore.getState().success(
+          "Cấp Chứng Chỉ Số Thành Công!",
+          `Mã chứng chỉ: ${cert.certificateCode}. Chữ ký số PGP đã được ghi nhận vào sổ đăng ký.`
+        )
+        return cert
+      } catch (err) {
+        set({ isClaimingCert: false })
+        const errMsg = err.response?.data?.message || err.message || "Không thể cấp chứng chỉ. Vui lòng kiểm tra lại điều kiện hoàn thành."
+        useNotificationStore.getState().error("Cấp Chứng Chỉ Thất Bại", errMsg)
+        throw err
+      }
+    },
+
+    // Fetch existing certificate if already issued
+    fetchCertificateForCourse: async (courseId, backendCourseId) => {
+      if (!backendCourseId) return null
+      try {
+        const cert = await certificationService.getCertificateForCourse(backendCourseId)
+        if (cert) {
+          set((state) => ({
+            certificates: { ...state.certificates, [courseId]: cert },
+          }))
+          return cert
+        }
+      } catch {
+        // Ignore
+      }
+      return null
+    },
+
+    // Check if course meets all conditions to claim official PGP certificate:
+    // 1. Backend progress 100% synced without error
+    // 2. All lessons completed in database
+    // 3. Quiz average >= 80% (if server quizSummary is available)
+    // 4. Capstone project completed
+    canClaimCertificate: (courseId) => {
+      const { courses, completedLessons, capstoneCompleted, syncStatus, quizSummaries } = get()
+      const course = courses.find((c) => c.id === courseId)
+      if (!course || !course.syllabus || course.syllabus.length === 0) return false
+      if (syncStatus === "error") return false
+
+      const doneList = completedLessons[courseId] || []
+      const allLessonsDone = course.syllabus.every((s) => doneList.includes(s.id))
+      const capstoneDone = !!capstoneCompleted[courseId]
+
+      // Check quiz criteria if fetched
+      const summary = quizSummaries[courseId]
+      const quizPassed = !summary || summary.meetsRequirement !== false
+
+      return allLessonsDone && capstoneDone && quizPassed
+    },
+
+    // Retry synchronization for a course
+    retrySync: async (courseId) => {
+      const course = get().courses.find((c) => c.id === courseId)
+      if (course?.backendId) {
+        return await get().syncCourseProgress(course.id, course.backendId)
+      }
+      return await get().fetchCoursesFromApi()
+    },
+
+    // Sync progress from Backend API (Backend is the absolute source of truth)
+    syncCourseProgress: async (courseId, backendCourseId) => {
+      set({ syncStatus: "syncing", syncError: null })
+      try {
+        const res = await progressService.getCourseProgress(backendCourseId)
+        if (res.success && res.data?.lessonProgressList) {
+          const course = get().courses.find((c) => c.id === courseId)
+          const doneLessonIds = []
+
+          res.data.lessonProgressList.forEach((lp, lpIdx) => {
+            if (lp.completed) {
+              const matchedLesson = course?.syllabus?.find(
+                (s, sIdx) =>
+                  s.backendId === lp.lessonId ||
+                  (s.backendSlug && s.backendSlug === lp.lessonSlug) ||
+                  (s.slug && s.slug === lp.lessonSlug) ||
+                  sIdx === lpIdx
+              )
+              if (matchedLesson) {
+                doneLessonIds.push(matchedLesson.id)
+              } else {
+                doneLessonIds.push(`s${lpIdx + 1}`)
+              }
+            }
+          })
+
+          set((state) => {
+            const newCompleted = { ...state.completedLessons, [courseId]: doneLessonIds }
+            localStorage.setItem("cyber_completed_lessons", JSON.stringify(newCompleted))
+            return { completedLessons: newCompleted, syncStatus: "synced", syncError: null }
+          })
+          return { success: true, count: doneLessonIds.length }
+        } else {
+          set({ syncStatus: "error", syncError: res.error || "Không thể đồng bộ tiến độ từ máy chủ" })
+          return { success: false, error: res.error }
+        }
+      } catch (err) {
+        set({ syncStatus: "error", syncError: err.message || "Lỗi mạng khi đồng bộ tiến độ" })
+        return { success: false, error: err.message }
+      }
+    },
+
+    // Fetch live courses from Backend API and map REAL backendId/slug into each lesson
+    fetchCoursesFromApi: async () => {
+      set({ syncStatus: "syncing", syncError: null })
+      try {
+        const res = await courseService.getCourses()
+        if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+          const liveCourses = await Promise.all(
+            res.data.map(async (c, idx) => {
+              const matched = INITIAL_COURSES.find(
+                (m) => m.id === c.slug || m.code?.toLowerCase() === c.slug?.toLowerCase()
+              )
+              const template = matched || INITIAL_COURSES[idx % INITIAL_COURSES.length]
+
+              // Fetch REAL lessons from backend for this course
+              let realLessons = []
+              try {
+                const lessonRes = await courseService.getLessonsByCourseId(c.id)
+                if (lessonRes.success && Array.isArray(lessonRes.data) && lessonRes.data.length > 0) {
+                  realLessons = lessonRes.data
+                } else {
+                  // Fallback: fetch via modules then lessons
+                  const modRes = await courseService.getModulesByCourseId(c.id)
+                  if (modRes.success && Array.isArray(modRes.data)) {
+                    for (const mod of modRes.data) {
+                      const modLessonsRes = await courseService.getLessonsByModuleId(mod.id)
+                      if (modLessonsRes.success && Array.isArray(modLessonsRes.data)) {
+                        realLessons.push(...modLessonsRes.data)
+                      }
+                    }
+                  }
+                }
+              } catch (e) {
+                console.warn(`Could not load real lessons for course ${c.id}:`, e)
+              }
+
+              // Map each syllabus item with REAL database IDs and slugs
+              const mappedSyllabus = template.syllabus.map((s, sIdx) => {
+                const matchedReal =
+                  realLessons.find(
+                    (rl) =>
+                      (s.slug && rl.slug === s.slug) ||
+                      (rl.position && rl.position === sIdx + 1)
+                  ) || realLessons[sIdx]
+
+                return {
+                  ...s,
+                  backendId: matchedReal ? matchedReal.id : null,
+                  backendSlug: matchedReal?.slug || s.slug || null,
+                  backendModuleId: matchedReal?.moduleId || null,
+                  realTitle: matchedReal?.title || s.title,
+                }
+              })
+
+              return {
+                ...template,
+                id: c.slug || `course-${c.id}`,
+                backendId: c.id,
+                code: template.code || (c.slug ? c.slug.toUpperCase().slice(0, 8) : `SEC-${c.id}`),
+                title: c.title,
+                description: c.description || template.description,
+                difficulty: c.difficulty === "BEGINNER" ? "Cơ Bản" : c.difficulty === "HARD" ? "Nâng Cao" : "Trung Cấp",
+                difficultyKey: c.difficulty?.toLowerCase() || "intermediate",
+                syllabus: mappedSyllabus,
+              }
+            })
+          )
+
+          set({ courses: liveCourses, syncStatus: "synced", syncError: null })
+
+          // Đồng bộ tiến độ cho các khóa học đã ghi danh
+          const { enrolledCourses } = get()
+          for (const enc of enrolledCourses) {
+            const found = liveCourses.find((lc) => lc.id === enc)
+            if (found?.backendId) {
+              await get().syncCourseProgress(found.id, found.backendId)
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch courses from backend API", err)
+        set({ syncStatus: "error", syncError: err.message || "Lỗi kết nối máy chủ" })
+      }
+    },
+
+    // Fetch user enrollments from Backend API
+    fetchUserEnrollments: async () => {
+      try {
+        const res = await progressService.getMyEnrollments()
+        if (res.success && Array.isArray(res.data)) {
+          const enrolledSlugs = res.data.map((e) => e.courseSlug || `course-${e.courseId}`)
+          set({ enrolledCourses: enrolledSlugs })
+          // Kéo tiến độ từng khóa
+          for (const e of res.data) {
+            await get().syncCourseProgress(e.courseSlug, e.courseId)
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch enrollments from backend", err)
+      }
+    },
+
     // Enroll in course
-    enrollCourse: (courseId) => {
+    enrollCourse: async (courseId) => {
       const { enrolledCourses, courses } = get()
-      if (enrolledCourses.includes(courseId)) return
+      if (enrolledCourses.includes(courseId)) return true
 
       const updated = [...enrolledCourses, courseId]
       localStorage.setItem("cyber_enrolled_courses", JSON.stringify(updated))
       set({ enrolledCourses: updated })
 
       const course = courses.find((c) => c.id === courseId)
+      if (course?.backendId) {
+        try {
+          await progressService.enrollCourse(course.backendId)
+          await get().syncCourseProgress(course.id, course.backendId)
+        } catch {
+          // Fallback smoothly
+        }
+      }
+
       useNotificationStore
         .getState()
         .success(
           "Kích hoạt khóa học thành công!",
           `Bạn đã ghi danh vào track: ${course?.title || courseId}`
         )
+      return true
     },
 
-    // Toggle completed status of a lesson
-    toggleLesson: (courseId, lessonId) => {
-      const { completedLessons, userXp } = get()
+    // Toggle completed status of a lesson with prerequisite enforcement and strict server sync
+    toggleLesson: async (courseId, lessonId) => {
+      const { completedLessons, userXp, courses, isLessonUnlocked } = get()
+      const course = courses.find((c) => c.id === courseId)
+      if (!course) return false
+
       const current = completedLessons[courseId] || []
       const isCurrentlyDone = current.includes(lessonId)
+      const lessonIndex = course.syllabus?.findIndex((s) => s.id === lessonId) ?? -1
+      const lesson = course.syllabus?.[lessonIndex]
 
-      const updatedList = isCurrentlyDone
-        ? current.filter((id) => id !== lessonId)
-        : [...current, lessonId]
-      const xpDelta = isCurrentlyDone ? -100 : 100
-
-      const newCompleted = {
-        ...completedLessons,
-        [courseId]: updatedList,
+      // Kiểm tra điều kiện prerequisite trước khi đánh dấu hoàn thành
+      if (!isCurrentlyDone && lessonIndex > 0) {
+        const unlocked = isLessonUnlocked(courseId, lessonIndex)
+        if (!unlocked) {
+          const prevLesson = course.syllabus[lessonIndex - 1]
+          useNotificationStore.getState().warning(
+            "Bài Học Đang Bị Khóa (Prerequisite Required)",
+            `Bạn cần hoàn thành bài học trước: "${prevLesson?.title || 'Bài trước'}" để mở khóa bài học này.`
+          )
+          return false
+        }
       }
 
-      const newXp = Math.max(0, userXp + xpDelta)
+      const targetBackendLessonId = lesson?.backendId
+      if (!targetBackendLessonId) {
+        useNotificationStore.getState().error(
+          "Lỗi Ánh Xạ Bài Học",
+          "Không tìm thấy ID bài học hợp lệ trên máy chủ. Vui lòng tải lại trang."
+        )
+        return false
+      }
 
-      localStorage.setItem("cyber_completed_lessons", JSON.stringify(newCompleted))
-      localStorage.setItem("cyber_user_learning_xp", newXp.toString())
+      set({ syncStatus: "syncing", syncError: null })
 
-      set({
-        completedLessons: newCompleted,
-        userXp: newXp,
-      })
+      // Đảm bảo học viên đã enroll khóa học ở backend trước khi ghi nhận bài
+      if (course.backendId && !get().enrolledCourses.includes(courseId)) {
+        try {
+          await progressService.enrollCourse(course.backendId)
+          set((state) => ({ enrolledCourses: [...state.enrolledCourses, courseId] }))
+        } catch {
+          // ignore if already enrolled
+        }
+      }
 
-      if (!isCurrentlyDone) {
-        useNotificationStore
-          .getState()
-          .success(
-            "Hoàn thành bài học!",
-            "+100 XP thưởng. Tiến độ khóa học được cập nhật."
+      try {
+        if (!isCurrentlyDone) {
+          // Gọi API hoàn thành bài học
+          const res = await progressService.completeLesson(targetBackendLessonId)
+          if (!res.success) {
+            set({ syncStatus: "error", syncError: res.error || "Máy chủ từ chối ghi nhận hoàn thành bài học" })
+            useNotificationStore.getState().error(
+              "Đồng Bộ Tiến Độ Thất Bại",
+              `${res.error || "Máy chủ từ chối ghi nhận hoàn thành bài học"}. Vui lòng thử lại.`
+            )
+            return false
+          }
+
+          const updatedList = [...current, lessonId]
+          const newXp = userXp + 100
+          const newCompleted = { ...completedLessons, [courseId]: updatedList }
+
+          localStorage.setItem("cyber_completed_lessons", JSON.stringify(newCompleted))
+          localStorage.setItem("cyber_user_learning_xp", newXp.toString())
+
+          set({
+            completedLessons: newCompleted,
+            userXp: newXp,
+            syncStatus: "synced",
+            syncError: null,
+          })
+
+          useNotificationStore.getState().success(
+            "Hoàn Thành Bài Học!",
+            `+100 XP. Tiến độ bài học "${lesson.title}" đã được lưu trên máy chủ.`
           )
+          return true
+        } else {
+          // Gọi API đặt lại bài học
+          const res = await progressService.resetLesson(targetBackendLessonId)
+          if (!res.success) {
+            set({ syncStatus: "error", syncError: res.error || "Không thể đặt lại tiến độ trên máy chủ" })
+            useNotificationStore.getState().error(
+              "Đặt Lại Thất Bại",
+              `${res.error || "Không thể đặt lại tiến độ trên máy chủ"}.`
+            )
+            return false
+          }
+
+          const updatedList = current.filter((id) => id !== lessonId)
+          const newXp = Math.max(0, userXp - 100)
+          const newCompleted = { ...completedLessons, [courseId]: updatedList }
+
+          localStorage.setItem("cyber_completed_lessons", JSON.stringify(newCompleted))
+          localStorage.setItem("cyber_user_learning_xp", newXp.toString())
+
+          set({
+            completedLessons: newCompleted,
+            userXp: newXp,
+            syncStatus: "synced",
+            syncError: null,
+          })
+
+          useNotificationStore.getState().info(
+            "Đã Đặt Lại Bài Học",
+            `Tiến độ bài học "${lesson.title}" đã được đặt lại.`
+          )
+          return true
+        }
+      } catch (err) {
+        set({ syncStatus: "error", syncError: err.message || "Lỗi mạng" })
+        useNotificationStore.getState().error(
+          "Lỗi Kết Nối Mạng",
+          "Không thể gửi yêu cầu đến máy chủ. Tiến độ không được lưu."
+        )
+        return false
       }
     },
 
     // Open Interactive Lesson Modal
     openLessonModal: (courseId, lessonId) => {
-      const { courses, enrolledCourses, enrollCourse } = get()
+      const { courses, enrolledCourses, enrollCourse, isLessonUnlocked, completedLessons } = get()
       const course = courses.find((c) => c.id === courseId)
       if (!course) return
 
@@ -1009,7 +1407,7 @@ export const useLearningStore = create((set, get) => {
       }
 
       // If no specific lesson requested, find first uncompleted or first lesson
-      const completed = get().completedLessons[courseId] || []
+      const completed = completedLessons[courseId] || []
       let targetLesson = null
       let targetIndex = 0
 
@@ -1023,6 +1421,16 @@ export const useLearningStore = create((set, get) => {
         targetIndex = course.syllabus.findIndex((s) => !completed.includes(s.id))
         if (targetIndex === -1) targetIndex = 0
         targetLesson = course.syllabus[targetIndex]
+      }
+
+      // Kiểm tra khóa prerequisite
+      if (targetIndex > 0 && !isLessonUnlocked(courseId, targetIndex)) {
+        const prevLesson = course.syllabus[targetIndex - 1]
+        useNotificationStore.getState().warning(
+          "Bài Học Đang Bị Khóa (Prerequisite Required)",
+          `Vui lòng hoàn thành bài học tiên quyết: "${prevLesson?.title || 'Bài trước'}" để mở khóa bài học này.`
+        )
+        return
       }
 
       set({
@@ -1039,20 +1447,30 @@ export const useLearningStore = create((set, get) => {
     },
 
     // Move to next lesson in modal
-    nextLesson: () => {
-      const { activeLessonModal, completedLessons, toggleLesson } = get()
+    nextLesson: async () => {
+      const { activeLessonModal, completedLessons, toggleLesson, isLessonUnlocked } = get()
       if (!activeLessonModal) return
 
       const { course, lesson, lessonIndex } = activeLessonModal
       // Mark current as completed if not yet
       const currentDone = completedLessons[course.id] || []
       if (!currentDone.includes(lesson.id)) {
-        toggleLesson(course.id, lesson.id)
+        const success = await toggleLesson(course.id, lesson.id)
+        if (!success) return
       }
 
       // If next lesson exists
       if (lessonIndex < course.syllabus.length - 1) {
         const nextIndex = lessonIndex + 1
+        // Check if next is unlocked
+        if (!isLessonUnlocked(course.id, nextIndex)) {
+          useNotificationStore.getState().warning(
+            "Bài Kế Tiếp Chưa Mở Khóa",
+            "Bạn phải hoàn thành bài học hiện tại để mở khóa nội dung tiếp theo."
+          )
+          return
+        }
+
         const nextTarget = course.syllabus[nextIndex]
         set({
           activeLessonModal: {
@@ -1066,8 +1484,8 @@ export const useLearningStore = create((set, get) => {
         useNotificationStore
           .getState()
           .success(
-            "Chúc mừng tốt nghiệp module!",
-            `Bạn đã hoàn thành 100% giáo trình ${course.code}!`
+            "Chúc mừng tốt nghiệp khóa học!",
+            `Bạn đã hoàn thành 100% giáo trình ${course.code}! Đủ điều kiện nhận Chứng chỉ số PGP.`
           )
       }
     },

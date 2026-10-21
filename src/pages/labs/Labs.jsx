@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   Clock,
   Server,
@@ -6,11 +6,11 @@ import {
   CheckCircle2,
 } from "lucide-react"
 import { Card, CountUp } from "../../components/common"
-import { LabTerminalModal } from "./components/LabTerminalModal"
 import { LabFilterBar } from "./components/LabFilterBar"
 import { FlagSubmissionCard } from "./components/FlagSubmissionCard"
 import useLabStore from "../../stores/useLabStore"
 import useNotificationStore from "../../stores/useNotificationStore"
+import challengeService from "../../services/challengeService"
 
 const LAB_DATA = [
   {
@@ -138,9 +138,43 @@ const CATEGORIES = [
 const DIFFICULTIES = ["all", "Novice", "Intermediate", "Advanced"]
 
 export function Labs() {
+  const [labs, setLabs] = useState(LAB_DATA)
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedDifficulty, setSelectedDifficulty] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
+
+  useEffect(() => {
+    async function loadChallenges() {
+      try {
+        const res = await challengeService.getChallenges()
+        if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+          const liveLabs = res.data.map((ch, idx) => {
+            const matched = LAB_DATA.find(
+              (l) => l.id === ch.slug || l.title?.toLowerCase() === ch.title?.toLowerCase()
+            )
+            if (matched) {
+              return { ...matched, backendId: ch.id, points: ch.points || matched.points }
+            }
+            const fallback = LAB_DATA[idx % LAB_DATA.length]
+            return {
+              ...fallback,
+              id: ch.slug || `lab-${ch.id}`,
+              backendId: ch.id,
+              title: ch.title,
+              category: ch.category?.toLowerCase() || fallback.category,
+              difficulty: ch.difficulty === "EASY" ? "Novice" : ch.difficulty === "HARD" ? "Advanced" : "Intermediate",
+              points: ch.points || 400,
+              description: ch.description || fallback.description,
+            }
+          })
+          setLabs(liveLabs)
+        }
+      } catch (err) {
+        console.warn("Could not load challenges from backend", err)
+      }
+    }
+    loadChallenges()
+  }, [])
 
   const { startLab, isRunning, activeLab, openTerminal, completedLabs, userPoints } = useLabStore()
   const { info } = useNotificationStore()
@@ -155,7 +189,7 @@ export function Labs() {
     }
   }
 
-  const filteredLabs = LAB_DATA.filter((lab) => {
+  const filteredLabs = labs.filter((lab) => {
     const matchesCategory = selectedCategory === "all" || lab.category === selectedCategory
     const matchesDifficulty = selectedDifficulty === "all" || lab.difficulty === selectedDifficulty
     const matchesSearch =

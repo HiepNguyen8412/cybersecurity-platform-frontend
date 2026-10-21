@@ -81,7 +81,14 @@ export function Learning() {
     toggleLesson,
     launchLessonLab,
     userXp,
+    fetchCoursesFromApi,
+    fetchUserEnrollments,
   } = useLearningStore()
+
+  useEffect(() => {
+    fetchCoursesFromApi()
+    fetchUserEnrollments()
+  }, [fetchCoursesFromApi, fetchUserEnrollments])
 
   const [activeCategory, setActiveCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")

@@ -1,6 +1,6 @@
-﻿import { useState } from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
-import { UserCheck, ArrowRight, BookOpen, FileText, X, Terminal, Search } from "lucide-react"
+import { UserCheck, ArrowRight, BookOpen, FileText, X, Terminal, Send } from "lucide-react"
 import { Card, Button } from "../../../components/common"
 
 /**

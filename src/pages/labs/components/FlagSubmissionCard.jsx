@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Flag, Send, CheckCircle2, Award } from "lucide-react"
 import useLabStore from "../../../stores/useLabStore"
 import useNotificationStore from "../../../stores/useNotificationStore"
+import challengeService from "../../../services/challengeService"
 
 export function FlagSubmissionCard({ lab }) {
   const [flagText, setFlagText] = useState("")
@@ -11,12 +12,30 @@ export function FlagSubmissionCard({ lab }) {
 
   const isCompleted = completedLabs.includes(lab.id)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!flagText.trim()) return
 
     setIsSubmitting(true)
-    setTimeout(() => {
+    try {
+      if (lab.backendId) {
+        const apiRes = await challengeService.submitFlag(lab.backendId, flagText.trim())
+        if (apiRes.success && apiRes.data) {
+          if (apiRes.data.correct) {
+            submitFlag(lab.id, flagText)
+            success("Chính xác! Cờ đã được xác nhận", apiRes.data.message || "Bạn đã giải thành công thử thách!")
+            setFlagText("")
+            setIsSubmitting(false)
+            return
+          } else {
+            error("Cờ không hợp lệ", apiRes.data.message || "Flag không chính xác.")
+            setIsSubmitting(false)
+            return
+          }
+        }
+      }
+
+      // Local fallback
       const res = submitFlag(lab.id, flagText)
       if (res.success) {
         success("Chính xác! Cờ đã được xác nhận", res.message)
@@ -24,8 +43,11 @@ export function FlagSubmissionCard({ lab }) {
       } else {
         error("Cờ không hợp lệ", res.message)
       }
+    } catch {
+      error("Lỗi xác thực", "Không thể gửi cờ thử thách tới máy chủ.")
+    } finally {
       setIsSubmitting(false)
-    }, 400)
+    }
   }
 
   return (

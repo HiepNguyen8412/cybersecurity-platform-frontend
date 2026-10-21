@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom"
 import {
   FileText,
-  BookOpen,
-  FileCheck,
   CheckCircle2,
   FlaskConical,
   Award,

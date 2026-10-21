@@ -1,28 +1,39 @@
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import {
-  FlaskConical,
   Plus,
   Search,
-  Filter,
   Eye,
   EyeOff,
-  Edit2,
-  Trash2,
   CheckCircle2,
   Server,
-  Award,
-  Layers,
   X,
   Save,
-  Check,
+  RefreshCw,
 } from "lucide-react"
 import AdminHeader from "./components/AdminHeader"
-import { Card, Badge, Button } from "../../components/common"
+import { Card, Button } from "../../components/common"
 import { ADMIN_LABS_CATALOG } from "./data/adminMockData"
+import challengeService from "../../services/challengeService"
 import useNotificationStore from "../../stores/useNotificationStore"
 
+const mapBackendChallenge = (ch) => ({
+  id: ch.id,
+  title: ch.title,
+  slug: ch.slug,
+  track: ch.category === "WEB" ? "Web Application Defense" : ch.category === "CRYPTO" ? "Cryptography & Ciphers" : ch.category === "PWN" ? "Binary Exploitation" : "Network Security",
+  difficulty: ch.difficulty === "EASY" ? "Cơ Bản" : ch.difficulty === "HARD" ? "Nâng Cao" : "Trung Cấp",
+  points: ch.points || 100,
+  containerImage: `cyberpath/ctf-${ch.slug || ch.id}:latest`,
+  memoryLimit: "512 MB",
+  cpuLimit: "0.5 vCPU",
+  flagSecret: "FLAG{PROTECTED_BCRYPT_IN_DB}",
+  status: "published",
+  instancesActive: ch.solvesCount || 0,
+})
+
 export default function AdminLabs() {
-  const [labs, setLabs] = useState(ADMIN_LABS_CATALOG)
+  const [labs, setLabs] = useState([])
+  const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
   const [trackFilter, setTrackFilter] = useState("all")
   const [visibleFlags, setVisibleFlags] = useState({})
@@ -41,6 +52,46 @@ export default function AdminLabs() {
     flagSecret: "FLAG{DEFAULT_FLAG_VALUE}",
     status: "published",
   })
+
+  const handleRefresh = useCallback(async () => {
+    setLoading(true)
+    try {
+      const res = await challengeService.getChallenges()
+      if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        setLabs(res.data.map(mapBackendChallenge))
+      } else {
+        setLabs(ADMIN_LABS_CATALOG)
+      }
+    } catch {
+      setLabs(ADMIN_LABS_CATALOG)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    let ignore = false
+    async function load() {
+      try {
+        const res = await challengeService.getChallenges()
+        if (!ignore) {
+          if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+            setLabs(res.data.map(mapBackendChallenge))
+          } else {
+            setLabs(ADMIN_LABS_CATALOG)
+          }
+        }
+      } catch {
+        if (!ignore) setLabs(ADMIN_LABS_CATALOG)
+      } finally {
+        if (!ignore) setLoading(false)
+      }
+    }
+    load()
+    return () => {
+      ignore = true
+    }
+  }, [])
 
   const toggleFlagVisibility = (id) => {
     setVisibleFlags((prev) => ({ ...prev, [id]: !prev[id] }))
@@ -111,14 +162,25 @@ export default function AdminLabs() {
         title="Quản Trị Phòng Lab Thực Chiến & Thử Thách CTF"
         subtitle="Quản lý cấu hình container cô lập, thiết lập Flag nghiệm thu, phân bổ tài nguyên và kiểm soát xuất bản"
         actions={
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={handleOpenCreate}
-            leftIcon={<Plus className="h-3.5 w-3.5" />}
-          >
-            Thêm Phòng Lab Mới
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              disabled={loading}
+              leftIcon={<RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />}
+            >
+              Làm Mới
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={handleOpenCreate}
+              leftIcon={<Plus className="h-3.5 w-3.5" />}
+            >
+              Thêm Phòng Lab Mới
+            </Button>
+          </div>
         }
       />
 

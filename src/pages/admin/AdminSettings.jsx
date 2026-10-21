@@ -1,18 +1,12 @@
 import { useState } from "react"
 import {
-  Settings,
   Server,
   Lock,
-  ShieldCheck,
   Bell,
   Save,
-  CheckCircle2,
-  Terminal,
-  Activity,
-  Globe,
 } from "lucide-react"
 import AdminHeader from "./components/AdminHeader"
-import { Card, Button, Input } from "../../components/common"
+import { Card, Button } from "../../components/common"
 import useNotificationStore from "../../stores/useNotificationStore"
 
 export default function AdminSettings() {

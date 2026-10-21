@@ -19,6 +19,7 @@ import {
   Flame,
   FileText,
   Compass,
+  Lightbulb,
 } from "lucide-react"
 import useLearningStore from "../../../stores/useLearningStore"
 import useNotificationStore from "../../../stores/useNotificationStore"
@@ -101,6 +102,7 @@ export function InteractiveLessonModal() {
     toggleLesson,
     completedLessons,
     launchLessonLab,
+    submitQuizAttempt,
   } = useLearningStore()
 
   const [searchParams] = useSearchParams()
@@ -110,6 +112,7 @@ export function InteractiveLessonModal() {
   const [copiedPayload, setCopiedPayload] = useState(false)
   const [selectedOption, setSelectedOption] = useState(null)
   const [quizSubmitted, setQuizSubmitted] = useState(false)
+  const [revealedHintTier, setRevealedHintTier] = useState(0) // 0: None, 1: Concept, 2: Technical, 3: Answer
 
   if (!activeLessonModal) return null
 
@@ -140,10 +143,13 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
   const handleQuizSubmit = (optIndex) => {
     setSelectedOption(optIndex)
     setQuizSubmitted(true)
+    if (submitQuizAttempt) {
+      submitQuizAttempt(lesson, optIndex, lesson.quiz?.correct)
+    }
     if (optIndex === lesson.quiz?.correct) {
       useNotificationStore.getState().success(
         "Chính xác! Tactical Analysis Đạt Chuẩn",
-        "+50 XP Thưởng Kiểm Tra Kỹ Năng"
+        "+50 XP Thưởng Kiểm Tra Kỹ Năng (Đã lưu điểm vào máy chủ)"
       )
     }
   }
@@ -151,6 +157,7 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
   const handleResetQuiz = () => {
     setSelectedOption(null)
     setQuizSubmitted(false)
+    setRevealedHintTier(0)
   }
 
   return createPortal(
@@ -483,6 +490,7 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
                     {lesson.quiz.question}
                   </h3>
 
+                  {/* Options */}
                   <div className="space-y-2.5 pt-1">
                     {lesson.quiz.options.map((opt, idx) => {
                       const isSelected = selectedOption === idx
@@ -515,32 +523,172 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
                     })}
                   </div>
 
+                  {/* Progressive Hint Tiers */}
+                  <div className="pt-2 border-t border-slate-800/80 space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-slate-400 flex items-center gap-1.5">
+                        <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Hệ Thống Gợi Ý Từng Mức (Hint Tiers):</span>
+                      </span>
+                      <div className="flex gap-1.5">
+                        {[1, 2, 3].map((tier) => (
+                          <button
+                            key={tier}
+                            type="button"
+                            onClick={() => setRevealedHintTier(revealedHintTier === tier ? tier - 1 : tier)}
+                            className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-colors cursor-pointer border ${
+                              revealedHintTier >= tier
+                                ? "bg-amber-500/20 border-amber-500/40 text-amber-300 font-bold"
+                                : "bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200"
+                            }`}
+                          >
+                            Mức {tier} {tier === 1 ? "(Khái Niệm)" : tier === 2 ? "(Cú Pháp)" : "(Đáp Án)"}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {revealedHintTier >= 1 && (
+                      <div className="p-3 rounded-xl bg-slate-900/90 border border-amber-500/30 text-xs text-amber-200 space-y-1 font-sans animate-in fade-in">
+                        <div className="font-mono font-bold text-amber-400 flex items-center gap-1.5 text-[11px]">
+                          <span>💡 GỢI Ý MỨC 1: KHÁI NIỆM CỐT LÕI</span>
+                        </div>
+                        <p className="text-slate-300">
+                          {lesson.quiz.hints?.[0]?.text || "Xem lại bản chất cơ chế xử lý dữ liệu đầu vào và các ràng buộc bảo mật của trình duyệt hoặc máy chủ."}
+                        </p>
+                      </div>
+                    )}
+
+                    {revealedHintTier >= 2 && (
+                      <div className="p-3 rounded-xl bg-slate-900/90 border border-cyan-500/30 text-xs text-cyan-200 space-y-1 font-sans animate-in fade-in">
+                        <div className="font-mono font-bold text-cyan-400 flex items-center gap-1.5 text-[11px]">
+                          <span>🔍 GỢI Ý MỨC 2: KỸ THUẬT & CÚ PHÁP</span>
+                        </div>
+                        <p className="text-slate-300">
+                          {lesson.quiz.hints?.[1]?.text || "Xem xét các tham số, phương thức HTTP hoặc cơ chế gán giá trị không an toàn được nêu trong phần lý thuyết."}
+                        </p>
+                      </div>
+                    )}
+
+                    {revealedHintTier >= 3 && (
+                      <div className="p-3 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-xs text-emerald-200 space-y-1 font-sans animate-in fade-in">
+                        <div className="font-mono font-bold text-emerald-400 flex items-center gap-1.5 text-[11px]">
+                          <span>🎯 GỢI Ý MỨC 3: PHÂN TÍCH LỜI GIẢI</span>
+                        </div>
+                        <p className="text-slate-300">
+                          {lesson.quiz.hints?.[2]?.text || `Đáp án đúng là phương án ${String.fromCharCode(65 + lesson.quiz.correct)} do tính chất loại trừ và nguyên tắc thiết kế phòng thủ.`}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Quiz Feedback After Submission */}
                   {quizSubmitted && (
-                    <div className="mt-4 p-4 rounded-xl bg-slate-900 border border-cyan-500/30 text-xs space-y-2 animate-in fade-in">
-                      <div className="flex items-center gap-2 font-bold font-mono">
-                        {selectedOption === lesson.quiz.correct ? (
-                          <>
-                            <Check className="w-4 h-4 text-emerald-400" />
-                            <span className="text-emerald-400">CHÍNH XÁC! PHÂN TÍCH TÁC CHIẾN CHUẨN XÁC</span>
-                          </>
-                        ) : (
-                          <>
-                            <AlertTriangle className="w-4 h-4 text-rose-400" />
-                            <span className="text-rose-400">CHƯA ĐÚNG - HÃY ĐỌC LẠI PHÂN TÍCH DƯỚI ĐÂY</span>
-                          </>
-                        )}
+                    <div className="mt-4 p-4 rounded-xl bg-slate-900 border border-cyan-500/30 text-xs space-y-3 animate-in fade-in">
+                      {/* Pass / Fail Criteria & Status Banner */}
+                      <div className="flex items-center justify-between font-mono pb-2 border-b border-slate-800 flex-wrap gap-2">
+                        <div className="flex items-center gap-2 font-bold">
+                          {selectedOption === lesson.quiz.correct ? (
+                            <>
+                              <Check className="w-4 h-4 text-emerald-400" />
+                              <span className="text-emerald-400">CHÍNH XÁC! PHÂN TÍCH TÁC CHIẾN ĐẠT CHUẨN (+50 XP)</span>
+                            </>
+                          ) : (
+                            <>
+                              <AlertTriangle className="w-4 h-4 text-rose-400" />
+                              <span className="text-rose-400">
+                                CHƯA ĐÚNG: BẠN CHỌN [{String.fromCharCode(65 + selectedOption)}]. ĐÁP ÁN ĐÚNG LÀ [{String.fromCharCode(65 + lesson.quiz.correct)}]
+                              </span>
+                            </>
+                          )}
+                        </div>
+                        <span
+                          className={`px-2 py-0.5 rounded text-[10px] font-bold border ${
+                            selectedOption === lesson.quiz.correct
+                              ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+                              : "bg-rose-500/20 text-rose-300 border-rose-500/40"
+                          }`}
+                        >
+                          {selectedOption === lesson.quiz.correct ? "PASS: ĐẠT" : "NOT PASSED: CHƯA ĐẠT"}
+                        </span>
                       </div>
 
-                      <p className="text-slate-300 leading-relaxed font-sans">
-                        {lesson.quiz.explanation}
-                      </p>
+                      {/* Targeted Review Based on Learner Mistake */}
+                      {selectedOption !== lesson.quiz.correct && (
+                        <div className="p-3.5 rounded-xl bg-amber-950/25 border border-amber-500/40 space-y-2 text-slate-300">
+                          <div className="flex items-center gap-2 font-mono font-bold text-amber-300 text-[11px]">
+                            <BookOpen className="w-4 h-4" />
+                            <span>BÀI ÔN THEO LỖI GẶP PHẢI (TARGETED REVIEW):</span>
+                          </div>
+                          <p className="text-[11px] leading-relaxed text-amber-200/90 font-sans">
+                            Bạn đã chọn nhầm phương án <strong>[{String.fromCharCode(65 + selectedOption)}]</strong>. Để khắc phục lỗ hổng kiến thức này, hãy xem lại phần lý thuyết và cơ chế bảo vệ cốt lõi của <strong>{lesson.title}</strong>:
+                          </p>
+                          <div className="flex flex-wrap gap-2 pt-1 font-mono text-[11px]">
+                            <button
+                              type="button"
+                              onClick={() => setActiveTab("theory")}
+                              className="px-3 py-1.5 rounded-lg bg-slate-900 border border-amber-500/40 text-amber-300 hover:bg-slate-800 transition-colors cursor-pointer flex items-center gap-1.5"
+                            >
+                              <BookOpen className="w-3.5 h-3.5" />
+                              <span>📖 Ôn Lại Lý Thuyết Cốt Lõi</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setActiveTab("code")}
+                              className="px-3 py-1.5 rounded-lg bg-slate-900 border border-cyan-500/40 text-cyan-300 hover:bg-slate-800 transition-colors cursor-pointer flex items-center gap-1.5"
+                            >
+                              <Code2 className="w-3.5 h-3.5" />
+                              <span>🛡️ Xem Mẫu Code Phòng Ngự</span>
+                            </button>
+                          </div>
+                        </div>
+                      )}
 
-                      <button
-                        onClick={handleResetQuiz}
-                        className="text-xs text-cyan-400 hover:underline font-mono pt-1 cursor-pointer block"
-                      >
-                        Thử lại câu hỏi
-                      </button>
+                      {/* Detailed Analysis */}
+                      <div className="p-3 rounded-lg bg-black/40 border border-slate-800 text-slate-300 leading-relaxed font-sans">
+                        <strong className="text-white block mb-1 font-mono text-[11px] uppercase tracking-wide">
+                          Phân Tích Chuyên Sâu:
+                        </strong>
+                        {lesson.quiz.explanation}
+                      </div>
+
+                      {/* Remediation Guide */}
+                      <div className="p-3 rounded-lg bg-emerald-950/20 border border-emerald-500/30 space-y-1.5 text-slate-300">
+                        <div className="flex items-center gap-2 font-mono font-bold text-emerald-400 text-[11px]">
+                          <ShieldCheck className="w-4 h-4" />
+                          <span>HƯỚNG DẪN REMEDIATION & PHÒNG NGỰ CHIỀU SÂU:</span>
+                        </div>
+                        <p className="text-[11px] leading-relaxed">
+                          Áp dụng nguyên tắc Least Privilege và kiểm soát dữ liệu tại ranh giới tin cậy. Tuyệt đối không tin tưởng bất kỳ input nào từ phía client mà không qua bộ lọc Whitelist và Parameterized Statements.
+                        </p>
+                      </div>
+
+                      {/* MITRE & CVE Alignment */}
+                      <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between text-[11px] font-mono flex-wrap gap-2">
+                        <span className="text-amber-400">
+                          MITRE: <strong>{lesson.mitre}</strong>
+                        </span>
+                        <span className="text-cyan-400">
+                          CVE/CWE: <strong>{lesson.cve}</strong>
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => launchLessonLab(course.labId)}
+                          className="px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 transition-colors cursor-pointer"
+                        >
+                          Thực hành trong Lab &rarr;
+                        </button>
+                      </div>
+
+                      <div className="pt-1">
+                        <button
+                          type="button"
+                          onClick={handleResetQuiz}
+                          className="text-xs text-cyan-400 hover:underline font-mono cursor-pointer block"
+                        >
+                          &larr; Thử lại câu hỏi khác
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -560,7 +708,10 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
         <div className="px-6 py-4 border-t border-slate-800 bg-slate-950/80 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <button
-              onClick={prevLesson}
+              onClick={() => {
+                handleResetQuiz()
+                prevLesson()
+              }}
               disabled={lessonIndex === 0}
               className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:hover:bg-slate-800 text-slate-300 font-mono text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
@@ -573,7 +724,10 @@ const secureResult = await enforceSecurityGuardrail(userInput, {
             </span>
 
             <button
-              onClick={nextLesson}
+              onClick={() => {
+                handleResetQuiz()
+                nextLesson()
+              }}
               className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-cyan-500/20 cursor-pointer"
             >
               <span>{lessonIndex < totalLessons - 1 ? "Bài Tiếp Theo" : "Hoàn Tất Khóa"}</span>

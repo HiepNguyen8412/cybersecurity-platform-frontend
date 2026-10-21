@@ -1,24 +1,13 @@
 import { useState } from "react"
 import {
-  UserCheck,
   Search,
-  Filter,
   UserPlus,
-  ShieldAlert,
-  ShieldCheck,
   CheckCircle2,
-  Lock,
-  Unlock,
-  KeyRound,
-  Mail,
-  Award,
-  MoreVertical,
   X,
   Save,
-  Download,
 } from "lucide-react"
 import AdminHeader from "./components/AdminHeader"
-import { Card, Badge, Button, Input, Modal } from "../../components/common"
+import { Card, Button } from "../../components/common"
 import { ADMIN_USERS } from "./data/adminMockData"
 import useNotificationStore from "../../stores/useNotificationStore"
 

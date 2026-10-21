@@ -1,5 +1,5 @@
-import { useState, Fragment } from "react"
-import { Link } from "react-router-dom"
+import { useState, useEffect, Fragment } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import {
   Check,
   X,
@@ -7,8 +7,16 @@ import {
   ChevronRight,
   ChevronDown,
   Shield,
+  Info,
+  Sparkles,
+  Lock,
+  Mail,
+  ArrowRight,
+  Loader2,
 } from "lucide-react"
 import useAuth from "../../hooks/useAuth"
+import { certificationService } from "../../services/certificationService"
+import { challengeService } from "../../services/challengeService"
 
 /**
  * Pricing Page - Bespoke Cyber Defense & SOC Range Subscriptions
@@ -16,8 +24,52 @@ import useAuth from "../../hooks/useAuth"
  */
 export function Pricing() {
   const { isAuthenticated } = useAuth()
+  const navigate = useNavigate()
   const [isAnnual, setIsAnnual] = useState(true)
   const [openFaq, setOpenFaq] = useState(null)
+  const [showEarlyAccessModal, setShowEarlyAccessModal] = useState(false)
+  const [showEnterpriseModal, setShowEnterpriseModal] = useState(false)
+  const [interestEmail, setInterestEmail] = useState("")
+  const [registeredInterest, setRegisteredInterest] = useState(false)
+  const [isSubmittingInterest, setIsSubmittingInterest] = useState(false)
+  const [interestFeedback, setInterestFeedback] = useState("")
+  const [interestError, setInterestError] = useState("")
+  const [realLabCount, setRealLabCount] = useState(null)
+
+  useEffect(() => {
+    let isMounted = true
+    challengeService.getAllChallenges()
+      .then((challenges) => {
+        if (isMounted && Array.isArray(challenges)) {
+          setRealLabCount(challenges.length)
+        }
+      })
+      .catch(() => {
+        // Fallback gracefully without breaking layout
+      })
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  const handleRegisterInterest = async (e) => {
+    e.preventDefault()
+    if (!interestEmail || !interestEmail.includes("@")) {
+      setInterestError("Vui lòng nhập địa chỉ email hợp lệ.")
+      return
+    }
+    setInterestError("")
+    setIsSubmittingInterest(true)
+    try {
+      const res = await certificationService.registerWaitlist(interestEmail, "pro", "pricing_beta")
+      setRegisteredInterest(true)
+      setInterestFeedback(res.message || "Đăng ký thành công! Email của bạn đã được ghi nhận vào hệ thống ưu tiên.")
+    } catch (err) {
+      setInterestError(err.response?.data?.message || "Không thể kết nối đến máy chủ. Vui lòng thử lại sau.")
+    } finally {
+      setIsSubmittingInterest(false)
+    }
+  }
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index)
@@ -26,68 +78,68 @@ export function Pricing() {
   const plans = [
     {
       id: "community",
-      name: "Chiến Binh SOC Tự Do",
-      badge: "Miễn Phí Trọn Đời",
-      description: "Dành cho sinh viên, học viên mới bắt đầu khám phá kỹ thuật phòng thủ và kiểm thử xâm nhập.",
+      name: "Học Viên Nền Tảng (Free)",
+      badge: "Miễn Phí Trải Nghiệm",
+      description: "Trải nghiệm bài giảng nhập môn an toàn thông tin, thực hành lab CTF căn bản và theo dõi tiến độ cá nhân.",
       monthlyPrice: 0,
       annualPrice: 0,
       period: "miễn phí",
       popular: false,
-      ctaText: isAuthenticated ? "Gói Đang Sử Dụng" : "Khởi Chạy Sandbox Miễn Phí",
+      ctaText: isAuthenticated ? "Gói Đang Sử Dụng" : "Bắt Đầu Miễn Phí",
       ctaTo: isAuthenticated ? "/dashboard" : "/register",
       features: [
-        { text: "15 Phòng Lab Cloud Sandbox cơ bản", included: true },
-        { text: "Giáo trình Linux & Web Security nền tảng", included: true },
-        { text: "Truy cập Terminal Web-SSH an toàn", included: true },
-        { text: "Cộng đồng hỗ trợ & giải đáp trên Discord", included: true },
-        { text: "Tra cứu ma trận MITRE ATT&CK căn bản", included: true },
-        { text: "Khai thác lỗ hổng CVE phức tạp chuyên sâu", included: false },
-        { text: "Sổ tay Tác chiến SOC & Đo kiểm Telemetry", included: false },
-        { text: "Chứng chỉ số xác thực bằng mã băm PGP", included: false },
+        { text: "1–2 Khóa học nền tảng (Web Security & Linux Defense)", included: true },
+        { text: "3–5 Phòng Lab CTF & Sandbox thực hành căn bản", included: true },
+        { text: "Theo dõi tiến độ học tập cá nhân & Điểm XP", included: true },
+        { text: "Tra cứu ma trận MITRE ATT&CK & CVE cơ bản", included: true },
+        { text: "AI Security Mentor (Giới hạn câu hỏi căn bản)", included: true },
+        { text: "Toàn bộ 6 chuyên đề nâng cao & Capstone Projects", included: false },
+        { text: "Hệ thống gợi ý sâu 3 mức độ & Hướng dẫn Remediation", included: false },
+        { text: "Cấp phát Chứng chỉ số PGP sau khi hoàn thành Capstone", included: false },
       ],
     },
     {
       id: "pro",
       name: "Chuyên Viên Tác Chiến PRO",
-      badge: "Lựa Chọn Phổ Biến Nhất",
-      description: "Toàn quyền truy cập kho vũ khí phòng thủ, kịch bản tấn công thực tế và telemetry giám sát thời gian thực.",
+      badge: "Mở Khóa Toàn Diện",
+      description: "Toàn quyền truy cập tất cả khóa học hiện có, phòng lab CTF thực chiến, trợ lý AI Mentor hạn ngạch cao và chứng chỉ số.",
       monthlyPrice: 24,
       annualPrice: 19,
       period: "mỗi tháng",
       popular: true,
-      ctaText: isAuthenticated ? "Nâng Cấp Gói Pro" : "Kích Hoạt Sandbox Pro",
-      ctaTo: isAuthenticated ? "/dashboard" : "/register",
+      ctaText: "Đăng Ký Trải Nghiệm Sớm (Beta)",
+      ctaTo: "#early-access",
       features: [
-        { text: "Toàn bộ 120+ Phòng Lab Cloud Sandboxes", included: true },
-        { text: "Ma trận MITRE ATT&CK & OWASP Top 10 đầy đủ", included: true },
-        { text: "Hạ tầng máy ảo Cloud Sandbox tốc độ cao", included: true },
-        { text: "Sổ tay Tác chiến SOC & Hướng dẫn Remediate", included: true },
-        { text: "Pháp chứng bộ nhớ RAM (Volatility) & Dị mã", included: true },
-        { text: "Chứng chỉ số chính quy có mã tra cứu", included: true },
-        { text: "Mô phỏng đợt tấn công Zero-Day & CVE mới", included: true },
-        { text: "Phân quyền quản trị nhóm doanh nghiệp", included: false },
+        { text: "Toàn bộ 6 Khóa học chuyên sâu (Web, SOC, Network, Cloud, PWN, Crypto)", included: true },
+        { text: realLabCount ? `Toàn bộ ${realLabCount} Phòng Lab CTF & Thử thách độc quyền hiện có` : "Toàn bộ các Phòng Lab CTF & Thử thách thực chiến hiện có", included: true },
+        { text: "Trợ lý AI Mentor phân tích kỹ thuật với hạn ngạch cao", included: true },
+        { text: "Hệ thống gợi ý 3 mức độ (Khái niệm -> Cú pháp -> Phân tích đáp án)", included: true },
+        { text: "Hướng dẫn Remediation vá lỗi & Mã nguồn phòng thủ chuẩn", included: true },
+        { text: "Đồ án Capstone cuối lộ trình & Bảng đánh giá Rubric chuẩn NIST", included: true },
+        { text: "Cấp Chứng chỉ số PGP khi đạt chuẩn điều kiện", included: true },
+        { text: "Quản trị đội ngũ & Báo cáo kỹ năng tổ chức", included: false },
       ],
     },
     {
       id: "enterprise",
-      name: "Trung Tâm SOC Doanh Nghiệp",
-      badge: "Hạ Tầng Tác Chiến Riêng",
-      description: "Môi trường Cyber Range cô lập chuyên dụng cho đội ngũ SOC, diễn tập Red vs Blue và học viện an ninh mạng.",
+      name: "Hạ Tầng SOC Doanh Nghiệp",
+      badge: "Tổ Chức & Đào Tạo",
+      description: "Hạ tầng thao trường riêng, dashboard đo kiểm kỹ năng đội ngũ, kịch bản diễn tập tùy biến và tích hợp hệ thống LMS doanh nghiệp.",
       monthlyPrice: 79,
       annualPrice: 65,
       period: "mỗi tài khoản/tháng",
       popular: false,
-      ctaText: "Liên Hệ Chuyên Gia Hạ Tầng",
-      ctaTo: "/register",
+      ctaText: "Liên Hệ Giải Pháp Doanh Nghiệp",
+      ctaTo: "#enterprise-contact",
       features: [
         { text: "Bao gồm tất cả quyền lợi Gói Pro", included: true },
-        { text: "Hệ thống Cyber Range cô lập (Air-Gapped)", included: true },
-        { text: "Kịch bản diễn tập giả lập APT theo yêu cầu", included: true },
-        { text: "Bảng đo kiểm kỹ năng đội ngũ & KPI SLA", included: true },
-        { text: "Đăng nhập một lần SSO / SAML 2.0 / Okta", included: true },
-        { text: "Xuất báo cáo định dạng chuẩn LMS / SCORM", included: true },
-        { text: "Chuyên gia Range Master hỗ trợ trực tiếp", included: true },
-        { text: "Diễn tập tấn công đối kháng Red vs Blue Live", included: true },
+        { text: "Team Dashboard & Quản trị phân quyền thành viên tổ chức", included: true },
+        { text: "Báo cáo phân tích khoảng trống kỹ năng đội ngũ theo chuẩn NIST NICE", included: true },
+        { text: "Cụm phòng Lab riêng tư (Private Cloud Sandbox)", included: true },
+        { text: "Đăng nhập một lần Doanh nghiệp (SSO / SAML 2.0 / Okta)", included: true },
+        { text: "Xuất dữ liệu đào tạo chuẩn quốc tế SCORM / xAPI / LMS", included: true },
+        { text: "Hỗ trợ kỹ thuật riêng và thiết kế kịch bản diễn tập theo yêu cầu", included: true },
+        { text: "Diễn tập tấn công đối kháng Red vs Blue Live theo đợt", included: true },
       ],
     },
   ]
@@ -96,27 +148,28 @@ export function Pricing() {
     {
       category: "Hạ Tầng Cyber Range & Môi Trường Sandbox",
       items: [
-        { name: "Phòng Lab Linux Cloud Sandbox trực tiếp trên trình duyệt", community: "15 Labs", pro: "Toàn bộ 120+ Labs", enterprise: "Không giới hạn + Tùy biến" },
-        { name: "Số lượng máy ảo chạy đồng thời tối đa", community: "1 Sandbox", pro: "3 Sandboxes", enterprise: "Cluster máy ảo riêng" },
-        { name: "Thời gian khởi động môi trường máy ảo", community: "< 6 giây", pro: "< 2.5 giây", enterprise: "Khởi động tức thì (Warm-Pool)" },
-        { name: "Thời lượng phiên Web-SSH liên tục", community: "60 phút / bài", pro: "Không giới hạn", enterprise: "Cấu hình theo SLA doanh nghiệp" },
+        { name: "Phòng Lab CTF & Sandbox thực hành trên trình duyệt", community: "3–5 Labs cơ bản", pro: realLabCount ? `Toàn bộ ${realLabCount} Labs hiện có` : "Toàn bộ các phòng lab hiện có", enterprise: "Cluster riêng + Tùy biến" },
+        { name: "Số lượng máy ảo chạy đồng thời tối đa", community: "1 Sandbox", pro: "2 Sandboxes", enterprise: "Cluster máy ảo riêng" },
+        { name: "Thời gian khởi động môi trường máy ảo", community: "< 6 giây", pro: "< 3 giây", enterprise: "Khởi động tức thì (Warm-Pool)" },
+        { name: "Thời lượng phiên thực hành liên tục", community: "60 phút / bài", pro: "Không giới hạn", enterprise: "Cấu hình theo SLA doanh nghiệp" },
       ],
     },
     {
       category: "Giáo Trình & Kỹ Thuật Tác Chiến",
       items: [
-        { name: "Đối chiếu kỹ thuật Khung MITRE ATT&CK", community: "Căn bản (8)", pro: "Đầy đủ (120+)", enterprise: "Bộ kịch bản APT đặc thù" },
-        { name: "Pháp chứng bộ nhớ RAM & Kernel (Volatility)", community: false, pro: true, enterprise: true },
-        { name: "Khai thác vượt rào IAM Cloud & Kubernetes Container Breakout", community: false, pro: true, enterprise: true },
-        { name: "Phát hành bài Lab mới định kỳ", community: "Hàng quý", pro: "2 tuần / lần", enterprise: "Ưu tiên nhận kịch bản 0-Day ngay" },
+        { name: "Khóa học tác chiến chuyên sâu", community: "1–2 Khóa nhập môn", pro: "Toàn bộ 6 Khóa chuyên sâu", enterprise: "Tùy biến giáo trình doanh nghiệp" },
+        { name: "Hệ thống gợi ý từng mức độ (Hint Tiers)", community: "Gợi ý mức 1 (Khái niệm)", pro: "Đầy đủ 3 mức + Phân tích đáp án", enterprise: "Đầy đủ 3 mức + Giảng viên hỗ trợ" },
+        { name: "Đồ án Capstone & Bảng đánh giá Rubric chuẩn NIST", community: false, pro: true, enterprise: true },
+        { name: "Phân tích vì sao sai & Hướng dẫn Remediation", community: "Cơ bản", pro: "Chuyên sâu theo chuẩn OWASP", enterprise: "Playbook SOC doanh nghiệp" },
       ],
     },
     {
-      category: "Tình Báo Tác Chiến & Đo Kiểm Năng Lực",
+      category: "Trợ Lý AI Mentor & Đo Kiểm Năng Lực",
       items: [
-        { name: "Hệ thống Sổ tay Tác chiến & Đo kiểm Telemetry", community: false, pro: "Truy vấn không giới hạn", enterprise: "Tùy biến theo Playbook SOC" },
-        { name: "Kiểm tra cú pháp code động theo AST Scanner", community: "Tiêu chuẩn", pro: "Phân tích AST thời gian thực", enterprise: "Tích hợp script chấm riêng" },
-        { name: "Huy hiệu & Chứng chỉ số xác thực bằng mã băm", community: false, pro: true, enterprise: "Gắn thương hiệu đơn vị đào tạo" },
+        { name: "Trợ lý AI Security Mentor", community: "5 lượt hỏi / ngày", pro: "Hạn ngạch cao (50 lượt / ngày)", enterprise: "Không giới hạn + Fine-tuned" },
+        { name: "Kiểm tra cú pháp code động & AST Scanner", community: "Tiêu chuẩn", pro: "Phân tích AST thời gian thực", enterprise: "Tích hợp script chấm riêng" },
+        { name: "Huy hiệu & Chứng chỉ số PGP có mã tra cứu", community: false, pro: "Cấp khi đạt đủ điều kiện (100% + Capstone)", enterprise: "Gắn thương hiệu đơn vị đào tạo" },
+        { name: "Team Dashboard, SSO & Báo cáo SCORM/LMS", community: false, pro: false, enterprise: true },
       ],
     },
   ]
@@ -303,17 +356,35 @@ export function Pricing() {
 
                 {/* Call-to-Action Button */}
                 <div className="pt-8">
-                  <Link
-                    to={plan.ctaTo}
-                    className={`w-full py-3.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                      plan.popular
-                        ? "cyber-btn-primary btn-cyber-interactive shadow-md shadow-blue-500/15"
-                        : "btn-cyber-interactive bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-800 dark:hover:bg-slate-700 shadow-sm"
-                    }`}
-                  >
-                    <span>{plan.ctaText}</span>
-                    <ChevronRight className="h-4 w-4" />
-                  </Link>
+                  {plan.id === "pro" ? (
+                    <button
+                      type="button"
+                      onClick={() => setShowEarlyAccessModal(true)}
+                      className="w-full py-3.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer cyber-btn-primary btn-cyber-interactive shadow-md shadow-blue-500/15"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      <span>{plan.ctaText}</span>
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  ) : plan.id === "enterprise" ? (
+                    <button
+                      type="button"
+                      onClick={() => setShowEnterpriseModal(true)}
+                      className="w-full py-3.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer btn-cyber-interactive bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-800 dark:hover:bg-slate-700 shadow-sm"
+                    >
+                      <Building2 className="h-4 w-4" />
+                      <span>{plan.ctaText}</span>
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  ) : (
+                    <Link
+                      to={plan.ctaTo}
+                      className="w-full py-3.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer btn-cyber-interactive bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-800 dark:hover:bg-slate-700 shadow-sm"
+                    >
+                      <span>{plan.ctaText}</span>
+                      <ChevronRight className="h-4 w-4" />
+                    </Link>
+                  )}
                 </div>
               </div>
             )
@@ -487,6 +558,184 @@ export function Pricing() {
           </div>
         </div>
       </div>
+
+      {/* ====================================================================
+          EARLY ACCESS BETA MODAL (TRANSPARENT FEATURE STATUS)
+         ==================================================================== */}
+      {showEarlyAccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl text-slate-100 space-y-5 animate-in zoom-in-95 duration-200">
+            <button
+              type="button"
+              onClick={() => setShowEarlyAccessModal(false)}
+              className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3">
+              <div className="p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cyan-400">
+                  GIAI ĐOẠN BETA &bull; TRẢI NGHIỆM MIỄN PHÍ
+                </span>
+                <h3 className="text-lg font-bold text-white">
+                  Chính Sách Quyền Lợi Gói Pro
+                </h3>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3 text-xs leading-relaxed text-slate-300">
+              <div className="flex items-start gap-2 text-cyan-300 font-semibold">
+                <Info className="w-4 h-4 shrink-0 mt-0.5" />
+                <span>Minh bạch về trạng thái thanh toán & hạ tầng:</span>
+              </div>
+              <p>
+                Cổng thanh toán tự động và hệ thống quản lý thuê bao (Server-Side Entitlement & Subscription Gate) hiện đang trong quy trình kiểm thử bảo mật nghiêm ngặt theo chuẩn an toàn thông tin.
+              </p>
+              <p className="font-semibold text-emerald-400">
+                🎉 Vì vậy, trong giai đoạn hiện tại, toàn bộ 6 Khóa học chuyên sâu và {realLabCount ? `${realLabCount} Phòng Lab CTF thực chiến hiện có` : "các phòng lab thực chiến hiện có"} đều được mở khóa để bạn rèn luyện hoàn toàn miễn phí!
+              </p>
+            </div>
+
+            {/* Interest Registration Box */}
+            <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+              <span className="text-[11px] font-mono font-bold text-amber-300 flex items-center gap-1.5">
+                <Mail className="w-3.5 h-3.5" />
+                <span>Nhận thông báo khi cổng thanh toán chính thức mở:</span>
+              </span>
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  value={interestEmail}
+                  onChange={(e) => {
+                    setInterestEmail(e.target.value)
+                    if (interestError) setInterestError("")
+                  }}
+                  disabled={isSubmittingInterest}
+                  placeholder="email@example.com"
+                  className="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400 font-mono disabled:opacity-50"
+                />
+                <button
+                  type="button"
+                  onClick={handleRegisterInterest}
+                  disabled={isSubmittingInterest}
+                  className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs font-mono transition-colors cursor-pointer shrink-0 disabled:opacity-50 flex items-center gap-1.5"
+                >
+                  {isSubmittingInterest ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Đang Lưu...</span>
+                    </>
+                  ) : registeredInterest ? (
+                    "Đã Đăng Ký!"
+                  ) : (
+                    "Nhận Tin"
+                  )}
+                </button>
+              </div>
+              {interestError && (
+                <p className="text-[11px] text-red-400 font-mono">
+                  ⚠️ {interestError}
+                </p>
+              )}
+              {registeredInterest && (
+                <p className="text-[11px] text-emerald-400 font-mono">
+                  ✓ {interestFeedback || "Cảm ơn bạn! Chúng tôi đã lưu email vào danh sách ưu tiên."}
+                </p>
+              )}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowEarlyAccessModal(false)
+                  navigate("/learning")
+                }}
+                className="flex-1 py-3 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md shadow-cyan-500/20"
+              >
+                <span>Vào Học Giáo Trình Ngay</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setShowEarlyAccessModal(false)
+                  navigate("/labs")
+                }}
+                className="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer border border-slate-700"
+              >
+                <span>Thực Hành CTF Labs</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ====================================================================
+          ENTERPRISE CONTACT MODAL
+         ==================================================================== */}
+      {showEnterpriseModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl text-slate-100 space-y-5 animate-in zoom-in-95 duration-200">
+            <button
+              type="button"
+              onClick={() => setShowEnterpriseModal(false)}
+              className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3">
+              <div className="p-3 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400">
+                <Building2 className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-indigo-400">
+                  GIẢI PHÁP TỔ CHỨC & ĐÀO TẠO
+                </span>
+                <h3 className="text-lg font-bold text-white">
+                  Tư Vấn Thao Trường SOC Doanh Nghiệp
+                </h3>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Dành riêng cho doanh nghiệp, viện nghiên cứu và trường đại học cần hạ tầng Cyber Range cô lập, đồng bộ dữ liệu chuẩn SCORM/LMS và diễn tập đối kháng Red vs Blue.
+            </p>
+
+            <div className="space-y-3 p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs font-mono">
+              <div className="flex items-center gap-3 text-slate-300">
+                <Mail className="w-4 h-4 text-cyan-400" />
+                <span>Email Chuyên Gia: <strong className="text-white">enterprise@cyberdefense.local</strong></span>
+              </div>
+              <div className="flex items-center gap-3 text-slate-300">
+                <Lock className="w-4 h-4 text-emerald-400" />
+                <span>Tiêu chuẩn: On-premise Air-Gapped / AWS / Azure Dedicated</span>
+              </div>
+              <div className="flex items-center gap-3 text-slate-300">
+                <Shield className="w-4 h-4 text-indigo-400" />
+                <span>Hỗ trợ kỹ thuật: SLA cam kết phản hồi dưới 1 giờ</span>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setShowEnterpriseModal(false)}
+                className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-colors cursor-pointer"
+              >
+                Đóng Cửa Sổ
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-﻿import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import {
   PageHeader,
   Card,
@@ -20,7 +20,6 @@ import {
   Award,
   ArrowRight,
   Clock,
-  Target,
   Flame,
   CheckCircle2,
 } from "lucide-react"

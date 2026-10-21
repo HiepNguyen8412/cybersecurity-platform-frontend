@@ -7,15 +7,10 @@ import {
   BookOpen,
   FileText,
   Settings,
-  RefreshCw,
-  Award,
 } from "lucide-react"
-import { Badge, Button } from "../../../components/common"
-import useAuth from "../../../hooks/useAuth"
 
 export function AdminHeader({ title = "Trung Tâm Điều Hành SOC", subtitle = "Quản trị nền tảng & Giám sát hạ tầng tác chiến", actions = null }) {
   const location = useLocation()
-  const { user } = useAuth()
 
   const navTabs = [
     { label: "Tổng Quan Control Center", path: "/admin", icon: LayoutDashboard },

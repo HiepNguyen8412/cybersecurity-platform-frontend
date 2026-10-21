@@ -25,6 +25,10 @@ export function AuthProvider({ children }) {
       setUser(null)
       setAuthError("Your session has expired. Please sign in again.")
       try {
+        localStorage.removeItem("cyberpath_auth_token")
+        sessionStorage.removeItem("cyberpath_auth_token")
+        localStorage.removeItem("cyberpath_refresh_token")
+        sessionStorage.removeItem("cyberpath_refresh_token")
         localStorage.removeItem("cyberpath_user_profile")
         sessionStorage.removeItem("cyberpath_user_profile")
         sessionStorage.removeItem("cyberpath_pending_verify_email")
@@ -236,6 +240,10 @@ export function AuthProvider({ children }) {
       setAuthError(null)
       setIsLoading(false)
       try {
+        localStorage.removeItem("cyberpath_auth_token")
+        sessionStorage.removeItem("cyberpath_auth_token")
+        localStorage.removeItem("cyberpath_refresh_token")
+        sessionStorage.removeItem("cyberpath_refresh_token")
         localStorage.removeItem("cyberpath_user_profile")
         sessionStorage.removeItem("cyberpath_user_profile")
         sessionStorage.removeItem("cyberpath_pending_verify_email")

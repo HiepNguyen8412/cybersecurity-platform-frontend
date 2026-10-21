@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react"
 import useAuth from "../../hooks/useAuth"
 import {
   DashboardHeader,
@@ -21,22 +22,58 @@ import {
   mockAIMentorGuidance,
 } from "../../data/dashboardMockData"
 import { Loader2 } from "lucide-react"
+import progressService from "../../services/progressService"
+import courseService from "../../services/courseService"
 
-/**
- * Dashboard Page
- * 
- * The primary learning home for the cybersecurity learning platform.
- * Answers 4 core questions:
- * 1. Where am I in my learning journey? (Welcome, Path Status, Streak)
- * 2. What should I do next? (Your Next Step - Primary focal card)
- * 3. How am I progressing? (Learning Overview 4 stats + Skill Overview + MITRE radar)
- * 4. What should I learn or practice next? (Learning Path stages + Recommended content)
- */
 export function Dashboard() {
   const { user, isInitializing } = useAuth()
+  const [stats, setStats] = useState(mockLearningOverview)
+  const [learningPaths, setLearningPaths] = useState(mockLearningPaths)
 
   const learnerName = user?.fullName || user?.name || "Chuyên viên SOC"
-  const currentPath = mockLearningPaths.find((p) => p.isCurrent) || mockLearningPaths[0]
+
+  useEffect(() => {
+    async function loadUserTelemetry() {
+      try {
+        const [enrollRes, courseRes] = await Promise.all([
+          progressService.getMyEnrollments(),
+          courseService.getCourses(),
+        ])
+
+        if (enrollRes.success && Array.isArray(enrollRes.data) && enrollRes.data.length > 0) {
+          const totalCompleted = enrollRes.data.reduce((acc, curr) => acc + (curr.completedLessons || 0), 0)
+          setStats((prev) => ({
+            ...prev,
+            completedLessons: { ...prev.completedLessons, value: totalCompleted || prev.completedLessons.value },
+          }))
+        }
+
+        if (courseRes.success && Array.isArray(courseRes.data) && courseRes.data.length > 0) {
+          const mapped = courseRes.data.map((c, idx) => ({
+            id: c.slug || `track-${c.id}`,
+            title: c.title,
+            track: c.difficulty === "BEGINNER" ? "Phòng Thủ Web" : "Tác Chiến Mạng",
+            progress: idx === 0 ? 35 : 0,
+            isCurrent: idx === 0,
+            status: c.published ? "Đang diễn tập" : "Sắp ra mắt",
+            estimatedHours: 18,
+            currentTopic: c.description ? c.description.slice(0, 45) + "..." : "Khám phá kiến trúc bảo mật",
+            stages: [
+              { title: "Nền tảng kiến trúc", completed: true },
+              { title: "Khai thác thực hành", completed: false },
+              { title: "Vá lỗi & Phòng thủ", completed: false },
+            ],
+          }))
+          setLearningPaths(mapped)
+        }
+      } catch (err) {
+        console.warn("Could not load dashboard telemetry", err)
+      }
+    }
+    loadUserTelemetry()
+  }, [])
+
+  const currentPath = learningPaths.find((p) => p.isCurrent) || learningPaths[0]
 
   if (isInitializing) {
     return (
@@ -72,7 +109,7 @@ export function Dashboard() {
       {/* ====================================================================
           SECTION C: LEARNING OVERVIEW (4 KEY STATS)
          ==================================================================== */}
-      <LearningOverview stats={mockLearningOverview} />
+      <LearningOverview stats={stats} />
 
       {/* ====================================================================
           SECTION D: CYBERSECURITY ANALYTICS & MITRE RADAR
@@ -89,7 +126,7 @@ export function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column (7 cols): Primary Curriculum & Next Milestones */}
         <div className="lg:col-span-7 space-y-6">
-          <LearningPathCard paths={mockLearningPaths} />
+          <LearningPathCard paths={learningPaths} />
           <RecommendedSection items={mockRecommendedContent} />
         </div>
 

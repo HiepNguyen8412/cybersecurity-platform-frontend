@@ -2,13 +2,12 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { 
   X, 
-  HelpCircle, 
   BookOpen, 
-  Terminal, 
   CreditCard, 
   Mail, 
   Compass, 
-  MessageSquare
+  MessageSquare,
+  FlaskConical
 } from "lucide-react"
 
 /**

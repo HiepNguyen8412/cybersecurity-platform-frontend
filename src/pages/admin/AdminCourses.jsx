@@ -1,25 +1,36 @@
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import {
-  BookOpen,
   Plus,
   Search,
-  Filter,
   CheckCircle2,
-  Clock,
-  Layers,
-  Award,
-  Edit2,
   X,
   Save,
-  ShieldAlert,
+  RefreshCw,
 } from "lucide-react"
 import AdminHeader from "./components/AdminHeader"
 import { Card, Badge, Button } from "../../components/common"
 import { ADMIN_COURSES_CATALOG } from "./data/adminMockData"
+import courseService from "../../services/courseService"
 import useNotificationStore from "../../stores/useNotificationStore"
 
+const mapBackendCourse = (c) => ({
+  id: c.id,
+  code: c.slug ? c.slug.toUpperCase().slice(0, 8) : `SEC-${c.id}`,
+  title: c.title,
+  slug: c.slug,
+  description: c.description || "",
+  track: c.difficulty === "BEGINNER" ? "Web Application Defense" : c.difficulty === "HARD" ? "Binary Exploitation" : "Network Security",
+  level: c.difficulty === "BEGINNER" ? "Cơ Bản" : c.difficulty === "HARD" ? "Nâng Cao" : "Trung Cấp",
+  cvssBase: c.difficulty === "HARD" ? "9.0 CRITICAL" : c.difficulty === "MEDIUM" ? "7.5 HIGH" : "5.0 MEDIUM",
+  status: c.published ? "published" : "draft",
+  lessonsCount: 6,
+  enrolledCount: 12,
+  updatedAt: new Date().toLocaleDateString("vi-VN"),
+})
+
 export default function AdminCourses() {
-  const [courses, setCourses] = useState(ADMIN_COURSES_CATALOG)
+  const [courses, setCourses] = useState([])
+  const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedCourse, setSelectedCourse] = useState(null)
@@ -32,6 +43,46 @@ export default function AdminCourses() {
     status: "published",
     lessonsCount: 6,
   })
+
+  const handleRefresh = useCallback(async () => {
+    setLoading(true)
+    try {
+      const res = await courseService.getCourses()
+      if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        setCourses(res.data.map(mapBackendCourse))
+      } else {
+        setCourses(ADMIN_COURSES_CATALOG)
+      }
+    } catch {
+      setCourses(ADMIN_COURSES_CATALOG)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    let ignore = false
+    async function load() {
+      try {
+        const res = await courseService.getCourses()
+        if (!ignore) {
+          if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+            setCourses(res.data.map(mapBackendCourse))
+          } else {
+            setCourses(ADMIN_COURSES_CATALOG)
+          }
+        }
+      } catch {
+        if (!ignore) setCourses(ADMIN_COURSES_CATALOG)
+      } finally {
+        if (!ignore) setLoading(false)
+      }
+    }
+    load()
+    return () => {
+      ignore = true
+    }
+  }, [])
 
   const filteredCourses = courses.filter((c) =>
     c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -59,7 +110,7 @@ export default function AdminCourses() {
     setIsModalOpen(true)
   }
 
-  const handleSaveCourse = (e) => {
+  const handleSaveCourse = async (e) => {
     e.preventDefault()
     if (!formData.title) return
 
@@ -76,7 +127,7 @@ export default function AdminCourses() {
         ...formData,
         id: `course-${Date.now().toString().slice(-4)}`,
         enrolledCount: 0,
-        updatedAt: "19/10/2026",
+        updatedAt: new Date().toLocaleDateString("vi-VN"),
       }
       setCourses([newCourse, ...courses])
       useNotificationStore.getState().success(
@@ -94,14 +145,25 @@ export default function AdminCourses() {
         title="Quản Trị Khóa Học & Giáo Trình Tác Chiến"
         subtitle="Quản lý chuyên mục đào tạo, cấu trúc bài học, điểm CVSS tương ứng và số lượng học viên ghi danh"
         actions={
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={handleOpenCreate}
-            leftIcon={<Plus className="h-3.5 w-3.5" />}
-          >
-            Thêm Khóa Học Mới
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              disabled={loading}
+              leftIcon={<RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />}
+            >
+              Làm Mới
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={handleOpenCreate}
+              leftIcon={<Plus className="h-3.5 w-3.5" />}
+            >
+              Thêm Khóa Học Mới
+            </Button>
+          </div>
         }
       />
 

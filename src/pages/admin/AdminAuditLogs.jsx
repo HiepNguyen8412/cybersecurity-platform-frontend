@@ -1,25 +1,82 @@
-import { useState } from "react"
-import {
-  FileText,
-  Search,
-  Filter,
-  Download,
-  AlertTriangle,
-  CheckCircle2,
-  Info,
-  ShieldAlert,
-  Server,
-  RefreshCw,
-} from "lucide-react"
+import { useState, useEffect, useCallback } from "react"
+import { Search, Download, RefreshCw } from "lucide-react"
 import AdminHeader from "./components/AdminHeader"
-import { Card, Badge, Button } from "../../components/common"
+import { Card, Button } from "../../components/common"
 import { ADMIN_AUDIT_LOGS } from "./data/adminMockData"
+import adminService from "../../services/adminService"
 import useNotificationStore from "../../stores/useNotificationStore"
 
 export default function AdminAuditLogs() {
-  const [logs, setLogs] = useState(ADMIN_AUDIT_LOGS)
+  const [logs, setLogs] = useState([])
+  const [loading, setLoading] = useState(true)
   const [severityFilter, setSeverityFilter] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
+
+  const fetchLogs = useCallback(async () => {
+    try {
+      const res = await adminService.getAuditLogs({ size: 100 })
+      if (res.success && res.data) {
+        const rawContent = Array.isArray(res.data) ? res.data : res.data.content || []
+        if (rawContent.length > 0) {
+          const mapped = rawContent.map((item) => ({
+            id: item.id,
+            timestamp: item.createdAt ? new Date(item.createdAt).toLocaleString("vi-VN") : "N/A",
+            severity: item.status === "FAILED" ? "CRITICAL" : item.status === "WARNING" ? "WARN" : "SUCCESS",
+            eventType: item.action || item.entityType || "AUDIT",
+            user: item.adminUsername || "Hệ thống",
+            ip: item.ipAddress || "127.0.0.1",
+            action: item.details || item.action || "Hoạt động quản trị",
+          }))
+          setLogs(mapped)
+          return
+        }
+      }
+      setLogs(ADMIN_AUDIT_LOGS)
+    } catch {
+      setLogs(ADMIN_AUDIT_LOGS)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    let ignore = false
+    async function load() {
+      try {
+        const res = await adminService.getAuditLogs({ size: 100 })
+        if (!ignore) {
+          if (res.success && res.data) {
+            const rawContent = Array.isArray(res.data) ? res.data : res.data.content || []
+            if (rawContent.length > 0) {
+              const mapped = rawContent.map((item) => ({
+                id: item.id,
+                timestamp: item.createdAt ? new Date(item.createdAt).toLocaleString("vi-VN") : "N/A",
+                severity: item.status === "FAILED" ? "CRITICAL" : item.status === "WARNING" ? "WARN" : "SUCCESS",
+                eventType: item.action || item.entityType || "AUDIT",
+                user: item.adminUsername || "Hệ thống",
+                ip: item.ipAddress || "127.0.0.1",
+                action: item.details || item.action || "Hoạt động quản trị",
+              }))
+              setLogs(mapped)
+              setLoading(false)
+              return
+            }
+          }
+          setLogs(ADMIN_AUDIT_LOGS)
+          setLoading(false)
+        }
+      } catch {
+        if (!ignore) {
+          setLogs(ADMIN_AUDIT_LOGS)
+          setLoading(false)
+        }
+      }
+    }
+    load()
+    return () => {
+      ignore = true
+    }
+  }, [])
 
   const filteredLogs = logs.filter((l) => {
     const matchSeverity = severityFilter === "all" || l.severity === severityFilter
@@ -53,14 +110,25 @@ export default function AdminAuditLogs() {
         title="Nhật Ký Kiểm Toán & Giám Sát Telemetry"
         subtitle="Toàn bộ lịch sử can thiệp hệ thống, nộp flag, triển khai container và các cảnh báo bất thường"
         actions={
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleExportLogs}
-            leftIcon={<Download className="h-3.5 w-3.5" />}
-          >
-            Xuất Báo Cáo JSON
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={fetchLogs}
+              isLoading={loading}
+              leftIcon={<RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />}
+            >
+              Làm Mới
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportLogs}
+              leftIcon={<Download className="h-3.5 w-3.5" />}
+            >
+              Xuất Báo Cáo JSON
+            </Button>
+          </div>
         }
       />
 

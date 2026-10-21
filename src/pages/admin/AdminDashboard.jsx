@@ -1,21 +1,12 @@
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import {
   Users,
   Server,
   Award,
   AlertTriangle,
-  Play,
-  RotateCcw,
   Trash2,
-  Download,
-  CheckCircle2,
-  ShieldAlert,
   Flame,
-  Activity,
-  UserCheck,
-  FileText,
-  Clock,
-  Terminal,
+  RefreshCw,
 } from "lucide-react"
 import AdminHeader from "./components/AdminHeader"
 import { Card, Badge, Button, ProgressBar, CountUp } from "../../components/common"
@@ -24,12 +15,48 @@ import {
   LIVE_SANDBOX_CONTAINERS,
   ADMIN_AUDIT_LOGS,
 } from "./data/adminMockData"
+import adminService from "../../services/adminService"
 import useNotificationStore from "../../stores/useNotificationStore"
 
 export default function AdminDashboard() {
   const [containers, setContainers] = useState(LIVE_SANDBOX_CONTAINERS)
   const [drillActive, setDrillActive] = useState(false)
-  const [purgedCount, setPurgedCount] = useState(0)
+  const [serverStatus, setServerStatus] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  const handleRefresh = useCallback(async () => {
+    setLoading(true)
+    try {
+      const res = await adminService.getServerStatus()
+      if (res.success && res.data) {
+        setServerStatus(res.data)
+      }
+    } catch {
+      // Keep running smoothly
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    let ignore = false
+    async function loadTelemetry() {
+      try {
+        const res = await adminService.getServerStatus()
+        if (!ignore && res.success && res.data) {
+          setServerStatus(res.data)
+        }
+      } catch {
+        // Fallback smoothly
+      } finally {
+        if (!ignore) setLoading(false)
+      }
+    }
+    loadTelemetry()
+    return () => {
+      ignore = true
+    }
+  }, [])
 
   const handleKillContainer = (id) => {
     setContainers((prev) => prev.filter((c) => c.id !== id))
@@ -40,7 +67,6 @@ export default function AdminDashboard() {
   }
 
   const handlePurgeContainers = () => {
-    setPurgedCount((p) => p + 4)
     useNotificationStore.getState().success(
       "Dọn Dẹp Hạ Tầng Thành Công",
       "Đã thu hồi 4 container rác và giải phóng 1.8 GB RAM trên cụm Sandbox."
@@ -70,6 +96,15 @@ export default function AdminDashboard() {
         subtitle="Quản trị toàn diện học viên, hạ tầng phòng lab đám mây và giám sát an ninh mạng thời gian thực"
         actions={
           <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              disabled={loading}
+              leftIcon={<RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />}
+            >
+              Đồng Bộ SOC
+            </Button>
             <Button
               variant={drillActive ? "danger" : "outline"}
               size="sm"
@@ -283,9 +318,16 @@ export default function AdminDashboard() {
               <span className="text-xs font-bold font-mono text-slate-400 uppercase tracking-wider">
                 RANGE HARDWARE LOAD
               </span>
-              <span className="text-xs font-bold font-mono text-emerald-500">
-                Uptime {ADMIN_STATS.systemUptime}
-              </span>
+              <div className="flex items-center gap-1.5">
+                {serverStatus && (
+                  <span className="text-[10px] px-1.5 py-0.5 rounded font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    LIVE
+                  </span>
+                )}
+                <span className="text-xs font-bold font-mono text-emerald-500">
+                  Uptime {serverStatus?.uptime || ADMIN_STATS.systemUptime}
+                </span>
+              </div>
             </div>
 
             <div className="space-y-3 font-mono text-xs">

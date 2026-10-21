@@ -90,6 +90,50 @@ async function callApiOrFallback(apiCall, fallbackHandler) {
   }
 }
 
+function normalizeUser(rawUser) {
+  if (!rawUser) return null
+  const computedName =
+    [rawUser.firstName, rawUser.lastName].filter(Boolean).join(" ").trim() ||
+    rawUser.fullName ||
+    rawUser.name ||
+    rawUser.username ||
+    (rawUser.email ? rawUser.email.split("@")[0] : "Learner")
+  return {
+    ...rawUser,
+    id: rawUser.id ? String(rawUser.id) : `usr_${Date.now()}`,
+    name: rawUser.name || computedName,
+    fullName: rawUser.fullName || computedName,
+    role: rawUser.role || (rawUser.roles?.includes("ROLE_ADMIN") ? "Administrator" : "Security Analyst"),
+    isEmailVerified: rawUser.isEmailVerified ?? true,
+  }
+}
+
+function storeSessionData(data, rememberMe = true) {
+  if (!data) return
+  const token = data.token
+  const refreshToken = data.refreshToken
+  const rawUser = data.user || (data.username ? data : null)
+  const user = normalizeUser(rawUser)
+
+  try {
+    localStorage.removeItem("cyberpath_logged_out")
+    sessionStorage.removeItem("cyberpath_logged_out")
+
+    const storage = rememberMe ? localStorage : sessionStorage
+    const otherStorage = rememberMe ? sessionStorage : localStorage
+
+    otherStorage.removeItem("cyberpath_auth_token")
+    otherStorage.removeItem("cyberpath_refresh_token")
+    otherStorage.removeItem("cyberpath_user_profile")
+
+    if (token) storage.setItem("cyberpath_auth_token", token)
+    if (refreshToken) storage.setItem("cyberpath_refresh_token", refreshToken)
+    if (user) storage.setItem("cyberpath_user_profile", JSON.stringify(user))
+  } catch {
+    // Ignore storage quota errors
+  }
+}
+
 export const authService = {
   /**
    * Log in user
@@ -97,7 +141,7 @@ export const authService = {
   async login(credentialsOrEmail, maybePassword, maybeRememberMe = true) {
     let email, password, rememberMe
     if (typeof credentialsOrEmail === "object" && credentialsOrEmail !== null) {
-      email = credentialsOrEmail.email || ""
+      email = credentialsOrEmail.email || credentialsOrEmail.username || ""
       password = credentialsOrEmail.password || ""
       rememberMe = credentialsOrEmail.rememberMe ?? true
     } else {
@@ -108,8 +152,8 @@ export const authService = {
 
     const cleanEmail = email.trim().toLowerCase()
 
-    return callApiOrFallback(
-      () => api.post("/auth/login", { email: cleanEmail, password, rememberMe }),
+    const result = await callApiOrFallback(
+      () => api.post("/auth/login", { username: cleanEmail, email: cleanEmail, password, rememberMe }),
       async () => {
         // Mock fallback simulation
         await new Promise((resolve) => setTimeout(resolve, 600))
@@ -134,20 +178,20 @@ export const authService = {
           isEmailVerified: true,
         }
 
-        try {
-          localStorage.removeItem("cyberpath_logged_out")
-          sessionStorage.removeItem("cyberpath_logged_out")
-          if (rememberMe) {
-            localStorage.setItem("cyberpath_user_profile", JSON.stringify(user))
-          } else {
-            sessionStorage.setItem("cyberpath_user_profile", JSON.stringify(user))
-          }
-        } catch {
-          // Ignore storage errors
-        }
+        storeSessionData({ user, token: "mock_jwt_token_" + Date.now() }, rememberMe)
         return { success: true, data: { user } }
       }
     )
+
+    if (result.success && result.data) {
+      storeSessionData(result.data, rememberMe)
+      if (result.data.user) {
+        result.data.user = normalizeUser(result.data.user)
+      } else if (result.data.username) {
+        result.data.user = normalizeUser(result.data)
+      }
+    }
+    return result
   },
 
   /**
@@ -166,9 +210,21 @@ export const authService = {
     }
 
     const cleanEmail = email.trim().toLowerCase()
+    const nameParts = name.trim().split(" ")
+    const firstName = nameParts.length > 1 ? nameParts.slice(0, -1).join(" ") : nameParts[0] || "User"
+    const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : ""
+    const derivedUsername =
+      cleanEmail.split("@")[0].replace(/[^a-zA-Z0-9_]/g, "_").slice(0, 50) || `user_${Date.now()}`
 
-    return callApiOrFallback(
-      () => api.post("/auth/register", { name: name.trim(), email: cleanEmail, password }),
+    const result = await callApiOrFallback(
+      () =>
+        api.post("/auth/register", {
+          username: derivedUsername,
+          email: cleanEmail,
+          password,
+          firstName,
+          lastName,
+        }),
       async () => {
         await new Promise((resolve) => setTimeout(resolve, 650))
 
@@ -199,13 +255,23 @@ export const authService = {
         }
       }
     )
+
+    if (result.success && result.data) {
+      storeSessionData(result.data, true)
+      if (result.data.user) {
+        result.data.user = normalizeUser(result.data.user)
+      } else if (result.data.username) {
+        result.data.user = normalizeUser(result.data)
+      }
+    }
+    return result
   },
 
   /**
    * Restore current session (e.g. on app refresh)
    */
   async getCurrentUser() {
-    return callApiOrFallback(
+    const result = await callApiOrFallback(
       () => api.get("/auth/me"),
       async () => {
         // Check safe storage profile cache (sessionStorage takes precedence for active tab)
@@ -222,7 +288,7 @@ export const authService = {
             localStorage.getItem("cyberpath_user_profile")
           if (cached) {
             const parsed = JSON.parse(cached)
-            return { success: true, data: { user: parsed } }
+            return { success: true, data: { user: normalizeUser(parsed) } }
           }
         } catch {
           // Ignore
@@ -235,6 +301,22 @@ export const authService = {
         return { success: false, error: "Không có phiên đăng nhập nào đang hoạt động." }
       }
     )
+
+    if (result.success && result.data) {
+      const raw = result.data.user || (result.data.username ? result.data : null)
+      if (raw) {
+        const user = normalizeUser(raw)
+        result.data.user = user
+        try {
+          const isSession = Boolean(sessionStorage.getItem("cyberpath_auth_token"))
+          const targetStorage = isSession ? sessionStorage : localStorage
+          targetStorage.setItem("cyberpath_user_profile", JSON.stringify(user))
+        } catch {
+          // Ignore
+        }
+      }
+    }
+    return result
   },
 
   /**
@@ -363,13 +445,22 @@ export const authService = {
    */
   async logout() {
     try {
-      await api.post("/auth/logout")
+      const refreshToken =
+        sessionStorage.getItem("cyberpath_refresh_token") ||
+        localStorage.getItem("cyberpath_refresh_token")
+      await api.post("/auth/logout", null, {
+        params: refreshToken ? { refreshToken } : {},
+      })
     } catch {
       // Backend may be offline, ignore network errors on logout
     }
     try {
       localStorage.setItem("cyberpath_logged_out", "true")
       sessionStorage.setItem("cyberpath_logged_out", "true")
+      localStorage.removeItem("cyberpath_auth_token")
+      sessionStorage.removeItem("cyberpath_auth_token")
+      localStorage.removeItem("cyberpath_refresh_token")
+      sessionStorage.removeItem("cyberpath_refresh_token")
       localStorage.removeItem("cyberpath_user_profile")
       sessionStorage.removeItem("cyberpath_user_profile")
       sessionStorage.removeItem("cyberpath_pending_verify_email")

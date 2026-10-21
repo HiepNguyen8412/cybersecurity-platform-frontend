@@ -47,6 +47,24 @@ const api = axios.create({
   },
 })
 
+// Attach Bearer token from local/session storage to all outbound API requests
+api.interceptors.request.use(
+  (config) => {
+    try {
+      const token =
+        sessionStorage.getItem("cyberpath_auth_token") ||
+        localStorage.getItem("cyberpath_auth_token")
+      if (token && !config.headers.Authorization) {
+        config.headers.Authorization = `Bearer ${token}`
+      }
+    } catch {
+      // Ignore storage errors in restricted contexts
+    }
+    return config
+  },
+  (error) => Promise.reject(error)
+)
+
 // Global session expiration handler (registered by AuthContext)
 let unauthorizedSessionHandler = null
 
@@ -57,20 +75,107 @@ export function setUnauthorizedSessionHandler(handler) {
 // Endpoints where a 401 represents invalid credentials rather than an expired session
 const AUTH_CREDENTIAL_ENDPOINTS = ["/auth/login", "/auth/register"]
 
+let isRefreshing = false
+let failedQueue = []
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error)
+    } else {
+      prom.resolve(token)
+    }
+  })
+  failedQueue = []
+}
+
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      const requestUrl = error.config?.url || ""
-      const isAuthCredentialAttempt = AUTH_CREDENTIAL_ENDPOINTS.some((endpoint) =>
+  async (error) => {
+    const originalRequest = error.config
+
+    if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
+      const requestUrl = originalRequest.url || ""
+      const isAuthAttempt = AUTH_CREDENTIAL_ENDPOINTS.some((endpoint) =>
         requestUrl.includes(endpoint)
       )
 
-      // If an authenticated endpoint receives 401, trigger session invalidation
-      if (!isAuthCredentialAttempt && typeof unauthorizedSessionHandler === "function") {
-        unauthorizedSessionHandler()
+      if (isAuthAttempt || requestUrl.includes("/auth/refresh")) {
+        if (typeof unauthorizedSessionHandler === "function") {
+          unauthorizedSessionHandler()
+        }
+        return Promise.reject(error)
+      }
+
+      const refreshToken =
+        sessionStorage.getItem("cyberpath_refresh_token") ||
+        localStorage.getItem("cyberpath_refresh_token")
+
+      if (!refreshToken) {
+        if (typeof unauthorizedSessionHandler === "function") {
+          unauthorizedSessionHandler()
+        }
+        return Promise.reject(error)
+      }
+
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject })
+        })
+          .then((newToken) => {
+            originalRequest.headers.Authorization = `Bearer ${newToken}`
+            return api(originalRequest)
+          })
+          .catch((err) => Promise.reject(err))
+      }
+
+      originalRequest._retry = true
+      isRefreshing = true
+
+      try {
+        const baseURL = originalRequest.baseURL || api.defaults.baseURL
+        const refreshResponse = await axios.post(`${baseURL}/auth/refresh`, {
+          refreshToken,
+        })
+
+        const newAccessToken = refreshResponse.data?.token
+        const newRefreshToken = refreshResponse.data?.refreshToken
+
+        if (newAccessToken) {
+          const isSession = Boolean(sessionStorage.getItem("cyberpath_auth_token"))
+          const targetStorage = isSession ? sessionStorage : localStorage
+          targetStorage.setItem("cyberpath_auth_token", newAccessToken)
+          if (newRefreshToken) {
+            targetStorage.setItem("cyberpath_refresh_token", newRefreshToken)
+          }
+
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+          processQueue(null, newAccessToken)
+          return api(originalRequest)
+        } else {
+          throw new Error("Missing token in refresh response")
+        }
+      } catch (refreshErr) {
+        processQueue(refreshErr, null)
+        try {
+          localStorage.removeItem("cyberpath_auth_token")
+          sessionStorage.removeItem("cyberpath_auth_token")
+          localStorage.removeItem("cyberpath_refresh_token")
+          sessionStorage.removeItem("cyberpath_refresh_token")
+          localStorage.removeItem("cyberpath_user_profile")
+          sessionStorage.removeItem("cyberpath_user_profile")
+        } catch {
+          // Ignore
+        }
+        if (typeof unauthorizedSessionHandler === "function") {
+          unauthorizedSessionHandler()
+        }
+        return Promise.reject(refreshErr)
+      } finally {
+        isRefreshing = false
       }
     }
+
     return Promise.reject(error)
   }
 )
