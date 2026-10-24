@@ -33,22 +33,25 @@ export function PublicHeader() {
   const displayName = user?.fullName || user?.name || "Learner"
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 transition-colors">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 h-18 flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-[#0a0c10]/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/5 transition-colors overflow-hidden">
+      {/* YewSafe-Inspired Top Subtle Cyan Horizon Glow */}
+      <div className="absolute inset-0 bg-gradient-to-b from-cyan-400/8 to-transparent pointer-events-none" />
+
+      <div className="relative max-w-[1240px] mx-auto px-4 sm:px-6 h-18 flex items-center justify-between z-10">
         {/* Logo & Live Status */}
         <div className="flex items-center gap-3.5">
           <Link
             to="/"
-            className="flex items-center gap-2.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg group"
+            className="flex items-center gap-2.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-lg group"
             title="CyberPath — Home"
           >
-            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-sm shadow-blue-500/25 group-hover:scale-105 transition-transform">
+            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/25 group-hover:scale-105 transition-transform">
               <ShieldCheck className="h-5 w-5 stroke-[2.2]" />
-              <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-cyan-400 ring-2 ring-white dark:ring-slate-900 animate-pulse" />
+              <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-cyan-300 ring-2 ring-white dark:ring-[#0a0c10] animate-pulse" />
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-                Cyber<span className="text-blue-600 dark:text-cyan-400">Path</span>
+                Cyber<span className="text-cyan-400">Path</span>
               </span>
               <span className="text-[10px] font-mono-tech uppercase tracking-widest text-slate-400 dark:text-slate-500 mt-0.5">
                 SEC-OPS RANGE
@@ -60,7 +63,7 @@ export function PublicHeader() {
         {/* Center Desktop Navigation - Segmented Cyber Pill HUD */}
         <nav
           aria-label="Public Navigation"
-          className="hidden md:flex items-center gap-1 p-1 bg-slate-100/80 dark:bg-slate-800/80 backdrop-blur-md border border-slate-200/90 dark:border-slate-700 rounded-full shadow-2xs"
+          className="hidden md:flex items-center gap-1 p-1 bg-slate-100/80 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/90 dark:border-slate-800 rounded-full shadow-2xs"
         >
           {navLinks.map((link) => {
             const IconComponent =
@@ -77,10 +80,10 @@ export function PublicHeader() {
                 key={link.label}
                 to={link.to}
                 className={({ isActive }) =>
-                  `inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs transition-all duration-200 select-none ${
+                  `relative inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs transition-all duration-200 select-none group ${
                     isActive
-                      ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-cyan-400 font-bold shadow-xs border border-blue-200/80 dark:border-cyan-500/40"
-                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-semibold hover:bg-white/60 dark:hover:bg-slate-700/60"
+                      ? "bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 font-bold shadow-xs border border-cyan-200/80 dark:border-cyan-500/40"
+                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-semibold hover:bg-white/60 dark:hover:bg-slate-800/60"
                   }`
                 }
               >
@@ -100,7 +103,7 @@ export function PublicHeader() {
             <div className="flex items-center gap-3">
               <Link
                 to="/dashboard"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold rounded-xl px-3.5 py-2 bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors shadow-2xs border border-blue-200/60 dark:border-blue-800/60"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold rounded-xl px-3.5 py-2 bg-blue-50 dark:bg-cyan-950/40 text-blue-700 dark:text-cyan-300 hover:bg-blue-100 dark:hover:bg-cyan-900/40 transition-colors shadow-2xs border border-blue-200/60 dark:border-cyan-500/40"
               >
                 <LayoutDashboard className="h-4 w-4" />
                 <span>Bảng Điều Khiển</span>
@@ -174,14 +177,14 @@ export function PublicHeader() {
             <div className="flex items-center gap-2.5">
               <Link
                 to="/login"
-                className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold rounded-xl px-3.5 py-2 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-cyan-400 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-all cursor-pointer shadow-2xs"
+                className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold rounded-xl px-4 py-2 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-cyan-400 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900/80 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 hover:border-cyan-500/40 transition-all cursor-pointer shadow-2xs"
               >
                 <LogIn className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
                 <span>Đăng nhập</span>
               </Link>
               <Link
                 to="/register"
-                className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold rounded-xl px-4 py-2 cyber-btn-primary hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer shadow-sm"
+                className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-bold rounded-xl px-4 py-2 bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-md shadow-cyan-400/25 hover:scale-105 active:scale-95 transition-all cursor-pointer"
               >
                 <span>Bắt đầu ngay</span>
               </Link>

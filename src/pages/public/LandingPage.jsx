@@ -16,9 +16,14 @@ import {
   Compass,
   UserCheck,
   FileText,
+  Zap,
+  Crosshair,
+  ArrowRight,
 } from "lucide-react"
 import useAuth from "../../hooks/useAuth"
 import { CountUp } from "../../components/common"
+import CyberNetworkCanvas from "../../components/effects/CyberNetworkCanvas"
+import CyberCommandTheater from "../../components/effects/CyberCommandTheater"
 
 const LIVE_INTEL_FEEDS = [
   {
@@ -55,6 +60,62 @@ const LIVE_INTEL_FEEDS = [
     tagColor: "text-purple-400",
     text: "Network isolation verified on all range sandbox nodes",
     shortText: "100% egress isolation",
+  },
+]
+
+// YewSafe-Inspired Standards & Technology Ecosystem Marquee
+const STANDARDS_ECOSYSTEM = [
+  { name: "MITRE ATT&CK® v14", category: "Adversary TTP Matrix", icon: "🛡️" },
+  { name: "OWASP Top 10 2025", category: "AppSec Vulnerability Standard", icon: "⚡" },
+  { name: "NIST SP 800-53 R5", category: "Federal Security Controls", icon: "🏛️" },
+  { name: "CIS Critical Controls", category: "System Hardening Baseline", icon: "🔒" },
+  { name: "ISO/IEC 27001:2022", category: "ISMS Information Security", icon: "🌐" },
+  { name: "Kali Linux Rolling", category: "Offensive PenTest Suite", icon: "🐉" },
+  { name: "Suricata 7.0 IDS/IPS", category: "High-Performance Threat Engine", icon: "📡" },
+  { name: "Wireshark Protocol", category: "Packet Deep Telemetry", icon: "🦈" },
+  { name: "Snort 3 Inspection", category: "Deep Packet Detection", icon: "🐗" },
+  { name: "Ghidra SRE Framework", category: "NSA Reverse Engineering", icon: "🔬" },
+  { name: "Metasploit Framework", category: "Exploitation & Automation", icon: "🎯" },
+  { name: "Docker Hardened Node", category: "Ephemeral MicroVM Sandbox", icon: "🐳" },
+]
+
+// YewSafe-Inspired 4-Card Promo & Strategic Feature Ribbon
+const PROMO_RIBBON_CARDS = [
+  {
+    pill: "DÙNG THỬ MIỄN PHÍ",
+    pillColor: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30",
+    title: "120+ Phòng Lab Sandbox Trực Tiếp",
+    description: "Khởi động ngay container Kali, Burp Suite & DVWA không cần cài đặt phức tạp trên máy.",
+    cta: "Thử Nghiệm Ngay",
+    link: "/labs",
+    laserColor: "via-cyan-400",
+  },
+  {
+    pill: "CHIẾN DỊCH APT",
+    pillColor: "bg-red-500/10 text-red-400 border-red-500/30",
+    title: "Diễn Tập Kịch Bản Nhóm APT Thực Tế",
+    description: "Tái hiện các chuỗi tấn công APT28, APT29, Ransomware LockBit trên môi trường Active Directory.",
+    cta: "Khám Phá Kịch Bản",
+    link: "/labs?category=APT",
+    laserColor: "via-red-400",
+  },
+  {
+    pill: "LÁ CHẮN SOAR & SOC",
+    pillColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+    title: "Phản Ứng Sự Cố Blue Team & Forensics",
+    description: "Điều tra log SIEM Splunk/ELK, phân tích bộ nhớ dump Volatility và cách ly mối đe dọa thời gian thực.",
+    cta: "Vào Phòng SOC",
+    link: "/labs?category=BlueTeam",
+    laserColor: "via-emerald-400",
+  },
+  {
+    pill: "CHỨNG CHỈ QUỐC TẾ",
+    pillColor: "bg-amber-500/10 text-amber-400 border-amber-500/30",
+    title: "Lộ Trình Đạt Chuẩn CEH, OSCP & Sec+",
+    description: "Hệ thống bài tập căn cứ theo ma trận kỹ năng NIST NICE và chứng nhận hoàn thành có mã tra cứu công khai.",
+    cta: "Xem Lộ Trình",
+    link: "/learning-paths",
+    laserColor: "via-amber-400",
   },
 ]
 
@@ -386,6 +447,53 @@ export function LandingPage() {
   const [labFilter, setLabFilter] = useState("all")
   const [labSearch, setLabSearch] = useState("")
 
+  // YewSafe-Inspired Quick Target Vulnerability Scanner
+  const [scanTargetInput, setScanTargetInput] = useState("")
+  const [isScanningTarget, setIsScanningTarget] = useState(false)
+  const [targetScanReport, setTargetScanReport] = useState(null)
+
+  const handleRunTargetScan = (customTarget) => {
+    const rawTarget = customTarget !== undefined ? customTarget : scanTargetInput
+    const target = (rawTarget || "10.10.14.89").trim()
+    setIsScanningTarget(true)
+    setTargetScanReport(null)
+
+    setTimeout(() => {
+      setIsScanningTarget(false)
+      const isSql = target.includes("14.89") || target.toLowerCase().includes("sql")
+      const isJwt = target.toLowerCase().includes("jwt") || target.includes("100")
+
+      setTargetScanReport({
+        target: target,
+        ip: target.match(/^\d+\.\d+\.\d+\.\d+$/) ? target : "103.142.112.44",
+        status: "TARGET_ACTIVE",
+        latency: "14ms",
+        ports: [
+          { port: "80/tcp", service: "HTTP (Nginx/1.24)", state: "OPEN", risk: "HIGH" },
+          { port: "443/tcp", service: "HTTPS (TLS 1.3)", state: "OPEN", risk: "LOW" },
+          { port: "8080/tcp", service: "Admin API Console", state: "EXPOSED", risk: "CRITICAL" },
+          { port: "22/tcp", service: "SSH (OpenSSH 8.9)", state: "SECURED", risk: "INFO" },
+        ],
+        vuln: isJwt
+          ? "CWE-347: JWT_SECRET_HS256_WEAK"
+          : isSql
+            ? "CVE-2024-38812: Time-based Blind SQLi"
+            : "CVE-2024-4577: PHP CGI Remote Code Execution",
+        severity: isJwt ? "HIGH 8.2" : "CRITICAL 9.8",
+        cveDesc: isJwt
+          ? "Khóa ký HS256 từ điển yếu, cho phép giả mạo Claim role=admin để leo thang đặc quyền."
+          : isSql
+            ? "Lỗ hổng chèn mã SQL không qua kiểm duyệt tham số tại endpoint /api/v1/auth/session."
+            : "Lỗ hổng xử lý đối số CGI trên Windows/Apache cho phép thực thi mã từ xa không cần xác thực.",
+        mitigation: isJwt
+          ? "Chuyển sang thuật toán bất đối xứng RS256/ES256 & tăng entropy khóa."
+          : isSql
+            ? "Sử dụng PreparedStatement parameterized query & bật luật chặn WAF L7."
+            : "Cập nhật bản vá PHP 8.2.20 & bật ModSecurity ruleset OWASP CRS.",
+      })
+    }, 550)
+  }
+
   const handleSimulateScan = () => {
     setIsScanning(true)
     setTimeout(() => {
@@ -606,15 +714,36 @@ export function LandingPage() {
           2. ASYMMETRICAL COMMAND CENTER HERO
          ==================================================================== */}
       <section className="relative overflow-hidden pt-8 sm:pt-14 pb-16 lg:pb-24 animate-fade-in-up">
-        {/* Subtle Ambient Radial Glows */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[420px] bg-gradient-to-b from-blue-500/10 via-cyan-400/5 to-transparent blur-3xl pointer-events-none" />
+        {/* ====================================================================
+            ATMOSPHERIC CYBER NETWORK CANVAS BACKGROUND
+            Custom interactive particle network animation — zero external assets.
+            Adapts automatically to Light / Dark / Cyberpunk themes.
+           ==================================================================== */}
+        <div className="absolute inset-0 overflow-hidden z-0">
+          <CyberNetworkCanvas className="absolute inset-0" />
 
-        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 relative">
+          {/* Bottom Edge Blend — dissolves canvas into the next section */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--bg-canvas)] pointer-events-none" />
+
+          {/* Subtle Scanline Micro-Texture for CRT / radar feel */}
+          <div
+            className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06] cyberpunk:opacity-[0.09] pointer-events-none"
+            style={{
+              backgroundImage: "repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 3px)",
+              backgroundSize: "100% 3px",
+            }}
+          />
+        </div>
+
+        {/* Subtle Ambient Radial Glows */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[420px] bg-gradient-to-b from-blue-500/10 via-cyan-400/5 to-transparent blur-3xl pointer-events-none z-0" />
+
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
             {/* Left Column: Mission Briefing & Action Dispatch */}
             <div className="lg:col-span-6 space-y-6">
               {/* Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-black tracking-tight text-slate-900 leading-[1.08]">
+              <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-black tracking-tight text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-[1.08]">
                 Offensive Mastery. <br />
                 <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 dark:from-cyan-300 dark:via-blue-400 dark:to-indigo-300 cyberpunk:from-[#38bdf8] cyberpunk:via-[#22d3ee] cyberpunk:to-[#34d399] bg-clip-text text-transparent drop-shadow-xs">
                   Defensive Precision.
@@ -623,9 +752,136 @@ export function LandingPage() {
               </h1>
 
               {/* Subtitle */}
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 cyberpunk:text-slate-300 leading-relaxed max-w-xl">
                 Tackle realistic cloud and network security challenges. Reverse-engineer authentic vulnerabilities, implement hardened defenses, and accelerate your security career.
               </p>
+
+              {/* YewSafe-Inspired Quick Target IP/Domain Scanner */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#0a0c10]/95 border border-slate-800 hover:border-cyan-500/40 shadow-xl shadow-black/40 backdrop-blur-md relative overflow-hidden transition-all">
+                {/* Laser Accent Top Glow */}
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent" />
+
+                <div className="flex items-center justify-between mb-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
+                    <span className="text-xs font-mono-tech font-bold text-cyan-300 uppercase tracking-wide">
+                      TRA CỨU & QUÉT LỖ HỔNG MỤC TIÊU NHANH
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono-tech text-slate-400 hidden sm:inline-block">
+                    LIVE TELEMETRY HUD
+                  </span>
+                </div>
+
+                {/* Search Bar Input */}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    handleRunTargetScan()
+                  }}
+                  className="flex flex-col sm:flex-row gap-2"
+                >
+                  <div className="relative flex-1">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                      <Crosshair className="h-4 w-4 text-cyan-400" />
+                    </div>
+                    <input
+                      type="text"
+                      value={scanTargetInput}
+                      onChange={(e) => setScanTargetInput(e.target.value)}
+                      placeholder="Nhập IP, Hostname mục tiêu (vd: 10.10.14.89, corp.internal)..."
+                      className="w-full pl-9 pr-3 py-2.5 bg-[#0e121a] border border-slate-700/80 rounded-xl text-xs sm:text-sm font-mono-tech text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition-all"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isScanningTarget}
+                    className="btn-cyber-interactive inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-mono-tech font-bold text-xs bg-cyan-400 hover:bg-cyan-300 text-slate-950 transition-all shrink-0 cursor-pointer disabled:opacity-50 shadow-md shadow-cyan-400/20"
+                  >
+                    {isScanningTarget ? (
+                      <>
+                        <RotateCw className="h-3.5 w-3.5 animate-spin text-slate-950" />
+                        <span>ĐANG QUÉT...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Zap className="h-3.5 w-3.5 fill-slate-950" />
+                        <span>QUÉT MỤC TIÊU</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+
+                {/* Quick Target Chips */}
+                <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
+                  <span className="text-[10px] font-mono-tech text-slate-400 font-semibold uppercase">Mẫu thử nhanh:</span>
+                  {[
+                    { label: "10.10.14.89 [SQLi]", val: "10.10.14.89" },
+                    { label: "192.168.1.100 [JWT]", val: "192.168.1.100" },
+                    { label: "corp-banking.vn [RCE]", val: "corp-banking.vn" },
+                  ].map((chip) => (
+                    <button
+                      key={chip.val}
+                      type="button"
+                      onClick={() => {
+                        setScanTargetInput(chip.val)
+                        handleRunTargetScan(chip.val)
+                      }}
+                      className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-800/80 hover:bg-cyan-950/60 text-slate-300 hover:text-cyan-300 border border-slate-700/60 hover:border-cyan-400/40 transition-colors cursor-pointer"
+                    >
+                      {chip.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Live Scan Diagnostic Report Box */}
+                {targetScanReport && (
+                  <div className="mt-3.5 pt-3.5 border-t border-slate-800 space-y-2.5 text-xs animate-in fade-in slide-in-from-top-1 duration-200">
+                    <div className="flex items-center justify-between flex-wrap gap-1">
+                      <div className="flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-red-500 animate-ping" />
+                        <span className="font-mono-tech font-bold text-red-400">
+                          {targetScanReport.vuln}
+                        </span>
+                      </div>
+                      <span className="font-mono-tech font-bold px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/40 text-[10px]">
+                        CVSS: {targetScanReport.severity}
+                      </span>
+                    </div>
+
+                    <p className="text-[11px] text-slate-300 leading-relaxed font-sans">
+                      {targetScanReport.cveDesc}
+                    </p>
+
+                    {/* Ports Matrix */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono-tech text-[10px]">
+                      {targetScanReport.ports.map((p, i) => (
+                        <div key={i} className="p-1.5 rounded bg-slate-900/90 border border-slate-800 flex flex-col">
+                          <span className="font-bold text-slate-200">{p.port}</span>
+                          <span className="text-slate-400 truncate">{p.service}</span>
+                          <span className={`text-[9px] font-bold ${p.risk === 'CRITICAL' ? 'text-red-400' : p.risk === 'HIGH' ? 'text-amber-400' : 'text-emerald-400'}`}>
+                            {p.state} • {p.risk}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Direct Action Link */}
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="text-[10px] text-slate-400 font-mono-tech">
+                        🛡 Khắc phục: <span className="text-slate-200">{targetScanReport.mitigation}</span>
+                      </span>
+                      <Link
+                        to="/labs"
+                        className="inline-flex items-center gap-1 text-[11px] font-mono-tech font-bold text-cyan-400 hover:text-cyan-300 transition-colors whitespace-nowrap ml-2"
+                      >
+                        <span>Khởi động Lab này</span>
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {/* Interactive Tool Chips (Clickable Quick Prompts) */}
               <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -659,7 +915,7 @@ export function LandingPage() {
               </div>
 
               {/* Telemetry Counter Strip */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80">
+              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 dark:border-slate-800/80 cyberpunk:border-slate-800/80">
                 <div className="space-y-0.5">
                   <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white cyberpunk:text-cyan-50">
                     <CountUp end={2400} suffix="+" />
@@ -667,16 +923,16 @@ export function LandingPage() {
                   <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Chuyên Viên Tác Chiến</div>
                 </div>
                 <div className="space-y-0.5">
-                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-blue-600">
+                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-cyan-400 cyberpunk:text-cyan-400">
                     <CountUp end={120} suffix="+" />
                   </div>
                   <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Phòng Lab Thực Địa</div>
                 </div>
                 <div className="space-y-0.5">
-                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-emerald-600">
+                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">
                     <CountUp end={100} suffix="%" />
                   </div>
-                  <div className="text-xs font-medium text-slate-500">MITRE ATT&CK</div>
+                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400">MITRE ATT&CK</div>
                 </div>
               </div>
             </div>
@@ -766,6 +1022,112 @@ export function LandingPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ====================================================================
+          YEWSAFE-INSPIRED STANDARDS & SECURITY ECOSYSTEM MARQUEE
+          Infinite Scrolling Ticker with Laser Horizon Glow Accents
+         ==================================================================== */}
+      <section className="relative w-full overflow-hidden bg-[#07090e] border-y border-white/5 py-4">
+        {/* Cyan Laser Horizon Beam Accents (Top & Bottom) */}
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
+
+        <div className="max-w-[1240px] mx-auto px-4 mb-2.5 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="flex h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
+            <span className="text-[11px] font-mono-tech uppercase font-bold tracking-wider text-cyan-400/90">
+              HỆ SINH THÁI TIÊU CHUẨN AN TOÀN THÔNG TIN & CÔNG NGHỆ TÍCH HỢP
+            </span>
+          </div>
+          <span className="hidden sm:inline-block text-[10px] font-mono-tech text-slate-500">
+            100% STANDARDS COMPLIANT • ZERO-TRUST SANDBOX FLEET
+          </span>
+        </div>
+
+        {/* Infinite Marquee Strip */}
+        <div className="flex overflow-hidden relative select-none">
+          {/* Left/Right Fade Masks */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#07090e] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#07090e] to-transparent z-10 pointer-events-none" />
+
+          <div className="animate-marquee-infinite items-center gap-4 py-1">
+            {[...STANDARDS_ECOSYSTEM, ...STANDARDS_ECOSYSTEM].map((item, idx) => (
+              <div
+                key={`${item.name}-${idx}`}
+                className="flex items-center gap-3 px-4 py-2 rounded-lg bg-[#0e121a]/90 border border-slate-800/80 hover:border-cyan-400/50 hover:bg-[#121722] transition-colors shrink-0 group cursor-default"
+              >
+                <span className="text-base group-hover:scale-110 transition-transform">{item.icon}</span>
+                <div className="flex flex-col">
+                  <span className="text-xs font-mono-tech font-bold text-slate-200 group-hover:text-cyan-300 transition-colors">
+                    {item.name}
+                  </span>
+                  <span className="text-[10px] font-mono-tech text-slate-500">
+                    {item.category}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ====================================================================
+          CYBER COMMAND THEATER (Cinematic Video & Interactive Operations HUD)
+          Inspired by NCS Group National SOC & Cyber Defense Command Center
+         ==================================================================== */}
+      <CyberCommandTheater />
+
+      {/* ====================================================================
+          YEWSAFE-INSPIRED PROMO & STRATEGIC CAPABILITY RIBBON
+          4 Glassmorphic High-Tech Cards with Category Pills & Laser Beam Bottoms
+         ==================================================================== */}
+      <section className="relative max-w-[1240px] mx-auto px-4 sm:px-6 pt-4 pb-8 z-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {PROMO_RIBBON_CARDS.map((card, idx) => (
+            <div
+              key={idx}
+              className="group relative bg-[#0a0c10]/95 backdrop-blur-md border border-slate-800/80 hover:border-cyan-500/40 rounded-xl p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-950/30 overflow-hidden"
+            >
+              {/* Subtle Ambient Hover Glow */}
+              <div className="absolute -top-12 -right-12 w-28 h-28 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/15 transition-all pointer-events-none" />
+
+              <div className="space-y-3 relative z-10">
+                {/* Pill Badge */}
+                <div className="flex items-center justify-between">
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono-tech font-bold uppercase tracking-wider border ${card.pillColor}`}>
+                    {card.pill}
+                  </span>
+                  <span className="text-[10px] font-mono-tech text-slate-600">0{idx + 1}</span>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-base font-bold text-white group-hover:text-cyan-300 transition-colors leading-snug">
+                  {card.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  {card.description}
+                </p>
+              </div>
+
+              {/* CTA Link with Orange Accent (YewSafe Signature #FF6B00) */}
+              <div className="pt-4 mt-2 border-t border-slate-800/60 relative z-10">
+                <Link
+                  to={card.link}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF7A00] hover:text-[#FFA040] transition-colors group/link"
+                >
+                  <span>{card.cta}</span>
+                  <ArrowRight className="h-3.5 w-3.5 group-hover/link:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Bottom Horizon Laser Beam Accent */}
+              <div className={`absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent ${card.laserColor} to-transparent opacity-60 group-hover:opacity-100 transition-opacity`} />
+            </div>
+          ))}
         </div>
       </section>
 
