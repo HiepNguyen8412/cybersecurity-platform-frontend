@@ -1,19 +1,20 @@
 import { useState } from "react"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import {
-  ShieldCheck,
-  Menu,
-  X,
-  LayoutDashboard,
-  User,
-  LogOut,
-  ChevronDown,
-  BookOpen,
-  FlaskConical,
-  Compass,
-  Shield,
-  LogIn,
-} from "lucide-react"
+  RiShieldFlashFill,
+  RiBookOpenLine,
+  RiTerminalBoxLine,
+  RiRouteLine,
+  RiPriceTag3Line,
+  RiDashboard3Line,
+  RiUser3Line,
+  RiLogoutBoxRLine,
+  RiArrowDownSLine,
+  RiLoginCircleLine,
+  RiFlashlightLine,
+  RiMenuLine,
+  RiCloseLine,
+} from "@remixicon/react"
 import useAuth from "../../hooks/useAuth"
 import { Avatar, Dropdown, DropdownItem, DropdownDivider } from "../../components/common"
 import { ThemeToggle } from "../../components/layout/ThemeToggle"
@@ -24,36 +25,39 @@ export function PublicHeader() {
   const navigate = useNavigate()
 
   const navLinks = [
-    { label: "Khóa học", to: "/learning" },
-    { label: "Phòng Lab", to: "/labs" },
-    { label: "Lộ trình", to: "/learning-paths" },
-    { label: "Bảng giá", to: "/pricing" },
+    { label: "Khóa học", to: "/learning", icon: RiBookOpenLine },
+    { label: "Phòng Lab", to: "/labs", icon: RiTerminalBoxLine },
+    { label: "Lộ trình", to: "/learning-paths", icon: RiRouteLine },
+    { label: "Bảng giá", to: "/pricing", icon: RiPriceTag3Line },
   ]
 
-  const displayName = user?.fullName || user?.name || "Learner"
+  const displayName = user?.fullName || user?.name || "Học viên"
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-[#0a0c10]/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/5 transition-colors overflow-hidden">
-      {/* YewSafe-Inspired Top Subtle Cyan Horizon Glow */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cyan-400/8 to-transparent pointer-events-none" />
+    <header className="sticky top-0 z-40 w-full bg-white/90 dark:bg-[#080d19]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] transition-colors select-none">
+      {/* Subtle Cyan Horizon Glow */}
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/[0.04] via-transparent to-transparent pointer-events-none" />
 
       <div className="relative max-w-[1240px] mx-auto px-4 sm:px-6 h-18 flex items-center justify-between z-10">
         {/* Logo & Live Status */}
         <div className="flex items-center gap-3.5">
           <Link
             to="/"
-            className="flex items-center gap-2.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-lg group"
-            title="CyberPath — Home"
+            className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl group"
+            title="CyberPath — Trang chủ"
           >
-            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/25 group-hover:scale-105 transition-transform">
-              <ShieldCheck className="h-5 w-5 stroke-[2.2]" />
-              <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-cyan-300 ring-2 ring-white dark:ring-[#0a0c10] animate-pulse" />
+            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white shadow-md shadow-blue-600/30 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
+              <RiShieldFlashFill className="h-5.5 w-5.5 text-white" />
+              <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 ring-2 ring-white dark:ring-[#080d19]" />
+              </span>
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-                Cyber<span className="text-cyan-400">Path</span>
+                Cyber<span className="text-blue-600 dark:text-cyan-400">Path</span>
               </span>
-              <span className="text-[10px] font-mono-tech uppercase tracking-widest text-slate-400 dark:text-slate-500 mt-0.5">
+              <span className="text-[10px] font-mono-tech uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
                 SEC-OPS RANGE
               </span>
             </div>
@@ -63,31 +67,24 @@ export function PublicHeader() {
         {/* Center Desktop Navigation - Segmented Cyber Pill HUD */}
         <nav
           aria-label="Public Navigation"
-          className="hidden md:flex items-center gap-1 p-1 bg-slate-100/80 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/90 dark:border-slate-800 rounded-full shadow-2xs"
+          className="hidden md:flex items-center gap-1.5 p-1.5 bg-slate-100/90 dark:bg-white/[0.04] backdrop-blur-md border border-slate-200/90 dark:border-white/[0.08] rounded-full shadow-inner"
         >
           {navLinks.map((link) => {
-            const IconComponent =
-              link.label === "Courses"
-                ? BookOpen
-                : link.label === "Labs"
-                ? FlaskConical
-                : link.label === "Paths"
-                ? Compass
-                : Shield
+            const Icon = link.icon
 
             return (
               <NavLink
                 key={link.label}
                 to={link.to}
                 className={({ isActive }) =>
-                  `relative inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs transition-all duration-200 select-none group ${
+                  `relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs transition-all duration-200 group ${
                     isActive
-                      ? "bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 font-bold shadow-xs border border-cyan-200/80 dark:border-cyan-500/40"
-                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-semibold hover:bg-white/60 dark:hover:bg-slate-800/60"
+                      ? "bg-white dark:bg-slate-800 text-blue-600 dark:text-cyan-300 font-bold shadow-xs border border-blue-200/80 dark:border-cyan-500/40"
+                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium hover:bg-white/60 dark:hover:bg-white/[0.06]"
                   }`
                 }
               >
-                <IconComponent className="h-3.5 w-3.5" />
+                <Icon className="h-4 w-4 shrink-0 transition-transform group-hover:scale-110" />
                 <span>{link.label}</span>
               </NavLink>
             )
@@ -103,9 +100,9 @@ export function PublicHeader() {
             <div className="flex items-center gap-3">
               <Link
                 to="/dashboard"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold rounded-xl px-3.5 py-2 bg-blue-50 dark:bg-cyan-950/40 text-blue-700 dark:text-cyan-300 hover:bg-blue-100 dark:hover:bg-cyan-900/40 transition-colors shadow-2xs border border-blue-200/60 dark:border-cyan-500/40"
+                className="inline-flex items-center gap-2 text-xs font-semibold rounded-xl px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-cyan-950/40 text-blue-700 dark:text-cyan-300 hover:border-blue-300 dark:hover:border-cyan-500/60 transition-all shadow-2xs border border-blue-200/80 dark:border-blue-500/30"
               >
-                <LayoutDashboard className="h-4 w-4" />
+                <RiDashboard3Line className="h-4 w-4" />
                 <span>Bảng Điều Khiển</span>
               </Link>
 
@@ -115,8 +112,8 @@ export function PublicHeader() {
                 trigger={({ isOpen }) => (
                   <button
                     type="button"
-                    className={`flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer select-none ${
-                      isOpen ? "bg-slate-100 dark:bg-slate-800" : ""
+                    className={`flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors cursor-pointer ${
+                      isOpen ? "bg-slate-100 dark:bg-white/[0.06]" : ""
                     }`}
                     aria-label="User menu"
                   >
@@ -124,13 +121,13 @@ export function PublicHeader() {
                     <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 hidden lg:inline-block max-w-[120px] truncate">
                       {displayName}
                     </span>
-                    <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
+                    <RiArrowDownSLine className="h-4 w-4 text-slate-400" />
                   </button>
                 )}
               >
                 {({ close }) => (
-                  <div className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
-                    <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
+                  <div className="bg-white dark:bg-[#0c1019] text-slate-900 dark:text-slate-100 rounded-xl border border-slate-200/80 dark:border-white/[0.08] shadow-xl overflow-hidden">
+                    <div className="px-3.5 py-2.5 border-b border-slate-100 dark:border-white/[0.06]">
                       <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">
                         {displayName}
                       </p>
@@ -138,35 +135,35 @@ export function PublicHeader() {
                     </div>
                     <div className="py-1">
                       <DropdownItem
-                        icon={<LayoutDashboard className="h-4 w-4" />}
+                        icon={<RiDashboard3Line className="h-4 w-4" />}
                         onClick={() => {
                           close()
                           navigate("/dashboard")
                         }}
                       >
-                        Dashboard
+                        Bảng điều khiển
                       </DropdownItem>
                       <DropdownItem
-                        icon={<User className="h-4 w-4" />}
+                        icon={<RiUser3Line className="h-4 w-4" />}
                         onClick={() => {
                           close()
                           navigate("/profile")
                         }}
                       >
-                        My Profile
+                        Hồ sơ cá nhân
                       </DropdownItem>
                     </div>
                     <DropdownDivider />
                     <div className="py-1">
                       <DropdownItem
                         danger
-                        icon={<LogOut className="h-4 w-4" />}
+                        icon={<RiLogoutBoxRLine className="h-4 w-4" />}
                         onClick={async () => {
                           close()
                           await logout()
                         }}
                       >
-                        Log out
+                        Đăng xuất
                       </DropdownItem>
                     </div>
                   </div>
@@ -177,15 +174,16 @@ export function PublicHeader() {
             <div className="flex items-center gap-2.5">
               <Link
                 to="/login"
-                className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold rounded-xl px-4 py-2 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-cyan-400 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900/80 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 hover:border-cyan-500/40 transition-all cursor-pointer shadow-2xs"
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold rounded-xl px-4 py-2 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-cyan-300 bg-slate-100/80 hover:bg-slate-200/80 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] border border-slate-200/80 dark:border-white/[0.08] hover:border-blue-300 dark:hover:border-cyan-500/40 transition-all cursor-pointer shadow-2xs"
               >
-                <LogIn className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
+                <RiLoginCircleLine className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
                 <span>Đăng nhập</span>
               </Link>
               <Link
                 to="/register"
-                className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-bold rounded-xl px-4 py-2 bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-md shadow-cyan-400/25 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-bold rounded-xl px-4.5 py-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white shadow-md shadow-blue-600/25 ring-1 ring-white/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
               >
+                <RiFlashlightLine className="h-3.5 w-3.5" />
                 <span>Bắt đầu ngay</span>
               </Link>
             </div>
@@ -201,29 +199,33 @@ export function PublicHeader() {
             className="p-2 -mr-1 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileMenuOpen ? <RiCloseLine className="h-5 w-5" /> : <RiMenuLine className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-6 space-y-3 shadow-lg animate-in slide-in-from-top-2 duration-150">
-          <nav className="flex flex-col space-y-2 pt-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                to={link.to}
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+        <div className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1019] px-4 pt-2 pb-6 space-y-3 shadow-lg animate-in slide-in-from-top-2 duration-150">
+          <nav className="flex flex-col space-y-1.5 pt-2">
+            {navLinks.map((link) => {
+              const Icon = link.icon
+              return (
+                <Link
+                  key={link.label}
+                  to={link.to}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.05] hover:text-slate-900 dark:hover:text-white transition-colors"
+                >
+                  <Icon className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
+                  <span>{link.label}</span>
+                </Link>
+              )
+            })}
           </nav>
 
           {isAuthenticated ? (
-            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+            <div className="pt-3 border-t border-slate-100 dark:border-white/[0.06] flex flex-col gap-2">
               <div className="flex items-center gap-2.5 px-2 py-1">
                 <Avatar name={displayName} size="sm" />
                 <div className="flex flex-col min-w-0">
@@ -236,16 +238,16 @@ export function PublicHeader() {
               <Link
                 to="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-2.5 text-sm font-semibold rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-2xs"
+                className="w-full text-center py-2.5 text-sm font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/25"
               >
-                Go to Dashboard
+                Bảng điều khiển
               </Link>
               <Link
                 to="/profile"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                className="w-full text-center py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.05] rounded-lg transition-colors"
               >
-                My Profile
+                Hồ sơ cá nhân
               </Link>
               <button
                 type="button"
@@ -255,25 +257,25 @@ export function PublicHeader() {
                 }}
                 className="w-full text-center py-2 text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer"
               >
-                Log out
+                Đăng xuất
               </button>
             </div>
           ) : (
-            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2.5">
+            <div className="pt-3 border-t border-slate-100 dark:border-white/[0.06] flex flex-col gap-2.5">
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl transition-all shadow-xs"
+                className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-white/[0.05] border border-slate-200 dark:border-white/[0.08] rounded-xl transition-all shadow-xs"
               >
-                <LogIn className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
+                <RiLoginCircleLine className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
                 <span>Đăng Nhập</span>
               </Link>
               <Link
                 to="/register"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-2.5 text-sm font-semibold rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-2xs"
+                className="w-full text-center py-2.5 text-sm font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md shadow-blue-600/25"
               >
-                Get started
+                Bắt đầu ngay
               </Link>
             </div>
           )}
