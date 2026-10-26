@@ -1,4 +1,4 @@
-﻿import { Moon, Sun, Terminal } from "lucide-react"
+import { RiSunLine, RiMoonLine, RiRadarLine } from "@remixicon/react"
 import useThemeStore from "../../stores/useThemeStore"
 
 export function ThemeToggle() {
@@ -12,31 +12,31 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       type="button"
       className={`
-        px-3 py-1.5 rounded-xl border transition-all cursor-pointer flex items-center space-x-2 text-xs font-mono shadow-xs select-none
+        px-3 py-1.5 rounded-xl border transition-all duration-200 cursor-pointer flex items-center gap-2 text-xs font-mono select-none
         ${
           isLight
-            ? "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800"
+            ? "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800 shadow-2xs"
             : isCyber
-            ? "bg-cyan-950/90 hover:bg-cyan-900 border-cyan-500/80 text-cyan-300 shadow-xs border-cyan-500/50"
-            : "bg-slate-800 hover:bg-slate-700 border-slate-600 text-slate-100"
+            ? "bg-emerald-950/40 hover:bg-emerald-900/50 border-emerald-500/40 text-emerald-300 shadow-2xs"
+            : "bg-white/[0.06] hover:bg-white/[0.1] border-white/[0.1] text-slate-200 shadow-2xs"
         }
       `.trim()}
-      title={`Chuyển giao diện: Hiện tại là ${isLight ? "LIGHT" : isCyber ? "CYBER RANGE (NEON)" : "DARK (STEALTH)"}`}
-      aria-label="Toggle visual theme"
+      title={`Chuyển giao diện: Hiện tại là ${isLight ? "SÁNG (EDITORIAL LIGHT)" : isCyber ? "CYBER RANGE (TACTICAL HUD)" : "TỐI (OBSIDIAN TITANIUM)"}`}
+      aria-label="Chuyển chế độ hiển thị giao diện"
     >
       {isLight ? (
         <>
-          <Sun className="w-4 h-4 text-amber-500" />
-          <span className="font-semibold">Sáng</span>
+          <RiSunLine className="w-4 h-4 text-amber-500" />
+          <span className="font-semibold text-slate-800">Sáng</span>
         </>
       ) : isCyber ? (
         <>
-          <Terminal className="w-4 h-4 text-cyan-300 animate-pulse" />
-          <span className="font-bold text-cyan-300 tracking-wider">CYBER</span>
+          <RiRadarLine className="w-4 h-4 text-emerald-400" />
+          <span className="font-bold text-emerald-300 tracking-wider">CYBER</span>
         </>
       ) : (
         <>
-          <Moon className="w-4 h-4 text-blue-400" />
+          <RiMoonLine className="w-4 h-4 text-indigo-400" />
           <span className="font-semibold text-white">Tối</span>
         </>
       )}
@@ -45,3 +45,4 @@ export function ThemeToggle() {
 }
 
 export default ThemeToggle
+
