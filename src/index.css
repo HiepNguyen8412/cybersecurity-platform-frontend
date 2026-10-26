@@ -1,4 +1,34 @@
 @import "tailwindcss";
+
+/* --------------------------------------------------------------------------
+   Industry-Standard Design System Color Library: Radix Colors (@radix-ui/colors)
+   12-Step Mathematically Calibrated Contrast Scales with P3 Wide Gamut
+   -------------------------------------------------------------------------- */
+@import "@radix-ui/colors/slate.css";
+@import "@radix-ui/colors/slate-dark.css";
+@import "@radix-ui/colors/slate-alpha.css";
+@import "@radix-ui/colors/slate-dark-alpha.css";
+@import "@radix-ui/colors/indigo.css";
+@import "@radix-ui/colors/indigo-dark.css";
+@import "@radix-ui/colors/iris.css";
+@import "@radix-ui/colors/iris-dark.css";
+@import "@radix-ui/colors/jade.css";
+@import "@radix-ui/colors/jade-dark.css";
+@import "@radix-ui/colors/mint.css";
+@import "@radix-ui/colors/mint-dark.css";
+@import "@radix-ui/colors/cyan.css";
+@import "@radix-ui/colors/cyan-dark.css";
+@import "@radix-ui/colors/teal.css";
+@import "@radix-ui/colors/teal-dark.css";
+@import "@radix-ui/colors/green.css";
+@import "@radix-ui/colors/green-dark.css";
+@import "@radix-ui/colors/amber.css";
+@import "@radix-ui/colors/amber-dark.css";
+@import "@radix-ui/colors/red.css";
+@import "@radix-ui/colors/red-dark.css";
+@import "@radix-ui/colors/black-alpha.css";
+@import "@radix-ui/colors/white-alpha.css";
+
 @import "./styles/tokens.css";
 
 /* Tailwind v4 class-based variant selectors */
@@ -57,41 +87,41 @@
    1. Background Atmosphere & Spatial Depth Canvases (ANTI-GLARE)
    ========================================================================== */
 
-/* Light Defense Grid */
+/* Light Defense Grid (Radix Slate-1 Canvas with Hairline Grid) */
 .cyber-grid-canvas {
   background-color: var(--bg-canvas);
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(219, 234, 254, 0.6) 0%, transparent 50%),
-    linear-gradient(to right, rgba(226, 232, 240, 0.5) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(226, 232, 240, 0.5) 1px, transparent 1px);
+    radial-gradient(circle at 50% 0%, rgba(224, 231, 255, 0.5) 0%, transparent 50%),
+    linear-gradient(to right, rgba(205, 206, 214, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(205, 206, 214, 0.35) 1px, transparent 1px);
   background-size: 100% 100%, 36px 36px, 36px 36px;
   position: relative;
 }
 
-/* Dark Stealth Atmosphere (Linear / Vercel Matte Style - Zero Glare) */
+/* Dark Stealth Atmosphere (Obsidian Titanium & Electric Iris - Zero Glare) */
 .dark:not(.cyberpunk) .cyber-grid-canvas,
 [data-theme="dark"] .cyber-grid-canvas {
-  background-color: var(--bg-canvas);
+  background-color: #090a0f;
   background-image: 
-    radial-gradient(circle at 30% 0%, rgba(30, 58, 138, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 80% 60%, rgba(15, 23, 42, 0.25) 0%, transparent 50%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    radial-gradient(circle at 40% 0%, rgba(91, 91, 214, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 60%, rgba(18, 20, 28, 0.4) 0%, transparent 50%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
 }
 
-/* Cyber Tactical Range (Rich Cyberspace Navy Tactical Grid) */
+/* Cyber Tactical Range (Tactical Matrix Jade Abyss & Phosphor Grid) */
 .cyberpunk .cyber-grid-canvas,
 [data-theme="cyberpunk"] .cyber-grid-canvas {
-  background-color: #05131e;
+  background-color: #02120b;
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.18) 0%, transparent 65%),
-    linear-gradient(to right, rgba(0, 240, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 240, 255, 0.08) 1px, transparent 1px);
+    radial-gradient(circle at 50% 0%, rgba(0, 229, 153, 0.16) 0%, transparent 60%),
+    linear-gradient(to right, rgba(0, 229, 153, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 229, 153, 0.08) 1px, transparent 1px);
   background-size: 100% 100%, 28px 28px, 28px 28px;
 }
 
-/* Ambient Spatial Depth Glow Orbs (Subtle 0.04 opacity - No washed out text) */
+/* Ambient Spatial Depth Glow Orbs */
 .ambient-glow-sphere-top {
   position: absolute;
   top: 0;
@@ -99,14 +129,19 @@
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(62, 99, 221, 0.06) 0%, transparent 70%);
   filter: blur(100px);
   pointer-events: none;
   z-index: 0;
 }
 
+.dark:not(.cyberpunk) .ambient-glow-sphere-top {
+  background: radial-gradient(circle, rgba(91, 91, 214, 0.08) 0%, transparent 70%);
+  filter: blur(100px);
+}
+
 .cyberpunk .ambient-glow-sphere-top {
-  background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 229, 153, 0.1) 0%, transparent 70%);
   filter: blur(100px);
 }
 
@@ -117,26 +152,31 @@
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.04) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(62, 99, 221, 0.04) 0%, transparent 70%);
   filter: blur(120px);
   pointer-events: none;
   z-index: 0;
 }
 
+.dark:not(.cyberpunk) .ambient-glow-sphere-bottom {
+  background: radial-gradient(circle, rgba(91, 91, 214, 0.05) 0%, transparent 70%);
+  filter: blur(120px);
+}
+
 .cyberpunk .ambient-glow-sphere-bottom {
-  background: radial-gradient(circle, rgba(0, 255, 170, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 229, 153, 0.08) 0%, transparent 70%);
   filter: blur(120px);
 }
 
 /* ==========================================================================
-   2. Card Dimensionality & Theme Identity (.cyber-card) - ANTI-GLARE
+   2. Card Dimensionality & Theme Identity (.cyber-card)
    ========================================================================== */
 
 /* Base Light Card (Swiss Editorial - Crisp, Matte, Non-Blinding) */
 .cyber-card {
   position: relative;
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--slate-6, #d9d9e0);
   box-shadow: 
     0 1px 3px 0 rgba(15, 23, 42, 0.04),
     0 4px 12px -2px rgba(15, 23, 42, 0.03);
@@ -146,7 +186,7 @@
 /* Dark Stealth Card (Obsidian Titanium - Anti-Glare) */
 .dark:not(.cyberpunk) .cyber-card,
 [data-theme="dark"] .cyber-card {
-  background: #0f121a;
+  background: #12141c;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 
     0 4px 16px -2px rgba(0, 0, 0, 0.7),
@@ -156,26 +196,26 @@
 
 .dark:not(.cyberpunk) .cyber-card:hover,
 [data-theme="dark"] .cyber-card:hover {
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(91, 91, 214, 0.4);
   box-shadow: 
     0 8px 24px -2px rgba(0, 0, 0, 0.8),
     inset 0 1px 0 rgba(255, 255, 255, 0.09);
   transform: translateY(-2px);
 }
 
-/* Cyber Tactical Card (High-Tech Cyberspace Navy Console - Highly Distinct) */
+/* Cyber Tactical Card (Tactical Matrix Jade Deck - Radically Distinct) */
 .cyberpunk .cyber-card,
 [data-theme="cyberpunk"] .cyber-card {
-  background: linear-gradient(180deg, #0d283e 0%, #081e30 100%);
-  border: 1px solid rgba(0, 240, 255, 0.45);
+  background: linear-gradient(180deg, #092c1f 0%, #062217 100%);
+  border: 1px solid rgba(0, 229, 153, 0.42);
   box-shadow: 
-    0 8px 26px -2px rgba(0, 15, 30, 0.9),
-    0 0 12px rgba(0, 240, 255, 0.12),
-    inset 0 1px 0 rgba(0, 240, 255, 0.35);
+    0 8px 26px -2px rgba(0, 20, 15, 0.9),
+    0 0 12px rgba(0, 229, 153, 0.12),
+    inset 0 1px 0 rgba(0, 229, 153, 0.32);
   border-radius: 10px;
 }
 
-/* Tactical HUD Corner Reticles on Cyber Cards (Crisp Glowing Cyan Corners) */
+/* Tactical HUD Corner Reticles on Cyber Cards (Luminous Phosphor Emerald) */
 .cyberpunk .cyber-card::before {
   content: "";
   position: absolute;
@@ -183,8 +223,8 @@
   left: -1px;
   width: 9px;
   height: 9px;
-  border-top: 2px solid #00f0ff;
-  border-left: 2px solid #00f0ff;
+  border-top: 2px solid #00e599;
+  border-left: 2px solid #00e599;
   pointer-events: none;
   z-index: 10;
   border-top-left-radius: 3px;
@@ -197,8 +237,8 @@
   right: -1px;
   width: 9px;
   height: 9px;
-  border-bottom: 2px solid #00f0ff;
-  border-right: 2px solid #00f0ff;
+  border-bottom: 2px solid #00e599;
+  border-right: 2px solid #00e599;
   pointer-events: none;
   z-index: 10;
   border-bottom-right-radius: 3px;
@@ -206,37 +246,37 @@
 
 .cyberpunk .cyber-card:hover,
 [data-theme="cyberpunk"] .cyber-card:hover {
-  border-color: #00f0ff;
+  border-color: #00e599;
   box-shadow: 
-    0 12px 32px rgba(0, 10, 25, 0.95),
-    0 0 15px rgba(0, 240, 255, 0.25),
-    inset 0 1px 0 rgba(0, 240, 255, 0.4);
+    0 12px 32px rgba(0, 20, 15, 0.95),
+    0 0 15px rgba(0, 229, 153, 0.25),
+    inset 0 1px 0 rgba(0, 229, 153, 0.4);
   transform: translateY(-2px);
 }
 
 /* Focal Cards (Hero & Highlight Panels) */
 .cyber-card-focal {
   position: relative;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border: 1px solid #cbd5e1;
+  background: linear-gradient(135deg, #ffffff 0%, #f9f9fb 100%);
+  border: 1px solid var(--slate-6, #d9d9e0);
   box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.06);
 }
 
 .dark:not(.cyberpunk) .cyber-card-focal,
 [data-theme="dark"] .cyber-card-focal {
-  background: linear-gradient(135deg, #0f121a 0%, #151a24 100%);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: linear-gradient(135deg, #12141c 0%, #171a24 100%);
+  border: 1px solid rgba(91, 91, 214, 0.35);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .cyberpunk .cyber-card-focal,
 [data-theme="cyberpunk"] .cyber-card-focal {
-  background: linear-gradient(135deg, #071a29 0%, #0d283e 100%);
-  border: 1px solid rgba(0, 240, 255, 0.5);
+  background: linear-gradient(135deg, #051d14 0%, #0a2d20 100%);
+  border: 1px solid rgba(0, 229, 153, 0.5);
   box-shadow: 
-    0 8px 28px rgba(0, 10, 25, 0.9),
-    0 0 15px rgba(0, 240, 255, 0.2),
-    inset 0 1px 0 rgba(0, 240, 255, 0.35);
+    0 8px 28px rgba(0, 20, 15, 0.9),
+    0 0 15px rgba(0, 229, 153, 0.2),
+    inset 0 1px 0 rgba(0, 229, 153, 0.35);
 }
 
 /* ==========================================================================
@@ -250,17 +290,17 @@
 }
 
 .dark:not(.cyberpunk) .cyber-terminal {
-  background-color: #090e18;
-  border-color: #232d42;
+  background-color: #0c0e15;
+  border-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .cyberpunk .cyber-terminal {
-  background-color: #030917;
-  border-color: rgba(6, 182, 212, 0.45);
+  background-color: #03140e;
+  border-color: rgba(0, 229, 153, 0.45);
   box-shadow: 
-    0 14px 34px rgba(0, 0, 0, 0.85),
-    inset 0 1px 0 rgba(6, 182, 212, 0.3);
+    0 14px 34px rgba(0, 20, 15, 0.9),
+    inset 0 1px 0 rgba(0, 229, 153, 0.3);
 }
 
 /* ==========================================================================
@@ -280,8 +320,9 @@
 [data-theme="dark"] .bg-white\/90,
 [data-theme="dark"] .bg-white\/80,
 [data-theme="dark"] .bg-white\/70 {
-  background-color: #0f121a !important;
+  background-color: #12141c !important;
   color: #f8fafc !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .cyberpunk .bg-white,
@@ -296,9 +337,9 @@
 [data-theme="cyberpunk"] .bg-white\/90,
 [data-theme="cyberpunk"] .bg-white\/80,
 [data-theme="cyberpunk"] .bg-white\/70 {
-  background: linear-gradient(180deg, #0d283e 0%, #081e30 100%) !important;
+  background: #062217 !important;
   color: #ffffff !important;
-  border-color: rgba(0, 240, 255, 0.45) !important;
+  border-color: rgba(0, 229, 153, 0.42) !important;
 }
 
 /* Slate Subcard / Pill Adapters */
@@ -307,7 +348,7 @@
 .dark:not(.cyberpunk) .bg-slate-50\/80,
 .dark:not(.cyberpunk) .bg-slate-50\/90,
 [data-theme="dark"] .bg-slate-50 {
-  background-color: #131722 !important;
+  background-color: #161922 !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
   color: #f1f5f9 !important;
 }
@@ -317,16 +358,16 @@
 .cyberpunk .bg-slate-50\/80,
 .cyberpunk .bg-slate-50\/90,
 [data-theme="cyberpunk"] .bg-slate-50 {
-  background-color: #061928 !important;
-  border-color: rgba(0, 240, 255, 0.3) !important;
-  color: #a5f3fc !important;
+  background-color: #03170e !important;
+  border-color: rgba(0, 229, 153, 0.3) !important;
+  color: #a8eedb !important;
 }
 
 .dark:not(.cyberpunk) .bg-slate-100,
 .dark:not(.cyberpunk) .bg-slate-100\/80,
 .dark:not(.cyberpunk) .bg-slate-100\/90,
 [data-theme="dark"] .bg-slate-100 {
-  background-color: #171d2b !important;
+  background-color: #1a1e2a !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
   color: #f1f5f9 !important;
 }
@@ -335,70 +376,70 @@
 .cyberpunk .bg-slate-100\/80,
 .cyberpunk .bg-slate-100\/90,
 [data-theme="cyberpunk"] .bg-slate-100 {
-  background-color: #10334f !important;
-  border-color: rgba(0, 240, 255, 0.4) !important;
-  color: #ffffff !important;
+  background-color: #09281c !important;
+  border-color: rgba(0, 229, 153, 0.35) !important;
+  color: #a8eedb !important;
 }
 
-/* Colored Status Badges & Chips (Anti-glare: subdued opacity) */
+/* Colored Status Badges & Chips */
 .dark:not(.cyberpunk) .bg-blue-50,
 .dark:not(.cyberpunk) .bg-blue-50\/70,
 .dark:not(.cyberpunk) .bg-blue-50\/80,
 .dark:not(.cyberpunk) .bg-blue-50\/90 {
-  background-color: rgba(37, 99, 235, 0.2) !important;
-  border-color: rgba(59, 130, 246, 0.4) !important;
-  color: #93c5fd !important;
+  background-color: rgba(91, 91, 214, 0.16) !important;
+  border-color: rgba(91, 91, 214, 0.35) !important;
+  color: #b1a9ff !important;
 }
 
 .cyberpunk .bg-blue-50,
 .cyberpunk .bg-blue-50\/70,
 .cyberpunk .bg-blue-50\/80,
 .cyberpunk .bg-blue-50\/90 {
-  background-color: rgba(6, 182, 212, 0.12) !important;
-  border-color: rgba(6, 182, 212, 0.45) !important;
-  color: #22d3ee !important;
+  background-color: rgba(0, 229, 153, 0.12) !important;
+  border-color: rgba(0, 229, 153, 0.4) !important;
+  color: #a8eedb !important;
 }
 
 .dark:not(.cyberpunk) .bg-emerald-50,
 .dark:not(.cyberpunk) .bg-emerald-50\/70 {
-  background-color: rgba(16, 185, 129, 0.2) !important;
-  border-color: rgba(16, 185, 129, 0.4) !important;
+  background-color: rgba(48, 164, 108, 0.16) !important;
+  border-color: rgba(48, 164, 108, 0.35) !important;
   color: #6ee7b7 !important;
 }
 
 .cyberpunk .bg-emerald-50,
 .cyberpunk .bg-emerald-50\/70 {
-  background-color: rgba(16, 185, 129, 0.12) !important;
-  border-color: rgba(16, 185, 129, 0.45) !important;
-  color: #34d399 !important;
+  background-color: rgba(0, 229, 153, 0.15) !important;
+  border-color: rgba(0, 229, 153, 0.45) !important;
+  color: #00e599 !important;
 }
 
 .dark:not(.cyberpunk) .bg-amber-50,
 .dark:not(.cyberpunk) .bg-amber-50\/90 {
-  background-color: rgba(245, 158, 11, 0.2) !important;
-  border-color: rgba(245, 158, 11, 0.4) !important;
-  color: #fcd34d !important;
+  background-color: rgba(255, 197, 61, 0.15) !important;
+  border-color: rgba(255, 197, 61, 0.35) !important;
+  color: #ffc53d !important;
 }
 
 .cyberpunk .bg-amber-50,
 .cyberpunk .bg-amber-50\/90 {
-  background-color: rgba(245, 158, 11, 0.12) !important;
-  border-color: rgba(245, 158, 11, 0.4) !important;
-  color: #fbbf24 !important;
+  background-color: rgba(255, 197, 61, 0.15) !important;
+  border-color: rgba(255, 197, 61, 0.45) !important;
+  color: #ffc53d !important;
 }
 
 .dark:not(.cyberpunk) .bg-rose-50,
 .dark:not(.cyberpunk) .bg-rose-50\/70 {
-  background-color: rgba(244, 63, 94, 0.2) !important;
-  border-color: rgba(244, 63, 94, 0.4) !important;
-  color: #fda4af !important;
+  background-color: rgba(229, 72, 77, 0.16) !important;
+  border-color: rgba(229, 72, 77, 0.35) !important;
+  color: #ff6369 !important;
 }
 
 .cyberpunk .bg-rose-50,
 .cyberpunk .bg-rose-50\/70 {
-  background-color: rgba(244, 63, 94, 0.12) !important;
-  border-color: rgba(244, 63, 94, 0.4) !important;
-  color: #f87171 !important;
+  background-color: rgba(229, 72, 77, 0.15) !important;
+  border-color: rgba(229, 72, 77, 0.45) !important;
+  color: #ff6369 !important;
 }
 
 /* Border Adaptations */
@@ -408,7 +449,7 @@
 .dark:not(.cyberpunk) .border-slate-200\/70,
 .dark:not(.cyberpunk) .border-slate-200\/80,
 .dark:not(.cyberpunk) .border-slate-200\/90 {
-  border-color: #222d42 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .cyberpunk .border-slate-100,
@@ -417,7 +458,7 @@
 .cyberpunk .border-slate-200\/70,
 .cyberpunk .border-slate-200\/80,
 .cyberpunk .border-slate-200\/90 {
-  border-color: rgba(6, 182, 212, 0.28) !important;
+  border-color: rgba(0, 229, 153, 0.28) !important;
 }
 
 /* Typography High-Contrast Enhancements (WCAG AAA - Anti-Glare) */
@@ -445,12 +486,12 @@
 
 .dark:not(.cyberpunk) .text-slate-600,
 [data-theme="dark"] .text-slate-600 {
-  color: #e2e8f0 !important;
+  color: var(--slate-11, #b0b4ba) !important;
 }
 
 .dark:not(.cyberpunk) .text-slate-500,
 [data-theme="dark"] .text-slate-500 {
-  color: #94a3b8 !important;
+  color: var(--slate-9, #696e77) !important;
 }
 
 /* Cyber Tactical Typography: High clarity without glare */
@@ -474,28 +515,28 @@
 
 .cyberpunk .text-slate-700,
 [data-theme="cyberpunk"] .text-slate-700 {
-  color: #e2e8f0 !important;
+  color: #f1f5f9 !important;
 }
 
 .cyberpunk .text-slate-600,
 [data-theme="cyberpunk"] .text-slate-600 {
-  color: #cbd5e1 !important;
+  color: #a8eedb !important;
 }
 
 .cyberpunk .text-slate-500,
 [data-theme="cyberpunk"] .text-slate-500 {
-  color: #94a3b8 !important;
+  color: #56dcae !important;
 }
 
 /* Colored Texts */
 .dark:not(.cyberpunk) .text-blue-700,
 .dark:not(.cyberpunk) .text-blue-800 {
-  color: #60a5fa !important;
+  color: #b1a9ff !important;
 }
 
 .cyberpunk .text-blue-700,
 .cyberpunk .text-blue-800 {
-  color: #22d3ee !important;
+  color: #00e599 !important;
 }
 
 .dark:not(.cyberpunk) .text-emerald-700,
@@ -505,7 +546,7 @@
 
 .cyberpunk .text-emerald-700,
 .cyberpunk .text-emerald-800 {
-  color: #10b981 !important;
+  color: #00e599 !important;
 }
 
 /* Form Inputs in Dark and Cyber (Anti-Glare & Matte Focus) */
@@ -514,7 +555,7 @@
 .dark:not(.cyberpunk) input[type="password"],
 .dark:not(.cyberpunk) textarea,
 .dark:not(.cyberpunk) select {
-  background-color: #0f121a !important;
+  background-color: #12141c !important;
   color: #ffffff !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
@@ -524,41 +565,54 @@
 .cyberpunk input[type="password"],
 .cyberpunk textarea,
 .cyberpunk select {
-  background-color: #041422 !important;
+  background-color: #03170e !important;
   color: #f0fdfa !important;
-  border-color: rgba(0, 240, 255, 0.35) !important;
+  border-color: rgba(0, 229, 153, 0.35) !important;
 }
 
 /* ==========================================================================
    5. Interactive Buttons & CTA styling (Anti-Glare)
    ========================================================================== */
 .cyber-btn-primary {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  background: var(--indigo-9, #3e63dd);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 6px rgba(62, 99, 221, 0.25);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.cyber-btn-primary:hover {
+  background: var(--indigo-10, #3358d4);
+  box-shadow: 0 4px 12px rgba(62, 99, 221, 0.35);
+  transform: translateY(-1px);
+}
+
 .dark:not(.cyberpunk) .cyber-btn-primary {
-  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-  border-color: rgba(96, 165, 250, 0.4);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  background: var(--iris-9, #5b5bd6);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 4px 14px rgba(91, 91, 214, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.dark:not(.cyberpunk) .cyber-btn-primary:hover {
+  background: var(--iris-10, #6765e8);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 18px rgba(91, 91, 214, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
 }
 
 .cyberpunk .cyber-btn-primary {
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-  color: #ffffff !important;
-  font-weight: 700;
-  border: 1px solid rgba(34, 211, 238, 0.5);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  letter-spacing: 0.03em;
+  background: #00e599;
+  color: #02120b !important;
+  font-weight: 800;
+  border: 1px solid #00e599;
+  box-shadow: 0 4px 16px rgba(0, 229, 153, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.04em;
 }
 
 .cyberpunk .cyber-btn-primary:hover {
-  background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
-  border-color: #22d3ee;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: #00ffaa;
+  border-color: #00ffaa;
+  box-shadow: 0 6px 22px rgba(0, 229, 153, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   transform: translateY(-1px);
 }
 

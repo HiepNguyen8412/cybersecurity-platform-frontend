@@ -113,7 +113,7 @@ export function FlagSubmissionCard({ lab }) {
         <button
           type="submit"
           disabled={isCompleted || isSubmitting || !flagText.trim()}
-          className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs shadow-md shadow-blue-600/25 ring-1 ring-white/20 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer active:scale-98"
+          className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 cyberpunk:bg-emerald-500 cyberpunk:hover:bg-emerald-400 text-white cyberpunk:text-slate-950 font-bold text-xs shadow-md shadow-indigo-600/20 dark:shadow-indigo-950/40 cyberpunk:shadow-emerald-500/30 ring-1 ring-white/20 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer active:scale-98"
         >
           {isSubmitting ? (
             <span className="inline-flex items-center gap-2">

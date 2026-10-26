@@ -1,58 +1,58 @@
 /**
  * Design Tokens - Cybersecurity Training & SOC Defense Platform
- * Bespoke, Non-Generic Visual Identity (Inspired by Linear, CrowdStrike Falcon & Raycast)
- * Completely eliminates stereotypical AI neon palettes and generic template colors.
+ * Enterprise Visual Identity powered by @radix-ui/colors (Radix Color System)
+ * 12-Step Mathematically Calibrated Contrast Scales with P3 Wide Gamut Support.
  * 
  * 1. :root -> Swiss Editorial Light (Pristine paper canvas, deep obsidian typography, fine hairline borders)
- * 2. .dark:not(.cyberpunk) -> Obsidian Titanium (Deep graphite void, silky electric iris accents, zero muddy slate)
- * 3. .cyberpunk -> Tactical Sentinel HUD (Deep abyss, precision matrix emerald & titanium silver, glare-free)
+ * 2. .dark:not(.cyberpunk) -> Obsidian Titanium & Electric Iris (Graphite void, electric iris, zero muddy slate)
+ * 3. .cyberpunk -> Tactical Cyber Range HUD & Matrix Jade (Deep jade void, phosphor emerald, HUD reticles)
  */
 
 :root {
   /* ==========================================================================
-     Surfaces (Swiss Editorial Light)
+     Surfaces (Swiss Editorial Light - Powered by Radix Slate)
      ========================================================================== */
-  --bg-canvas: #f9fafb;          /* Pure matte paper */
-  --bg-surface: #ffffff;         /* Elevated crisp card */
-  --bg-surface-hover: #f3f4f6;   /* Subtle grey hover */
-  --bg-surface-active: #e5e7eb;  /* Tactile active state */
-  --bg-subtle: #f9fafb;
-  --bg-muted: #f3f4f6;
+  --bg-canvas: var(--slate-1, #fcfcfd);          /* Pure matte paper */
+  --bg-surface: #ffffff;                         /* Elevated crisp card */
+  --bg-surface-hover: var(--slate-2, #f9f9fb);   /* Subtle neutral hover */
+  --bg-surface-active: var(--slate-3, #f0f0f3);  /* Tactile active state */
+  --bg-subtle: var(--slate-2, #f9f9fb);
+  --bg-muted: var(--slate-3, #f0f0f3);
 
-  /* Borders (Light) */
-  --border-subtle: #f3f4f6;
-  --border-default: #e5e7eb;     /* 1px refined border */
-  --border-strong: #d1d5db;
-  --border-focus: #4f46e5;
+  /* Borders (Radix Slate Hairline) */
+  --border-subtle: var(--slate-4, #e8e8ec);
+  --border-default: var(--slate-6, #d9d9e0);     /* 1px razor-sharp boundary */
+  --border-strong: var(--slate-8, #b9bbc6);
+  --border-focus: var(--indigo-9, #3e63dd);
 
-  /* Typography Colors (Light) */
-  --text-primary: #111827;       /* Pure graphite ink */
-  --text-secondary: #374151;     /* High-legibility neutral */
-  --text-muted: #6b7280;         /* Clear metadata */
-  --text-disabled: #9ca3af;
+  /* Typography (High Definition Radix Contrast - Zero Blurriness) */
+  --text-primary: var(--slate-12, #1c2024);      /* Deep obsidian ink */
+  --text-secondary: var(--slate-11, #60646c);    /* High-legibility neutral */
+  --text-muted: var(--slate-10, #80838d);        /* Clear metadata */
+  --text-disabled: var(--slate-8, #b9bbc6);
   --text-inverse: #ffffff;
 
-  /* Primary Brand (Electric Iris & Sapphire) */
-  --primary-50: #eef2ff;
-  --primary-100: #e0e7ff;
-  --primary-200: #c7d2fe;
-  --primary-500: #4f46e5;
-  --primary-600: #4338ca;
-  --primary-700: #3730a3;
-  --primary-surface: #eef2ff;
-  --primary-border: #c7d2fe;
-  --primary-text: #4338ca;
+  /* Primary Brand (Radix Precision Indigo & Cobalt) */
+  --primary-50: var(--indigo-2, #f0f4ff);
+  --primary-100: var(--indigo-3, #e6edfe);
+  --primary-200: var(--indigo-4, #d7e2fe);
+  --primary-500: var(--indigo-9, #3e63dd);
+  --primary-600: var(--indigo-10, #3358d4);
+  --primary-700: var(--indigo-11, #3a5ccc);
+  --primary-surface: var(--indigo-3, #e6edfe);
+  --primary-border: var(--indigo-6, #b0c4fd);
+  --primary-text: var(--indigo-11, #3a5ccc);
 
-  /* Semantic Precision Colors */
-  --success-50: #f0fdf4;
-  --success-500: #10b981;
-  --success-600: #059669;
-  --warning-50: #fffbeb;
-  --warning-500: #f59e0b;
-  --danger-50: #fef2f2;
-  --danger-500: #ef4444;
-  --info-50: #eff6ff;
-  --info-500: #3b82f6;
+  /* Semantic Precision Colors (Radix Calibrated Scales) */
+  --success-50: var(--green-2, #f1faf5);
+  --success-500: var(--green-9, #30a46c);
+  --success-600: var(--green-10, #299764);
+  --warning-50: var(--amber-2, #fefce8);
+  --warning-500: var(--amber-9, #ffc53d);
+  --danger-50: var(--red-2, #feefef);
+  --danger-500: var(--red-9, #e5484d);
+  --info-50: var(--indigo-2, #f0f4ff);
+  --info-500: var(--indigo-9, #3e63dd);
 
   /* Elevation Shadows (Light) */
   --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.04);
@@ -66,42 +66,42 @@
   --font-heading: 'Plus Jakarta Sans', var(--font-sans);
   --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
 
-  --cyber-blue-primary: #4f46e5;
-  --cyber-cyan: #0284c7;
-  --cyber-emerald: #10b981;
+  --cyber-blue-primary: var(--indigo-9, #3e63dd);
+  --cyber-cyan: var(--cyan-9, #00a2c7);
+  --cyber-emerald: var(--green-9, #30a46c);
 }
 
 /* ==========================================================================
-   THEME 1: DARK MODE (Obsidian Titanium - Linear / Raycast Style)
-   Deep abyssal charcoal, electric iris accents, fine hairline glass borders,
-   luxurious specular rim lighting, zero cheap neon glare.
+   THEME 1: DARK MODE (Obsidian Titanium & Electric Iris)
+   Linear & Raycast Aesthetic: Deep graphite void, electric iris accents,
+   crisp frosted hairline borders, matte specular rim, ZERO cheap neon cyan.
    ========================================================================== */
 [data-theme="dark"],
 .dark:not(.cyberpunk) {
-  --bg-canvas: #08090d;          /* Pure obsidian graphite void */
-  --bg-surface: #0f121a;         /* Sculpted obsidian card surface */
-  --bg-surface-hover: #151a24;   /* Soft slate hover */
-  --bg-surface-active: #1c2230;  /* Active card state */
-  --bg-subtle: #0b0d13;
-  --bg-muted: #131720;
+  --bg-canvas: #090a0f;                         /* Pure obsidian graphite void */
+  --bg-surface: #12141c;                        /* Sculpted obsidian card surface */
+  --bg-surface-hover: #171a24;                  /* Clean slate hover */
+  --bg-surface-active: #1d212e;                 /* Active card state */
+  --bg-subtle: #0d0e15;
+  --bg-muted: #151822;
 
   --border-subtle: rgba(255, 255, 255, 0.05);
   --border-default: rgba(255, 255, 255, 0.08); /* 1px crisp frosted border */
-  --border-strong: rgba(255, 255, 255, 0.15);
-  --border-focus: #6366f1;
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --border-focus: var(--iris-9, #5b5bd6);
 
-  --text-primary: #ffffff;       /* Pure white crisp headings */
-  --text-secondary: #e2e8f0;     /* Silver-white high clarity body */
-  --text-muted: #8492a6;         /* Titanium silver metadata */
-  --text-disabled: #475569;
-  --text-inverse: #08090d;
+  --text-primary: #ffffff;                      /* Ultra-crisp headings */
+  --text-secondary: var(--slate-11, #b0b4ba);   /* Silver titanium high clarity */
+  --text-muted: var(--slate-9, #696e77);        /* Muted titanium metadata */
+  --text-disabled: var(--slate-7, #43484e);
+  --text-inverse: #090a0f;
 
-  --primary-50: #1e1b4b;
-  --primary-500: #6366f1;        /* Electric Iris */
-  --primary-600: #4f46e5;
-  --primary-surface: rgba(99, 102, 241, 0.12);
-  --primary-border: rgba(99, 102, 241, 0.35);
-  --primary-text: #a5b4fc;
+  --primary-50: var(--iris-2, #16162a);
+  --primary-500: var(--iris-9, #5b5bd6);        /* Electric Iris Accent */
+  --primary-600: var(--iris-10, #6765e8);
+  --primary-surface: rgba(91, 91, 214, 0.14);
+  --primary-border: rgba(91, 91, 214, 0.38);
+  --primary-text: var(--iris-11, #b1a9ff);
 
   /* Multi-Plane Elevation Shadows with Matte Specular Rim */
   --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.6);
@@ -113,53 +113,53 @@
 }
 
 /* ==========================================================================
-   THEME 2: CYBER MODE (Tactical Cyber Range HUD - Rich Cyberspace Navy & Cyan Matrix)
+   THEME 2: CYBER MODE (Tactical Cyber Range HUD & Matrix Jade)
    RADICALLY DISTINCT FROM DARK MODE:
-   - Dark Mode is pure obsidian graphite monochrome (#08090d / #0f121a) with violet accents.
-   - Cyber Mode is deep tactical cyberspace navy-teal (#05131e / #0b2336) with luminous 
-     cyber cyan (#00f0ff / #06b6d4), matrix emerald (#00ffaa), and military HUD styling.
+   - Dark Mode is pure obsidian graphite monochrome (#090a0f / #12141c) with Electric Iris.
+   - Cyber Mode is deep tactical jade abyss (#02120b / #062217) with luminous 
+     Matrix Phosphor (#00e599), Mint phosphor (#a8eedb), and tactical HUD styling.
    ========================================================================== */
 [data-theme="cyberpunk"],
 .cyberpunk {
-  --bg-canvas: #05131e;          /* Rich Cyberspace Navy Void (Completely distinct from Obsidian black) */
-  --bg-surface: #0b2336;         /* Luminous Tactical Cyber Deck Surface */
-  --bg-surface-hover: #10324d;   /* Active deck hover */
-  --bg-surface-active: #164264;  /* Elevated state */
-  --bg-subtle: #081a29;
-  --bg-muted: #0d2940;
+  --bg-canvas: #02120b;                         /* Deep Tactical Emerald Void */
+  --bg-surface: #062217;                         /* Luminous Tactical HUD Deck Surface */
+  --bg-surface-hover: #0b2f21;                  /* Active deck hover */
+  --bg-surface-active: #103d2b;                 /* Elevated state */
+  --bg-subtle: #03170e;
+  --bg-muted: #08291c;
 
-  /* Luminous Cyber Cyan & Matrix Glass Borders */
-  --border-subtle: rgba(0, 240, 255, 0.25);
-  --border-default: rgba(0, 240, 255, 0.45);
-  --border-strong: #00f0ff;
-  --border-focus: #00f0ff;
+  /* Luminous Tactical Matrix Borders */
+  --border-subtle: rgba(0, 229, 153, 0.22);
+  --border-default: rgba(0, 229, 153, 0.42);
+  --border-strong: #00e599;
+  --border-focus: #00e599;
 
-  /* High-Contrast Luminous Cyber Typography */
-  --text-primary: #ffffff;       /* Pure crisp white */
-  --text-secondary: #a5f3fc;     /* Vibrant ice-cyan */
-  --text-muted: #67e8f9;         /* Matrix cyan */
-  --text-disabled: #386b80;
-  --text-inverse: #05131e;
+  /* High-Contrast Luminous Tactical Typography */
+  --text-primary: #ffffff;                      /* Pure crisp white */
+  --text-secondary: var(--jade-11, #a8eedb);    /* Vibrant phosphor mint */
+  --text-muted: var(--jade-10, #56dcae);        /* Tactical matrix jade */
+  --text-disabled: #1d5843;
+  --text-inverse: #02120b;
 
-  /* Tactical Cyber Cyan & Electric Blue Accents */
-  --primary-50: #083344;
-  --primary-500: #06b6d4;        /* Luminous Cyan */
-  --primary-600: #0891b2;
-  --primary-surface: rgba(0, 240, 255, 0.2);
-  --primary-border: rgba(0, 240, 255, 0.6);
-  --primary-text: #22d3ee;
+  /* Tactical Matrix Phosphor Emerald & Luminous Accents */
+  --primary-50: var(--jade-2, #0d1e16);
+  --primary-500: #00e599;                       /* Precision Matrix Phosphor */
+  --primary-600: #05b177;
+  --primary-surface: rgba(0, 229, 153, 0.16);
+  --primary-border: rgba(0, 229, 153, 0.45);
+  --primary-text: #a8eedb;
 
-  /* Cyberspace Blue-Teal Depth Shadows */
-  --shadow-xs: 0 1px 4px rgba(0, 15, 30, 0.7);
-  --shadow-sm: 0 2px 10px rgba(0, 15, 30, 0.8), inset 0 1px 0 rgba(0, 240, 255, 0.35);
-  --shadow-md: 0 8px 26px -2px rgba(0, 15, 30, 0.9), inset 0 1px 0 rgba(0, 240, 255, 0.4);
-  --shadow-lg: 0 16px 38px -4px rgba(0, 15, 30, 0.95), inset 0 1px 0 rgba(0, 240, 255, 0.45);
-  --card-elevated-shadow: 0 14px 34px rgba(0, 15, 30, 0.95), 0 0 20px rgba(0, 240, 255, 0.2);
-  --specular-top-rim: inset 0 1px 0 0 rgba(0, 240, 255, 0.45);
+  /* Matrix Depth Shadows */
+  --shadow-xs: 0 1px 4px rgba(0, 20, 15, 0.7);
+  --shadow-sm: 0 2px 10px rgba(0, 20, 15, 0.8), inset 0 1px 0 rgba(0, 229, 153, 0.32);
+  --shadow-md: 0 8px 26px -2px rgba(0, 20, 15, 0.9), inset 0 1px 0 rgba(0, 229, 153, 0.38);
+  --shadow-lg: 0 16px 38px -4px rgba(0, 20, 15, 0.95), inset 0 1px 0 rgba(0, 229, 153, 0.42);
+  --card-elevated-shadow: 0 14px 34px rgba(0, 20, 15, 0.95), 0 0 20px rgba(0, 229, 153, 0.18);
+  --specular-top-rim: inset 0 1px 0 0 rgba(0, 229, 153, 0.42);
 
-  --cyber-blue-primary: #06b6d4;
+  --cyber-blue-primary: #00e599;
   --cyber-cyan: #00f0ff;
-  --cyber-emerald: #00ffaa;
-  --cyber-glow-blue: 0 0 20px rgba(6, 182, 212, 0.5);
-  --cyber-glow-cyan: 0 0 20px rgba(0, 240, 255, 0.5);
+  --cyber-emerald: #00e599;
+  --cyber-glow-blue: 0 0 20px rgba(0, 229, 153, 0.4);
+  --cyber-glow-cyan: 0 0 20px rgba(0, 229, 153, 0.4);
 }

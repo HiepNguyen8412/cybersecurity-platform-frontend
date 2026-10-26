@@ -88,21 +88,21 @@ export class ErrorBoundary extends Component {
 
           {/* Ambient Glow */}
           <div
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-gradient-to-r from-blue-600/15 via-indigo-600/10 to-cyan-500/10 blur-3xl pointer-events-none"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-gradient-to-r from-indigo-600/15 via-indigo-600/10 to-blue-500/10 blur-3xl pointer-events-none"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 max-w-lg w-full bg-[#0d1322]/95 border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/90 text-center space-y-6 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative z-10 max-w-lg w-full bg-[#090a0f]/95 border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/90 text-center space-y-6 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200">
             {/* Friendly Shield Icon Header with Glowing Ring */}
-            <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600/20 via-indigo-600/20 to-cyan-500/15 border border-cyan-500/40 flex items-center justify-center mx-auto text-cyan-300 shadow-[0_0_20px_rgba(6,182,212,0.25)] ring-1 ring-white/10">
+            <div className="relative w-16 h-16 rounded-2xl bg-indigo-950/60 border border-indigo-500/40 flex items-center justify-center mx-auto text-indigo-300 shadow-[0_0_20px_rgba(91,91,214,0.25)] ring-1 ring-white/10">
               <RiShieldCheckFill className="w-8 h-8" />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 ring-2 ring-[#0d1322] animate-pulse" />
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 ring-2 ring-[#090a0f] animate-pulse" />
             </div>
 
             {/* Main Friendly Content */}
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-500/15 border border-blue-400/30 text-cyan-300 text-[11px] font-mono font-semibold tracking-wider uppercase shadow-2xs">
-                <RiLifebuoyLine className="w-3.5 h-3.5 text-cyan-400" />
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-indigo-500/15 border border-indigo-400/30 text-indigo-300 text-[11px] font-mono font-semibold tracking-wider uppercase shadow-2xs">
+                <RiLifebuoyLine className="w-3.5 h-3.5 text-indigo-400" />
                 <span>Trợ Giúp Sự Cố Nền Tảng</span>
               </div>
 
@@ -191,7 +191,7 @@ export class ErrorBoundary extends Component {
               <button
                 type="button"
                 onClick={this.handleReload}
-                className="flex-1 min-w-[130px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold text-xs shadow-md shadow-blue-600/30 ring-1 ring-white/20 transition-all cursor-pointer"
+                className="flex-1 min-w-[130px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-md shadow-indigo-600/30 ring-1 ring-white/20 transition-all cursor-pointer"
               >
                 <RiRefreshLine className="w-3.5 h-3.5" />
                 <span>Tải Lại Trang</span>

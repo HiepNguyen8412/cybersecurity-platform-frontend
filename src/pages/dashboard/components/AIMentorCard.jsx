@@ -53,7 +53,7 @@ export function AIMentorCard({
         {/* Header */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 cyberpunk:from-cyan-500 cyberpunk:to-blue-600 text-white shadow-2xs">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-emerald-500 text-white cyberpunk:text-slate-950 shadow-2xs">
               <UserCheck className="h-4 w-4" aria-hidden="true" />
             </div>
             <div>

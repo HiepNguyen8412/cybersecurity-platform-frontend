@@ -1,4 +1,4 @@
-﻿import { TrendingUp, BookOpen, FlaskConical, Flame, CheckCircle2 } from "lucide-react"
+import { TrendingUp, BookOpen, FlaskConical, Flame, CheckCircle2 } from "lucide-react"
 import { Card, ProgressBar, CountUp } from "../../../components/common"
 
 const iconMap = {
@@ -11,13 +11,13 @@ const iconMap = {
 
 const variantTheme = {
   primary: {
-    iconBg: "bg-blue-50 dark:bg-blue-950/70 cyberpunk:bg-cyan-950/80 text-blue-600 dark:text-blue-400 cyberpunk:text-cyan-400 border border-blue-100 dark:border-blue-800/60 cyberpunk:border-cyan-500/50",
-    textValue: "text-slate-900 dark:text-white cyberpunk:text-cyan-50",
+    iconBg: "bg-indigo-50 dark:bg-indigo-950/70 cyberpunk:bg-emerald-950/80 text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-300 border border-indigo-100 dark:border-indigo-800/60 cyberpunk:border-emerald-500/50",
+    textValue: "text-slate-900 dark:text-white cyberpunk:text-white",
     progressVariant: "primary",
   },
   indigo: {
-    iconBg: "bg-indigo-50 dark:bg-indigo-950/70 cyberpunk:bg-cyan-950/80 text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-300 border border-indigo-100 dark:border-indigo-800/60 cyberpunk:border-cyan-500/50",
-    textValue: "text-slate-900 dark:text-white cyberpunk:text-cyan-50",
+    iconBg: "bg-indigo-50 dark:bg-indigo-950/70 cyberpunk:bg-emerald-950/80 text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-300 border border-indigo-100 dark:border-indigo-800/60 cyberpunk:border-emerald-500/50",
+    textValue: "text-slate-900 dark:text-white cyberpunk:text-white",
     progressVariant: "indigo",
   },
   success: {

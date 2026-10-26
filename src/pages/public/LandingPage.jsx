@@ -746,32 +746,32 @@ export function LandingPage() {
             {/* Left Column: Mission Briefing & Action Dispatch */}
             <div className="lg:col-span-6 space-y-6">
               {/* Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-black tracking-tight text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-[1.08]">
+              <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-black tracking-tight text-slate-900 dark:text-white cyberpunk:text-white leading-[1.08]">
                 Offensive Mastery. <br />
-                <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 dark:from-cyan-300 dark:via-blue-400 dark:to-indigo-300 cyberpunk:from-[#38bdf8] cyberpunk:via-[#22d3ee] cyberpunk:to-[#34d399] bg-clip-text text-transparent drop-shadow-xs">
+                <span className="bg-gradient-to-r from-indigo-600 via-blue-700 to-indigo-800 dark:from-white dark:via-indigo-200 dark:to-indigo-400 cyberpunk:from-emerald-300 cyberpunk:via-emerald-400 cyberpunk:to-teal-300 bg-clip-text text-transparent drop-shadow-xs">
                   Defensive Precision.
                 </span> <br />
                 Real Attack Forensics.
               </h1>
 
               {/* Subtitle */}
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 cyberpunk:text-slate-300 leading-relaxed max-w-xl">
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 cyberpunk:text-emerald-100/90 leading-relaxed max-w-xl">
                 Tackle realistic cloud and network security challenges. Reverse-engineer authentic vulnerabilities, implement hardened defenses, and accelerate your security career.
               </p>
 
               {/* YewSafe-Inspired Quick Target IP/Domain Scanner */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#0a0c10]/95 border border-slate-800 hover:border-cyan-500/40 shadow-xl shadow-black/40 backdrop-blur-md relative overflow-hidden transition-all">
+              <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#12141c] cyberpunk:bg-[#062217] border border-slate-200 dark:border-white/10 cyberpunk:border-emerald-500/40 shadow-xl shadow-slate-200/50 dark:shadow-black/60 cyberpunk:shadow-emerald-950/40 backdrop-blur-md relative overflow-hidden transition-all">
                 {/* Laser Accent Top Glow */}
-                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent" />
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 dark:via-indigo-400/80 cyberpunk:via-emerald-400/90 to-transparent" />
 
                 <div className="flex items-center justify-between mb-2.5">
                   <div className="flex items-center gap-2">
-                    <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
-                    <span className="text-xs font-mono-tech font-bold text-cyan-300 uppercase tracking-wide">
+                    <span className="flex h-2 w-2 rounded-full bg-indigo-600 dark:bg-indigo-400 cyberpunk:bg-emerald-400 animate-ping" />
+                    <span className="text-xs font-mono-tech font-bold text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400 uppercase tracking-wide">
                       TRA CỨU & QUÉT LỖ HỔNG MỤC TIÊU NHANH
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono-tech text-slate-400 hidden sm:inline-block">
+                  <span className="text-[10px] font-mono-tech text-slate-400 dark:text-slate-500 cyberpunk:text-emerald-600 hidden sm:inline-block">
                     LIVE TELEMETRY HUD
                   </span>
                 </div>
@@ -786,29 +786,29 @@ export function LandingPage() {
                 >
                   <div className="relative flex-1">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                      <Crosshair className="h-4 w-4 text-cyan-400" />
+                      <Crosshair className="h-4 w-4 text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400" />
                     </div>
                     <input
                       type="text"
                       value={scanTargetInput}
                       onChange={(e) => setScanTargetInput(e.target.value)}
                       placeholder="Nhập IP, Hostname mục tiêu (vd: 10.10.14.89, corp.internal)..."
-                      className="w-full pl-9 pr-3 py-2.5 bg-[#0e121a] border border-slate-700/80 rounded-xl text-xs sm:text-sm font-mono-tech text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition-all"
+                      className="w-full pl-9 pr-3 py-2.5 bg-slate-50 dark:bg-[#090a0f] cyberpunk:bg-[#03170e] border border-slate-300 dark:border-white/10 cyberpunk:border-emerald-500/30 rounded-xl text-xs sm:text-sm font-mono-tech text-slate-900 dark:text-white cyberpunk:text-emerald-100 placeholder-slate-400 dark:placeholder-slate-500 cyberpunk:placeholder-emerald-700/80 focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 cyberpunk:focus:border-emerald-400 transition-all"
                     />
                   </div>
                   <button
                     type="submit"
                     disabled={isScanningTarget}
-                    className="btn-cyber-interactive inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-mono-tech font-bold text-xs bg-cyan-400 hover:bg-cyan-300 text-slate-950 transition-all shrink-0 cursor-pointer disabled:opacity-50 shadow-md shadow-cyan-400/20"
+                    className="btn-cyber-interactive inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-mono-tech font-bold text-xs bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-indigo-600 dark:hover:bg-indigo-500 dark:text-white cyberpunk:bg-[#00e599] cyberpunk:hover:bg-[#00ffaa] cyberpunk:text-slate-950 transition-all shrink-0 cursor-pointer disabled:opacity-50 shadow-md shadow-indigo-600/20 dark:shadow-indigo-950/40 cyberpunk:shadow-emerald-500/25"
                   >
                     {isScanningTarget ? (
                       <>
-                        <RotateCw className="h-3.5 w-3.5 animate-spin text-slate-950" />
+                        <RotateCw className="h-3.5 w-3.5 animate-spin" />
                         <span>ĐANG QUÉT...</span>
                       </>
                     ) : (
                       <>
-                        <Zap className="h-3.5 w-3.5 fill-slate-950" />
+                        <Zap className="h-3.5 w-3.5 fill-current" />
                         <span>QUÉT MỤC TIÊU</span>
                       </>
                     )}
@@ -817,7 +817,7 @@ export function LandingPage() {
 
                 {/* Quick Target Chips */}
                 <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
-                  <span className="text-[10px] font-mono-tech text-slate-400 font-semibold uppercase">Mẫu thử nhanh:</span>
+                  <span className="text-[10px] font-mono-tech text-slate-500 dark:text-slate-400 cyberpunk:text-emerald-500 font-semibold uppercase">Mẫu thử nhanh:</span>
                   {[
                     { label: "10.10.14.89 [SQLi]", val: "10.10.14.89" },
                     { label: "192.168.1.100 [JWT]", val: "192.168.1.100" },
@@ -830,7 +830,7 @@ export function LandingPage() {
                         setScanTargetInput(chip.val)
                         handleRunTargetScan(chip.val)
                       }}
-                      className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-800/80 hover:bg-cyan-950/60 text-slate-300 hover:text-cyan-300 border border-slate-700/60 hover:border-cyan-400/40 transition-colors cursor-pointer"
+                      className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700/80 cyberpunk:bg-emerald-950/50 cyberpunk:hover:bg-emerald-900/50 text-slate-700 dark:text-slate-300 cyberpunk:text-emerald-300 border border-slate-300/80 dark:border-slate-700/60 cyberpunk:border-emerald-500/40 transition-colors cursor-pointer"
                     >
                       {chip.label}
                     </button>
@@ -839,30 +839,30 @@ export function LandingPage() {
 
                 {/* Live Scan Diagnostic Report Box */}
                 {targetScanReport && (
-                  <div className="mt-3.5 pt-3.5 border-t border-slate-800 space-y-2.5 text-xs animate-in fade-in slide-in-from-top-1 duration-200">
+                  <div className="mt-3.5 pt-3.5 border-t border-slate-200 dark:border-slate-800 cyberpunk:border-emerald-500/30 space-y-2.5 text-xs animate-in fade-in slide-in-from-top-1 duration-200">
                     <div className="flex items-center justify-between flex-wrap gap-1">
                       <div className="flex items-center gap-2">
                         <span className="h-2 w-2 rounded-full bg-red-500 animate-ping" />
-                        <span className="font-mono-tech font-bold text-red-400">
+                        <span className="font-mono-tech font-bold text-red-500 dark:text-red-400">
                           {targetScanReport.vuln}
                         </span>
                       </div>
-                      <span className="font-mono-tech font-bold px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/40 text-[10px]">
+                      <span className="font-mono-tech font-bold px-1.5 py-0.5 rounded bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/30 text-[10px]">
                         CVSS: {targetScanReport.severity}
                       </span>
                     </div>
 
-                    <p className="text-[11px] text-slate-300 leading-relaxed font-sans">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300 cyberpunk:text-emerald-100/80 leading-relaxed font-sans">
                       {targetScanReport.cveDesc}
                     </p>
 
                     {/* Ports Matrix */}
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono-tech text-[10px]">
                       {targetScanReport.ports.map((p, i) => (
-                        <div key={i} className="p-1.5 rounded bg-slate-900/90 border border-slate-800 flex flex-col">
-                          <span className="font-bold text-slate-200">{p.port}</span>
-                          <span className="text-slate-400 truncate">{p.service}</span>
-                          <span className={`text-[9px] font-bold ${p.risk === 'CRITICAL' ? 'text-red-400' : p.risk === 'HIGH' ? 'text-amber-400' : 'text-emerald-400'}`}>
+                        <div key={i} className="p-1.5 rounded bg-slate-50 dark:bg-slate-900/90 cyberpunk:bg-[#03170e] border border-slate-200 dark:border-slate-800 cyberpunk:border-emerald-500/30 flex flex-col">
+                          <span className="font-bold text-slate-800 dark:text-slate-200 cyberpunk:text-emerald-200">{p.port}</span>
+                          <span className="text-slate-500 dark:text-slate-400 truncate">{p.service}</span>
+                          <span className={`text-[9px] font-bold ${p.risk === 'CRITICAL' ? 'text-red-500 dark:text-red-400' : p.risk === 'HIGH' ? 'text-amber-500 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                             {p.state} • {p.risk}
                           </span>
                         </div>
@@ -871,12 +871,12 @@ export function LandingPage() {
 
                     {/* Direct Action Link */}
                     <div className="flex items-center justify-between pt-1">
-                      <span className="text-[10px] text-slate-400 font-mono-tech">
-                        🛡 Khắc phục: <span className="text-slate-200">{targetScanReport.mitigation}</span>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono-tech">
+                        🛡 Khắc phục: <span className="text-slate-700 dark:text-slate-200 cyberpunk:text-emerald-200">{targetScanReport.mitigation}</span>
                       </span>
                       <Link
                         to="/labs"
-                        className="inline-flex items-center gap-1 text-[11px] font-mono-tech font-bold text-cyan-400 hover:text-cyan-300 transition-colors whitespace-nowrap ml-2"
+                        className="inline-flex items-center gap-1 text-[11px] font-mono-tech font-bold text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400 hover:underline transition-colors whitespace-nowrap ml-2"
                       >
                         <span>Khởi động Lab này</span>
                         <ArrowRight className="h-3 w-3" />
@@ -888,11 +888,11 @@ export function LandingPage() {
 
               {/* Interactive Tool Chips (Clickable Quick Prompts) */}
               <div className="flex flex-wrap items-center gap-2 pt-1">
-                <span className="text-xs font-mono-tech text-slate-400 font-bold uppercase">Công Cụ Diễn Tập:</span>
+                <span className="text-xs font-mono-tech text-slate-500 dark:text-slate-400 cyberpunk:text-emerald-500 font-bold uppercase">Công Cụ Diễn Tập:</span>
                 {["Burp Suite", "Wireshark", "SQLMap", "Suricata", "Ghidra"].map((tool) => (
                   <span
                     key={tool}
-                    className="text-[11px] font-mono-tech font-semibold px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-300 shadow-2xs hover:border-blue-400 dark:hover:border-cyan-400 hover:text-blue-600 dark:hover:text-cyan-300 transition-colors select-none"
+                    className="text-[11px] font-mono-tech font-semibold px-2 py-0.5 rounded-md bg-white dark:bg-[#12141c] cyberpunk:bg-[#062217] border border-slate-200 dark:border-white/10 cyberpunk:border-emerald-500/40 text-slate-700 dark:text-slate-200 cyberpunk:text-emerald-300 shadow-2xs hover:border-indigo-400 dark:hover:border-indigo-500 cyberpunk:hover:border-emerald-400 hover:text-indigo-600 dark:hover:text-indigo-400 cyberpunk:hover:text-emerald-300 transition-colors select-none"
                   >
                     {tool}
                   </span>
@@ -903,39 +903,39 @@ export function LandingPage() {
               <div className="flex flex-wrap items-center gap-3.5 pt-2">
                 <Link
                   to={isAuthenticated ? "/dashboard" : "/register"}
-                  className="cyber-btn-primary btn-cyber-interactive inline-flex items-center justify-center font-bold rounded-xl px-6 py-3.5 text-sm gap-2.5 cursor-pointer group shadow-md shadow-blue-500/15"
+                  className="cyber-btn-primary btn-cyber-interactive inline-flex items-center justify-center font-bold rounded-xl px-6 py-3.5 text-sm gap-2.5 cursor-pointer group shadow-md"
                 >
-                  <Play className="h-4 w-4 fill-white group-hover:scale-110 transition-transform" />
+                  <Play className="h-4 w-4 fill-current group-hover:scale-110 transition-transform" />
                   <span>{isAuthenticated ? "Vào Bảng Điều Khiển Tác Chiến" : "Khởi Động Sandbox Miễn Phí"}</span>
                 </Link>
                 <Link
                   to="/labs"
-                  className="btn-cyber-interactive inline-flex items-center justify-center gap-2 font-semibold rounded-xl px-5 py-3.5 text-sm bg-white dark:bg-slate-900 cyberpunk:bg-[#071329] text-slate-800 dark:text-slate-100 cyberpunk:text-cyan-300 border border-slate-200 dark:border-slate-800 cyberpunk:border-cyan-500/40 hover:border-blue-400 dark:hover:border-cyan-400 hover:text-blue-600 dark:hover:text-cyan-400 hover:bg-blue-50/50 dark:hover:bg-slate-800 shadow-2xs transition-all cursor-pointer"
+                  className="btn-cyber-interactive inline-flex items-center justify-center gap-2 font-semibold rounded-xl px-5 py-3.5 text-sm bg-white dark:bg-[#12141c] cyberpunk:bg-[#062217] text-slate-800 dark:text-slate-100 cyberpunk:text-emerald-300 border border-slate-200 dark:border-white/10 cyberpunk:border-emerald-500/40 hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-300 cyberpunk:hover:border-emerald-400 cyberpunk:hover:text-emerald-200 shadow-2xs transition-all cursor-pointer"
                 >
-                  <FlaskConical className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
+                  <FlaskConical className="h-4 w-4 text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400" />
                   <span>Khám Phá 120+ Phòng Lab</span>
                 </Link>
               </div>
 
               {/* Telemetry Counter Strip */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 dark:border-slate-800/80 cyberpunk:border-slate-800/80">
+              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200 dark:border-white/10 cyberpunk:border-emerald-500/30">
                 <div className="space-y-0.5">
-                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white cyberpunk:text-cyan-50">
+                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white cyberpunk:text-white">
                     <CountUp end={2400} suffix="+" />
                   </div>
-                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Chuyên Viên Tác Chiến</div>
+                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-emerald-300/80">Chuyên Viên Tác Chiến</div>
                 </div>
                 <div className="space-y-0.5">
-                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-cyan-400 cyberpunk:text-cyan-400">
+                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400">
                     <CountUp end={120} suffix="+" />
                   </div>
-                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Phòng Lab Thực Địa</div>
+                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-emerald-300/80">Phòng Lab Thực Địa</div>
                 </div>
                 <div className="space-y-0.5">
-                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">
+                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 cyberpunk:text-emerald-400">
                     <CountUp end={100} suffix="%" />
                   </div>
-                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400">MITRE ATT&CK</div>
+                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-emerald-300/80">MITRE ATT&CK</div>
                 </div>
               </div>
             </div>
@@ -943,10 +943,9 @@ export function LandingPage() {
             {/* Right Column: Interactive Live Security Console */}
             <div className="lg:col-span-6 flex justify-center">
               {/* Console Chassis */}
-              <div className="w-full max-w-xl cyber-terminal rounded-2xl p-4 sm:p-5 text-slate-100 shadow-2xl relative border border-slate-800">
+              <div className="w-full max-w-xl cyber-terminal rounded-2xl p-4 sm:p-5 text-slate-100 shadow-2xl relative">
                 {/* Window Frame Bar */}
-                {/* Window Frame Bar */}
-                <div className="flex items-center justify-between pb-3.5 border-b border-slate-800 gap-2">
+                <div className="flex items-center justify-between pb-3.5 border-b border-slate-800 cyberpunk:border-emerald-500/30 gap-2">
                   <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                     <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-rose-500/90 inline-block" />
                     <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-amber-500/90 inline-block" />
@@ -961,7 +960,7 @@ export function LandingPage() {
 
                   {/* Clean Tab Selector + Replay Button */}
                   <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                    <div className="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+                    <div className="flex items-center bg-slate-900 cyberpunk:bg-[#03170e] p-0.5 rounded-lg border border-slate-800 cyberpunk:border-emerald-500/30">
                       {[
                         { key: "cli", label: "CLI" },
                         { key: "vector", label: "Vector" },
@@ -973,8 +972,8 @@ export function LandingPage() {
                           onClick={() => handleTabChange(tab.key)}
                           className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded text-[11px] sm:text-xs font-mono-tech transition-all cursor-pointer ${
                             activeConsoleTab === tab.key
-                              ? "bg-blue-600 text-white font-bold shadow-2xs"
-                              : "text-slate-400 hover:text-slate-200"
+                              ? "bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-emerald-500 cyberpunk:text-slate-950 text-white font-bold shadow-2xs"
+                              : "text-slate-400 hover:text-slate-200 cyberpunk:text-emerald-300"
                           }`}
                         >
                           {tab.label}

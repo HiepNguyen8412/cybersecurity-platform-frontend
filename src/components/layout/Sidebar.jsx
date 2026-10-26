@@ -91,20 +91,20 @@ export function Sidebar() {
           title="CyberPath - Trang chủ"
         >
           {/* Custom Sculpted Shield Vessel */}
-          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white shadow-md shadow-blue-600/30 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
-            <RiShieldFlashFill className="h-5.5 w-5.5 text-white" />
+          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-emerald-500 text-white cyberpunk:text-slate-950 shadow-md shadow-indigo-600/30 dark:shadow-indigo-950/50 cyberpunk:shadow-emerald-500/30 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
+            <RiShieldFlashFill className="h-5.5 w-5.5 text-white cyberpunk:text-slate-950" />
             <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 ring-2 ring-white dark:ring-[#0c1019]" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 ring-2 ring-white dark:ring-[#090a0f]" />
             </span>
           </div>
 
           {!isCollapsed && (
             <div className="flex flex-col">
-              <span className="text-sm font-extrabold tracking-tight text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
-                Cyber<span className="text-blue-600 dark:text-cyan-400">Path</span>
+              <span className="text-sm font-extrabold tracking-tight text-slate-900 dark:text-white cyberpunk:text-white leading-tight">
+                Cyber<span className="text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400">Path</span>
               </span>
-              <span className="text-[10px] font-mono-tech tracking-widest text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400/90 uppercase leading-tight mt-0.5">
+              <span className="text-[10px] font-mono-tech tracking-widest text-slate-400 dark:text-slate-400 cyberpunk:text-emerald-400/90 uppercase leading-tight mt-0.5">
                 SEC-OPS RANGE
               </span>
             </div>
@@ -186,8 +186,8 @@ export function Sidebar() {
                             ${isCollapsed ? "w-9 h-9" : "w-7.5 h-7.5"}
                             ${
                               isActive
-                                ? "bg-gradient-to-br from-blue-600/25 via-indigo-600/20 to-cyan-500/15 border border-blue-400/40 text-blue-600 dark:text-cyan-300 shadow-[0_0_10px_rgba(59,130,246,0.25)] ring-1 ring-blue-500/20"
-                                : "bg-slate-100/80 dark:bg-white/[0.04] cyberpunk:bg-cyan-950/30 border border-slate-200/60 dark:border-white/5 cyberpunk:border-cyan-500/20 text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 group-hover:text-blue-600 dark:group-hover:text-cyan-200 group-hover:bg-blue-50/70 dark:group-hover:bg-white/[0.08] group-hover:border-blue-200/70 dark:group-hover:border-white/10"
+                                ? "bg-indigo-50 dark:bg-indigo-950/60 cyberpunk:bg-emerald-950/60 border border-indigo-200 dark:border-indigo-700/50 cyberpunk:border-emerald-500/40 text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-300 shadow-2xs"
+                                : "bg-slate-100/80 dark:bg-white/[0.04] cyberpunk:bg-emerald-950/20 border border-slate-200/60 dark:border-white/5 cyberpunk:border-emerald-500/20 text-slate-500 dark:text-slate-400 cyberpunk:text-emerald-400/80 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 group-hover:bg-indigo-50/70 dark:group-hover:bg-white/[0.08] group-hover:border-indigo-200/70 dark:group-hover:border-white/10"
                             }
                           `.trim()}
                         >

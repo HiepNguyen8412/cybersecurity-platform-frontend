@@ -31,7 +31,7 @@ export function NotFound() {
 
       {/* Ambient Radial Lights */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[360px] bg-gradient-to-r from-blue-600/15 via-indigo-600/10 to-cyan-500/15 blur-3xl pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[360px] bg-gradient-to-r from-indigo-600/15 via-indigo-600/10 to-blue-500/15 blur-3xl pointer-events-none"
         aria-hidden="true"
       />
 
@@ -115,7 +115,7 @@ export function NotFound() {
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
           <Link
             to="/"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold text-xs shadow-md shadow-blue-600/30 ring-1 ring-white/20 transition-all hover:scale-105 active:scale-95"
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-md shadow-indigo-600/30 ring-1 ring-white/20 transition-all hover:scale-105 active:scale-95"
           >
             <RiHome4Line className="w-4 h-4" />
             <span>Về Trang Chủ</span>
