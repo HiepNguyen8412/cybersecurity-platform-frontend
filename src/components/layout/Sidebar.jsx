@@ -1,4 +1,4 @@
-﻿import { NavLink, Link } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
 import {
   LayoutDashboard,
   BookOpen,
@@ -141,6 +141,7 @@ export function Sidebar() {
                   <NavLink
                     key={item.path}
                     to={item.path}
+                    end={item.path === "/admin" || item.path === "/dashboard"}
                     onClick={closeMobileMenu}
                     title={item.label}
                     aria-label={item.label}

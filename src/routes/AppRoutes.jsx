@@ -1,34 +1,37 @@
 import { lazy, Suspense } from "react"
 import { Routes, Route, Navigate } from "react-router-dom"
-import PublicLayout from "../layouts/PublicLayout/PublicLayout"
-import AppLayout from "../layouts/AppLayout/AppLayout"
 import ProtectedRoute from "./ProtectedRoute"
 import PublicOnlyRoute from "./PublicOnlyRoute"
 import PageLoadingFallback from "../components/common/PageLoadingFallback"
 import ErrorBoundary from "../components/common/ErrorBoundary"
 
-// Lazy-Loaded Route Components for high-performance code splitting
+// Lazy-Loaded Layouts for optimal bundle code-splitting
+const PublicLayout = lazy(() => import("../layouts/PublicLayout/PublicLayout"))
+const AppLayout = lazy(() => import("../layouts/AppLayout/AppLayout"))
+
+// Lazy-Loaded Public Exploration Pages
 const LandingPage = lazy(() => import("../pages/public/LandingPage"))
 const Learning = lazy(() => import("../pages/learning/Learning"))
 const LearningPaths = lazy(() => import("../pages/learning/LearningPaths"))
 const Labs = lazy(() => import("../pages/labs/Labs"))
 const Pricing = lazy(() => import("../pages/public/Pricing"))
+const NotFound = lazy(() => import("../pages/public/NotFound"))
 
-// Auth Pages (PublicOnly)
+// Lazy-Loaded Auth Pages (PublicOnly)
 const Login = lazy(() => import("../pages/auth/Login"))
 const Register = lazy(() => import("../pages/auth/Register"))
 const ForgotPassword = lazy(() => import("../pages/auth/ForgotPassword"))
 const ResetPassword = lazy(() => import("../pages/auth/ResetPassword"))
 const VerifyEmail = lazy(() => import("../pages/auth/VerifyEmail"))
 
-// Platform Authenticated Pages (Protected)
+// Lazy-Loaded Platform Authenticated Pages (Protected)
 const Dashboard = lazy(() => import("../pages/dashboard/Dashboard"))
 const Progress = lazy(() => import("../pages/progress/Progress"))
 const Achievements = lazy(() => import("../pages/progress/Achievements"))
 const Profile = lazy(() => import("../pages/profile/Profile"))
 const Settings = lazy(() => import("../pages/settings/Settings"))
 
-// Admin SOC Control Center Pages
+// Lazy-Loaded Admin SOC Control Center Pages
 const AdminDashboard = lazy(() => import("../pages/admin/AdminDashboard"))
 const AdminUsers = lazy(() => import("../pages/admin/AdminUsers"))
 const AdminLabs = lazy(() => import("../pages/admin/AdminLabs"))
@@ -53,6 +56,8 @@ function AppRoutes() {
             <Route path="/paths" element={<Navigate to="/learning-paths" replace />} />
             <Route path="/labs" element={<Labs />} />
             <Route path="/pricing" element={<Pricing />} />
+            {/* Catch-all 404 Route within PublicLayout */}
+            <Route path="*" element={<NotFound />} />
           </Route>
 
           {/* ====================================================================
@@ -95,11 +100,6 @@ function AppRoutes() {
           <Route path="/threats" element={<Navigate to="/dashboard" replace />} />
           <Route path="/vulnerabilities" element={<Navigate to="/dashboard" replace />} />
           <Route path="/incidents" element={<Navigate to="/dashboard" replace />} />
-
-          {/* ====================================================================
-              5. Fallback 404
-             ==================================================================== */}
-          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
     </ErrorBoundary>

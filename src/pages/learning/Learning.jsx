@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, lazy, Suspense } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import {
   Search,
@@ -20,8 +20,13 @@ import {
   FileText,
 } from "lucide-react"
 import { Badge, Button, CountUp } from "../../components/common"
-import { CourseSyllabusDrawer } from "./components/CourseSyllabusDrawer"
-import { InteractiveLessonModal } from "./components/InteractiveLessonModal"
+
+const CourseSyllabusDrawer = lazy(() =>
+  import("./components/CourseSyllabusDrawer").then((m) => ({ default: m.CourseSyllabusDrawer }))
+)
+const InteractiveLessonModal = lazy(() =>
+  import("./components/InteractiveLessonModal").then((m) => ({ default: m.InteractiveLessonModal }))
+)
 import useLearningStore from "../../stores/useLearningStore"
 import useNotificationStore from "../../stores/useNotificationStore"
 
@@ -791,15 +796,15 @@ export function Learning() {
         </div>
       </div>
 
-      {/* Slide-over Course Syllabus Drawer */}
-      <CourseSyllabusDrawer
-        course={drawerCourse}
-        isOpen={!!drawerCourse}
-        onClose={() => setDrawerCourse(null)}
-      />
-
-      {/* Flagship Interactive Mission Lesson Modal */}
-      <InteractiveLessonModal />
+      {/* Lazy-Loaded Modals */}
+      <Suspense fallback={null}>
+        <CourseSyllabusDrawer
+          course={drawerCourse}
+          isOpen={!!drawerCourse}
+          onClose={() => setDrawerCourse(null)}
+        />
+        <InteractiveLessonModal />
+      </Suspense>
     </div>
   )
 }

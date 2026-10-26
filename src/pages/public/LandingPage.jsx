@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react"
 import { Link } from "react-router-dom"
 import {
   FlaskConical,
@@ -22,8 +22,9 @@ import {
 } from "lucide-react"
 import useAuth from "../../hooks/useAuth"
 import { CountUp } from "../../components/common"
-import CyberNetworkCanvas from "../../components/effects/CyberNetworkCanvas"
-import CyberCommandTheater from "../../components/effects/CyberCommandTheater"
+
+const CyberNetworkCanvas = lazy(() => import("../../components/effects/CyberNetworkCanvas"))
+const CyberCommandTheater = lazy(() => import("../../components/effects/CyberCommandTheater"))
 
 const LIVE_INTEL_FEEDS = [
   {
@@ -720,7 +721,9 @@ export function LandingPage() {
             Adapts automatically to Light / Dark / Cyberpunk themes.
            ==================================================================== */}
         <div className="absolute inset-0 overflow-hidden z-0">
-          <CyberNetworkCanvas className="absolute inset-0" />
+          <Suspense fallback={null}>
+            <CyberNetworkCanvas className="absolute inset-0" />
+          </Suspense>
 
           {/* Bottom Edge Blend — dissolves canvas into the next section */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--bg-canvas)] pointer-events-none" />
@@ -1077,7 +1080,9 @@ export function LandingPage() {
           CYBER COMMAND THEATER (Cinematic Video & Interactive Operations HUD)
           Inspired by NCS Group National SOC & Cyber Defense Command Center
          ==================================================================== */}
-      <CyberCommandTheater />
+      <Suspense fallback={null}>
+        <CyberCommandTheater />
+      </Suspense>
 
       {/* ====================================================================
           YEWSAFE-INSPIRED PROMO & STRATEGIC CAPABILITY RIBBON

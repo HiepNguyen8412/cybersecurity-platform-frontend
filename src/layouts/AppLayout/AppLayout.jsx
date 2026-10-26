@@ -1,8 +1,15 @@
+import { lazy, Suspense } from "react"
 import { Outlet } from "react-router-dom"
 import Navbar from "../../components/layout/Navbar"
 import Sidebar from "../../components/layout/Sidebar"
 import useLayout from "../../hooks/useLayout"
-import { LabTerminalModal } from "../../pages/labs/components/LabTerminalModal"
+
+// Lazy-loaded modal to avoid loading sandbox terminal dependencies until needed
+const LabTerminalModal = lazy(() =>
+  import("../../pages/labs/components/LabTerminalModal").then((module) => ({
+    default: module.LabTerminalModal,
+  }))
+)
 
 /**
  * Persistent AppLayout for the authenticated cybersecurity learning platform.
@@ -45,7 +52,9 @@ export function AppLayout({ children, maxWidth = "max-w-[1240px]", className = "
       </main>
 
       {/* 4. Global Interactive Cyber Range Sandbox Terminal Modal */}
-      <LabTerminalModal />
+      <Suspense fallback={null}>
+        <LabTerminalModal />
+      </Suspense>
     </div>
   )
 }

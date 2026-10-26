@@ -1,15 +1,33 @@
 import { Component } from "react"
-import { RefreshCw, Home, ShieldAlert } from "lucide-react"
+import {
+  RefreshCw,
+  Home,
+  ArrowLeft,
+  ShieldCheck,
+  ChevronDown,
+  ChevronUp,
+  Copy,
+  Check,
+  LifeBuoy,
+} from "lucide-react"
 
 /**
  * ErrorBoundary
- * Catches JavaScript errors anywhere in their child component tree,
- * logs those errors, and displays a graceful cyber-themed fallback UI.
+ * Catches JavaScript errors anywhere in the component tree,
+ * logs them safely, and displays a friendly, reassuring, user-focused UI
+ * while keeping technical debugging details neatly tucked away for developers.
  */
 export class ErrorBoundary extends Component {
   constructor(props) {
     super(props)
-    this.state = { hasError: false, error: null, errorInfo: null }
+    this.state = {
+      hasError: false,
+      error: null,
+      errorInfo: null,
+      showDetails: false,
+      copied: false,
+      incidentId: "SEC-OPS-" + Math.random().toString(36).substring(2, 8).toUpperCase(),
+    }
   }
 
   static getDerivedStateFromError(error) {
@@ -17,8 +35,9 @@ export class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    this.setState({ errorInfo })
-    console.error("ErrorBoundary caught an unhandled error:", error, errorInfo)
+    const incidentId = "SEC-OPS-" + Math.random().toString(36).substring(2, 8).toUpperCase()
+    this.setState({ errorInfo, incidentId })
+    console.error(`[ErrorBoundary] Sự cố ${incidentId}:`, error, errorInfo)
   }
 
   handleReload = () => {
@@ -29,48 +48,172 @@ export class ErrorBoundary extends Component {
     window.location.href = "/"
   }
 
+  handleGoBack = () => {
+    if (window.history.length > 1) {
+      window.history.back()
+    } else {
+      window.location.href = "/"
+    }
+  }
+
+  toggleDetails = () => {
+    this.setState((prev) => ({ showDetails: !prev.showDetails }))
+  }
+
+  copyDetails = () => {
+    const text = `[Mã Sự Cố: ${this.state.incidentId}]\nThời gian: ${new Date().toISOString()}\nLỗi: ${this.state.error?.toString()}\n\nStack:\n${this.state.errorInfo?.componentStack || "Không có stack"}`
+    if (navigator?.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        this.setState({ copied: true })
+        setTimeout(() => this.setState({ copied: false }), 2500)
+      })
+    }
+  }
+
   render() {
     if (this.state.hasError) {
+      const { incidentId, showDetails, copied, error, errorInfo } = this.state
+
       return (
-        <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 text-white font-mono">
-          <div className="max-w-lg w-full p-8 rounded-3xl border border-rose-500/40 bg-slate-900/90 shadow-2xl shadow-rose-950/40 text-center space-y-6 animate-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center mx-auto text-rose-400">
-              <ShieldAlert className="w-8 h-8 animate-pulse" />
+        <div className="min-h-screen bg-[#070b14] flex items-center justify-center p-4 sm:p-6 text-white font-sans selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-hidden">
+          {/* Subtle Background Cyber Grid */}
+          <div
+            className="fixed inset-0 pointer-events-none opacity-20"
+            style={{
+              backgroundImage: "radial-gradient(rgba(56, 189, 248, 0.15) 1.5px, transparent 1.5px)",
+              backgroundSize: "28px 28px",
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Ambient Glow */}
+          <div
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-gradient-to-r from-blue-600/10 via-cyan-500/10 to-transparent blur-3xl pointer-events-none"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 max-w-lg w-full bg-slate-900/95 border border-slate-800/90 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-black/80 text-center space-y-6 backdrop-blur-md animate-in fade-in zoom-in-95 duration-200">
+            {/* Friendly Shield Icon Header */}
+            <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/15 to-cyan-500/15 border border-cyan-500/30 flex items-center justify-center mx-auto text-cyan-400 shadow-inner">
+              <ShieldCheck className="w-8 h-8" />
+              <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-slate-900 animate-pulse" />
             </div>
 
-            <div className="space-y-2">
-              <span className="text-[10px] uppercase font-bold tracking-widest text-rose-400 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20">
-                NGOẠI LỆ HỆ THỐNG NGHIÊM TRỌNG
-              </span>
-              <h1 className="text-xl font-bold text-white tracking-wide mt-2">
-                Sự Cố Gián Đoạn Ứng Dụng
+            {/* Main Friendly Content */}
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[11px] font-mono font-semibold tracking-wider uppercase">
+                <LifeBuoy className="w-3.5 h-3.5" />
+                <span>Trợ Giúp Sự Cố</span>
+              </div>
+
+              <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                Rất tiếc, đã có sự cố xảy ra
               </h1>
-              <p className="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
-                Hệ thống bảo vệ đã cách ly tiến trình lỗi để ngăn chặn rò rỉ dữ liệu phiên làm việc.
+
+              <p className="text-sm text-slate-300 leading-relaxed max-w-md mx-auto">
+                Trang này tạm thời không thể hiển thị nội dung. Dữ liệu tài khoản và tiến trình học tập của bạn hoàn toàn an toàn và đã được lưu trữ trên hệ thống.
               </p>
+
+              {/* Incident Code Badge */}
+              <div className="pt-1 flex items-center justify-center gap-2">
+                <span className="text-xs text-slate-400">Mã tham chiếu sự cố:</span>
+                <span className="inline-block px-2.5 py-0.5 rounded-md bg-slate-800 border border-slate-700 font-mono text-xs font-semibold text-cyan-300 select-all">
+                  #{incidentId}
+                </span>
+              </div>
             </div>
 
-            {/* Error detail */}
-            <div className="p-3.5 rounded-xl bg-black/60 border border-slate-800 text-left text-[11px] text-rose-300 font-mono overflow-x-auto max-h-32">
-              <code>{this.state.error?.toString() || "Unknown Component Crash"}</code>
+            {/* Quick Suggestions Card */}
+            <div className="bg-slate-950/60 rounded-xl p-3.5 border border-slate-800/80 text-left text-xs text-slate-400 space-y-2">
+              <p className="font-semibold text-slate-200 flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                Gợi ý khắc phục nhanh:
+              </p>
+              <ul className="list-disc list-inside space-y-1 text-slate-400 pl-1">
+                <li>Bấm nút <strong>Tải Lại Trang</strong> bên dưới để thử nạp lại phiên làm việc.</li>
+                <li>Quay lại <strong>Trang Chủ</strong> để tiếp tục sử dụng các tính năng khác.</li>
+                <li>Hệ thống đã tự động lưu log sự cố để kỹ thuật viên kiểm tra.</li>
+              </ul>
             </div>
 
-            {/* Actions */}
-            <div className="flex items-center justify-center space-x-3 pt-2">
+            {/* Collapsible Technical Details (Hidden by default, clean for ordinary users) */}
+            <div className="border-t border-slate-800/70 pt-4 text-left">
               <button
+                type="button"
+                onClick={this.toggleDetails}
+                className="w-full flex items-center justify-between text-xs text-slate-400 hover:text-slate-200 transition-colors py-1 cursor-pointer focus:outline-none"
+              >
+                <span className="font-mono">Chi tiết kỹ thuật (dành cho quản trị viên)</span>
+                {showDetails ? (
+                  <ChevronUp className="w-4 h-4 text-slate-400" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 text-slate-400" />
+                )}
+              </button>
+
+              {showDetails && (
+                <div className="mt-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800/90 text-left space-y-2.5 animate-in fade-in duration-150">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono text-amber-400 font-medium">
+                      {error?.name || "Lỗi giao diện"}: {error?.message || "Không xác định"}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={this.copyDetails}
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] text-slate-300 transition-colors cursor-pointer"
+                      title="Sao chép lỗi để gửi hỗ trợ"
+                    >
+                      {copied ? (
+                        <>
+                          <Check className="w-3 h-3 text-emerald-400" />
+                          <span className="text-emerald-400">Đã sao chép</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3" />
+                          <span>Sao chép</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {errorInfo?.componentStack && (
+                    <pre className="text-[10px] font-mono text-slate-400 max-h-36 overflow-y-auto whitespace-pre-wrap leading-tight bg-slate-900/80 p-2 rounded border border-slate-800">
+                      {errorInfo.componentStack.trim()}
+                    </pre>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Primary Action Buttons */}
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <button
+                type="button"
                 onClick={this.handleReload}
-                className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-colors cursor-pointer"
+                className="flex-1 min-w-[130px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-semibold text-xs shadow-md shadow-cyan-900/30 transition-all cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>Tải Lại Trang</span>
               </button>
 
               <button
+                type="button"
                 onClick={this.handleGoHome}
-                className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-950/40 transition-all cursor-pointer"
+                className="flex-1 min-w-[130px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700/80 text-white font-medium text-xs transition-colors cursor-pointer"
               >
                 <Home className="w-3.5 h-3.5" />
                 <span>Về Trang Chủ</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={this.handleGoBack}
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 text-xs transition-colors cursor-pointer"
+                title="Quay lại trang trước"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Quay Lại</span>
               </button>
             </div>
           </div>
