@@ -475,38 +475,38 @@ const THREAT_ORIGINS = [
 const ACTIVE_ENGAGEMENTS = [
   // APAC Engagements (Fast, high-density traffic)
   { id: "eng-1", fromId: "thr_szx", toId: "vnm_han", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 1.15, peakAlt: 0.16, offset: 0.0 },
-  { id: "eng-2", fromId: "thr_can", toId: "vnm_sgn", attackColor: "#ff9100", interceptColor: "#00e676", speed: 1.25, peakAlt: 0.15, offset: 0.19 },
+  { id: "eng-2", fromId: "thr_can", toId: "vnm_sgn", attackColor: "#ff9100", interceptColor: "#00e676", speed: 1.25, peakAlt: 0.15, offset: 0.19, breached: true },
   { id: "eng-3", fromId: "thr_bkk", toId: "vnm_han", attackColor: "#ffea00", interceptColor: "#00f5ff", speed: 1.35, peakAlt: 0.12, offset: 0.42 },
   { id: "eng-4", fromId: "thr_pek", toId: "jpn_tyo", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 1.1, peakAlt: 0.18, offset: 0.65 },
-  { id: "eng-5", fromId: "thr_ctu", toId: "sgp_sin", attackColor: "#d500f9", interceptColor: "#00e676", speed: 1.05, peakAlt: 0.17, offset: 0.88 },
+  { id: "eng-5", fromId: "thr_ctu", toId: "sgp_sin", attackColor: "#d500f9", interceptColor: "#00e676", speed: 1.05, peakAlt: 0.17, offset: 0.88, breached: true },
   { id: "eng-6", fromId: "thr_jkt", toId: "sgp_sin", attackColor: "#ff9100", interceptColor: "#00f5ff", speed: 1.4, peakAlt: 0.11, offset: 0.08 },
   { id: "eng-7", fromId: "thr_mnl", toId: "kor_sel", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.2, peakAlt: 0.19, offset: 0.31 },
   { id: "eng-8", fromId: "thr_vvo", toId: "jpn_tyo", attackColor: "#ff9100", interceptColor: "#00f5ff", speed: 1.3, peakAlt: 0.14, offset: 0.54 },
   { id: "eng-9", fromId: "thr_hgh", toId: "chn_shg", attackColor: "#d500f9", interceptColor: "#00e676", speed: 1.45, peakAlt: 0.1, offset: 0.77 },
-  { id: "eng-10", fromId: "thr_wuh", toId: "sgp_sin", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 1.12, peakAlt: 0.18, offset: 0.23 },
+  { id: "eng-10", fromId: "thr_wuh", toId: "sgp_sin", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 1.12, peakAlt: 0.18, offset: 0.23, breached: true },
   { id: "eng-11", fromId: "thr_del", toId: "ind_mum", attackColor: "#ffea00", interceptColor: "#00e676", speed: 1.3, peakAlt: 0.13, offset: 0.46 },
   { id: "eng-12", fromId: "thr_tpe", toId: "jpn_tyo", attackColor: "#ff9100", interceptColor: "#00f5ff", speed: 1.25, peakAlt: 0.15, offset: 0.69 },
   { id: "eng-13", fromId: "thr_jkt", toId: "aus_syd", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 1.05, peakAlt: 0.22, offset: 0.92 },
 
   // NAM & Trans-Pacific Engagements
   { id: "eng-14", fromId: "thr_szx", toId: "usa_sjc", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 0.9, peakAlt: 0.26, offset: 0.14 },
-  { id: "eng-15", fromId: "thr_pek", toId: "usa_sjc", attackColor: "#ff9100", interceptColor: "#00e676", speed: 0.92, peakAlt: 0.27, offset: 0.37 },
+  { id: "eng-15", fromId: "thr_pek", toId: "usa_sjc", attackColor: "#ff9100", interceptColor: "#00e676", speed: 0.92, peakAlt: 0.27, offset: 0.37, breached: true },
   { id: "eng-16", fromId: "thr_dfw", toId: "usa_nyc", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 1.35, peakAlt: 0.15, offset: 0.6 },
   { id: "eng-17", fromId: "thr_chi", toId: "usa_was", attackColor: "#d500f9", interceptColor: "#00e676", speed: 1.4, peakAlt: 0.13, offset: 0.83 },
   { id: "eng-18", fromId: "thr_lax", toId: "usa_sjc", attackColor: "#ffea00", interceptColor: "#00f5ff", speed: 1.5, peakAlt: 0.11, offset: 0.05 },
-  { id: "eng-19", fromId: "thr_mia", toId: "can_tor", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.2, peakAlt: 0.17, offset: 0.28 },
+  { id: "eng-19", fromId: "thr_mia", toId: "can_tor", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.2, peakAlt: 0.17, offset: 0.28, breached: true },
   { id: "eng-20", fromId: "thr_sea", toId: "usa_sjc", attackColor: "#ff9100", interceptColor: "#00f5ff", speed: 1.45, peakAlt: 0.12, offset: 0.51 },
   { id: "eng-21", fromId: "thr_atl", toId: "usa_was", attackColor: "#d500f9", interceptColor: "#00e676", speed: 1.35, peakAlt: 0.14, offset: 0.74 },
   { id: "eng-22", fromId: "thr_dfw", toId: "mex_mex", attackColor: "#ff9100", interceptColor: "#00f5ff", speed: 1.3, peakAlt: 0.15, offset: 0.97 },
 
   // EUR & Russian Eurasia Engagements
-  { id: "eng-23", fromId: "thr_ovb", toId: "deu_fra", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 0.95, peakAlt: 0.24, offset: 0.11 },
+  { id: "eng-23", fromId: "thr_ovb", toId: "deu_fra", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 0.95, peakAlt: 0.24, offset: 0.11, breached: true },
   { id: "eng-24", fromId: "thr_ovb", toId: "rus_mow", attackColor: "#ff9100", interceptColor: "#00e676", speed: 1.2, peakAlt: 0.18, offset: 0.34 },
   { id: "eng-25", fromId: "thr_kuf", toId: "gbr_lon", attackColor: "#d500f9", interceptColor: "#00f5ff", speed: 1.1, peakAlt: 0.2, offset: 0.57 },
-  { id: "eng-26", fromId: "thr_kaz", toId: "rus_led", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.35, peakAlt: 0.15, offset: 0.8 },
+  { id: "eng-26", fromId: "thr_kaz", toId: "rus_led", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.35, peakAlt: 0.15, offset: 0.8, breached: true },
   { id: "eng-27", fromId: "thr_yek", toId: "rus_mow", attackColor: "#ff9100", interceptColor: "#00f5ff", speed: 1.3, peakAlt: 0.16, offset: 0.02 },
   { id: "eng-28", fromId: "thr_iev", toId: "nld_ams", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.25, peakAlt: 0.16, offset: 0.25 },
-  { id: "eng-29", fromId: "thr_otp", toId: "fra_par", attackColor: "#ffea00", interceptColor: "#00f5ff", speed: 1.2, peakAlt: 0.15, offset: 0.48 },
+  { id: "eng-29", fromId: "thr_otp", toId: "fra_par", attackColor: "#ffea00", interceptColor: "#00f5ff", speed: 1.2, peakAlt: 0.15, offset: 0.48, breached: true },
   { id: "eng-30", fromId: "thr_waw", toId: "che_zrh", attackColor: "#d500f9", interceptColor: "#00e676", speed: 1.3, peakAlt: 0.14, offset: 0.71 },
   { id: "eng-31", fromId: "thr_ber", toId: "deu_fra", attackColor: "#ff9100", interceptColor: "#00f5ff", speed: 1.5, peakAlt: 0.1, offset: 0.94 },
   { id: "eng-32", fromId: "thr_mil", toId: "che_zrh", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.6, peakAlt: 0.09, offset: 0.17 },
@@ -514,24 +514,24 @@ const ACTIVE_ENGAGEMENTS = [
 
   // MEA, LATAM & Global South Engagements
   { id: "eng-34", fromId: "thr_thr", toId: "uae_dxb", attackColor: "#d500f9", interceptColor: "#00f5ff", speed: 1.4, peakAlt: 0.13, offset: 0.62 },
-  { id: "eng-35", fromId: "thr_cai", toId: "isr_tlv", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.5, peakAlt: 0.11, offset: 0.85 },
+  { id: "eng-35", fromId: "thr_cai", toId: "isr_tlv", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.5, peakAlt: 0.11, offset: 0.85, breached: true },
   { id: "eng-36", fromId: "thr_ist", toId: "sau_ruh", attackColor: "#ff9100", interceptColor: "#00f5ff", speed: 1.25, peakAlt: 0.16, offset: 0.07 },
-  { id: "eng-37", fromId: "thr_los", toId: "zaf_jnb", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.05, peakAlt: 0.23, offset: 0.3 },
+  { id: "eng-37", fromId: "thr_los", toId: "zaf_jnb", attackColor: "#ff1744", interceptColor: "#00e676", speed: 1.05, peakAlt: 0.23, offset: 0.3, breached: true },
   { id: "eng-38", fromId: "thr_cas", toId: "fra_par", attackColor: "#ffea00", interceptColor: "#00f5ff", speed: 1.15, peakAlt: 0.19, offset: 0.53 },
   { id: "eng-39", fromId: "thr_rio", toId: "bra_sao", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 1.6, peakAlt: 0.1, offset: 0.76 },
-  { id: "eng-40", fromId: "thr_bog", toId: "arg_bue", attackColor: "#ff9100", interceptColor: "#00e676", speed: 1.08, peakAlt: 0.21, offset: 0.98 },
+  { id: "eng-40", fromId: "thr_bog", toId: "arg_bue", attackColor: "#ff9100", interceptColor: "#00e676", speed: 1.08, peakAlt: 0.21, offset: 0.98, breached: true },
   { id: "eng-41", fromId: "thr_scl", toId: "arg_bue", attackColor: "#d500f9", interceptColor: "#00f5ff", speed: 1.5, peakAlt: 0.12, offset: 0.21 },
-  { id: "eng-42", fromId: "thr_rio", toId: "usa_nyc", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 0.95, peakAlt: 0.25, offset: 0.44 },
+  { id: "eng-42", fromId: "thr_rio", toId: "usa_nyc", attackColor: "#ff1744", interceptColor: "#00f5ff", speed: 0.95, peakAlt: 0.25, offset: 0.44, breached: true },
 ]
 
 // 6 Continental Filter Zones
 const REGIONS = [
-  { id: "all", name: "Toàn Cầu", code: "GLOBAL", count: "320+ PoPs", color: "#38bdf8" },
-  { id: "apac", name: "Châu Á - TBD", code: "APAC", count: "112 PoPs", color: "#06b6d4" },
-  { id: "nam", name: "Bắc Mỹ", code: "NAM", count: "86 PoPs", color: "#38bdf8" },
-  { id: "eur", name: "Châu Âu & Nga", code: "EUR", count: "78 PoPs", color: "#fbbf24" },
-  { id: "mea", name: "Trung Đông", code: "MEA", count: "28 PoPs", color: "#a855f7" },
-  { id: "latam", name: "Mỹ Latinh", code: "LATAM", count: "24 PoPs", color: "#f43f5e" },
+  { id: "all", name: "Toàn Cầu", code: "GLOBAL", count: "320+ PoPs", color: "#38bdf8", latRange: [-90, 90], lonRange: [-180, 180] },
+  { id: "apac", name: "Châu Á - TBD", code: "APAC", count: "112 PoPs", color: "#06b6d4", latRange: [-45, 55], lonRange: [60, 180] },
+  { id: "nam", name: "Bắc Mỹ", code: "NAM", count: "86 PoPs", color: "#38bdf8", latRange: [10, 65], lonRange: [-140, -50] },
+  { id: "eur", name: "Châu Âu & Nga", code: "EUR", count: "78 PoPs", color: "#fbbf24", latRange: [35, 70], lonRange: [-15, 90] },
+  { id: "mea", name: "Trung Đông", code: "MEA", count: "28 PoPs", color: "#a855f7", latRange: [-35, 45], lonRange: [20, 65] },
+  { id: "latam", name: "Mỹ Latinh", code: "LATAM", count: "24 PoPs", color: "#f43f5e", latRange: [-55, 30], lonRange: [-120, -30] },
 ]
 
 // 80 Deep Space Twinkling Stars for 3D Globe
@@ -543,6 +543,18 @@ const STARS = Array.from({ length: 80 }, (_, i) => ({
   offset: i * 0.7,
 }))
 
+// Real-Time Security Incident Stream (Authentic SOC Dispatch)
+const THREAT_EVENTS = [
+  { time: "Vừa xong", type: "BREACH", text: "Botnet Quảng Châu (Trung Quốc) xuyên thủng WAF Hồ Chí Minh (18.2 Gbps HTTP/2 Flood) — Đang kích hoạt Rate Limit dự phòng", badge: "XUYÊN THỦNG", color: "text-red-400", bg: "bg-red-500/10 border-red-500/30 text-red-400" },
+  { time: "3s trước", type: "BLOCKED", text: "Anycast Singapore đánh chặn 145 Gbps UDP Reflection từ Thành Đô — Hấp thụ 100% tại biên mạng", badge: "ĐÁNH CHẶN", color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400" },
+  { time: "7s trước", type: "BREACH", text: "Reflected Cloud Chicago xâm nhập Cụm Máy Chủ Toronto (Zero-Day Spring4Shell) — Đã chuyển sang Sandbox cô lập", badge: "XUYÊN THỦNG", color: "text-red-400", bg: "bg-red-500/10 border-red-500/30 text-red-400" },
+  { time: "11s trước", type: "BLOCKED", text: "Anycast Tokyo vô hiệu hóa 92 Gbps SYN Flood từ Bắc Kinh — 0% ảnh hưởng dịch vụ tài chính", badge: "ĐÁNH CHẶN", color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400" },
+  { time: "15s trước", type: "BREACH", text: "Trojan C2 Rio de Janeiro xuyên thủng Phòng Tuyến New York (Credential Stuffing 450k req/s) — Đã khóa 1,200 dải IP", badge: "XUYÊN THỦNG", color: "text-red-400", bg: "bg-red-500/10 border-red-500/30 text-red-400" },
+  { time: "19s trước", type: "BLOCKED", text: "Frankfurt Scrubbing Hub lọc sạch 110 Gbps NTP Amplification từ Novosibirsk — Tỷ lệ drop 100%", badge: "ĐÁNH CHẶN", color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400" },
+  { time: "24s trước", type: "BREACH", text: "Phishing C2 Lagos xuyên thủng Gateway Johannesburg (DNS Tunneling Data Exfiltration) — Tự động cắt kết nối BGP", badge: "XUYÊN THỦNG", color: "text-red-400", bg: "bg-red-500/10 border-red-500/30 text-red-400" },
+  { time: "28s trước", type: "BLOCKED", text: "Hà Nội PoP bẻ gãy 64 Gbps Slowloris Attack từ Băng Cốc — Tự động bảo vệ cổng dịch vụ công", badge: "ĐÁNH CHẶN", color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400" },
+]
+
 export default function CyberCommandTheater() {
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
@@ -553,6 +565,7 @@ export default function CyberCommandTheater() {
   const [selectedPop, setSelectedPop] = useState(NETWORK_POPS[0])
   const [pingStatus, setPingStatus] = useState(null)
   const [hoveredNode, setHoveredNode] = useState(null)
+  const [currentEventIdx, setCurrentEventIdx] = useState(0)
 
   // 3D Globe Rotation & Drag State
   const globeRotRef = useRef(0)
@@ -562,6 +575,15 @@ export default function CyberCommandTheater() {
   const selectedRegionRef = useRef("all")
   const selectedPopRef = useRef(NETWORK_POPS[0])
   const screenNodesRef = useRef([])
+  const cameraRef = useRef({ zoom: 1.0, lat: 0, lon: 0 })
+
+  // Cycle Live Threat Dispatch Stream
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentEventIdx((prev) => (prev + 1) % THREAT_EVENTS.length)
+    }, 3800)
+    return () => clearInterval(timer)
+  }, [])
 
   useEffect(() => {
     viewModeRef.current = viewMode
@@ -575,10 +597,49 @@ export default function CyberCommandTheater() {
     selectedPopRef.current = selectedPop
   }, [selectedPop])
 
+  // Select region and auto-focus region's primary PoP hub
+  const handleSelectRegion = useCallback((regionId) => {
+    setSelectedRegion(regionId)
+    if (regionId !== "all") {
+      const firstPop = NETWORK_POPS.find((p) => p.zone === regionId)
+      if (firstPop) setSelectedPop(firstPop)
+    }
+  }, [])
+
   // Filtered PoPs based on region
   const visiblePops = useMemo(() => {
     if (selectedRegion === "all") return NETWORK_POPS
     return NETWORK_POPS.filter((p) => p.zone === selectedRegion)
+  }, [selectedRegion])
+
+  // Real-time Dynamic Regional Statistics & Breach Breakdown
+  const regionStats = useMemo(() => {
+    const inRegPops = selectedRegion === "all" ? NETWORK_POPS : NETWORK_POPS.filter((p) => p.zone === selectedRegion)
+    const popIds = new Set(inRegPops.map((p) => p.id))
+
+    const regEngagements =
+      selectedRegion === "all"
+        ? ACTIVE_ENGAGEMENTS
+        : ACTIVE_ENGAGEMENTS.filter((e) => popIds.has(e.toId))
+
+    const totalEng = regEngagements.length
+    const breachedEng = regEngagements.filter((e) => e.breached).length
+    const interceptedEng = totalEng - breachedEng
+    const interceptRate = totalEng > 0 ? ((interceptedEng / totalEng) * 100).toFixed(1) : "100.0"
+
+    const inRegThreats =
+      selectedRegion === "all"
+        ? THREAT_ORIGINS
+        : THREAT_ORIGINS.filter((t) => regEngagements.some((e) => e.fromId === t.id))
+
+    return {
+      popCount: inRegPops.length,
+      threatCount: inRegThreats.length,
+      totalEng,
+      breachedEng,
+      interceptedEng,
+      interceptRate: `${interceptRate}%`,
+    }
   }, [selectedRegion])
 
   // Interactive Ping Test between Selected PoP and Neighboring Hub
@@ -629,9 +690,20 @@ export default function CyberCommandTheater() {
       const dt = (now - lastTime) / 1000
       lastTime = now
 
-      // Smooth auto-rotation in 3D when not dragging
+      // Smooth auto-rotation in 3D when not dragging (or region alignment)
       if (!isDraggingRef.current && viewModeRef.current === "3d-globe") {
-        globeRotRef.current += dt * 0.16
+        const curReg = selectedRegionRef.current
+        if (curReg !== "all") {
+          const rData = REGIONS.find((r) => r.id === curReg) || REGIONS[0]
+          const targetLon = (rData.lonRange[0] + rData.lonRange[1]) / 2
+          const targetRot = -((targetLon * Math.PI) / 180) - Math.PI / 2
+          let diff = (targetRot - globeRotRef.current) % (Math.PI * 2)
+          if (diff > Math.PI) diff -= Math.PI * 2
+          if (diff < -Math.PI) diff += Math.PI * 2
+          globeRotRef.current += diff * 0.05
+        } else {
+          globeRotRef.current += dt * 0.16
+        }
       }
 
       const canvas = canvasRef.current
@@ -657,11 +729,27 @@ export default function CyberCommandTheater() {
         const cosT = Math.cos(tilt)
         const sinT = Math.sin(tilt)
 
+        // Region Zoom Camera (Smooth 60fps lerp camera interpolation for 2D map)
+        const regionData = REGIONS.find((r) => r.id === curRegion) || REGIONS[0]
+        const isZoomed = curRegion !== "all"
+        const targetZoom = isZoomed ? 2.2 : 1.0
+        const targetLat = isZoomed ? (regionData.latRange[0] + regionData.latRange[1]) / 2 : 0
+        const targetLon = isZoomed ? (regionData.lonRange[0] + regionData.lonRange[1]) / 2 : 0
+
+        const cam = cameraRef.current
+        cam.zoom += (targetZoom - cam.zoom) * 0.08
+        cam.lat += (targetLat - cam.lat) * 0.08
+        cam.lon += (targetLon - cam.lon) * 0.08
+
+        const zoomLevel = cam.zoom
+        const focalLat = cam.lat
+        const focalLon = cam.lon
+
         // Mathematical Projections
         const project2D = (lat, lon) => {
-          const px = cx + (lon / 180) * (w * 0.495)
-          const py = cy - (lat / 90) * (h * 0.45)
-          return { px, py, visible: true, scale: 1, z: 1 }
+          const px = cx + ((lon - focalLon) / 180) * (w * 0.495) * zoomLevel
+          const py = cy - ((lat - focalLat) / 90) * (h * 0.45) * zoomLevel
+          return { px, py, visible: px > -100 && px < w + 100 && py > -100 && py < h + 100, scale: zoomLevel > 1 ? 1.3 : 1, z: 1 }
         }
 
         const project3D = (lat, lon, altitude = 0) => {
@@ -901,7 +989,7 @@ export default function CyberCommandTheater() {
         })
 
         // ====================================================================
-        // 4. ACTIVE CYBER ENGAGEMENTS (ATTACK TRACERS & ANYCAST INTERCEPTIONS)
+        // 4. ACTIVE CYBER ENGAGEMENTS (ATTACK TRACERS & MIXED OUTCOMES)
         // ====================================================================
         ACTIVE_ENGAGEMENTS.forEach((eng) => {
           const from =
@@ -910,8 +998,13 @@ export default function CyberCommandTheater() {
           const to = NETWORK_POPS.find((p) => p.id === eng.toId)
           if (!from || !to) return
 
+          const isBreach = eng.breached === true
+
           // Cycle progress from 0.00 to 1.00
           const tRaw = ((now * 0.00032 * (eng.speed || 1)) + eng.offset) % 1
+
+          // Impact point: breached attacks fly to 1.0 (target), intercepted stop at 0.82
+          const impactT = isBreach ? 0.92 : 0.82
 
           // 2D vs 3D Trajectory Evaluator
           let getPoint
@@ -951,8 +1044,8 @@ export default function CyberCommandTheater() {
             }
           }
 
-          // A. Attack Plasma Tracer Dart (Active from t = 0 to 0.82)
-          if (tRaw < 0.82) {
+          // A. Attack Plasma Tracer Dart (Active from t = 0 to impactT)
+          if (tRaw < impactT) {
             const pHead = getPoint(tRaw)
             const pTail = getPoint(Math.max(0, tRaw - 0.14))
 
@@ -960,7 +1053,7 @@ export default function CyberCommandTheater() {
               const hScale = pHead.scale || 1
               // Curved Tracer Trail connecting intermediate steps
               ctx.strokeStyle = eng.attackColor
-              ctx.lineWidth = 2.2 * hScale
+              ctx.lineWidth = (isBreach ? 2.8 : 2.2) * hScale
               ctx.beginPath()
               ctx.moveTo(pTail.px, pTail.py)
               for (let st = 1; st <= 4; st++) {
@@ -973,107 +1066,192 @@ export default function CyberCommandTheater() {
               // White-Hot Laser Tip
               ctx.fillStyle = "#ffffff"
               ctx.beginPath()
-              ctx.arc(pHead.px, pHead.py, 2.4 * hScale, 0, Math.PI * 2)
+              ctx.arc(pHead.px, pHead.py, (isBreach ? 3.0 : 2.4) * hScale, 0, Math.PI * 2)
               ctx.fill()
 
               // Outer Colored Plasma Corona
               ctx.fillStyle = `${eng.attackColor}55`
               ctx.beginPath()
-              ctx.arc(pHead.px, pHead.py, 5.5 * hScale, 0, Math.PI * 2)
+              ctx.arc(pHead.px, pHead.py, (isBreach ? 7.0 : 5.5) * hScale, 0, Math.PI * 2)
               ctx.fill()
             }
           }
 
           // Target Defense Node coordinates
           const pTarget = project(to.lat, to.lon, 0)
-          const pImpact = getPoint(0.82)
+          const pImpact = getPoint(impactT)
 
           if (pTarget.visible && pImpact.visible) {
             const tScale = pTarget.scale || 1
             const iScale = pImpact.scale || 1
 
-            // B. Anycast Scrubbing Dome Barrier Shield (Activated when threat approaches: t >= 0.65)
-            if (tRaw >= 0.65) {
-              const inAngle = Math.atan2(pImpact.py - pTarget.py, pImpact.px - pTarget.px)
-              const domeRadius = 15 * tScale
+            if (isBreach) {
+              // ============================================================
+              // BREACHED ATTACK: No shield, no interception — attack hits target!
+              // ============================================================
 
-              // Glowing Shield Barrier Arc
-              ctx.strokeStyle = eng.interceptColor || "#00f5ff"
-              ctx.lineWidth = 2.4
-              ctx.beginPath()
-              ctx.arc(pTarget.px, pTarget.py, domeRadius, inAngle - 0.75, inAngle + 0.75)
-              ctx.stroke()
-
-              // Inner Forcefield Resonance Arc
-              ctx.strokeStyle = "rgba(255, 255, 255, 0.75)"
-              ctx.lineWidth = 1.2
-              ctx.beginPath()
-              ctx.arc(pTarget.px, pTarget.py, domeRadius * 0.75, inAngle - 0.5, inAngle + 0.5)
-              ctx.stroke()
-            }
-
-            // C. Counter-Interception Beam (Fired from target toward incoming missile: 0.65 <= t < 0.82)
-            if (tRaw >= 0.65 && tRaw < 0.82) {
-              const defProg = Math.min(1, (tRaw - 0.65) / 0.17)
-              const beamHeadX = pTarget.px + (pImpact.px - pTarget.px) * defProg
-              const beamHeadY = pTarget.py + (pImpact.py - pTarget.py) * defProg
-
-              ctx.strokeStyle = eng.interceptColor || "#00f5ff"
-              ctx.lineWidth = 2.0
-              ctx.beginPath()
-              ctx.moveTo(pTarget.px, pTarget.py)
-              ctx.lineTo(beamHeadX, beamHeadY)
-              ctx.stroke()
-
-              // White Defensive Beam Tip Pulse
-              ctx.fillStyle = "#ffffff"
-              ctx.beginPath()
-              ctx.arc(beamHeadX, beamHeadY, 2.2, 0, Math.PI * 2)
-              ctx.fill()
-            }
-
-            // D. Mid-Air Neutralization, Spark Dissipation & Anycast Absorption Shockwave (t >= 0.82)
-            if (tRaw >= 0.82) {
-              const postImpact = (tRaw - 0.82) / 0.18 // 0.00 to 1.00
-
-              // 1. Initial Collision Flash
-              if (postImpact < 0.28) {
-                const flashAlpha = 1 - postImpact / 0.28
-                ctx.fillStyle = `rgba(255, 255, 255, ${flashAlpha * 0.95})`
+              // E1. Target Damage Warning Flicker (starts early at t >= 0.7)
+              if (tRaw >= 0.7 && tRaw < impactT) {
+                const flickerRate = Math.sin(now * 0.025) * 0.5 + 0.5
+                ctx.strokeStyle = `rgba(239, 68, 68, ${flickerRate * 0.7})`
+                ctx.lineWidth = 2
                 ctx.beginPath()
-                ctx.arc(pImpact.px, pImpact.py, 7 * iScale, 0, Math.PI * 2)
+                ctx.arc(pTarget.px, pTarget.py, 12 * tScale, 0, Math.PI * 2)
+                ctx.stroke()
+              }
+
+              // E2. Breach Impact: Red Explosion & Damage Shockwave (t >= impactT)
+              if (tRaw >= impactT) {
+                const postBreach = (tRaw - impactT) / (1 - impactT) // 0.00 to 1.00
+
+                // Bright red-white flash at impact point
+                if (postBreach < 0.35) {
+                  const flashAlpha = 1 - postBreach / 0.35
+                  ctx.fillStyle = `rgba(255, 60, 60, ${flashAlpha * 0.95})`
+                  ctx.beginPath()
+                  ctx.arc(pTarget.px, pTarget.py, (10 + postBreach * 8) * iScale, 0, Math.PI * 2)
+                  ctx.fill()
+
+                  // White-hot core
+                  ctx.fillStyle = `rgba(255, 255, 255, ${flashAlpha * 0.8})`
+                  ctx.beginPath()
+                  ctx.arc(pTarget.px, pTarget.py, 5 * iScale * (1 - postBreach), 0, Math.PI * 2)
+                  ctx.fill()
+                }
+
+                // Expanding crimson damage shockwave ring (outer)
+                const shockR = (6 + postBreach * 38) * iScale
+                const shockAlpha = Math.max(0, 1 - postBreach)
+                ctx.strokeStyle = `rgba(239, 68, 68, ${shockAlpha * 0.8})`
+                ctx.lineWidth = Math.max(1, 2.5 * (1 - postBreach))
+                ctx.beginPath()
+                ctx.arc(pTarget.px, pTarget.py, shockR, 0, Math.PI * 2)
+                ctx.stroke()
+
+                // Inner orange damage ring
+                const innerR = (3 + postBreach * 22) * iScale
+                ctx.strokeStyle = `rgba(255, 145, 0, ${shockAlpha * 0.6})`
+                ctx.lineWidth = Math.max(0.8, 1.8 * (1 - postBreach))
+                ctx.beginPath()
+                ctx.arc(pTarget.px, pTarget.py, innerR, 0, Math.PI * 2)
+                ctx.stroke()
+
+                // Scattered debris/damage sparks flying outward
+                const debrisAngles = [0.3, 1.1, 2.0, 2.9, 3.7, 4.6, 5.4]
+                debrisAngles.forEach((ang, idx) => {
+                  const dist = postBreach * (22 + idx * 6) * iScale
+                  const spX = pTarget.px + Math.cos(ang + eng.offset * 12) * dist
+                  const spY = pTarget.py + Math.sin(ang + eng.offset * 12) * dist
+                  const sparkAlpha = Math.max(0, (1 - postBreach) * 0.85)
+                  ctx.fillStyle = idx % 3 === 0
+                    ? `rgba(255, 60, 60, ${sparkAlpha})`
+                    : idx % 3 === 1
+                      ? `rgba(255, 145, 0, ${sparkAlpha})`
+                      : `rgba(255, 255, 255, ${sparkAlpha * 0.7})`
+                  ctx.beginPath()
+                  ctx.arc(spX, spY, (1.8 - postBreach * 0.8) * iScale, 0, Math.PI * 2)
+                  ctx.fill()
+                })
+
+                // Pulsing "BREACH" danger halo on the target node
+                if (postBreach > 0.3) {
+                  const dangerPulse = Math.sin((postBreach - 0.3) * Math.PI * 4) * 0.5 + 0.5
+                  ctx.strokeStyle = `rgba(239, 68, 68, ${dangerPulse * 0.5 * (1 - postBreach)})`
+                  ctx.lineWidth = 2.5
+                  ctx.beginPath()
+                  ctx.arc(pTarget.px, pTarget.py, (18 + dangerPulse * 6) * tScale, 0, Math.PI * 2)
+                  ctx.stroke()
+                }
+              }
+
+            } else {
+              // ============================================================
+              // INTERCEPTED ATTACK: Shield dome + counter-beam + clean neutralization
+              // ============================================================
+
+              // B. Anycast Scrubbing Dome Barrier Shield (Activated when threat approaches: t >= 0.65)
+              if (tRaw >= 0.65) {
+                const inAngle = Math.atan2(pImpact.py - pTarget.py, pImpact.px - pTarget.px)
+                const domeRadius = 15 * tScale
+
+                // Glowing Shield Barrier Arc
+                ctx.strokeStyle = eng.interceptColor || "#00f5ff"
+                ctx.lineWidth = 2.4
+                ctx.beginPath()
+                ctx.arc(pTarget.px, pTarget.py, domeRadius, inAngle - 0.75, inAngle + 0.75)
+                ctx.stroke()
+
+                // Inner Forcefield Resonance Arc
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.75)"
+                ctx.lineWidth = 1.2
+                ctx.beginPath()
+                ctx.arc(pTarget.px, pTarget.py, domeRadius * 0.75, inAngle - 0.5, inAngle + 0.5)
+                ctx.stroke()
+              }
+
+              // C. Counter-Interception Beam (Fired from target toward incoming missile: 0.65 <= t < 0.82)
+              if (tRaw >= 0.65 && tRaw < 0.82) {
+                const defProg = Math.min(1, (tRaw - 0.65) / 0.17)
+                const beamHeadX = pTarget.px + (pImpact.px - pTarget.px) * defProg
+                const beamHeadY = pTarget.py + (pImpact.py - pTarget.py) * defProg
+
+                ctx.strokeStyle = eng.interceptColor || "#00f5ff"
+                ctx.lineWidth = 2.0
+                ctx.beginPath()
+                ctx.moveTo(pTarget.px, pTarget.py)
+                ctx.lineTo(beamHeadX, beamHeadY)
+                ctx.stroke()
+
+                // White Defensive Beam Tip Pulse
+                ctx.fillStyle = "#ffffff"
+                ctx.beginPath()
+                ctx.arc(beamHeadX, beamHeadY, 2.2, 0, Math.PI * 2)
                 ctx.fill()
               }
 
-              // 2. Expanding Clean Anycast Scrubbing Shockwave Ring
-              const shockR = (4 + postImpact * 28) * iScale
-              const shockAlpha = Math.max(0, 1 - postImpact)
-              ctx.strokeStyle = eng.interceptColor || "#00f5ff"
-              ctx.lineWidth = Math.max(1, 2.2 * (1 - postImpact))
-              ctx.beginPath()
-              ctx.arc(pImpact.px, pImpact.py, shockR, 0, Math.PI * 2)
-              ctx.stroke()
+              // D. Mid-Air Neutralization, Spark Dissipation & Anycast Absorption Shockwave (t >= 0.82)
+              if (tRaw >= 0.82) {
+                const postImpact = (tRaw - 0.82) / 0.18 // 0.00 to 1.00
 
-              // 3. Spark Dissipation Particles Scattering Harmlessly
-              const sparkAngles = [0.6, 1.8, 3.2, 4.5, 5.6]
-              sparkAngles.forEach((ang, sIdx) => {
-                const dist = postImpact * (18 + sIdx * 5) * iScale
-                const spX = pImpact.px + Math.cos(ang + eng.offset * 10) * dist
-                const spY = pImpact.py + Math.sin(ang + eng.offset * 10) * dist
-                ctx.fillStyle =
-                  sIdx % 2 === 0
-                    ? `rgba(255, 255, 255, ${shockAlpha * 0.9})`
-                    : `${eng.attackColor}${Math.floor(shockAlpha * 255).toString(16).padStart(2, "0")}`
+                // 1. Initial Collision Flash
+                if (postImpact < 0.28) {
+                  const flashAlpha = 1 - postImpact / 0.28
+                  ctx.fillStyle = `rgba(255, 255, 255, ${flashAlpha * 0.95})`
+                  ctx.beginPath()
+                  ctx.arc(pImpact.px, pImpact.py, 7 * iScale, 0, Math.PI * 2)
+                  ctx.fill()
+                }
+
+                // 2. Expanding Clean Anycast Scrubbing Shockwave Ring
+                const shockR = (4 + postImpact * 28) * iScale
+                const shockAlpha = Math.max(0, 1 - postImpact)
+                ctx.strokeStyle = eng.interceptColor || "#00f5ff"
+                ctx.lineWidth = Math.max(1, 2.2 * (1 - postImpact))
                 ctx.beginPath()
-                ctx.arc(spX, spY, 1.4 * iScale, 0, Math.PI * 2)
-                ctx.fill()
-              })
+                ctx.arc(pImpact.px, pImpact.py, shockR, 0, Math.PI * 2)
+                ctx.stroke()
+
+                // 3. Spark Dissipation Particles Scattering Harmlessly
+                const sparkAngles = [0.6, 1.8, 3.2, 4.5, 5.6]
+                sparkAngles.forEach((ang, sIdx) => {
+                  const dist = postImpact * (18 + sIdx * 5) * iScale
+                  const spX = pImpact.px + Math.cos(ang + eng.offset * 10) * dist
+                  const spY = pImpact.py + Math.sin(ang + eng.offset * 10) * dist
+                  ctx.fillStyle =
+                    sIdx % 2 === 0
+                      ? `rgba(255, 255, 255, ${shockAlpha * 0.9})`
+                      : `${eng.attackColor}${Math.floor(shockAlpha * 255).toString(16).padStart(2, "0")}`
+                  ctx.beginPath()
+                  ctx.arc(spX, spY, 1.4 * iScale, 0, Math.PI * 2)
+                  ctx.fill()
+                })
+              }
             }
           }
         })
 
         // ====================================================================
-        // 5. TIER-4 DEFENSE POPS PINS (ZERO TEXT ON CANVAS FOR CLEANEST HUD)
+        // 5. TIER-4 DEFENSE POPS PINS (DRAMATIC REGION FILTERING & BREACH DISTRESS)
         // ====================================================================
         NETWORK_POPS.forEach((pop) => {
           const isSelected = curPop?.id === pop.id
@@ -1082,20 +1260,40 @@ export default function CyberCommandTheater() {
           if (!p.visible) return
 
           const scale = p.scale || 1
-          screenNodesRef.current.push({ ...pop, px: p.px, py: p.py, isThreat: false })
+
+          // When zoomed into a region, drastically dim out-of-region nodes
+          if (!inRegion && isZoomed) {
+            // Ghost node — barely visible
+            ctx.globalAlpha = 0.12
+            ctx.fillStyle = "#334155"
+            ctx.beginPath()
+            ctx.arc(p.px, p.py, 1.5 * scale, 0, Math.PI * 2)
+            ctx.fill()
+            ctx.globalAlpha = 1.0
+            return
+          }
+
+          // Check if this PoP is actively suffering an ongoing breach
+          const activeBreach = ACTIVE_ENGAGEMENTS.find((eng) => {
+            if (!eng.breached || eng.toId !== pop.id) return false
+            const t = ((now * 0.00032 * (eng.speed || 1)) + eng.offset) % 1
+            return t >= 0.7
+          })
+
+          screenNodesRef.current.push({ ...pop, px: p.px, py: p.py, isThreat: false, isBreached: !!activeBreach })
 
           // Selected Node Pulsing Radar Reticle & Crosshair
           if (isSelected) {
             const t = (now * 0.003) % 1
             const rLock = (14 + t * 8) * scale
-            ctx.strokeStyle = `rgba(56, 189, 248, ${Math.max(0, 1 - t)})`
+            ctx.strokeStyle = activeBreach ? `rgba(239, 68, 68, ${Math.max(0, 1 - t)})` : `rgba(56, 189, 248, ${Math.max(0, 1 - t)})`
             ctx.lineWidth = 1.4
             ctx.beginPath()
             ctx.arc(p.px, p.py, rLock, 0, Math.PI * 2)
             ctx.stroke()
 
             // Reticle Crosshairs
-            ctx.strokeStyle = "#38bdf8"
+            ctx.strokeStyle = activeBreach ? "#ef4444" : "#38bdf8"
             ctx.lineWidth = 1.2
             ctx.beginPath()
             ctx.moveTo(p.px - 14 * scale, p.py)
@@ -1103,19 +1301,39 @@ export default function CyberCommandTheater() {
             ctx.moveTo(p.px, p.py - 14 * scale)
             ctx.lineTo(p.px, p.py + 14 * scale)
             ctx.stroke()
-          } else if (inRegion) {
-            // Subtle Anycast Active Pulse
-            const tNode = (now * 0.002 + (Math.abs(pop.lon) % 10) * 0.1) % 1
-            ctx.strokeStyle = `rgba(16, 185, 129, ${Math.max(0, (1 - tNode) * 0.4)})`
-            ctx.lineWidth = 1
+          } else if (activeBreach) {
+            // Intense Red Warning Pulse for Node Under Breach
+            const tNode = (now * 0.004) % 1
+            ctx.strokeStyle = `rgba(239, 68, 68, ${Math.max(0, 1 - tNode)})`
+            ctx.lineWidth = 2.5
             ctx.beginPath()
-            ctx.arc(p.px, p.py, (5 + tNode * 8) * scale, 0, Math.PI * 2)
+            ctx.arc(p.px, p.py, (6 + tNode * 22) * scale, 0, Math.PI * 2)
             ctx.stroke()
+          } else if (inRegion) {
+            // Prominent Region-Active Anycast Pulse (much bigger when zoomed)
+            const tNode = (now * 0.002 + (Math.abs(pop.lon) % 10) * 0.1) % 1
+            const pulseIntensity = isZoomed ? 0.7 : 0.4
+            const pulseSize = isZoomed ? 18 : 8
+            ctx.strokeStyle = `rgba(16, 185, 129, ${Math.max(0, (1 - tNode) * pulseIntensity)})`
+            ctx.lineWidth = isZoomed ? 2 : 1
+            ctx.beginPath()
+            ctx.arc(p.px, p.py, (5 + tNode * pulseSize) * scale, 0, Math.PI * 2)
+            ctx.stroke()
+
+            // Extra outer glow halo when zoomed into region
+            if (isZoomed) {
+              const t2 = (now * 0.0015 + (Math.abs(pop.lat) % 7) * 0.15) % 1
+              ctx.strokeStyle = `rgba(56, 189, 248, ${Math.max(0, (1 - t2) * 0.3)})`
+              ctx.lineWidth = 1.5
+              ctx.beginPath()
+              ctx.arc(p.px, p.py, (12 + t2 * 22) * scale, 0, Math.PI * 2)
+              ctx.stroke()
+            }
           }
 
-          // Node Center Dot
-          const dotRadius = (isSelected ? 5.5 : inRegion ? 4 : 2.5) * scale
-          ctx.fillStyle = isSelected ? "#38bdf8" : inRegion ? "#10b981" : "#475569"
+          // Node Center Dot (crimson if actively breached, blue if selected, emerald if secure)
+          const dotRadius = (isSelected ? 5.5 : inRegion && isZoomed ? 6 : inRegion ? 4 : 2.5) * scale
+          ctx.fillStyle = activeBreach ? "#ef4444" : isSelected ? "#38bdf8" : inRegion ? "#10b981" : "#475569"
           ctx.beginPath()
           ctx.arc(p.px, p.py, dotRadius, 0, Math.PI * 2)
           ctx.fill()
@@ -1128,7 +1346,15 @@ export default function CyberCommandTheater() {
             ctx.fill()
           }
 
-          // NO ctx.fillText: City labels completely removed from map canvas surface as requested!
+          // City Name Label (with warning sign if breached)
+          if (inRegion && isZoomed && curMode === "2d-map") {
+            ctx.font = `bold ${Math.round(10 * scale)}px monospace`
+            ctx.fillStyle = activeBreach ? "#f87171" : "rgba(255, 255, 255, 0.85)"
+            ctx.textAlign = "center"
+            ctx.fillText(activeBreach ? `⚠️ ${pop.name} [XUYÊN THỦNG]` : pop.name, p.px, p.py - (dotRadius + 6) * scale)
+          }
+
+          // NO ctx.fillText in non-zoomed mode
         })
       } catch {
         // Recover gracefully
@@ -1208,11 +1434,11 @@ export default function CyberCommandTheater() {
         <div className="flex items-center gap-3 shrink-0">
           <div className="px-4 py-2.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-right font-mono text-xs shadow-lg backdrop-blur-md">
             <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider flex items-center justify-end gap-1.5">
-              <span>TRẠNG THÁI MẠNG LƯỚI</span>
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <span>MỨC ĐỘ NGUY CƠ AN NINH</span>
+              <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping" />
             </div>
-            <div className="text-sm font-extrabold text-emerald-400 mt-0.5 tracking-wider">
-              100% OPERATIONAL &bull; 0 OUTAGE
+            <div className="text-sm font-extrabold text-amber-400 mt-0.5 tracking-wider">
+              DEFCON 2 &bull; 11 SỰ CỐ ĐANG XỬ LÝ
             </div>
           </div>
         </div>
@@ -1291,7 +1517,7 @@ export default function CyberCommandTheater() {
               <button
                 key={r.id}
                 type="button"
-                onClick={() => setSelectedRegion(r.id)}
+                onClick={() => handleSelectRegion(r.id)}
                 className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 text-xs ${
                   selectedRegion === r.id
                     ? "bg-cyan-500/20 text-cyan-300 border border-cyan-400/50 shadow-md shadow-cyan-500/20"
@@ -1349,14 +1575,30 @@ export default function CyberCommandTheater() {
             viewMode === "3d-globe" ? "cursor-grab active:cursor-grabbing" : "cursor-crosshair"
           }`}
         >
-          {/* Authentic NASA Earth at Night Satellite Texture (Visible in 2D mode) */}
-          <img
-            src="/images/world-map-realistic-dark.jpg"
-            alt="Real World Satellite Global Network"
-            className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-opacity duration-700 ${
-              viewMode === "2d-map" ? "opacity-95 contrast-105 brightness-95" : "opacity-0"
-            }`}
-          />
+          {/* Authentic NASA Earth at Night Satellite Texture (Visible in 2D mode, zooms with region) */}
+          {(() => {
+            const rd = REGIONS.find((r) => r.id === selectedRegion) || REGIONS[0]
+            const isZ = selectedRegion !== "all"
+            const cLat = isZ ? (rd.latRange[0] + rd.latRange[1]) / 2 : 0
+            const cLon = isZ ? (rd.lonRange[0] + rd.lonRange[1]) / 2 : 0
+            const zScale = isZ ? 2.2 : 1.0
+            // Convert lat/lon center to % offset from map center (equirectangular)
+            const txPct = isZ ? -(cLon / 180) * 50 : 0
+            const tyPct = isZ ? (cLat / 90) * 50 : 0
+            return (
+              <img
+                src="/images/world-map-realistic-dark.jpg"
+                alt="Real World Satellite Global Network"
+                className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-all duration-700 ease-in-out ${
+                  viewMode === "2d-map" ? "opacity-95 contrast-105 brightness-95" : "opacity-0"
+                }`}
+                style={{
+                  transform: `scale(${zScale}) translate(${txPct}%, ${tyPct}%)`,
+                  transformOrigin: "center center",
+                }}
+              />
+            )
+          })()}
 
           {/* Interactive HTML5 Canvas Layer */}
           <canvas
@@ -1374,11 +1616,13 @@ export default function CyberCommandTheater() {
               <span>ANYCAST GLOBAL MESH // REAL-TIME THREAT TELEMETRY</span>
             </div>
             <div className="text-slate-400 text-[10px] flex items-center gap-2">
-              <span className="text-emerald-400 font-bold">26 PoPs Bảo Vệ</span>
+              <span className="text-emerald-400 font-bold">{regionStats.popCount} PoPs Bảo Vệ</span>
               <span>&bull;</span>
-              <span className="text-red-400 font-bold">36 Nguồn Botnet</span>
+              <span className="text-red-400 font-bold">{regionStats.threatCount} Nguồn Botnet</span>
               <span>&bull;</span>
-              <span className="text-cyan-400 font-bold">100% Đánh Chặn Anycast Edge</span>
+              <span className="text-emerald-400 font-bold">{regionStats.interceptRate} Đánh Chặn</span>
+              <span>&bull;</span>
+              <span className="text-red-400 font-bold animate-pulse">{regionStats.breachedEng} Xuyên Thủng</span>
             </div>
           </div>
 
@@ -1426,9 +1670,16 @@ export default function CyberCommandTheater() {
                     <div className="text-[10px] text-slate-400">{selectedPop.country} &bull; {selectedPop.type}</div>
                   </div>
                 </div>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[9px] font-bold">
-                  {selectedPop.status}
-                </span>
+                {ACTIVE_ENGAGEMENTS.some((e) => e.breached && e.toId === selectedPop.id) ? (
+                  <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/40 text-[9px] font-bold animate-pulse flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-red-500 animate-ping" />
+                    BỊ XUYÊN THỦNG (L7)
+                  </span>
+                ) : (
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[9px] font-bold">
+                    {selectedPop.status}
+                  </span>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-2 text-[11px] py-1">
@@ -1485,6 +1736,34 @@ export default function CyberCommandTheater() {
               <span>Khám Phá Lộ Trình An Ninh Mạng</span>
               <ChevronRight className="h-3.5 w-3.5" />
             </Link>
+          </div>
+        </div>
+
+        {/* ==================================================================
+            LIVE THREAT INCIDENT DISPATCH TICKER (AUTHENTIC SOC EVENT FEED)
+           ================================================================== */}
+        <div className="bg-[#050812] border-t border-slate-800/90 px-4 py-2.5 flex items-center justify-between gap-3 font-mono text-xs z-30">
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="px-2 py-0.5 rounded-md bg-red-500/20 border border-red-500/40 text-red-400 font-extrabold text-[10px] tracking-wider flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-red-500 animate-ping" />
+              LIVE DISPATCH
+            </span>
+            <span className="text-slate-500 text-[10px] hidden md:inline">[{THREAT_EVENTS[currentEventIdx].time}]</span>
+          </div>
+
+          <div className="flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-xs">
+            <span className={`inline-block px-1.5 py-0.2 rounded text-[9px] font-extrabold mr-2 border ${THREAT_EVENTS[currentEventIdx].bg}`}>
+              {THREAT_EVENTS[currentEventIdx].badge}
+            </span>
+            <span className={THREAT_EVENTS[currentEventIdx].color}>
+              {THREAT_EVENTS[currentEventIdx].text}
+            </span>
+          </div>
+
+          <div className="hidden lg:flex items-center gap-2 text-slate-500 text-[10px] shrink-0 font-bold">
+            <span className="text-amber-400 font-extrabold">DEFCON 2</span>
+            <span>&bull;</span>
+            <span className="text-cyan-400">SOC RADAR ACTIVE</span>
           </div>
         </div>
 
