@@ -14,6 +14,14 @@ export const challengeService = {
   },
 
   /**
+   * Helper to retrieve all challenges directly as an array or object
+   */
+  async getAllChallenges(params = {}) {
+    const res = await this.getChallenges(params)
+    return res.success && res.data ? res.data : []
+  },
+
+  /**
    * Get challenge details by ID
    */
   async getChallengeById(id) {

@@ -271,6 +271,13 @@ export const authService = {
    * Restore current session (e.g. on app refresh)
    */
   async getCurrentUser() {
+    const hasToken =
+      sessionStorage.getItem("cyberpath_auth_token") ||
+      localStorage.getItem("cyberpath_auth_token")
+    if (!hasToken) {
+      return { success: false, error: "Không có phiên đăng nhập nào đang hoạt động." }
+    }
+
     const result = await callApiOrFallback(
       () => api.get("/auth/me"),
       async () => {

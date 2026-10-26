@@ -38,15 +38,18 @@ export function Pricing() {
 
   useEffect(() => {
     let isMounted = true
-    challengeService.getAllChallenges()
-      .then((challenges) => {
-        if (isMounted && Array.isArray(challenges)) {
-          setRealLabCount(challenges.length)
-        }
-      })
-      .catch(() => {
-        // Fallback gracefully without breaking layout
-      })
+    if (typeof challengeService?.getAllChallenges === "function") {
+      challengeService
+        .getAllChallenges()
+        .then((challenges) => {
+          if (isMounted && Array.isArray(challenges)) {
+            setRealLabCount(challenges.length)
+          }
+        })
+        .catch(() => {
+          // Fallback gracefully without breaking layout
+        })
+    }
     return () => {
       isMounted = false
     }

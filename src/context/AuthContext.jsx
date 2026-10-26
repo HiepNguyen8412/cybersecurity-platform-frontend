@@ -59,7 +59,7 @@ export function AuthProvider({ children }) {
       } catch {
         // No valid session, stay unauthenticated
       } finally {
-        if (isMounted && authActionSeq.current === currentSeq) {
+        if (isMounted) {
           setIsInitializing(false)
         }
       }
