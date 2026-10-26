@@ -1,53 +1,56 @@
-import { ShieldCheck } from "lucide-react"
+import { RiRadarLine } from "@remixicon/react"
 
 /**
- * High-Tech Cyber Loading Skeleton Fallback for React Suspense / Lazy Loading
- * Adaptive across Light, Dark, and Cyber Range themes.
+ * Ultra-Sleek, Minimalist Page Loading Fallback (Linear / Vercel style)
+ * Replaces chunky bouncing graphics with a silky top laser progress line
+ * and non-intrusive, zero-shift content skeleton placeholders.
  */
 export function PageLoadingFallback() {
   return (
-    <div className="w-full min-h-[75vh] flex flex-col justify-start items-center relative overflow-hidden py-10 px-4 sm:px-6 animate-fade-in bg-transparent">
-      {/* Top Laser Progress Bar */}
-      <div className="cyber-top-loader-bar" aria-hidden="true">
-        <div className="cyber-top-loader-laser" />
+    <div className="w-full min-h-[60vh] flex flex-col justify-start relative overflow-hidden py-4 px-2 sm:px-4 animate-in fade-in duration-200">
+      {/* 1. Ultra-Fine Top Gradient Laser Bar */}
+      <div className="fixed top-0 left-0 right-0 h-[2.5px] z-50 overflow-hidden pointer-events-none">
+        <div className="h-full w-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 animate-[shimmer_1.5s_infinite] shadow-[0_0_10px_rgba(99,102,241,0.5)]" />
       </div>
 
-      {/* Central Security Node Handshake Badge */}
-      <div className="my-8 flex flex-col items-center space-y-3 z-10">
-        <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 dark:from-blue-600 dark:to-cyan-600 text-white shadow-lg shadow-blue-500/25 animate-float">
-          <ShieldCheck className="h-7 w-7 stroke-[2.2]" />
-          <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-cyan-400 ring-2 ring-white dark:ring-slate-900 animate-ping" />
+      {/* 2. Minimalist Breadcrumb & Title Shimmer Bar */}
+      <div className="flex items-center justify-between pb-6 border-b border-slate-200/60 dark:border-white/[0.06]">
+        <div className="space-y-2">
+          <div className="h-3 w-32 rounded-full bg-slate-200/70 dark:bg-white/[0.05] animate-pulse" />
+          <div className="h-6 w-56 rounded-lg bg-slate-200/90 dark:bg-white/[0.08] animate-pulse" />
         </div>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.06] text-[11px] font-mono text-slate-400">
+          <RiRadarLine className="w-3.5 h-3.5 text-indigo-500 animate-spin" />
+          <span>Đang đồng bộ...</span>
+        </div>
+      </div>
 
-        <div className="flex flex-col items-center text-center space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-blue-600 dark:bg-cyan-400 animate-pulse" />
-            <span className="font-mono-tech text-xs font-bold text-blue-900 dark:text-white cyberpunk:text-cyan-300 tracking-wider uppercase">
-              KHỞI TẠO MÔI TRƯỜNG TÁC CHIẾN
-            </span>
+      {/* 3. Sleek Non-Intrusive Shimmer Grid (Zero Layout Shift) */}
+      <div className="mt-6 space-y-5">
+        {/* Top 3 Stat Cards Skeleton */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="h-28 rounded-2xl bg-white dark:bg-[#0f121a] border border-slate-200/80 dark:border-white/[0.06] p-4 space-y-3 shadow-xs">
+            <div className="h-3 w-20 rounded bg-slate-200/80 dark:bg-white/[0.06] animate-pulse" />
+            <div className="h-7 w-28 rounded bg-slate-200/90 dark:bg-white/[0.09] animate-pulse" />
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 font-mono-tech">
-            Đang đồng bộ hóa sandbox và tài nguyên bảo mật...
-          </p>
-        </div>
-      </div>
-
-      {/* Responsive Skeleton Mock Grid */}
-      <div className="w-full max-w-[1240px] space-y-6">
-        {/* Skeleton Header Card */}
-        <div className="w-full h-28 cyber-card cyber-skeleton rounded-2xl p-6" />
-
-        {/* Skeleton Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="h-48 cyber-card cyber-skeleton rounded-2xl" />
-          <div className="h-48 cyber-card cyber-skeleton rounded-2xl" />
-          <div className="h-48 cyber-card cyber-skeleton rounded-2xl" />
+          <div className="h-28 rounded-2xl bg-white dark:bg-[#0f121a] border border-slate-200/80 dark:border-white/[0.06] p-4 space-y-3 shadow-xs">
+            <div className="h-3 w-24 rounded bg-slate-200/80 dark:bg-white/[0.06] animate-pulse" />
+            <div className="h-7 w-32 rounded bg-slate-200/90 dark:bg-white/[0.09] animate-pulse" />
+          </div>
+          <div className="h-28 rounded-2xl bg-white dark:bg-[#0f121a] border border-slate-200/80 dark:border-white/[0.06] p-4 space-y-3 shadow-xs">
+            <div className="h-3 w-20 rounded bg-slate-200/80 dark:bg-white/[0.06] animate-pulse" />
+            <div className="h-7 w-24 rounded bg-slate-200/90 dark:bg-white/[0.09] animate-pulse" />
+          </div>
         </div>
 
-        {/* Skeleton Bottom Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-8 h-64 cyber-card cyber-skeleton rounded-2xl" />
-          <div className="lg:col-span-4 h-64 cyber-card cyber-skeleton rounded-2xl" />
+        {/* Main Content Area Skeleton */}
+        <div className="h-72 rounded-2xl bg-white dark:bg-[#0f121a] border border-slate-200/80 dark:border-white/[0.06] p-6 shadow-xs relative overflow-hidden">
+          <div className="h-4 w-40 rounded bg-slate-200/80 dark:bg-white/[0.06] mb-6 animate-pulse" />
+          <div className="space-y-3">
+            <div className="h-10 rounded-xl bg-slate-100 dark:bg-white/[0.03] animate-pulse" />
+            <div className="h-10 rounded-xl bg-slate-100 dark:bg-white/[0.03] animate-pulse" />
+            <div className="h-10 rounded-xl bg-slate-100 dark:bg-white/[0.03] animate-pulse" />
+          </div>
         </div>
       </div>
     </div>

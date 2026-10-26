@@ -5,9 +5,8 @@ import PublicOnlyRoute from "./PublicOnlyRoute"
 import PageLoadingFallback from "../components/common/PageLoadingFallback"
 import ErrorBoundary from "../components/common/ErrorBoundary"
 
-// Lazy-Loaded Layouts for optimal bundle code-splitting
-const PublicLayout = lazy(() => import("../layouts/PublicLayout/PublicLayout"))
-const AppLayout = lazy(() => import("../layouts/AppLayout/AppLayout"))
+import PublicLayout from "../layouts/PublicLayout/PublicLayout"
+import AppLayout from "../layouts/AppLayout/AppLayout"
 
 // Lazy-Loaded Public Exploration Pages
 const LandingPage = lazy(() => import("../pages/public/LandingPage"))

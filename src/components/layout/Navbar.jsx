@@ -1,17 +1,16 @@
-﻿import { useState } from "react"
+import { useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import {
-  Menu,
-  Search,
-  Bell,
-  User,
-  Settings,
-  LogOut,
-  ChevronDown,
-  X,
-  PanelLeftClose,
-  PanelLeftOpen,
-} from "lucide-react"
+  RiMenuLine,
+  RiCloseLine,
+  RiSearchLine,
+  RiNotification3Line,
+  RiSideBarLine,
+  RiUser3Line,
+  RiSettings4Line,
+  RiLogoutBoxRLine,
+  RiArrowDownSLine,
+} from "@remixicon/react"
 import useLayout from "../../hooks/useLayout"
 import useAuth from "../../hooks/useAuth"
 import {
@@ -26,14 +25,13 @@ import ThemeToggle from "./ThemeToggle"
 
 /**
  * Topbar for authenticated application.
- * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
+ * Upgraded with @remixicon/react icons and Obsidian Titanium aesthetic.
  */
 export function Navbar() {
   const {
     isSidebarCollapsed,
     toggleSidebarCollapse,
     openMobileMenu,
-    pageTitle,
     breadcrumbs: customBreadcrumbs,
   } = useLayout()
 
@@ -56,48 +54,79 @@ export function Navbar() {
     switch (path) {
       case "/dashboard":
         return [
-          { label: "Trung tâm", href: "/dashboard" },
-          { label: "Bàn điều khiển" },
+          { label: "Nền tảng", href: "/dashboard" },
+          { label: "Trung tâm điều hành" },
         ]
       case "/learning":
         return [
-          { label: "Đào tạo", href: "/learning" },
-          { label: "Khóa học & Module" },
+          { label: "Học tập", href: "/learning" },
+          { label: "Giáo trình bài giảng" },
         ]
       case "/learning-paths":
         return [
-          { label: "Đào tạo", href: "/learning-paths" },
+          { label: "Học tập", href: "/learning" },
           { label: "Lộ trình chuyên môn" },
         ]
       case "/labs":
         return [
           { label: "Thực hành", href: "/labs" },
-          { label: "Phòng Lab & CTF" },
+          { label: "Phòng Lab thực chiến" },
         ]
       case "/progress":
         return [
-          { label: "Năng lực", href: "/progress" },
-          { label: "Thống kê kỹ năng" },
+          { label: "Hồ sơ", href: "/progress" },
+          { label: "Thống kê năng lực" },
         ]
       case "/achievements":
         return [
-          { label: "Năng lực", href: "/achievements" },
+          { label: "Hồ sơ", href: "/progress" },
           { label: "Huy hiệu & Chứng chỉ" },
         ]
       case "/profile":
         return [
           { label: "Tài khoản", href: "/profile" },
-          { label: "Hồ sơ bảo mật" },
+          { label: "Hồ sơ cá nhân" },
         ]
       case "/settings":
         return [
-          { label: "Tài khoản", href: "/settings" },
+          { label: "Hệ thống", href: "/settings" },
+          { label: "Cài đặt & Bảo mật" },
+        ]
+      case "/admin":
+      case "/admin/dashboard":
+        return [
+          { label: "SOC Admin", href: "/admin" },
+          { label: "Trung tâm chỉ huy" },
+        ]
+      case "/admin/users":
+        return [
+          { label: "SOC Admin", href: "/admin" },
+          { label: "Quản lý người dùng" },
+        ]
+      case "/admin/labs":
+        return [
+          { label: "SOC Admin", href: "/admin" },
+          { label: "Quản trị phòng Lab" },
+        ]
+      case "/admin/courses":
+        return [
+          { label: "SOC Admin", href: "/admin" },
+          { label: "Quản trị khóa học" },
+        ]
+      case "/admin/audit-logs":
+        return [
+          { label: "SOC Admin", href: "/admin" },
+          { label: "Nhật ký kiểm toán" },
+        ]
+      case "/admin/settings":
+        return [
+          { label: "SOC Admin", href: "/admin" },
           { label: "Cấu hình hệ thống" },
         ]
       default:
         return [
-          { label: "Nền tảng", href: "/dashboard" },
-          { label: pageTitle || "Tổng quan" },
+          { label: "CyberPath", href: "/dashboard" },
+          { label: "Tổng quan" },
         ]
     }
   }
@@ -107,15 +136,15 @@ export function Navbar() {
   const sampleNotifications = [
     {
       id: 1,
-      title: "Lab thực chiến mới",
-      desc: "SQL Injection: Filter Evasion đã được mở trên hệ thống.",
-      time: "10 phút trước",
+      title: "Phát hiện tấn công mô phỏng",
+      desc: "Hệ thống IDS vừa ghi nhận 3 cảnh báo SQL Injection tại phòng Lab #02.",
+      time: "5 phút trước",
       unread: true,
     },
     {
       id: 2,
-      title: "Huy hiệu mới",
-      desc: "Bạn đã đạt danh hiệu 'Packet Inspector' xuất sắc.",
+      title: "Chứng chỉ mới khả dụng",
+      desc: "Bạn đã đủ điều kiện nhận chứng chỉ SOC Level 1 Analyst.",
       time: "2 giờ trước",
       unread: true,
     },
@@ -131,7 +160,7 @@ export function Navbar() {
   return (
     <header
       className={`
-        fixed top-0 right-0 left-0 z-30 h-16 bg-white/95 dark:bg-[#121824]/95 cyberpunk:bg-[#040d1a]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-[#222d42] cyberpunk:border-cyan-500/50 text-slate-900 dark:text-white cyberpunk:text-cyan-50 transition-all duration-200 ease-in-out
+        fixed top-0 right-0 left-0 z-30 h-16 bg-white/85 dark:bg-[#08090d]/85 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] text-slate-900 dark:text-white transition-all duration-200 ease-in-out select-none
         ${isSidebarCollapsed ? "md:left-[72px]" : "md:left-60"}
       `.trim()}
     >
@@ -141,24 +170,20 @@ export function Navbar() {
           <button
             type="button"
             onClick={openMobileMenu}
-            className="md:hidden p-2 -ml-1 text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 cyberpunk:hover:bg-cyan-950/60 rounded-lg transition-colors cursor-pointer"
+            className="md:hidden p-2 -ml-1 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.06] rounded-xl transition-colors cursor-pointer"
             aria-label="Mở menu điều hướng"
           >
-            <Menu className="h-5 w-5" />
+            <RiMenuLine className="h-5 w-5" />
           </button>
 
           <button
             type="button"
             onClick={toggleSidebarCollapse}
-            className="hidden md:flex p-2 text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 cyberpunk:hover:bg-cyan-950/60 rounded-lg transition-colors cursor-pointer"
+            className="hidden md:flex p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/[0.06] rounded-xl transition-colors cursor-pointer"
             title={isSidebarCollapsed ? "Mở rộng thanh bên" : "Thu gọn thanh bên"}
             aria-label={isSidebarCollapsed ? "Mở rộng thanh bên" : "Thu gọn thanh bên"}
           >
-            {isSidebarCollapsed ? (
-              <PanelLeftOpen className="h-4 w-4" />
-            ) : (
-              <PanelLeftClose className="h-4 w-4" />
-            )}
+            <RiSideBarLine className="h-4.5 w-4.5" />
           </button>
 
           <div className="flex items-center min-w-0 overflow-hidden">
@@ -169,22 +194,22 @@ export function Navbar() {
         {/* Center: Global Search */}
         <div className="flex-1 max-w-md mx-3 hidden sm:block">
           <div className="relative flex items-center w-full">
-            <Search className="absolute left-3 h-4 w-4 text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400 pointer-events-none" />
+            <RiSearchLine className="absolute left-3.5 h-4 w-4 text-slate-400 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Tìm kiếm kỹ thuật MITRE, mã CVE, bài lab..."
-              className="w-full rounded-xl border border-slate-200/90 dark:border-slate-700/80 cyberpunk:border-cyan-500/40 bg-slate-50/70 dark:bg-slate-800/90 cyberpunk:bg-[#071329] py-1.5 pl-9 pr-9 text-xs sm:text-sm text-slate-900 dark:text-white cyberpunk:text-cyan-100 placeholder:text-slate-400 dark:placeholder:text-slate-400 cyberpunk:placeholder:text-cyan-500/60 outline-none transition duration-150 focus:border-blue-600 dark:focus:border-cyan-400 cyberpunk:focus:border-cyan-400 focus:bg-white dark:focus:bg-slate-800 shadow-2xs"
+              className="w-full rounded-xl border border-slate-200/90 dark:border-white/[0.08] bg-slate-100/70 dark:bg-white/[0.04] py-1.5 pl-10 pr-9 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none transition duration-150 focus:border-indigo-500/70 dark:focus:border-indigo-400/60 focus:bg-white dark:focus:bg-[#0d1017] shadow-2xs font-sans"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cyberpunk:hover:text-cyan-300 cursor-pointer transition-colors"
+                className="absolute right-2.5 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer transition-colors"
                 aria-label="Xóa tìm kiếm"
               >
-                <X className="h-3.5 w-3.5" />
+                <RiCloseLine className="h-4 w-4" />
               </button>
             )}
           </div>
@@ -192,9 +217,12 @@ export function Navbar() {
 
         {/* Right: Security Status + Notifications & User Menu */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50/90 dark:bg-emerald-950/60 cyberpunk:bg-[#042f2e] border border-emerald-200/80 dark:border-emerald-800/60 cyberpunk:border-emerald-500/60 text-emerald-800 dark:text-emerald-300 cyberpunk:text-emerald-300 text-[11px] font-mono-tech">
-            <span className="cyber-pulse-dot text-emerald-500" />
-            <span className="font-semibold">PHÒNG THỦ: ĐANG BẬT</span>
+          <div className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[11px] font-mono font-medium shadow-2xs">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span>PHÒNG THỦ: ĐANG BẬT</span>
           </div>
 
           <ThemeToggle />
@@ -206,22 +234,22 @@ export function Navbar() {
             trigger={({ isOpen }) => (
               <button
                 type="button"
-                className={`relative p-2 rounded-lg text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 cyberpunk:hover:bg-cyan-950/60 transition-colors cursor-pointer ${
-                  isOpen ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white" : ""
+                className={`relative p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors cursor-pointer ${
+                  isOpen ? "bg-slate-100 dark:bg-white/[0.06] text-slate-900 dark:text-white" : ""
                 }`}
                 aria-label="Xem thông báo"
               >
-                <Bell className="h-5 w-5" />
+                <RiNotification3Line className="h-5 w-5" />
                 <span className="absolute top-1.5 right-1.5 flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600 dark:bg-cyan-400" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
                 </span>
               </button>
             )}
           >
             {({ close }) => (
-              <div className="bg-white dark:bg-slate-900 cyberpunk:bg-[#060e1d] text-slate-900 dark:text-white border border-slate-200 dark:border-[#222d42] cyberpunk:border-cyan-500/50 rounded-xl overflow-hidden shadow-xl">
-                <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <div className="bg-white dark:bg-[#0e121a] text-slate-900 dark:text-white border border-slate-200/90 dark:border-white/[0.08] rounded-2xl overflow-hidden shadow-2xl">
+                <div className="px-4 py-3 border-b border-slate-100 dark:border-white/[0.06] flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-semibold text-slate-900 dark:text-white">Thông báo</span>
                     <Badge variant="primary" size="sm">
@@ -231,40 +259,40 @@ export function Navbar() {
                   <button
                     type="button"
                     onClick={close}
-                    className="text-xs text-blue-600 dark:text-cyan-400 hover:underline font-medium cursor-pointer"
+                    className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium cursor-pointer"
                   >
                     Đã đọc hết
                   </button>
                 </div>
 
-                <div className="py-1 max-h-72 overflow-y-auto divide-y divide-slate-50 dark:divide-slate-800">
+                <div className="py-1 max-h-72 overflow-y-auto divide-y divide-slate-100 dark:divide-white/[0.04]">
                   {sampleNotifications.map((notif) => (
                     <div
                       key={notif.id}
-                      className={`px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors cursor-pointer ${
-                        notif.unread ? "bg-blue-50/40 dark:bg-blue-950/30" : ""
+                      className={`px-4 py-3 hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors cursor-pointer ${
+                        notif.unread ? "bg-indigo-50/50 dark:bg-indigo-950/20" : ""
                       }`}
                     >
                       <div className="flex items-start justify-between gap-2">
                         <p className="text-xs font-semibold text-slate-800 dark:text-slate-100 leading-tight">
                           {notif.title}
                         </p>
-                        <span className="text-[10px] text-slate-400 dark:text-slate-400 whitespace-nowrap">
+                        <span className="text-[10px] text-slate-400 dark:text-slate-500 whitespace-nowrap">
                           {notif.time}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5 leading-normal">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                         {notif.desc}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <div className="p-2 border-t border-slate-100 dark:border-slate-800 text-center">
+                <div className="p-2.5 border-t border-slate-100 dark:border-white/[0.06] text-center">
                   <Link
                     to="/dashboard"
                     onClick={close}
-                    className="text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 block py-1"
+                    className="text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:underline block py-0.5"
                   >
                     Xem tất cả thông báo
                   </Link>
@@ -280,8 +308,8 @@ export function Navbar() {
             trigger={({ isOpen }) => (
               <button
                 type="button"
-                className={`flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 cyberpunk:hover:bg-cyan-950/60 transition-colors cursor-pointer select-none ${
-                  isOpen ? "bg-slate-100 dark:bg-slate-800" : ""
+                className={`flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors cursor-pointer select-none ${
+                  isOpen ? "bg-slate-100 dark:bg-white/[0.06]" : ""
                 }`}
                 aria-label="Mở menu người dùng"
               >
@@ -294,13 +322,13 @@ export function Navbar() {
                     {displayRole}
                   </span>
                 </div>
-                <ChevronDown className="h-3.5 w-3.5 text-slate-400 hidden sm:inline-block" />
+                <RiArrowDownSLine className="h-4 w-4 text-slate-400 hidden sm:inline-block" />
               </button>
             )}
           >
             {({ close }) => (
-              <div className="bg-white dark:bg-slate-900 cyberpunk:bg-[#060e1d] text-slate-900 dark:text-white border border-slate-200 dark:border-[#222d42] cyberpunk:border-cyan-500/50 rounded-xl overflow-hidden shadow-xl">
-                <div className="px-3 py-2.5 border-b border-slate-100 dark:border-slate-800">
+              <div className="bg-white dark:bg-[#0e121a] text-slate-900 dark:text-white border border-slate-200/90 dark:border-white/[0.08] rounded-2xl overflow-hidden shadow-2xl">
+                <div className="px-4 py-3 border-b border-slate-100 dark:border-white/[0.06]">
                   <p className="text-xs font-semibold text-slate-900 dark:text-white leading-tight">{displayName}</p>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
                     {displayEmail}
@@ -313,10 +341,10 @@ export function Navbar() {
                 </div>
 
                 <div className="py-1">
-                  <DropdownItem icon={<User className="h-4 w-4" />} onClick={() => { close(); navigate("/profile"); }}>
+                  <DropdownItem icon={<RiUser3Line className="h-4 w-4" />} onClick={() => { close(); navigate("/profile"); }}>
                     Hồ sơ cá nhân
                   </DropdownItem>
-                  <DropdownItem icon={<Settings className="h-4 w-4" />} onClick={() => { close(); navigate("/settings"); }}>
+                  <DropdownItem icon={<RiSettings4Line className="h-4 w-4" />} onClick={() => { close(); navigate("/settings"); }}>
                     Cài đặt bảo mật
                   </DropdownItem>
                 </div>
@@ -325,7 +353,8 @@ export function Navbar() {
 
                 <div className="py-1">
                   <DropdownItem
-                    icon={<LogOut className="h-4 w-4 text-rose-500" />}
+                    danger
+                    icon={<RiLogoutBoxRLine className="h-4 w-4 text-rose-500" />}
                     onClick={() => { close(); logout(); }}
                     className="text-rose-600 dark:text-rose-400"
                   >
