@@ -21,10 +21,10 @@ export function AppLayout({ children, maxWidth = "max-w-[1240px]", className = "
   const { isSidebarCollapsed } = useLayout()
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#08090d] text-slate-900 dark:text-[#e2e8f0] flex flex-col antialiased relative overflow-x-hidden selection:bg-indigo-500/20 selection:text-indigo-400">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#08090d] cyberpunk:bg-[#020d18] text-slate-900 dark:text-[#e2e8f0] cyberpunk:text-[#f0fdfa] flex flex-col antialiased relative overflow-x-hidden selection:bg-indigo-500/20 selection:text-indigo-400">
       {/* Subtle Ambient Spatial Glow */}
       <div
-        className="fixed top-0 left-1/2 -translate-x-1/2 w-[900px] h-[350px] bg-gradient-to-b from-indigo-500/[0.04] via-blue-500/[0.02] to-transparent blur-3xl pointer-events-none"
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-[900px] h-[350px] bg-gradient-to-b from-indigo-500/[0.04] via-blue-500/[0.02] to-transparent cyberpunk:from-cyan-500/[0.08] cyberpunk:via-teal-500/[0.03] blur-3xl pointer-events-none"
         aria-hidden="true"
       />
       

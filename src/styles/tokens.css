@@ -113,48 +113,53 @@
 }
 
 /* ==========================================================================
-   THEME 2: CYBER MODE (Tactical Sentinel HUD - Precision Emerald Matrix)
-   Deep abyss, hairline matrix emerald accents, glare-free matte metallic styling.
+   THEME 2: CYBER MODE (Tactical Cyber Range HUD - Rich Cyberspace Navy & Cyan Matrix)
+   RADICALLY DISTINCT FROM DARK MODE:
+   - Dark Mode is pure obsidian graphite monochrome (#08090d / #0f121a) with violet accents.
+   - Cyber Mode is deep tactical cyberspace navy-teal (#05131e / #0b2336) with luminous 
+     cyber cyan (#00f0ff / #06b6d4), matrix emerald (#00ffaa), and military HUD styling.
    ========================================================================== */
 [data-theme="cyberpunk"],
 .cyberpunk {
-  --bg-canvas: #05070a;          /* Pitch dark tactical void */
-  --bg-surface: #090e14;         /* Deep military titanium surface */
-  --bg-surface-hover: #0e151f;   /* Clean active deck hover */
-  --bg-surface-active: #131c29;
-  --bg-subtle: #070a0f;
-  --bg-muted: #0c1219;
+  --bg-canvas: #05131e;          /* Rich Cyberspace Navy Void (Completely distinct from Obsidian black) */
+  --bg-surface: #0b2336;         /* Luminous Tactical Cyber Deck Surface */
+  --bg-surface-hover: #10324d;   /* Active deck hover */
+  --bg-surface-active: #164264;  /* Elevated state */
+  --bg-subtle: #081a29;
+  --bg-muted: #0d2940;
 
-  /* Precision Glare-Free Emerald & Frost Borders */
-  --border-subtle: rgba(16, 185, 129, 0.15);
-  --border-default: rgba(16, 185, 129, 0.28);
-  --border-strong: #10b981;
-  --border-focus: #10b981;
+  /* Luminous Cyber Cyan & Matrix Glass Borders */
+  --border-subtle: rgba(0, 240, 255, 0.25);
+  --border-default: rgba(0, 240, 255, 0.45);
+  --border-strong: #00f0ff;
+  --border-focus: #00f0ff;
 
-  /* Anti-Glare Balanced Typography */
-  --text-primary: #ffffff;
-  --text-secondary: #e2e8f0;
-  --text-muted: #8492a6;
-  --text-disabled: #475569;
-  --text-inverse: #05070a;
+  /* High-Contrast Luminous Cyber Typography */
+  --text-primary: #ffffff;       /* Pure crisp white */
+  --text-secondary: #a5f3fc;     /* Vibrant ice-cyan */
+  --text-muted: #67e8f9;         /* Matrix cyan */
+  --text-disabled: #386b80;
+  --text-inverse: #05131e;
 
-  /* Tactical Sentinel Emerald & Matrix Accents */
-  --primary-50: #022c22;
-  --primary-500: #10b981;
-  --primary-600: #059669;
-  --primary-surface: rgba(16, 185, 129, 0.12);
-  --primary-border: rgba(16, 185, 129, 0.4);
-  --primary-text: #34d399;
+  /* Tactical Cyber Cyan & Electric Blue Accents */
+  --primary-50: #083344;
+  --primary-500: #06b6d4;        /* Luminous Cyan */
+  --primary-600: #0891b2;
+  --primary-surface: rgba(0, 240, 255, 0.2);
+  --primary-border: rgba(0, 240, 255, 0.6);
+  --primary-text: #22d3ee;
 
-  /* Deep Black Elevation Shadows with Micro Rim */
-  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.7);
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(16, 185, 129, 0.25);
-  --shadow-md: 0 8px 24px -2px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(16, 185, 129, 0.3);
-  --shadow-lg: 0 16px 36px -4px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(16, 185, 129, 0.35);
-  --card-elevated-shadow: 0 14px 34px rgba(0, 0, 0, 0.95), 0 0 1px rgba(16, 185, 129, 0.35);
-  --specular-top-rim: inset 0 1px 0 0 rgba(16, 185, 129, 0.3);
+  /* Cyberspace Blue-Teal Depth Shadows */
+  --shadow-xs: 0 1px 4px rgba(0, 15, 30, 0.7);
+  --shadow-sm: 0 2px 10px rgba(0, 15, 30, 0.8), inset 0 1px 0 rgba(0, 240, 255, 0.35);
+  --shadow-md: 0 8px 26px -2px rgba(0, 15, 30, 0.9), inset 0 1px 0 rgba(0, 240, 255, 0.4);
+  --shadow-lg: 0 16px 38px -4px rgba(0, 15, 30, 0.95), inset 0 1px 0 rgba(0, 240, 255, 0.45);
+  --card-elevated-shadow: 0 14px 34px rgba(0, 15, 30, 0.95), 0 0 20px rgba(0, 240, 255, 0.2);
+  --specular-top-rim: inset 0 1px 0 0 rgba(0, 240, 255, 0.45);
 
-  --cyber-blue-primary: #10b981;
-  --cyber-glow-blue: 0 4px 14px rgba(0, 0, 0, 0.8);
-  --cyber-glow-cyan: 0 4px 14px rgba(0, 0, 0, 0.8);
+  --cyber-blue-primary: #06b6d4;
+  --cyber-cyan: #00f0ff;
+  --cyber-emerald: #00ffaa;
+  --cyber-glow-blue: 0 0 20px rgba(6, 182, 212, 0.5);
+  --cyber-glow-cyan: 0 0 20px rgba(0, 240, 255, 0.5);
 }

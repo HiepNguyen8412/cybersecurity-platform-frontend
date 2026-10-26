@@ -77,7 +77,7 @@ export function Sidebar() {
   ]
 
   const renderSidebarContent = (isCollapsed) => (
-    <div className="flex h-full flex-col bg-white dark:bg-[#0c1019] cyberpunk:bg-[#030814] border-r border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 text-slate-900 dark:text-white cyberpunk:text-cyan-50 transition-colors select-none">
+    <div className="flex h-full flex-col bg-white dark:bg-[#0c1019] cyberpunk:bg-[#051726] border-r border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 text-slate-900 dark:text-white cyberpunk:text-cyan-50 transition-colors select-none">
       {/* Brand Header */}
       <div
         className={`flex h-16 items-center border-b border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 ${
@@ -209,7 +209,7 @@ export function Sidebar() {
 
       {/* Cyber Sandbox Telemetry Widget (Desktop expanded only) */}
       {!isCollapsed && (
-        <div className="mx-3 mb-2 p-2.5 rounded-xl bg-slate-50/90 dark:bg-[#111726] cyberpunk:bg-[#061126] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 font-mono-tech text-[10px] space-y-1.5 shadow-2xs">
+        <div className="mx-3 mb-2 p-2.5 rounded-xl bg-slate-50/90 dark:bg-[#111726] cyberpunk:bg-[#07243c] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-400/50 font-mono-tech text-[10px] space-y-1.5 shadow-2xs">
           <div className="flex items-center justify-between">
             <span className="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400 font-bold uppercase tracking-wider">
               <RiRadarLine className="w-3.5 h-3.5 text-cyan-500 animate-pulse" />

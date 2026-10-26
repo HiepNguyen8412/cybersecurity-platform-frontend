@@ -34,9 +34,9 @@ export function PublicHeader() {
   const displayName = user?.fullName || user?.name || "Học viên"
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/90 dark:bg-[#080d19]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] transition-colors select-none">
+    <header className="sticky top-0 z-40 w-full bg-white/90 dark:bg-[#08090d]/90 cyberpunk:bg-[#051726]/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 transition-colors select-none">
       {/* Subtle Cyan Horizon Glow */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/[0.04] via-transparent to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/[0.04] via-transparent to-transparent cyberpunk:from-cyan-500/[0.08] pointer-events-none" />
 
       <div className="relative max-w-[1240px] mx-auto px-4 sm:px-6 h-18 flex items-center justify-between z-10">
         {/* Logo & Live Status */}

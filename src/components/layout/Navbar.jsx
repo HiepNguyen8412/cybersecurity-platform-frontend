@@ -160,7 +160,7 @@ export function Navbar() {
   return (
     <header
       className={`
-        fixed top-0 right-0 left-0 z-30 h-16 bg-white/85 dark:bg-[#08090d]/85 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] text-slate-900 dark:text-white transition-all duration-200 ease-in-out select-none
+        fixed top-0 right-0 left-0 z-30 h-16 bg-white/85 dark:bg-[#08090d]/85 cyberpunk:bg-[#051726]/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 text-slate-900 dark:text-white cyberpunk:text-cyan-50 transition-all duration-200 ease-in-out select-none
         ${isSidebarCollapsed ? "md:left-[72px]" : "md:left-60"}
       `.trim()}
     >
