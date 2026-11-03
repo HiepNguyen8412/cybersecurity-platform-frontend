@@ -8,7 +8,7 @@ import {
   ChevronDown,
   Shield,
   Info,
-  Sparkles,
+  Zap,
   Lock,
   Mail,
   ArrowRight,
@@ -207,8 +207,8 @@ export function Pricing() {
             1. HERO TITLE & BILLING TOGGLE
            ==================================================================== */}
         <div className="text-center max-w-3xl mx-auto space-y-5">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 cyberpunk:bg-emerald-950/60 border border-indigo-200/80 dark:border-indigo-800/60 cyberpunk:border-emerald-500/40 text-indigo-700 dark:text-indigo-300 cyberpunk:text-emerald-300 text-xs font-mono shadow-2xs">
-            <Shield className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 cyberpunk:bg-blue-950/60 border border-indigo-200/80 dark:border-indigo-800/60 cyberpunk:border-cyan-500/40 text-indigo-700 dark:text-indigo-300 cyberpunk:text-cyan-300 text-xs font-mono shadow-2xs">
+            <Shield className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400" />
             <span className="font-semibold uppercase tracking-wider text-[11px]">
               Đầu Tư Vào Kỹ Năng Thực Chiến • Không Phí Ẩn Hạ Tầng
             </span>
@@ -216,7 +216,7 @@ export function Pricing() {
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white cyberpunk:text-white tracking-tight leading-tight">
             Nâng Tầm Năng Lực Phòng Thủ SOC. <br />
-            <span className="bg-gradient-to-r from-indigo-600 via-blue-700 to-indigo-800 dark:from-white dark:via-indigo-200 dark:to-indigo-400 cyberpunk:from-emerald-300 cyberpunk:via-emerald-400 cyberpunk:to-teal-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-indigo-600 via-blue-700 to-indigo-800 dark:from-white dark:via-indigo-200 dark:to-indigo-400 cyberpunk:from-cyan-300 cyberpunk:via-blue-400 cyberpunk:to-indigo-300 bg-clip-text text-transparent">
               Trải Nghiệm Trực Tiếp Trên Cloud Sandbox.
             </span>
           </h1>
@@ -365,7 +365,7 @@ export function Pricing() {
                       onClick={() => setShowEarlyAccessModal(true)}
                       className="w-full py-3.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer cyber-btn-primary btn-cyber-interactive shadow-md shadow-blue-500/15"
                     >
-                      <Sparkles className="h-4 w-4" />
+                      <Zap className="h-4 w-4" />
                       <span>{plan.ctaText}</span>
                       <ChevronRight className="h-4 w-4" />
                     </button>
@@ -578,7 +578,7 @@ export function Pricing() {
 
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
-                <Sparkles className="w-6 h-6" />
+                <Zap className="w-6 h-6" />
               </div>
               <div>
                 <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cyan-400">

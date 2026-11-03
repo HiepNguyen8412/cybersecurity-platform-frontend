@@ -24,10 +24,10 @@ export function DashboardHeader({
       <div className="space-y-1.5">
         <div className="flex items-center gap-2.5 flex-wrap">
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
-            Chào buổi sáng, {displayName} <span className="inline-block animate-wiggle select-none" aria-hidden="true">⚡</span>
+            Chào buổi sáng, {displayName}
           </h1>
           <span className="font-mono-tech text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800/60 cyberpunk:bg-cyan-950/60 cyberpunk:text-cyan-300 cyberpunk:border-cyan-500/50 shadow-2xs">
-            TRUY CẬP: LVL-4 // SOC READY
+            CHUYÊN VIÊN AN NINH MẠNG
           </span>
         </div>
         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300/80 font-normal leading-relaxed">

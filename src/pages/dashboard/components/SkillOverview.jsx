@@ -1,4 +1,4 @@
-﻿import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { UserCheck, ArrowRight } from "lucide-react"
 import { Card } from "../../../components/common"
 import SkillProgressItem from "./SkillProgressItem"

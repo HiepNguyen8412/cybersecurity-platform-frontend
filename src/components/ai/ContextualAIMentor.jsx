@@ -1,4 +1,4 @@
-﻿import { useState } from "react"
+import { useState } from "react"
 import { UserCheck, BookOpen, FileText, CheckCircle2, AlertTriangle, ShieldCheck, X } from "lucide-react"
 
 /**

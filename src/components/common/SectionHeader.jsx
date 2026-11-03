@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Reusable SectionHeader component for inner card and section groupings.
  * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
  */

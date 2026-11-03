@@ -1,4 +1,4 @@
-﻿import { useState } from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Compass, ArrowRight, Layers, FlaskConical, Clock, CheckCircle2, ChevronRight } from "lucide-react"
 import { Card, Badge, Button, ProgressBar, CountUp } from "../../../components/common"

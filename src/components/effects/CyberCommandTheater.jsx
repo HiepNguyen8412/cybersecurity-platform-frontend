@@ -1589,6 +1589,8 @@ export default function CyberCommandTheater() {
               <img
                 src="/images/world-map-realistic-dark.jpg"
                 alt="Real World Satellite Global Network"
+                loading="lazy"
+                decoding="async"
                 className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-all duration-700 ease-in-out ${
                   viewMode === "2d-map" ? "opacity-95 contrast-105 brightness-95" : "opacity-0"
                 }`}

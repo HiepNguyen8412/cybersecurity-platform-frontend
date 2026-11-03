@@ -113,53 +113,53 @@
 }
 
 /* ==========================================================================
-   THEME 2: CYBER MODE (Tactical Cyber Range HUD & Matrix Jade)
-   RADICALLY DISTINCT FROM DARK MODE:
-   - Dark Mode is pure obsidian graphite monochrome (#090a0f / #12141c) with Electric Iris.
-   - Cyber Mode is deep tactical jade abyss (#02120b / #062217) with luminous 
-     Matrix Phosphor (#00e599), Mint phosphor (#a8eedb), and tactical HUD styling.
+   THEME 2: CYBER MODE (Tactical Cyber Range HUD & Electric Cyber Blue)
+   RADICALLY SLEEK & MODERN CYBERSECURITY AESTHETIC:
+   - Deep Midnight Space Blue Void (#030712 / #050b1a)
+   - Luminous Electric Blue (#0084ff), Cyber Cyan (#00d2ff), Sky Blue (#38bdf8)
+   - High-tech tactical HUD styling with zero muddy green
    ========================================================================== */
 [data-theme="cyberpunk"],
 .cyberpunk {
-  --bg-canvas: #02120b;                         /* Deep Tactical Emerald Void */
-  --bg-surface: #062217;                         /* Luminous Tactical HUD Deck Surface */
-  --bg-surface-hover: #0b2f21;                  /* Active deck hover */
-  --bg-surface-active: #103d2b;                 /* Elevated state */
-  --bg-subtle: #03170e;
-  --bg-muted: #08291c;
+  --bg-canvas: #040916;                         /* Deep Midnight Tech Blue Void */
+  --bg-surface: #091329;                        /* Luminous Tactical Blue HUD Deck Surface */
+  --bg-surface-hover: #0e1d3e;                  /* Active deck hover */
+  --bg-surface-active: #132752;                 /* Elevated state */
+  --bg-subtle: #060d1f;
+  --bg-muted: #0b1733;
 
-  /* Luminous Tactical Matrix Borders */
-  --border-subtle: rgba(0, 229, 153, 0.22);
-  --border-default: rgba(0, 229, 153, 0.42);
-  --border-strong: #00e599;
-  --border-focus: #00e599;
+  /* Luminous Tactical Cyber Blue Borders */
+  --border-subtle: rgba(56, 189, 248, 0.18);
+  --border-default: rgba(0, 162, 255, 0.35);
+  --border-strong: #0099ff;
+  --border-focus: #00d2ff;
 
   /* High-Contrast Luminous Tactical Typography */
   --text-primary: #ffffff;                      /* Pure crisp white */
-  --text-secondary: var(--jade-11, #a8eedb);    /* Vibrant phosphor mint */
-  --text-muted: var(--jade-10, #56dcae);        /* Tactical matrix jade */
-  --text-disabled: #1d5843;
-  --text-inverse: #02120b;
+  --text-secondary: #93c5fd;                    /* Electric sky blue clarity */
+  --text-muted: #60a5fa;                        /* High-definition tactical blue metadata */
+  --text-disabled: #1e3a5f;
+  --text-inverse: #030712;
 
-  /* Tactical Matrix Phosphor Emerald & Luminous Accents */
-  --primary-50: var(--jade-2, #0d1e16);
-  --primary-500: #00e599;                       /* Precision Matrix Phosphor */
-  --primary-600: #05b177;
-  --primary-surface: rgba(0, 229, 153, 0.16);
-  --primary-border: rgba(0, 229, 153, 0.45);
-  --primary-text: #a8eedb;
+  /* Tactical Electric Cyber Blue & Luminous Accents */
+  --primary-50: #0a1b38;
+  --primary-500: #0084ff;                       /* Precision Electric Blue */
+  --primary-600: #0070db;
+  --primary-surface: rgba(0, 132, 255, 0.16);
+  --primary-border: rgba(0, 162, 255, 0.45);
+  --primary-text: #7dd3fc;
 
-  /* Matrix Depth Shadows */
-  --shadow-xs: 0 1px 4px rgba(0, 20, 15, 0.7);
-  --shadow-sm: 0 2px 10px rgba(0, 20, 15, 0.8), inset 0 1px 0 rgba(0, 229, 153, 0.32);
-  --shadow-md: 0 8px 26px -2px rgba(0, 20, 15, 0.9), inset 0 1px 0 rgba(0, 229, 153, 0.38);
-  --shadow-lg: 0 16px 38px -4px rgba(0, 20, 15, 0.95), inset 0 1px 0 rgba(0, 229, 153, 0.42);
-  --card-elevated-shadow: 0 14px 34px rgba(0, 20, 15, 0.95), 0 0 20px rgba(0, 229, 153, 0.18);
-  --specular-top-rim: inset 0 1px 0 0 rgba(0, 229, 153, 0.42);
+  /* Cyber Blue Depth Shadows */
+  --shadow-xs: 0 1px 4px rgba(2, 6, 23, 0.7);
+  --shadow-sm: 0 2px 10px rgba(2, 6, 23, 0.8), inset 0 1px 0 rgba(56, 189, 248, 0.28);
+  --shadow-md: 0 8px 26px -2px rgba(2, 6, 23, 0.9), inset 0 1px 0 rgba(56, 189, 248, 0.35);
+  --shadow-lg: 0 16px 38px -4px rgba(2, 6, 23, 0.95), inset 0 1px 0 rgba(56, 189, 248, 0.4);
+  --card-elevated-shadow: 0 14px 34px rgba(2, 6, 23, 0.95), 0 0 22px rgba(0, 132, 255, 0.22);
+  --specular-top-rim: inset 0 1px 0 0 rgba(56, 189, 248, 0.4);
 
-  --cyber-blue-primary: #00e599;
-  --cyber-cyan: #00f0ff;
-  --cyber-emerald: #00e599;
-  --cyber-glow-blue: 0 0 20px rgba(0, 229, 153, 0.4);
-  --cyber-glow-cyan: 0 0 20px rgba(0, 229, 153, 0.4);
+  --cyber-blue-primary: #0084ff;
+  --cyber-cyan: #00d2ff;
+  --cyber-emerald: #38bdf8;
+  --cyber-glow-blue: 0 0 22px rgba(0, 132, 255, 0.45);
+  --cyber-glow-cyan: 0 0 22px rgba(0, 210, 255, 0.45);
 }

@@ -8,17 +8,210 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="description"
     content="Modern, interactive cybersecurity education platform for learners, analysts, and security professionals." />
-  <meta name="theme-color" content="#2563eb" />
+  <meta name="theme-color" content="#090c13" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap"
     rel="stylesheet" />
   <title>CyberPath — Cyber Range & Hands-On Security Platform</title>
+
+  <!-- Instant Theme Resolver: Eliminates light/dark flicker when opening web -->
+  <script>
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem("cyber_theme") || "dark";
+        var root = document.documentElement;
+        if (savedTheme === "light") {
+          root.classList.add("light");
+          root.setAttribute("data-theme", "light");
+          root.style.colorScheme = "light";
+        } else if (savedTheme === "cyberpunk") {
+          root.classList.add("dark", "cyberpunk");
+          root.setAttribute("data-theme", "cyberpunk");
+          root.style.colorScheme = "dark";
+        } else {
+          root.classList.add("dark");
+          root.setAttribute("data-theme", "dark");
+          root.style.colorScheme = "dark";
+        }
+      } catch (e) { }
+    })();
+  </script>
+
+  <style>
+    /* ==========================================================================
+       Bespoke Minimalist Preloader (Quiet, Fast, Human-Grade)
+       ========================================================================== */
+    .app-preloader-overlay {
+      position: fixed;
+      inset: 0;
+      background: #090c13;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      user-select: none;
+      will-change: opacity, transform;
+      transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .app-preloader-overlay.is-exiting {
+      opacity: 0 !important;
+      transform: scale(0.99) !important;
+      pointer-events: none !important;
+    }
+
+    .app-preloader-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.04);
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .app-preloader-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #2563eb, #38bdf8);
+      transition: width 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .app-preloader-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .app-preloader-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      animation: subtleBreathe 2.4s ease-in-out infinite;
+    }
+
+    .app-preloader-icon {
+      width: 22px;
+      height: 22px;
+      stroke: #38bdf8;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .app-preloader-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .app-preloader-status {
+      font-size: 0.75rem;
+      color: #64748b;
+      letter-spacing: 0.02em;
+    }
+
+    @keyframes subtleBreathe {
+      0%, 100% { transform: scale(0.98); opacity: 0.85; }
+      50% { transform: scale(1.02); opacity: 1; }
+    }
+  </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900">
+<body class="bg-[#090c13] text-slate-100 antialiased selection:bg-blue-500/20 selection:text-blue-400">
+  <!-- Minimalist Initial Preloader -->
+  <div id="cyber-app-preloader" class="app-preloader-overlay" aria-live="polite">
+    <div class="app-preloader-bar">
+      <div id="cyber-preloader-top-fill" class="app-preloader-bar-fill"></div>
+    </div>
+
+    <div class="app-preloader-content">
+      <div class="app-preloader-icon-box">
+        <svg class="app-preloader-icon" viewBox="0 0 24 24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      </div>
+
+      <div class="app-preloader-title">CyberPath Platform</div>
+      <div class="app-preloader-status">Đang khởi chạy môi trường an toàn...</div>
+    </div>
+  </div>
+
   <div id="root"></div>
+
+  <!-- Preloader Controller (Smooth Fast Dismissal) -->
+  <script>
+    (function () {
+      var preloader = document.getElementById("cyber-app-preloader");
+      if (!preloader) return;
+
+      var topFill = document.getElementById("cyber-preloader-top-fill");
+      var isExiting = false;
+      var startTime = performance.now();
+
+      function step(now) {
+        if (isExiting) return;
+        var elapsed = now - startTime;
+        var progress = Math.min(85, (1 - Math.exp(-elapsed / 200)) * 90);
+        if (topFill) topFill.style.width = progress + "%";
+        if (progress < 85) {
+          requestAnimationFrame(step);
+        }
+      }
+      requestAnimationFrame(step);
+
+      window.__dismissCyberPreloader = function () {
+        if (isExiting || !preloader) return;
+        isExiting = true;
+        if (topFill) topFill.style.width = "100%";
+
+        setTimeout(function () {
+          preloader.classList.add("is-exiting");
+          setTimeout(function () {
+            if (preloader && preloader.parentNode) {
+              preloader.parentNode.removeChild(preloader);
+            }
+          }, 240);
+        }, 80);
+      };
+
+      // Instant bypass via click or keypress
+      preloader.addEventListener("click", function () {
+        window.__dismissCyberPreloader();
+      });
+      window.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" || e.key === " " || e.key === "Enter") {
+          window.__dismissCyberPreloader();
+        }
+      });
+
+      // Safety fallback: auto-dismiss after 2 seconds
+      setTimeout(function () {
+        if (!isExiting) window.__dismissCyberPreloader();
+      }, 2000);
+    })();
+  </script>
+
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

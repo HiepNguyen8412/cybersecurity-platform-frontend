@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { Lock } from "lucide-react"
 import PublicHeader from "../PublicLayout/PublicHeader"
+import CyberBackground from "../../components/common/CyberBackground"
 
 /**
  * Centered, Color-Harmonized Cybersecurity AuthLayout.
@@ -10,28 +11,12 @@ import PublicHeader from "../PublicLayout/PublicHeader"
  */
 export function AuthLayout({ children }) {
   return (
-    <div className="min-h-screen cyber-grid-canvas text-slate-900 dark:text-white cyberpunk:text-cyan-50 flex flex-col justify-between relative overflow-x-hidden selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-cyan-950 dark:selection:text-cyan-200">
+    <div className="min-h-screen text-slate-900 dark:text-white cyberpunk:text-cyan-50 flex flex-col justify-between relative overflow-x-hidden selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-cyan-950 dark:selection:text-cyan-200">
+      {/* Global Cybersecurity Ambient Backdrop */}
+      <CyberBackground />
+
       {/* 1. Persistent Public Header */}
       <PublicHeader />
-
-      {/* ====================================================================
-          BACKGROUND CYBERSECURITY MOTIF (SOFT & EYE-FRIENDLY)
-         ==================================================================== */}
-      {/* Soft Cyber Dot Matrix Grid Overlay */}
-      <div
-        className="fixed inset-0 pointer-events-none opacity-40"
-        style={{
-          backgroundImage: `radial-gradient(rgba(37, 99, 235, 0.12) 1.2px, transparent 1.2px)`,
-          backgroundSize: "24px 24px",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Soft Ambient Radial Glows */}
-      <div
-        className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[380px] bg-gradient-to-b from-blue-200/25 via-indigo-100/15 to-transparent blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
 
       {/* Subtle Security Badge Pill */}
       <div className="relative z-10 pt-4 flex justify-center px-4">

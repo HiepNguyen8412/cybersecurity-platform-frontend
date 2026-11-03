@@ -6,16 +6,8 @@ export function PublicFooter() {
 
   return (
     <footer className="relative w-full bg-[#0a0c10] text-slate-300 transition-colors overflow-hidden border-t border-slate-800/80">
-      {/* ====================================================================
-          YEWSAFE-STYLE SIGNATURE LASER HORIZON BEAM GLOW
-         ==================================================================== */}
-      <div className="absolute top-0 left-0 right-0 h-px">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/90 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent blur-[2px]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent blur-[1px]" />
-      </div>
-      <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent blur-xl pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-900/30 to-transparent pointer-events-none" />
+      {/* Top Hairline Rim */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.08]" />
 
       {/* Top Footer Main Columns */}
       <div className="relative max-w-[1240px] mx-auto px-4 sm:px-6 py-10 lg:py-14 z-10">
@@ -43,10 +35,7 @@ export function PublicFooter() {
             {/* Live Operational Status Pill */}
             <div className="pt-1">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900/80 border border-gray-700/60 text-xs font-mono-tech text-gray-300 select-none shadow-inner">
-                <span className="flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                </span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
                 <span className="font-semibold text-emerald-400">SLA 99.98%</span>
                 <span className="text-gray-500">&bull;</span>
                 <span className="text-gray-400">Range Sandbox Trực Tuyến</span>

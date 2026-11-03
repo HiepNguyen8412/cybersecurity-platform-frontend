@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom"
 import AppRoutes from "./routes/AppRoutes"
 import ScrollToTop from "./components/common/ScrollToTop"
 import ToastContainer from "./components/common/ToastContainer"
+import WebsitePreloader from "./components/common/WebsitePreloader"
 import { AuthProvider } from "./context/AuthContext"
 import { LayoutProvider } from "./context/LayoutContext"
 import useThemeStore from "./stores/useThemeStore"
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <WebsitePreloader />
       <ScrollToTop />
       <AuthProvider>
         <LayoutProvider>

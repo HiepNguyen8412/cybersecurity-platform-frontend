@@ -17,11 +17,11 @@ export function ThemeToggle() {
           isLight
             ? "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800 shadow-2xs"
             : isCyber
-            ? "bg-emerald-950/40 hover:bg-emerald-900/50 border-emerald-500/40 text-emerald-300 shadow-2xs"
+            ? "bg-blue-950/60 hover:bg-blue-900/70 border-cyan-500/50 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.25)]"
             : "bg-white/[0.06] hover:bg-white/[0.1] border-white/[0.1] text-slate-200 shadow-2xs"
         }
       `.trim()}
-      title={`Chuyển giao diện: Hiện tại là ${isLight ? "SÁNG (EDITORIAL LIGHT)" : isCyber ? "CYBER RANGE (TACTICAL HUD)" : "TỐI (OBSIDIAN TITANIUM)"}`}
+      title={`Chuyển giao diện: Hiện tại là ${isLight ? "SÁNG (EDITORIAL LIGHT)" : isCyber ? "CYBER BLUE (TACTICAL SOC)" : "TỐI (OBSIDIAN TITANIUM)"}`}
       aria-label="Chuyển chế độ hiển thị giao diện"
     >
       {isLight ? (
@@ -31,8 +31,8 @@ export function ThemeToggle() {
         </>
       ) : isCyber ? (
         <>
-          <RiRadarLine className="w-4 h-4 text-emerald-400" />
-          <span className="font-bold text-emerald-300 tracking-wider">CYBER</span>
+          <RiRadarLine className="w-4 h-4 text-cyan-400 animate-pulse" />
+          <span className="font-bold text-cyan-300 tracking-wider">CYBER BLUE</span>
         </>
       ) : (
         <>

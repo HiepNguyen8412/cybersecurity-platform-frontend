@@ -1,4 +1,4 @@
-﻿import { ProgressBar, Badge, CountUp } from "../../../components/common"
+import { ProgressBar, Badge, CountUp } from "../../../components/common"
 
 const levelBadgeVariants = {
   Novice: "secondary",

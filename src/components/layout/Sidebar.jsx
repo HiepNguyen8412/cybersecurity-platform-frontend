@@ -91,20 +91,20 @@ export function Sidebar() {
           title="CyberPath - Trang chủ"
         >
           {/* Custom Sculpted Shield Vessel */}
-          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-emerald-500 text-white cyberpunk:text-slate-950 shadow-md shadow-indigo-600/30 dark:shadow-indigo-950/50 cyberpunk:shadow-emerald-500/30 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
-            <RiShieldFlashFill className="h-5.5 w-5.5 text-white cyberpunk:text-slate-950" />
+          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-blue-600 text-white cyberpunk:text-white shadow-md shadow-indigo-600/30 dark:shadow-indigo-950/50 cyberpunk:shadow-blue-500/30 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
+            <RiShieldFlashFill className="h-5.5 w-5.5 text-white" />
             <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 ring-2 ring-white dark:ring-[#090a0f]" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400 ring-2 ring-white dark:ring-[#090a0f]" />
             </span>
           </div>
 
           {!isCollapsed && (
             <div className="flex flex-col">
               <span className="text-sm font-extrabold tracking-tight text-slate-900 dark:text-white cyberpunk:text-white leading-tight">
-                Cyber<span className="text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400">Path</span>
+                Cyber<span className="text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400">Path</span>
               </span>
-              <span className="text-[10px] font-mono-tech tracking-widest text-slate-400 dark:text-slate-400 cyberpunk:text-emerald-400/90 uppercase leading-tight mt-0.5">
+              <span className="text-[10px] font-mono-tech tracking-widest text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400/90 uppercase leading-tight mt-0.5">
                 SEC-OPS RANGE
               </span>
             </div>

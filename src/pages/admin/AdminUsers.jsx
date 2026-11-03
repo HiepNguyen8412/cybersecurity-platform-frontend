@@ -180,6 +180,8 @@ export default function AdminUsers() {
                       <img
                         src={u.avatar}
                         alt={u.name}
+                        loading="lazy"
+                        decoding="async"
                         className="h-8 w-8 rounded-full object-cover border border-slate-200 dark:border-slate-700"
                       />
                       <div>

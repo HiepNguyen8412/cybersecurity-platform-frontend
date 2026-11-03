@@ -46,16 +46,13 @@ export function PublicHeader() {
             className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 rounded-xl group"
             title="CyberPath — Trang chủ"
           >
-            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-emerald-500 text-white cyberpunk:text-slate-950 shadow-md shadow-indigo-600/30 dark:shadow-indigo-950/50 cyberpunk:shadow-emerald-500/30 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
-              <RiShieldFlashFill className="h-5.5 w-5.5 text-white cyberpunk:text-slate-950" />
-              <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 ring-2 ring-white dark:ring-[#090a0f]" />
-              </span>
+            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-blue-600 text-white cyberpunk:text-white shadow-md shadow-indigo-600/30 dark:shadow-indigo-950/50 cyberpunk:shadow-blue-500/30 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
+              <RiShieldFlashFill className="h-5.5 w-5.5 text-white" />
+              <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-[#090a0f]" />
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-                Cyber<span className="text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400">Path</span>
+                Cyber<span className="text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400">Path</span>
               </span>
               <span className="text-[10px] font-mono-tech uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
                 SEC-OPS RANGE
@@ -174,14 +171,14 @@ export function PublicHeader() {
             <div className="flex items-center gap-2.5">
               <Link
                 to="/login"
-                className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold rounded-xl px-4 py-2 text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 cyberpunk:hover:text-emerald-400 bg-slate-100/80 hover:bg-slate-200/80 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] border border-slate-200/80 dark:border-white/[0.08] hover:border-indigo-300 dark:hover:border-indigo-500/40 cyberpunk:hover:border-emerald-500/40 transition-all cursor-pointer shadow-2xs"
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold rounded-xl px-4 py-2 text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 cyberpunk:hover:text-cyan-400 bg-slate-100/80 hover:bg-slate-200/80 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] border border-slate-200/80 dark:border-white/[0.08] hover:border-indigo-300 dark:hover:border-indigo-500/40 cyberpunk:hover:border-cyan-500/40 transition-all cursor-pointer shadow-2xs"
               >
-                <RiLoginCircleLine className="h-4 w-4 text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400" />
+                <RiLoginCircleLine className="h-4 w-4 text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400" />
                 <span>Đăng nhập</span>
               </Link>
               <Link
                 to="/register"
-                className="inline-flex items-center justify-center gap-1.5 text-xs font-bold rounded-xl px-4.5 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 cyberpunk:bg-emerald-500 cyberpunk:hover:bg-emerald-400 text-white cyberpunk:text-slate-950 shadow-md shadow-indigo-600/20 dark:shadow-indigo-950/40 cyberpunk:shadow-emerald-500/30 ring-1 ring-white/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-bold rounded-xl px-4.5 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 cyberpunk:bg-blue-600 cyberpunk:hover:bg-blue-500 text-white cyberpunk:text-white shadow-md shadow-indigo-600/20 dark:shadow-indigo-950/40 cyberpunk:shadow-blue-500/30 ring-1 ring-white/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
               >
                 <RiFlashlightLine className="h-3.5 w-3.5" />
                 <span>Bắt đầu ngay</span>

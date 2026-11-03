@@ -12,7 +12,6 @@ import {
   ShieldCheck,
   FileCheck2,
   AlertCircle,
-  Sparkles,
   Loader2,
   ExternalLink,
 } from "lucide-react"
@@ -386,7 +385,7 @@ export function CourseSyllabusDrawer({ course, isOpen, onClose }) {
               <div className="p-4 rounded-xl bg-slate-950/70 border border-cyan-500/30 space-y-3">
                 <div className="flex items-center justify-between font-mono font-bold text-cyan-400">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" />
+                    <ShieldCheck className="w-4 h-4" />
                     <span>Đồ Án Tốt Nghiệp Capstone Cuối Lộ Trình</span>
                   </div>
                   {isCapstoneDone ? (

@@ -1,4 +1,4 @@
-﻿import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { ArrowRight, Clock, Compass, PlayCircle, FileText, CheckCircle2 } from "lucide-react"
 import { Card, Badge, Button, ProgressBar, CountUp } from "../../../components/common"
 

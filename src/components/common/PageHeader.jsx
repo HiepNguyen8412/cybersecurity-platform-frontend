@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Reusable PageHeader component for consistent top-of-page titles, descriptions, and action buttons.
  * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
  */

@@ -53,16 +53,16 @@ export function AIMentorCard({
         {/* Header */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-emerald-500 text-white cyberpunk:text-slate-950 shadow-2xs">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-blue-600 text-white cyberpunk:text-white shadow-2xs">
               <UserCheck className="h-4 w-4" aria-hidden="true" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <h2 className="text-xs font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 tracking-tight uppercase">
-                  CỐ VẤN TÁC CHIẾN // SOC INTEL
+                <h2 className="text-xs font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 tracking-tight">
+                  Cố Vấn Lộ Trình Thực Hành
                 </h2>
                 <span className="font-mono-tech text-[10px] font-bold text-blue-700 dark:text-cyan-400 cyberpunk:text-cyan-300 bg-blue-100/90 dark:bg-cyan-950/60 cyberpunk:bg-cyan-950/80 border border-blue-200 dark:border-cyan-800/40 cyberpunk:border-cyan-500/50 px-1.5 py-0.5 rounded">
-                  v2.4 TELEMETRY
+                  HỆ THỐNG GỢI Ý
                 </span>
               </div>
             </div>

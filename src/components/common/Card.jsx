@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Reusable Card component and subcomponents.
  * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
  */
