@@ -1,39 +1,39 @@
 import { Link, useLocation } from "react-router-dom"
 import {
-  ShieldCheck,
-  LayoutDashboard,
-  UserCheck,
-  FlaskConical,
-  BookOpen,
-  FileText,
-  Settings,
-} from "lucide-react"
+  RiShieldCheckLine,
+  RiDashboard3Line,
+  RiUserSettingsLine,
+  RiCpuLine,
+  RiFolderShield2Line,
+  RiFileHistoryLine,
+  RiEqualizer3Line,
+} from "@remixicon/react"
 
 export function AdminHeader({ title = "Trung Tâm Điều Hành SOC", subtitle = "Quản trị nền tảng & Giám sát hạ tầng tác chiến", actions = null }) {
   const location = useLocation()
 
   const navTabs = [
-    { label: "Tổng Quan Control Center", path: "/admin", icon: LayoutDashboard },
-    { label: "Quản Lý Người Dùng", path: "/admin/users", icon: UserCheck },
-    { label: "Quản Trị Phòng Lab", path: "/admin/labs", icon: FlaskConical },
-    { label: "Quản Trị Khóa Học", path: "/admin/courses", icon: BookOpen },
-    { label: "Nhật Ký Kiểm Toán", path: "/admin/audit-logs", icon: FileText },
-    { label: "Cấu Hình Hệ Thống", path: "/admin/settings", icon: Settings },
+    { label: "Tổng quan Control Center", path: "/admin", icon: RiDashboard3Line },
+    { label: "Quản lý người dùng", path: "/admin/users", icon: RiUserSettingsLine },
+    { label: "Quản trị phòng Lab", path: "/admin/labs", icon: RiCpuLine },
+    { label: "Quản trị khóa học", path: "/admin/courses", icon: RiFolderShield2Line },
+    { label: "Nhật ký kiểm toán", path: "/admin/audit-logs", icon: RiFileHistoryLine },
+    { label: "Cấu hình hệ thống", path: "/admin/settings", icon: RiEqualizer3Line },
   ]
 
   return (
-    <div className="space-y-4 pb-2 border-b border-slate-200/80 dark:border-slate-800 cyberpunk:border-cyan-500/40">
+    <div className="space-y-4 pb-3 border-b border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 select-none">
       {/* Top Banner Row */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-rose-600 text-white text-[11px] font-bold uppercase tracking-wider font-mono shadow-2xs">
-              <ShieldCheck className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-rose-500/10 dark:bg-rose-950/40 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-[10px] font-bold uppercase tracking-wider font-mono-tech shadow-2xs">
+              <RiShieldCheckLine className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               <span>SOC ADMIN CLEARANCE // LVL-5</span>
             </span>
 
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-[11px] font-semibold font-mono">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-emerald-500/10 dark:bg-emerald-950/40 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold font-mono-tech">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               <span>HẠ TẦNG TRỰC CHIẾN ONLINE</span>
             </span>
           </div>
@@ -55,7 +55,7 @@ export function AdminHeader({ title = "Trung Tâm Điều Hành SOC", subtitle =
       </div>
 
       {/* Navigation Sub-Tabs */}
-      <div className="flex items-center gap-1 overflow-x-auto pb-1 pt-1 scrollbar-none">
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 pt-0.5 scrollbar-none">
         {navTabs.map((tab) => {
           const Icon = tab.icon
           const isActive = location.pathname === tab.path || (tab.path === "/admin" && location.pathname === "/admin/dashboard")
@@ -64,11 +64,11 @@ export function AdminHeader({ title = "Trung Tâm Điều Hành SOC", subtitle =
               key={tab.path}
               to={tab.path}
               className={`
-                inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer
+                inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer
                 ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-sm dark:bg-cyan-600 dark:text-slate-950 cyberpunk:bg-cyan-500 cyberpunk:text-slate-950 font-bold"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800 cyberpunk:text-cyan-300/80 cyberpunk:hover:text-cyan-100 cyberpunk:hover:bg-cyan-950/40"
+                    ? "bg-indigo-600 text-white shadow-xs dark:bg-indigo-600 dark:text-white cyberpunk:bg-cyan-500 cyberpunk:text-slate-950 font-semibold"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/[0.06] cyberpunk:text-cyan-300/80 cyberpunk:hover:text-cyan-100 cyberpunk:hover:bg-cyan-950/40"
                 }
               `}
             >

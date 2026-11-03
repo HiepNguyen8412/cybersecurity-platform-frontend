@@ -103,15 +103,15 @@ function ForgotPassword() {
              ==================================================================== */
           <div className="space-y-5">
             <div className="space-y-1.5 text-center">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-[11px] font-semibold text-blue-700 tracking-wide uppercase">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 cyberpunk:bg-cyan-950/60 border border-blue-100 dark:border-blue-800/50 cyberpunk:border-cyan-500/40 text-[11px] font-semibold text-blue-700 dark:text-blue-300 cyberpunk:text-cyan-300 tracking-wide uppercase">
                 <KeyRound className="h-3 w-3" />
                 <span>Khôi Phục Thông Tin Đăng Nhập</span>
               </div>
 
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
                 Đặt Lại Mật Khẩu
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 leading-normal">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80 leading-normal">
                 Nhập địa chỉ email đã đăng ký để nhận liên kết khôi phục an toàn sử dụng một lần.
               </p>
             </div>

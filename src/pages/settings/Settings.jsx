@@ -28,32 +28,32 @@ export function Settings() {
       {/* ====================================================================
           1. HEADER BANNER
          ==================================================================== */}
-      <section className="relative rounded-2xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/80 cyberpunk:from-[#071022] cyberpunk:via-[#09152b] cyberpunk:to-[#0c1e3d] border border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-sm p-6 sm:p-8 overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400" />
+      <section className="relative rounded-2xl bg-white dark:bg-[#0c1017] cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 shadow-sm p-6 sm:p-8 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-px bg-slate-200 dark:bg-white/10" />
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <span className="font-mono-tech text-[11px] font-bold px-2.5 py-1 rounded bg-blue-600 text-white uppercase tracking-wider shadow-2xs">
+              <span className="font-mono-tech text-[11px] font-bold px-2.5 py-1 rounded bg-indigo-600 text-white uppercase tracking-wider shadow-2xs">
                 PLATFORM CONFIGURATION
               </span>
-              <span className="font-mono-tech text-[11px] font-bold px-2.5 py-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span className="font-mono-tech text-[11px] font-bold px-2.5 py-1 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40">
                 HARDENED PROFILE
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white cyberpunk:text-cyan-50 tracking-tight">
               Security Controls & Sandbox Preferences
             </h1>
 
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
               Configure multi-factor authentication, ephemeral terminal sandbox isolation parameters, and telemetry alerts.
             </p>
           </div>
 
           {saveSuccess && (
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold animate-fade-in-up">
-              <Check className="h-4 w-4 text-emerald-600" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/40 text-emerald-800 dark:text-emerald-300 text-xs font-semibold animate-fade-in-up">
+              <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
               <span>Cài Đặt Đã Đồng Bộ</span>
             </div>
           )}
@@ -67,17 +67,17 @@ export function Settings() {
         {/* LEFT COLUMN: AUTHENTICATION & SANDBOX CONFIGURATION (7 COLS) */}
         <div className="lg:col-span-7 space-y-6">
           {/* MULTI-FACTOR AUTHENTICATION */}
-          <Card className="p-6 border-slate-200/90 shadow-sm space-y-4">
+          <Card className="p-6 border-slate-200/90 dark:border-white/[0.08] shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="h-9 w-9 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+                <div className="h-9 w-9 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/40 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                   <Smartphone className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                     Two-Factor Authentication (2FA / WebAuthn)
                   </h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Hardware security keys (YubiKey) or TOTP authenticator app.
                   </p>
                 </div>
@@ -88,7 +88,7 @@ export function Settings() {
                 aria-label="Kích hoạt xác thực hai yếu tố MFA"
                 onClick={() => setMfaEnabled(!mfaEnabled)}
                 className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                  mfaEnabled ? "bg-blue-600" : "bg-slate-300"
+                  mfaEnabled ? "bg-indigo-600" : "bg-slate-300 dark:bg-slate-700"
                 }`}
                 role="switch"
                 aria-checked={mfaEnabled}
@@ -101,23 +101,23 @@ export function Settings() {
               </button>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono-tech text-slate-600 flex items-center justify-between">
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-mono-tech text-slate-600 dark:text-slate-300 flex items-center justify-between">
               <span>PHƯƠNG THỨC CHÍNH: KHÓA PHẦN CỨNG (FIDO2)</span>
-              <span className="text-emerald-700 font-bold">ACTIVE</span>
+              <span className="text-emerald-700 dark:text-emerald-400 font-bold">ACTIVE</span>
             </div>
           </Card>
 
           {/* VIRTUAL LAB SANDBOX ISOLATION PREFERENCES */}
-          <Card className="p-6 border-slate-200/90 shadow-sm space-y-4">
+          <Card className="p-6 border-slate-200/90 dark:border-white/[0.08] shadow-sm space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="h-9 w-9 rounded-lg bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600">
+              <div className="h-9 w-9 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/40 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                 <Terminal className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-slate-900">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                   Terminal Range & Sandbox Lifecycle
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   Configure ephemeral VM automatic teardown and shell output display.
                 </p>
               </div>
@@ -125,13 +125,13 @@ export function Settings() {
 
             <div className="space-y-4 pt-2">
               <div>
-                <label className="text-xs font-bold text-slate-700 font-mono-tech block mb-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 font-mono-tech block mb-1">
                   INACTIVE CONTAINER TIMEOUT:
                 </label>
                 <select
                   value={sandboxTimeout}
                   onChange={(e) => setSandboxTimeout(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm bg-white dark:bg-slate-900 cyberpunk:bg-[#071329] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 text-slate-900 dark:text-slate-100 cyberpunk:text-cyan-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 font-mono"
+                  className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm bg-white dark:bg-slate-900 cyberpunk:bg-[#071329] border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 text-slate-900 dark:text-slate-100 cyberpunk:text-cyan-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 font-mono"
                 >
                   <option value="15">15 Phút (Thu hồi RAM nghiêm ngặt)</option>
                   <option value="30">30 Phút (Khuyến nghị mặc định)</option>
@@ -140,7 +140,7 @@ export function Settings() {
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 font-mono-tech block mb-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 font-mono-tech block mb-1">
                   TELEMETRY LOG VERBOSITY:
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -151,7 +151,7 @@ export function Settings() {
                       onClick={() => setTelemetryVerbosity(mode)}
                       className={`p-2.5 rounded-xl text-xs font-mono-tech uppercase font-semibold text-center border transition-all cursor-pointer ${
                         telemetryVerbosity === mode
-                          ? "bg-blue-600 text-white border-blue-600 shadow-2xs"
+                          ? "bg-indigo-600 text-white border-indigo-600 shadow-2xs"
                           : "bg-white dark:bg-slate-900 cyberpunk:bg-[#071329] text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 hover:bg-slate-50 dark:hover:bg-slate-800"
                       }`}
                     >

@@ -95,15 +95,15 @@ function Login() {
       <div className="space-y-5">
         {/* Header with Security Sub-badge */}
         <div className="space-y-1.5 text-center">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-[11px] font-semibold text-blue-700 tracking-wide uppercase">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 cyberpunk:bg-cyan-950/60 border border-blue-100 dark:border-blue-800/50 cyberpunk:border-cyan-500/40 text-[11px] font-semibold text-blue-700 dark:text-blue-300 cyberpunk:text-cyan-300 tracking-wide uppercase">
             <Shield className="h-3 w-3" />
             <span>Cổng Truy Cập An Toàn SOC</span>
           </div>
 
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
             Đăng Nhập Vào Nền Tảng
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 leading-normal">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80 leading-normal">
             Nhập thông tin xác thực để tiếp tục phiên tác chiến an ninh mạng.
           </p>
         </div>
@@ -150,14 +150,14 @@ function Login() {
             <div className="flex items-center justify-between mb-1">
               <label
                 htmlFor="login-password"
-                className="text-xs font-semibold text-slate-700 tracking-wide"
+                className="text-xs font-semibold text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-200 tracking-wide"
               >
                 Password <span className="text-rose-500">*</span>
               </label>
 
               <Link
                 to="/forgot-password"
-                className="text-xs font-medium text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+                className="text-xs font-medium text-blue-600 dark:text-blue-400 cyberpunk:text-cyan-300 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-colors"
                 tabIndex={isBusy ? -1 : 0}
               >
                 Forgot password?
@@ -211,16 +211,16 @@ function Login() {
         </form>
 
         {/* Demo Fast Login Helper */}
-        <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-between text-xs transition-colors hover:bg-slate-100/70">
+        <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 cyberpunk:bg-[#071329] border border-slate-200/90 dark:border-slate-700/80 cyberpunk:border-cyan-500/30 flex items-center justify-between text-xs transition-colors hover:bg-slate-100/70 dark:hover:bg-slate-800">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300">
               <KeyRound className="h-3.5 w-3.5" />
             </div>
             <div className="flex flex-col text-left min-w-0">
-              <span className="text-[11px] font-semibold text-slate-800 truncate">
+              <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-100 cyberpunk:text-cyan-50 truncate">
                 Demo Account &bull; Hiệp Nguyễn
               </span>
-              <span className="text-[10px] text-slate-500 truncate">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 truncate">
                 hiep.nguyen@cyberpath.edu (Security Analyst)
               </span>
             </div>
@@ -234,8 +234,8 @@ function Login() {
           >
             {isDemoCopied ? (
               <>
-                <Check className="h-3 w-3 text-emerald-600" />
-                <span className="text-emerald-700">Đã điền mẫu!</span>
+                <Check className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
+                <span className="text-emerald-700 dark:text-emerald-300">Đã điền mẫu!</span>
               </>
             ) : (
               <span>Điền Mẫu Thử Nghiệm</span>
@@ -250,11 +250,11 @@ function Login() {
         </div>
 
         {/* Registration Link */}
-        <p className="text-center text-xs text-slate-500 pt-1">
+        <p className="text-center text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 pt-1">
           Don't have an account yet?{" "}
           <Link
             to="/register"
-            className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+            className="font-semibold text-blue-600 dark:text-blue-400 cyberpunk:text-cyan-300 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-colors"
           >
             Create an account
           </Link>

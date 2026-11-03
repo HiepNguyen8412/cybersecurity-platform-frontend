@@ -1471,13 +1471,13 @@ export function LandingPage() {
       <section className="max-w-[1240px] mx-auto px-4 sm:px-6 py-14 sm:py-18">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <span className="text-xs font-mono-tech font-bold text-blue-600 uppercase tracking-widest">
+            <span className="text-xs font-mono-tech font-bold text-blue-600 dark:text-blue-400 cyberpunk:text-cyan-400 uppercase tracking-widest">
               DANH MỤC PHÒNG LAB THỰC CHIẾN
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white cyberpunk:text-white tracking-tight mt-1">
               Hệ Thống Phòng Lab Thực Chiến
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80 mt-1">
               Các môi trường khai thác lỗ hổng thực tế được ánh xạ với chuẩn CVE và ma trận MITRE ATT&CK.
             </p>
           </div>
@@ -1491,11 +1491,11 @@ export function LandingPage() {
                 value={labSearch}
                 onChange={(e) => setLabSearch(e.target.value)}
                 placeholder="Tìm kiếm phòng lab, mã CVE..."
-                className="pl-9 pr-3 py-1.5 text-xs font-mono-tech rounded-xl border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40 bg-white dark:bg-slate-800 cyberpunk:bg-[#030712] text-slate-900 dark:text-white focus:border-blue-600 outline-none w-full sm:w-48 shadow-2xs"
+                className="pl-9 pr-3 py-1.5 text-xs font-mono-tech rounded-xl border border-slate-200 dark:border-white/10 cyberpunk:border-cyan-500/40 bg-white dark:bg-[#12141c] cyberpunk:bg-[#030712] text-slate-900 dark:text-white cyberpunk:text-cyan-50 focus:border-blue-600 dark:focus:border-blue-400 outline-none w-full sm:w-48 shadow-2xs"
               />
             </div>
 
-            <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-slate-800 cyberpunk:bg-[#0d1e3d] rounded-xl border border-slate-200/80 dark:border-slate-700 cyberpunk:border-cyan-500/40 text-xs">
+            <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-[#12141c] cyberpunk:bg-[#0d1e3d] rounded-xl border border-slate-200/80 dark:border-white/10 cyberpunk:border-cyan-500/40 text-xs">
               {[
                 { key: "all", label: "All" },
                 { key: "web", label: "Web" },
@@ -1509,7 +1509,7 @@ export function LandingPage() {
                   onClick={() => setLabFilter(cat.key)}
                   className={`px-3 py-1 rounded-lg font-mono-tech text-xs font-semibold transition-all cursor-pointer ${
                     labFilter === cat.key
-                      ? "bg-white dark:bg-slate-700 cyberpunk:bg-cyan-500/20 text-blue-600 dark:text-cyan-300 shadow-2xs font-bold"
+                      ? "bg-white dark:bg-blue-600 cyberpunk:bg-cyan-500/20 text-blue-600 dark:text-white cyberpunk:text-cyan-300 shadow-2xs font-bold"
                       : "text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-400/80 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
@@ -1521,19 +1521,19 @@ export function LandingPage() {
         </div>
 
         {/* Live Lab Telemetry Summary Bar with CountUp */}
-        <div className="mb-6 p-3.5 rounded-xl bg-slate-50/90 border border-slate-200/80 flex flex-wrap items-center justify-between gap-3 text-xs font-mono-tech">
-          <div className="flex items-center gap-2 text-slate-700">
+        <div className="mb-6 p-3.5 rounded-xl bg-slate-50/90 dark:bg-[#12141c] cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/10 cyberpunk:border-cyan-500/30 flex flex-wrap items-center justify-between gap-3 text-xs font-mono-tech">
+          <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-200">
             <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
             <span className="font-semibold">Kịch Bản Đang Lọc:</span>
-            <span className="font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+            <span className="font-bold text-blue-600 dark:text-blue-400 cyberpunk:text-cyan-300 bg-blue-50 dark:bg-blue-950/40 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800/40">
               <CountUp end={filteredLabs.length} duration={3500} /> Phòng Lab Khả Dụng
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-slate-500">
+          <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80">
             <span>
               Cumulative Rewards:{" "}
-              <strong className="text-amber-800 font-bold">
+              <strong className="text-amber-700 dark:text-amber-400 font-bold">
                 <CountUp
                   end={filteredLabs.reduce((sum, l) => sum + (l.points || 0), 0)}
                   duration={3500}
@@ -1542,10 +1542,10 @@ export function LandingPage() {
                 />
               </strong>
             </span>
-            <span className="hidden sm:inline text-slate-300">&bull;</span>
+            <span className="hidden sm:inline text-slate-300 dark:text-slate-700">&bull;</span>
             <span className="hidden sm:inline">
               Cloud VM Automation:{" "}
-              <strong className="text-emerald-700 font-bold">
+              <strong className="text-emerald-700 dark:text-emerald-400 font-bold">
                 <CountUp end={100} duration={3500} suffix="%" /> Cấu Hình Tự Động
               </strong>
             </span>

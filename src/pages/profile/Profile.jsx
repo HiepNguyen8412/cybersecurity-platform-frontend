@@ -41,17 +41,17 @@ export function Profile() {
       {/* ====================================================================
           1. DOSSIER IDENTITY BANNER
          ==================================================================== */}
-      <section className="relative rounded-2xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/80 cyberpunk:from-[#071022] cyberpunk:via-[#09152b] cyberpunk:to-[#0c1e3d] border border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/40 shadow-sm p-6 sm:p-8 overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400" />
+      <section className="relative rounded-2xl bg-white dark:bg-[#0c1017] cyberpunk:bg-[#071022] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 shadow-sm p-6 sm:p-8 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-px bg-slate-200 dark:bg-white/10" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
             {/* Avatar with Cyber Halo Ring */}
             <div className="relative">
-              <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-2xl sm:text-3xl font-extrabold shadow-md border-2 border-white">
+              <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-indigo-600 dark:bg-indigo-600 flex items-center justify-center text-white text-2xl sm:text-3xl font-extrabold shadow-md border-2 border-white dark:border-slate-800">
                 {learnerName.slice(0, 2).toUpperCase()}
               </div>
-              <span className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center" title="Online & Operational">
+              <span className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-800 flex items-center justify-center" title="Online & Operational">
                 <span className="h-2 w-2 rounded-full bg-white" />
               </span>
             </div>
@@ -59,32 +59,32 @@ export function Profile() {
             {/* Profile Info */}
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white cyberpunk:text-cyan-50 tracking-tight">
                   {learnerName}
                 </h1>
-                <span className="font-mono-tech text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+                <span className="font-mono-tech text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/40">
                   CLEARANCE: TIER-2 SPECIALIST
                 </span>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-600 font-mono-tech flex items-center gap-2 flex-wrap">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-mono-tech flex items-center gap-2 flex-wrap">
                 <span className="flex items-center gap-1">
                   <Mail className="h-3.5 w-3.5 text-slate-400" />
                   {learnerEmail}
                 </span>
-                <span className="text-slate-300">&bull;</span>
+                <span className="text-slate-300 dark:text-slate-700">&bull;</span>
                 <span className="flex items-center gap-1">
                   <MapPin className="h-3.5 w-3.5 text-slate-400" />
                   Hanoi SOC Node
                 </span>
-                <span className="text-slate-300">&bull;</span>
-                <span className="flex items-center gap-1 text-amber-700 font-semibold">
+                <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+                <span className="flex items-center gap-1 text-amber-700 dark:text-amber-400 font-semibold">
                   <Flame className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
                   7-Day Streak
                 </span>
               </p>
 
-              <p className="text-xs text-slate-500 max-w-xl pt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl pt-0.5">
                 Cybersecurity Apprentice specializing in Web Application Penetration Testing, defensive SIEM correlation rules, and enterprise incident response.
               </p>
             </div>
@@ -117,13 +117,13 @@ export function Profile() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* LEFT COLUMN: VERIFIED SKILLS & CTF RECORD (7 COLS) */}
         <div className="lg:col-span-7 space-y-6">
-          <Card className="p-6 border-slate-200/90 shadow-sm space-y-4">
+          <Card className="p-6 border-slate-200/90 dark:border-white/[0.08] shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <Shield className="h-4 w-4 text-blue-600" />
+              <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Shield className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
                 Verified Tactical Competencies
               </h2>
-              <span className="text-xs font-mono-tech text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              <span className="text-xs font-mono-tech text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-800/40">
                 PROCTORED
               </span>
             </div>
@@ -138,12 +138,12 @@ export function Profile() {
               ].map((skill, idx) => (
                 <div key={idx} className="space-y-1">
                   <div className="flex justify-between items-center text-xs font-semibold">
-                    <span className="text-slate-800">{skill.name}</span>
-                    <span className="font-mono-tech text-blue-600 font-bold">{skill.pct}%</span>
+                    <span className="text-slate-800 dark:text-slate-200">{skill.name}</span>
+                    <span className="font-mono-tech text-indigo-600 dark:text-indigo-400 font-bold">{skill.pct}%</span>
                   </div>
-                  <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-blue-600 rounded-full transition-all duration-500"
+                      className="h-full bg-indigo-600 dark:bg-indigo-500 rounded-full transition-all duration-500"
                       style={{ width: `${skill.pct}%` }}
                     />
                   </div>
@@ -153,30 +153,30 @@ export function Profile() {
           </Card>
 
           {/* RANGE STATS & COMMUNITY HANDLE */}
-          <Card className="p-6 border-slate-200/90 shadow-sm space-y-4">
-            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <Terminal className="h-4 w-4 text-blue-600" />
+          <Card className="p-6 border-slate-200/90 dark:border-white/[0.08] shadow-sm space-y-4">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Terminal className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
               External Platform Identifiers
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <GitBranch className="h-5 w-5 text-slate-700" />
+                  <GitBranch className="h-5 w-5 text-slate-700 dark:text-slate-300" />
                   <div>
-                    <span className="text-xs font-bold text-slate-900 block">GitHub</span>
-                    <span className="text-[11px] text-slate-500 font-mono">@hiepnguyen8412</span>
+                    <span className="text-xs font-bold text-slate-900 dark:text-white block">GitHub</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">@hiepnguyen8412</span>
                   </div>
                 </div>
                 <Badge variant="success" size="sm">Đã Kết Nối</Badge>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <Globe className="h-5 w-5 text-blue-600" />
+                  <Globe className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
                   <div>
-                    <span className="text-xs font-bold text-slate-900 block">Hack The Box</span>
-                    <span className="text-[11px] text-slate-500 font-mono">Cấp bậc: Chuyên gia Khai thác</span>
+                    <span className="text-xs font-bold text-slate-900 dark:text-white block">Hack The Box</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">Cấp bậc: Chuyên gia Khai thác</span>
                   </div>
                 </div>
                 <Badge variant="primary" size="sm">Linked</Badge>
@@ -188,20 +188,20 @@ export function Profile() {
         {/* RIGHT COLUMN: PGP PUBLIC KEY FINGERPRINT & SECURITY CONTROLS (5 COLS) */}
         <div className="lg:col-span-5 space-y-6">
           {/* PGP KEY CARD */}
-          <Card className="p-6 border-slate-200/90 shadow-sm space-y-4">
+          <Card className="p-6 border-slate-200/90 dark:border-white/[0.08] shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Key className="h-4 w-4 text-amber-500" />
-                <h3 className="text-base font-bold text-slate-900">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   PGP Public Fingerprint
                 </h3>
               </div>
-              <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+              <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                 RSA 4096-BIT
               </span>
             </div>
 
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Used for cryptographic signing of verified lab completions and encrypted report deliveries:
             </p>
 

@@ -106,15 +106,15 @@ function Register() {
       <div className="space-y-5">
         {/* Header with Security Sub-badge */}
         <div className="space-y-1.5 text-center">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-100 text-[11px] font-semibold text-blue-700 tracking-wide uppercase">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 cyberpunk:bg-cyan-950/60 border border-blue-100 dark:border-blue-800/50 cyberpunk:border-cyan-500/40 text-[11px] font-semibold text-blue-700 dark:text-blue-300 cyberpunk:text-cyan-300 tracking-wide uppercase">
             <Shield className="h-3 w-3" />
             <span>Đăng Ký Tài Khoản Tác Chiến</span>
           </div>
 
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
             Tạo Tài Khoản Học Viên
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 leading-normal">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80 leading-normal">
             Truy cập hệ thống phòng lab ảo thực chiến, đấu trường an ninh và lộ trình chuyên sâu.
           </p>
         </div>
@@ -286,11 +286,11 @@ function Register() {
         </div>
 
         {/* Sign In Link */}
-        <p className="text-center text-xs text-slate-500 pt-1">
+        <p className="text-center text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 pt-1">
           Đã có tài khoản?{" "}
           <Link
             to="/login"
-            className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+            className="font-semibold text-blue-600 dark:text-blue-400 cyberpunk:text-cyan-300 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-colors"
           >
             Sign in
           </Link>

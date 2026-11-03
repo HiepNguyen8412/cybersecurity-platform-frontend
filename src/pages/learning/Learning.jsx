@@ -160,9 +160,9 @@ export function Learning() {
       {/* ====================================================================
           1. ACADEMY MISSION CONTROL HUD (HERO BANNER - CYBER RANGE THEME)
          ==================================================================== */}
-      <section className="relative rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/90 border border-slate-700/60 dark:border-slate-800 shadow-xl p-6 sm:p-8 overflow-hidden text-white">
-        {/* Neon laser accent bar */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500" />
+      <section className="relative rounded-3xl bg-slate-900 dark:bg-[#0c1017] border border-slate-800 shadow-xl p-6 sm:p-8 overflow-hidden text-white">
+        {/* Subtle hairline top accent border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-white/10 dark:bg-white/10" />
         
         {/* Cyber Watermark Icon */}
         <div className="absolute -right-8 -bottom-8 opacity-5 pointer-events-none select-none text-cyan-400">
@@ -335,7 +335,7 @@ export function Learning() {
                 >
                   {/* Subtle top indicator for enrolled courses */}
                   {isEnrolled && (
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-500" />
+                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-cyan-400" />
                   )}
 
                   <div className="space-y-4">
