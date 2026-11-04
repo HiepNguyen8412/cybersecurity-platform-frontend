@@ -143,145 +143,145 @@ function ResetPassword() {
             </div>
 
             {formError && (
-              <div
-                role="alert"
-                aria-live="assertive"
-                className="p-3.5 rounded-xl bg-rose-50 border border-rose-200/80 text-xs text-rose-700 flex items-start gap-2.5 animate-in fade-in"
-              >
-                <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
-                <div className="flex-1">
-                  <span className="font-semibold block">Lỗi cập nhật mật khẩu</span>
-                  <span>{formError}</span>
-                </div>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
-              {/* New Password */}
-              <div className="space-y-1.5">
-                <Input
-                  id="new-password"
-                  label="New password"
-                  type="password"
-                  required
-                  autoComplete="new-password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value)
-                    if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: "" }))
-                    if (formError) setFormError("")
-                  }}
-                  placeholder="••••••••"
-                  leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
-                  showPasswordToggle
-                  errorMessage={fieldErrors.password}
-                  disabled={isBusy}
-                />
-
-                <PasswordStrength password={password} />
-              </div>
-
-              {/* Confirm New Password */}
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label
-                    htmlFor="confirm-new-password"
-                    className="text-xs font-semibold text-slate-700 tracking-wide"
-                  >
-                    Confirm new password <span className="text-rose-500">*</span>
-                  </label>
-
-                  {isPasswordMatch && (
-                    <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 animate-in fade-in">
-                      <CheckCircle2 className="h-3 w-3" />
-                      <span>Mật khẩu trùng khớp</span>
-                    </span>
-                  )}
-                </div>
-
-                <Input
-                  id="confirm-new-password"
-                  type="password"
-                  required
-                  autoComplete="new-password"
-                  value={confirmPassword}
-                  onChange={(e) => {
-                    setConfirmPassword(e.target.value)
-                    if (fieldErrors.confirmPassword) setFieldErrors((prev) => ({ ...prev, confirmPassword: "" }))
-                    if (formError) setFormError("")
-                  }}
-                  placeholder="••••••••"
-                  leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
-                  showPasswordToggle
-                  errorMessage={fieldErrors.confirmPassword}
-                  disabled={isBusy}
-                />
-              </div>
-
-              <div className="pt-1">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="lg"
-                  fullWidth
-                  isLoading={isBusy}
-                  loadingText="Updating credentials..."
-                  rightIcon={!isBusy ? <ArrowRight className="h-4 w-4" /> : null}
-                >
-                  Update Password & Sign In
-                </Button>
-              </div>
-            </form>
-          </div>
-        ) : (
-          /* State 3: Password Successfully Updated */
-          <div className="space-y-5 text-center animate-in fade-in duration-200">
-            <div className="flex h-14 w-14 mx-auto items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 shadow-2xs">
-              <CheckCircle2 className="h-7 w-7 stroke-[2]" />
-            </div>
-
-            <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-100 text-[11px] font-semibold text-emerald-700 tracking-wide uppercase">
-                <Shield className="h-3 w-3" />
-                <span>Thông Tin Đã Được Bảo Vệ</span>
-              </div>
-
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
-                Password Updated Successfully
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-500 leading-normal">
-                Your account password has been updated. You can now use your new credentials to sign in.
-              </p>
-            </div>
-
-            <div className="pt-2">
-              <Button
-                variant="primary"
-                size="lg"
-                fullWidth
-                rightIcon={<ArrowRight className="h-4 w-4" />}
-                onClick={() => navigate("/login", { replace: true })}
-              >
-                Sign In With New Password
-              </Button>
+          <div
+            role="alert"
+            aria-live="assertive"
+            className="p-3.5 rounded-xl bg-rose-50 border border-rose-200/80 text-xs text-rose-700 flex items-start gap-2.5 animate-in fade-in"
+          >
+            <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
+            <div className="flex-1">
+              <span className="font-semibold block">Lỗi cập nhật mật khẩu</span>
+              <span>{formError}</span>
             </div>
           </div>
         )}
 
-        {/* Back to sign in link */}
-        {!isSuccess && !isTokenInvalid && (
-          <p className="text-center text-xs text-slate-500 pt-2 border-t border-slate-100">
-            Remember your existing password?{" "}
-            <Link
-              to="/login"
-              className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+        <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
+          {/* New Password */}
+          <div className="space-y-1.5">
+            <Input
+              id="new-password"
+              label="New password"
+              type="password"
+              required
+              autoComplete="new-password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+                if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: "" }))
+                if (formError) setFormError("")
+              }}
+              placeholder="••••••••"
+              leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
+              showPasswordToggle
+              errorMessage={fieldErrors.password}
+              disabled={isBusy}
+            />
+
+            <PasswordStrength password={password} />
+          </div>
+
+          {/* Confirm New Password */}
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label
+                htmlFor="confirm-new-password"
+                className="text-xs font-semibold text-slate-700 tracking-wide"
+              >
+                Confirm new password <span className="text-rose-500">*</span>
+              </label>
+
+              {isPasswordMatch && (
+                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 animate-in fade-in">
+                  <CheckCircle2 className="h-3 w-3" />
+                  <span>Mật khẩu trùng khớp</span>
+                </span>
+              )}
+            </div>
+
+            <Input
+              id="confirm-new-password"
+              type="password"
+              required
+              autoComplete="new-password"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value)
+                if (fieldErrors.confirmPassword) setFieldErrors((prev) => ({ ...prev, confirmPassword: "" }))
+                if (formError) setFormError("")
+              }}
+              placeholder="••••••••"
+              leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
+              showPasswordToggle
+              errorMessage={fieldErrors.confirmPassword}
+              disabled={isBusy}
+            />
+          </div>
+
+          <div className="pt-1">
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              fullWidth
+              isLoading={isBusy}
+              loadingText="Updating credentials..."
+              rightIcon={!isBusy ? <ArrowRight className="h-4 w-4" /> : null}
             >
-              Sign in
-            </Link>
-          </p>
-        )}
+              Update Password & Sign In
+            </Button>
+          </div>
+        </form>
       </div>
-    </AuthLayout>
+      ) : (
+      /* State 3: Password Successfully Updated */
+      <div className="space-y-5 text-center animate-in fade-in duration-200">
+        <div className="flex h-14 w-14 mx-auto items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 shadow-2xs">
+          <CheckCircle2 className="h-7 w-7 stroke-[2]" />
+        </div>
+
+        <div className="space-y-1.5">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-100 text-[11px] font-semibold text-emerald-700 tracking-wide uppercase">
+            <Shield className="h-3 w-3" />
+            <span>Thông Tin Đã Được Bảo Vệ</span>
+          </div>
+
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
+            Password Updated Successfully
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 leading-normal">
+            Your account password has been updated. You can now use your new credentials to sign in.
+          </p>
+        </div>
+
+        <div className="pt-2">
+          <Button
+            variant="primary"
+            size="lg"
+            fullWidth
+            rightIcon={<ArrowRight className="h-4 w-4" />}
+            onClick={() => navigate("/login", { replace: true })}
+          >
+            Sign In With New Password
+          </Button>
+        </div>
+      </div>
+        )}
+
+      {/* Back to sign in link */}
+      {!isSuccess && !isTokenInvalid && (
+        <p className="text-center text-xs text-slate-500 pt-2 border-t border-slate-100">
+          Remember your existing password?{" "}
+          <Link
+            to="/login"
+            className="font-semibold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+          >
+            Sign in
+          </Link>
+        </p>
+      )}
+    </div>
+    </AuthLayout >
   )
 }
 
