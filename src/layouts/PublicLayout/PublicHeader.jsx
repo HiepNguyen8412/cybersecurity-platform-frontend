@@ -34,37 +34,34 @@ export function PublicHeader() {
   const displayName = user?.fullName || user?.name || "Học viên"
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/90 dark:bg-[#0a0f1d]/90 cyberpunk:bg-[#040a1a]/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 transition-colors select-none">
-      {/* Subtle Cyan Horizon Glow */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/[0.04] via-transparent to-transparent cyberpunk:from-cyan-500/[0.08] pointer-events-none" />
-
-      <div className="relative max-w-[1240px] mx-auto px-4 sm:px-6 h-18 flex items-center justify-between z-10">
-        {/* Logo & Live Status */}
-        <div className="flex items-center gap-3.5">
+    <header className="sticky top-0 z-40 w-full bg-white/85 dark:bg-[#080b14]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] transition-colors select-none">
+      <div className="relative max-w-[1240px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between z-10">
+        {/* Logo & Platform Name */}
+        <div className="flex items-center gap-3">
           <Link
             to="/"
-            className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 rounded-xl group"
+            className="flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl group"
             title="CyberPath — Trang chủ"
           >
-            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-blue-600 text-white cyberpunk:text-white shadow-md shadow-indigo-600/30 dark:shadow-indigo-950/50 cyberpunk:shadow-blue-500/30 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
-              <RiShieldFlashFill className="h-5.5 w-5.5 text-white" />
-              <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-[#0a0f1d]" />
+            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-sky-500 text-white shadow-md shadow-blue-600/20 group-hover:scale-105 transition-transform duration-200">
+              <RiShieldFlashFill className="h-5 w-5 text-white" />
+              <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-[#080b14]" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-                Cyber<span className="text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400">Path</span>
+              <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white leading-none">
+                Cyber<span className="text-blue-600 dark:text-sky-400">Path</span>
               </span>
-              <span className="text-[10px] font-mono-tech uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
+              <span className="text-[10px] font-mono tracking-wider text-slate-400 dark:text-slate-500 mt-0.5">
                 SEC-OPS RANGE
               </span>
             </div>
           </Link>
         </div>
 
-        {/* Center Desktop Navigation - Segmented Cyber Pill HUD */}
+        {/* Center Desktop Navigation */}
         <nav
           aria-label="Public Navigation"
-          className="hidden md:flex items-center gap-1.5 p-1.5 bg-slate-100/90 dark:bg-white/[0.04] backdrop-blur-md border border-slate-200/90 dark:border-white/[0.08] rounded-full shadow-inner"
+          className="hidden md:flex items-center gap-1"
         >
           {navLinks.map((link) => {
             const Icon = link.icon
@@ -74,14 +71,14 @@ export function PublicHeader() {
                 key={link.label}
                 to={link.to}
                 className={({ isActive }) =>
-                  `relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs transition-all duration-200 group ${
+                  `relative inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs transition-all duration-150 ${
                     isActive
-                      ? "bg-white dark:bg-slate-800 text-blue-600 dark:text-cyan-300 font-bold shadow-xs border border-blue-200/80 dark:border-cyan-500/40"
-                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium hover:bg-white/60 dark:hover:bg-white/[0.06]"
+                      ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-sky-400 font-semibold"
+                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-white/[0.05] font-medium"
                   }`
                 }
               >
-                <Icon className="h-4 w-4 shrink-0 transition-transform group-hover:scale-110" />
+                <Icon className="h-4 w-4 shrink-0" />
                 <span>{link.label}</span>
               </NavLink>
             )
@@ -89,7 +86,7 @@ export function PublicHeader() {
         </nav>
 
         {/* Right Desktop Auth Actions + Theme Toggle */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2.5">
           {/* Visual Theme Selector */}
           <ThemeToggle />
 
@@ -97,7 +94,7 @@ export function PublicHeader() {
             <div className="flex items-center gap-3">
               <Link
                 to="/dashboard"
-                className="inline-flex items-center gap-2 text-xs font-semibold rounded-xl px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-cyan-950/40 text-blue-700 dark:text-cyan-300 hover:border-blue-300 dark:hover:border-cyan-500/60 transition-all shadow-2xs border border-blue-200/80 dark:border-blue-500/30"
+                className="inline-flex items-center gap-2 text-xs font-semibold rounded-lg px-3.5 py-2 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-sky-400 hover:bg-blue-100/80 dark:hover:bg-blue-500/20 transition-all border border-blue-200/60 dark:border-blue-500/20"
               >
                 <RiDashboard3Line className="h-4 w-4" />
                 <span>Bảng Điều Khiển</span>
@@ -109,7 +106,7 @@ export function PublicHeader() {
                 trigger={({ isOpen }) => (
                   <button
                     type="button"
-                    className={`flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors cursor-pointer ${
+                    className={`flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors cursor-pointer ${
                       isOpen ? "bg-slate-100 dark:bg-white/[0.06]" : ""
                     }`}
                     aria-label="User menu"
@@ -123,7 +120,7 @@ export function PublicHeader() {
                 )}
               >
                 {({ close }) => (
-                  <div className="bg-white dark:bg-[#10192e] text-slate-900 dark:text-slate-100 rounded-xl border border-slate-200/80 dark:border-white/[0.08] shadow-xl overflow-hidden">
+                  <div className="bg-white dark:bg-[#0f1422] text-slate-900 dark:text-slate-100 rounded-xl border border-slate-200/80 dark:border-white/[0.08] shadow-xl overflow-hidden">
                     <div className="px-3.5 py-2.5 border-b border-slate-100 dark:border-white/[0.06]">
                       <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">
                         {displayName}
@@ -168,17 +165,17 @@ export function PublicHeader() {
               </Dropdown>
             </div>
           ) : (
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               <Link
                 to="/login"
-                className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold rounded-xl px-4 py-2 text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 cyberpunk:hover:text-cyan-400 bg-slate-100/80 hover:bg-slate-200/80 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] border border-slate-200/80 dark:border-white/[0.08] hover:border-indigo-300 dark:hover:border-indigo-500/40 cyberpunk:hover:border-cyan-500/40 transition-all cursor-pointer shadow-2xs"
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-medium rounded-lg px-3.5 py-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-all cursor-pointer"
               >
-                <RiLoginCircleLine className="h-4 w-4 text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400" />
+                <RiLoginCircleLine className="h-4 w-4 text-slate-400" />
                 <span>Đăng nhập</span>
               </Link>
               <Link
                 to="/register"
-                className="inline-flex items-center justify-center gap-1.5 text-xs font-bold rounded-xl px-4.5 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 cyberpunk:bg-blue-600 cyberpunk:hover:bg-blue-500 text-white cyberpunk:text-white shadow-md shadow-indigo-600/20 dark:shadow-indigo-950/40 cyberpunk:shadow-blue-500/30 ring-1 ring-white/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold rounded-lg px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white shadow-xs hover:shadow-sm hover:shadow-blue-600/20 active:scale-[0.98] transition-all cursor-pointer"
               >
                 <RiFlashlightLine className="h-3.5 w-3.5" />
                 <span>Bắt đầu ngay</span>

@@ -5,40 +5,40 @@ export function PublicFooter() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="relative w-full bg-[#0a0c10] text-slate-300 transition-colors overflow-hidden border-t border-slate-800/80">
+    <footer className="relative w-full bg-[#080b14] text-slate-400 transition-colors overflow-hidden border-t border-slate-800/60 select-none">
       {/* Top Hairline Rim */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.08]" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.06]" />
 
       {/* Top Footer Main Columns */}
-      <div className="relative max-w-[1240px] mx-auto px-4 sm:px-6 py-10 lg:py-14 z-10">
+      <div className="relative max-w-[1240px] mx-auto px-4 sm:px-6 py-12 lg:py-16 z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
           {/* Col 1 & 2: Platform Identity, Mission & Social Links */}
           <div className="lg:col-span-2 space-y-4">
             <Link
               to="/"
-              className="inline-flex items-center gap-2.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-lg group"
+              className="inline-flex items-center gap-2.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg group"
               title="CyberPath — Home"
             >
-              <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-sky-500 text-white shadow-md shadow-blue-600/20 group-hover:scale-105 transition-transform">
                 <ShieldCheck className="h-4.5 w-4.5 stroke-[2.2]" />
-                <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-cyan-300 ring-2 ring-[#0a0c10] animate-pulse" />
+                <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-[#080b14]" />
               </div>
-              <span className="text-xl font-black tracking-tight text-white leading-none">
-                Cyber<span className="text-cyan-400">Path</span>
+              <span className="text-xl font-bold tracking-tight text-white leading-none">
+                Cyber<span className="text-sky-400">Path</span>
               </span>
             </Link>
 
-            <p className="text-xs sm:text-sm text-gray-400 leading-relaxed max-w-sm">
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm">
               Nền tảng thao trường an ninh mạng và diễn tập thực chiến đám mây thế hệ mới. Đem lại năng lực phân tích mã độc, đánh chặn APT và vá lỗi trực tiếp trên sandbox trình duyệt.
             </p>
 
             {/* Live Operational Status Pill */}
             <div className="pt-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900/80 border border-gray-700/60 text-xs font-mono-tech text-gray-300 select-none shadow-inner">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono text-slate-300 select-none">
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
                 <span className="font-semibold text-emerald-400">SLA 99.98%</span>
-                <span className="text-gray-500">&bull;</span>
-                <span className="text-gray-400">Range Sandbox Trực Tuyến</span>
+                <span className="text-slate-600">&bull;</span>
+                <span className="text-slate-400">Range Sandbox Trực Tuyến</span>
               </div>
             </div>
 
