@@ -81,15 +81,15 @@ export default function CyberNetworkCanvas({ className = "" }) {
       }
       if (isDark) {
         return {
-          nodeCore: "rgba(148, 163, 184, 0.7)",     // slate-400
-          nodeGlow: "rgba(148, 163, 184, 0.12)",
-          lineBase: "rgba(148, 163, 184, 0.05)",
-          lineActive: "rgba(148, 163, 184, 0.18)",
-          pulseColor: "rgba(96, 165, 250, 0.7)",    // blue-400
-          sweepColor: "rgba(148, 163, 184, 0.025)",
-          labelColor: "rgba(148, 163, 184, 0.25)",
-          bigNodeCore: "rgba(96, 165, 250, 0.8)",
-          bigNodeGlow: "rgba(96, 165, 250, 0.15)",
+          nodeCore: "rgba(148, 163, 184, 0.8)",     // slate-400
+          nodeGlow: "rgba(56, 189, 248, 0.2)",      // sky-400 subtle glow
+          lineBase: "rgba(148, 163, 184, 0.08)",
+          lineActive: "rgba(56, 189, 248, 0.28)",   // sky-400 active line
+          pulseColor: "rgba(52, 211, 153, 0.85)",   // living emerald data pulse
+          sweepColor: "rgba(56, 189, 248, 0.035)",
+          labelColor: "rgba(148, 163, 184, 0.35)",
+          bigNodeCore: "rgba(56, 189, 248, 0.9)",   // sky azure core
+          bigNodeGlow: "rgba(56, 189, 248, 0.25)",
         }
       }
       // Light mode

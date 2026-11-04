@@ -98,15 +98,15 @@
   position: relative;
 }
 
-/* Dark Stealth Atmosphere (Obsidian Titanium & Electric Iris - Zero Glare) */
+/* Dark Stealth Atmosphere (Deep Oceanic Midnight & Luminous Azure - Natural Depth) */
 .dark:not(.cyberpunk) .cyber-grid-canvas,
 [data-theme="dark"] .cyber-grid-canvas {
-  background-color: #090a0f;
+  background-color: #0a0f1d;
   background-image: 
-    radial-gradient(circle at 40% 0%, rgba(91, 91, 214, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 80% 60%, rgba(18, 20, 28, 0.4) 0%, transparent 50%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    radial-gradient(circle at 40% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 60%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+    linear-gradient(to right, rgba(148, 163, 184, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
 }
 
@@ -338,30 +338,31 @@
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-/* Dark Stealth Card (Obsidian Titanium - Anti-Glare) */
+/* Dark Stealth Card (Rich Oceanic Obsidian Slate - Natural Depth) */
 .dark:not(.cyberpunk) .cyber-card,
 [data-theme="dark"] .cyber-card {
-  background: #12141c;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #10192e;
+  border: 1px solid rgba(148, 163, 184, 0.12);
   box-shadow: 
-    0 4px 16px -2px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    0 4px 18px -2px rgba(5, 10, 25, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
   border-radius: 14px;
 }
 
 .dark:not(.cyberpunk) .cyber-card:hover,
 [data-theme="dark"] .cyber-card:hover {
-  border-color: rgba(91, 91, 214, 0.4);
+  border-color: rgba(59, 130, 246, 0.45);
   box-shadow: 
-    0 8px 24px -2px rgba(0, 0, 0, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    0 8px 26px -2px rgba(5, 10, 25, 0.8),
+    0 0 16px rgba(59, 130, 246, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
   transform: translateY(-2px);
 }
 
 /* Cyber Tactical Card (Tactical Cyber Blue Deck - Sleek High-Tech) */
 .cyberpunk .cyber-card,
 [data-theme="cyberpunk"] .cyber-card {
-  background: linear-gradient(180deg, #091329 0%, #060e1f 100%);
+  background: linear-gradient(180deg, #08142c 0%, #050d1e 100%);
   border: 1px solid rgba(0, 162, 255, 0.38);
   box-shadow: 
     0 8px 26px -2px rgba(2, 6, 23, 0.9),
@@ -419,9 +420,9 @@
 
 .dark:not(.cyberpunk) .cyber-card-focal,
 [data-theme="dark"] .cyber-card-focal {
-  background: linear-gradient(135deg, #12141c 0%, #171a24 100%);
-  border: 1px solid rgba(91, 91, 214, 0.35);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, #10192e 0%, #15223e 100%);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  box-shadow: 0 8px 24px rgba(5, 10, 25, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .cyberpunk .cyber-card-focal,
@@ -445,9 +446,9 @@
 }
 
 .dark:not(.cyberpunk) .cyber-terminal {
-  background-color: #0c0e15;
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background-color: #0b1122;
+  border-color: rgba(148, 163, 184, 0.16);
+  box-shadow: 0 12px 28px rgba(5, 10, 25, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .cyberpunk .cyber-terminal {
@@ -459,7 +460,7 @@
 }
 
 /* ==========================================================================
-   4. High-Contrast Typography & Surface Overrides (Anti-Glare)
+   4. High-Contrast Typography & Surface Overrides (Anti-Glare & Natural Depth)
    ========================================================================== */
 
 /* White Background Adapters (Full Opacity Variants Support) */
@@ -475,9 +476,9 @@
 [data-theme="dark"] .bg-white\/90,
 [data-theme="dark"] .bg-white\/80,
 [data-theme="dark"] .bg-white\/70 {
-  background-color: #12141c !important;
+  background-color: #10192e !important;
   color: #f8fafc !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(148, 163, 184, 0.12) !important;
 }
 
 .cyberpunk .bg-white,
@@ -492,7 +493,7 @@
 [data-theme="cyberpunk"] .bg-white\/90,
 [data-theme="cyberpunk"] .bg-white\/80,
 [data-theme="cyberpunk"] .bg-white\/70 {
-  background: #091329 !important;
+  background: #08142c !important;
   color: #ffffff !important;
   border-color: rgba(0, 162, 255, 0.35) !important;
 }
@@ -503,8 +504,8 @@
 .dark:not(.cyberpunk) .bg-slate-50\/80,
 .dark:not(.cyberpunk) .bg-slate-50\/90,
 [data-theme="dark"] .bg-slate-50 {
-  background-color: #161922 !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background-color: #131f38 !important;
+  border-color: rgba(148, 163, 184, 0.1) !important;
   color: #f1f5f9 !important;
 }
 
@@ -522,8 +523,8 @@
 .dark:not(.cyberpunk) .bg-slate-100\/80,
 .dark:not(.cyberpunk) .bg-slate-100\/90,
 [data-theme="dark"] .bg-slate-100 {
-  background-color: #1a1e2a !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  background-color: #182645 !important;
+  border-color: rgba(148, 163, 184, 0.12) !important;
   color: #f1f5f9 !important;
 }
 
@@ -710,9 +711,9 @@
 .dark:not(.cyberpunk) input[type="password"],
 .dark:not(.cyberpunk) textarea,
 .dark:not(.cyberpunk) select {
-  background-color: #12141c !important;
+  background-color: #0d1527 !important;
   color: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(148, 163, 184, 0.16) !important;
 }
 
 .cyberpunk input[type="text"],
@@ -726,32 +727,32 @@
 }
 
 /* ==========================================================================
-   5. Interactive Buttons & CTA styling (Anti-Glare)
+   5. Interactive Buttons & CTA styling (Natural Radiant High-Tech)
    ========================================================================== */
 .cyber-btn-primary {
-  background: var(--indigo-9, #3e63dd);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 6px rgba(62, 99, 221, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cyber-btn-primary:hover {
-  background: var(--indigo-10, #3358d4);
-  box-shadow: 0 4px 12px rgba(62, 99, 221, 0.35);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
   transform: translateY(-1px);
 }
 
 .dark:not(.cyberpunk) .cyber-btn-primary {
-  background: var(--iris-9, #5b5bd6);
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 4px 14px rgba(91, 91, 214, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 18px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .dark:not(.cyberpunk) .cyber-btn-primary:hover {
-  background: var(--iris-10, #6765e8);
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 6px 18px rgba(91, 91, 214, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transform: translateY(-1px);
 }
 

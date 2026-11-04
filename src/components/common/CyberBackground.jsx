@@ -34,7 +34,7 @@ export const CyberBackground = memo(function CyberBackground({
       aria-hidden="true"
     >
       {/* 1. Base Canvas Void */}
-      <div className="absolute inset-0 bg-[#f8fafc] dark:bg-[#08090d] cyberpunk:bg-[#030816] transition-colors duration-300" />
+      <div className="absolute inset-0 bg-[#f8fafc] dark:bg-[#0a0f1d] cyberpunk:bg-[#040a1a] transition-colors duration-300" />
 
       {/* 2. Top Information Security Video Stream Layer (Zero Logo, Seamless Loop) */}
       {showTopVideo && (
@@ -83,14 +83,14 @@ export const CyberBackground = memo(function CyberBackground({
       {/* 5. Atmospheric Aurora Depth Orbs (High-Luminance Cyber Glows with Ultra-Soft Diffusion) */}
       {showGlow && (
         <>
-          {/* Top-Center Spotlight Conical Beam */}
-          <div className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[1100px] h-[500px] rounded-full blur-[140px] opacity-70 dark:opacity-55 cyberpunk:opacity-75 bg-gradient-to-b from-indigo-500/18 via-blue-500/12 to-transparent dark:from-[#5b5bd6]/25 dark:via-[#3e63dd]/15 dark:to-transparent cyberpunk:from-[#0084ff]/30 cyberpunk:via-[#00d2ff]/18 cyberpunk:to-transparent pointer-events-none animate-pulse-gentle" />
+          {/* Top-Center Spotlight Conical Beam (Natural Ocean Sapphire & Emerald Aurora) */}
+          <div className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[1100px] h-[500px] rounded-full blur-[140px] opacity-70 dark:opacity-55 cyberpunk:opacity-75 bg-gradient-to-b from-blue-500/18 via-emerald-500/12 to-transparent dark:from-[#2563eb]/22 dark:via-[#10b981]/14 dark:to-transparent cyberpunk:from-[#0084ff]/30 cyberpunk:via-[#00d2ff]/18 cyberpunk:to-transparent pointer-events-none animate-pulse-gentle" />
 
-          {/* Top-Left Deep Cobalt Depth Orb */}
-          <div className="absolute -top-[60px] -left-[80px] w-[550px] h-[550px] rounded-full blur-[130px] opacity-50 dark:opacity-35 cyberpunk:opacity-50 bg-gradient-to-br from-blue-500/12 via-indigo-400/8 to-transparent dark:from-[#4338ca]/25 dark:via-[#312e81]/15 dark:to-transparent cyberpunk:from-[#1d4ed8]/28 cyberpunk:via-[#0284c7]/18 cyberpunk:to-transparent pointer-events-none" />
+          {/* Top-Left Deep Marine Depth Orb */}
+          <div className="absolute -top-[60px] -left-[80px] w-[550px] h-[550px] rounded-full blur-[130px] opacity-50 dark:opacity-35 cyberpunk:opacity-50 bg-gradient-to-br from-blue-500/12 via-indigo-400/8 to-transparent dark:from-[#1d4ed8]/25 dark:via-[#047857]/15 dark:to-transparent cyberpunk:from-[#1d4ed8]/28 cyberpunk:via-[#0284c7]/18 cyberpunk:to-transparent pointer-events-none" />
 
-          {/* Bottom-Right Electric Cyan Depth Orb */}
-          <div className="absolute bottom-[2%] -right-[100px] w-[650px] h-[650px] rounded-full blur-[140px] opacity-45 dark:opacity-30 cyberpunk:opacity-45 bg-gradient-to-tl from-sky-400/12 via-indigo-300/8 to-transparent dark:from-[#3b82f6]/20 dark:via-[#1e1b4b]/20 dark:to-transparent cyberpunk:from-[#00a2ff]/24 cyberpunk:via-[#0369a1]/18 cyberpunk:to-transparent pointer-events-none" />
+          {/* Bottom-Right Clear Sky & Mint Depth Orb */}
+          <div className="absolute bottom-[2%] -right-[100px] w-[650px] h-[650px] rounded-full blur-[140px] opacity-45 dark:opacity-30 cyberpunk:opacity-45 bg-gradient-to-tl from-sky-400/12 via-emerald-400/8 to-transparent dark:from-[#0284c7]/22 dark:via-[#10b981]/15 dark:to-transparent cyberpunk:from-[#00a2ff]/24 cyberpunk:via-[#0369a1]/18 cyberpunk:to-transparent pointer-events-none" />
         </>
       )}
 

@@ -1,152 +1,249 @@
 /**
  * Design Tokens - Cybersecurity Training & SOC Defense Platform
- * Enterprise Visual Identity powered by @radix-ui/colors (Radix Color System)
- * 12-Step Mathematically Calibrated Contrast Scales with P3 Wide Gamut Support.
- * 
- * 1. :root -> Swiss Editorial Light (Pristine paper canvas, deep obsidian typography, fine hairline borders)
- * 2. .dark:not(.cyberpunk) -> Obsidian Titanium & Electric Iris (Graphite void, electric iris, zero muddy slate)
- * 3. .cyberpunk -> Tactical Cyber Range HUD & Matrix Jade (Deep jade void, phosphor emerald, HUD reticles)
+ * Enterprise Visual Identity powered by:
+ * 1. Open Color (yeun/open-color): Ergonomic, natural, high-definition harmony scales
+ * 2. Radix Colors (@radix-ui/colors): 12-Step mathematically calibrated contrast scales with P3 wide gamut
+ *
+ * THEMES:
+ * 1. :root -> Natural Editorial Light (Crisp alpine snow canvas #f8fafc, deep ink slate typography, fresh sapphire & mint accents)
+ * 2. .dark:not(.cyberpunk) -> Deep Oceanic Midnight & Luminous Azure (Natural marine void #0a0f1d, rich obsidian slate #10192e, living emerald #10b981)
+ * 3. .cyberpunk -> Tactical Cyber Range HUD & Electric Azure (Deep tech blue #040a1a, tactical console #08142c, cyan & sky telemetry)
  */
 
 :root {
   /* ==========================================================================
-     Surfaces (Swiss Editorial Light - Powered by Radix Slate)
+     OPEN COLOR (yeun/open-color) Natural Harmony Swatches
      ========================================================================== */
-  --bg-canvas: var(--slate-1, #fcfcfd);          /* Pure matte paper */
-  --bg-surface: #ffffff;                         /* Elevated crisp card */
-  --bg-surface-hover: var(--slate-2, #f9f9fb);   /* Subtle neutral hover */
-  --bg-surface-active: var(--slate-3, #f0f0f3);  /* Tactile active state */
-  --bg-subtle: var(--slate-2, #f9f9fb);
-  --bg-muted: var(--slate-3, #f0f0f3);
+  --oc-gray-0: #f8f9fa;
+  --oc-gray-1: #f1f3f5;
+  --oc-gray-2: #e9ecef;
+  --oc-gray-3: #dee2e6;
+  --oc-gray-4: #ced4da;
+  --oc-gray-5: #adb5bd;
+  --oc-gray-6: #868e96;
+  --oc-gray-7: #495057;
+  --oc-gray-8: #343a40;
+  --oc-gray-9: #212529;
 
-  /* Borders (Radix Slate Hairline) */
-  --border-subtle: var(--slate-4, #e8e8ec);
-  --border-default: var(--slate-6, #d9d9e0);     /* 1px razor-sharp boundary */
-  --border-strong: var(--slate-8, #b9bbc6);
-  --border-focus: var(--indigo-9, #3e63dd);
+  --oc-teal-0: #e6fcf5;
+  --oc-teal-1: #c3fae8;
+  --oc-teal-2: #96f2d7;
+  --oc-teal-3: #63e6be;
+  --oc-teal-4: #38d9a9;
+  --oc-teal-5: #20c997;
+  --oc-teal-6: #12b886;
+  --oc-teal-7: #0ca678;
+  --oc-teal-8: #099268;
+  --oc-teal-9: #087f5b;
 
-  /* Typography (High Definition Radix Contrast - Zero Blurriness) */
-  --text-primary: var(--slate-12, #1c2024);      /* Deep obsidian ink */
-  --text-secondary: var(--slate-11, #60646c);    /* High-legibility neutral */
-  --text-muted: var(--slate-10, #80838d);        /* Clear metadata */
-  --text-disabled: var(--slate-8, #b9bbc6);
+  --oc-green-0: #ebfbee;
+  --oc-green-1: #d3f9d8;
+  --oc-green-2: #b2f2bb;
+  --oc-green-3: #8ce99a;
+  --oc-green-4: #69db7c;
+  --oc-green-5: #51cf66;
+  --oc-green-6: #40c057;
+  --oc-green-7: #37b24d;
+  --oc-green-8: #2f9e44;
+  --oc-green-9: #2b8a3e;
+
+  --oc-blue-0: #e7f5ff;
+  --oc-blue-1: #d0ebff;
+  --oc-blue-2: #a5d8ff;
+  --oc-blue-3: #74c0fc;
+  --oc-blue-4: #4dabf7;
+  --oc-blue-5: #339af0;
+  --oc-blue-6: #228be6;
+  --oc-blue-7: #1c7ed6;
+  --oc-blue-8: #1971c2;
+  --oc-blue-9: #1864ab;
+
+  --oc-cyan-0: #e3fafc;
+  --oc-cyan-1: #c5f6fa;
+  --oc-cyan-2: #99e9f2;
+  --oc-cyan-3: #66d9e8;
+  --oc-cyan-4: #3bc9db;
+  --oc-cyan-5: #22b8cf;
+  --oc-cyan-6: #15aabf;
+  --oc-cyan-7: #1098ad;
+  --oc-cyan-8: #0c8599;
+  --oc-cyan-9: #0b7285;
+
+  --oc-yellow-0: #fff9db;
+  --oc-yellow-1: #fff3bf;
+  --oc-yellow-2: #ffec99;
+  --oc-yellow-3: #ffe066;
+  --oc-yellow-4: #ffd43b;
+  --oc-yellow-5: #fcc419;
+  --oc-yellow-6: #fab005;
+  --oc-yellow-7: #f59f00;
+  --oc-yellow-8: #f08c00;
+  --oc-yellow-9: #e67700;
+
+  --oc-red-0: #fff5f5;
+  --oc-red-1: #ffe3e3;
+  --oc-red-2: #ffc9c9;
+  --oc-red-3: #ffa8a8;
+  --oc-red-4: #ff8787;
+  --oc-red-5: #ff6b6b;
+  --oc-red-6: #fa5252;
+  --oc-red-7: #f03e3e;
+  --oc-red-8: #e03131;
+  --oc-red-9: #c92a2a;
+
+  /* ==========================================================================
+     LIGHT MODE: Natural Editorial Light (Alpine Snow & Deep Ocean Ink)
+     ========================================================================== */
+  --bg-canvas: #f8fafc;                         /* Alpine Snow Clean Canvas */
+  --bg-surface: #ffffff;                        /* Crisp White Card */
+  --bg-surface-hover: #f1f5f9;                  /* Soft Natural Hover */
+  --bg-surface-active: #e2e8f0;                 /* Tactile Active State */
+  --bg-subtle: #f8fafc;
+  --bg-muted: #f1f5f9;
+
+  /* Borders: Hairline Natural Slate */
+  --border-subtle: #f1f5f9;
+  --border-default: #e2e8f0;                    /* Crisp 1px Boundary */
+  --border-strong: #cbd5e1;
+  --border-focus: #2563eb;
+
+  /* Typography: Deep Slate Ink with High Legibility */
+  --text-primary: #0f172a;                      /* Deep Slate Ink */
+  --text-secondary: #475569;                    /* High-Legibility Neutral */
+  --text-muted: #64748b;                        /* Clear Metadata */
+  --text-disabled: #94a3b8;
   --text-inverse: #ffffff;
 
-  /* Primary Brand (Radix Precision Indigo & Cobalt) */
-  --primary-50: var(--indigo-2, #f0f4ff);
-  --primary-100: var(--indigo-3, #e6edfe);
-  --primary-200: var(--indigo-4, #d7e2fe);
-  --primary-500: var(--indigo-9, #3e63dd);
-  --primary-600: var(--indigo-10, #3358d4);
-  --primary-700: var(--indigo-11, #3a5ccc);
-  --primary-surface: var(--indigo-3, #e6edfe);
-  --primary-border: var(--indigo-6, #b0c4fd);
-  --primary-text: var(--indigo-11, #3a5ccc);
+  /* Primary Brand: Fresh Ocean Sapphire */
+  --primary-50: var(--oc-blue-0);
+  --primary-100: var(--oc-blue-1);
+  --primary-200: var(--oc-blue-2);
+  --primary-500: #2563eb;
+  --primary-600: #1d4ed8;
+  --primary-700: #1e40af;
+  --primary-surface: #eff6ff;
+  --primary-border: #bfdbfe;
+  --primary-text: #1d4ed8;
 
-  /* Semantic Precision Colors (Radix Calibrated Scales) */
-  --success-50: var(--green-2, #f1faf5);
-  --success-500: var(--green-9, #30a46c);
-  --success-600: var(--green-10, #299764);
-  --warning-50: var(--amber-2, #fefce8);
-  --warning-500: var(--amber-9, #ffc53d);
-  --danger-50: var(--red-2, #feefef);
-  --danger-500: var(--red-9, #e5484d);
-  --info-50: var(--indigo-2, #f0f4ff);
-  --info-500: var(--indigo-9, #3e63dd);
+  /* Semantic Precision Colors: Living Organic Flora & Sun Scales */
+  --success-50: var(--oc-teal-0);
+  --success-500: #10b981;                       /* Living Emerald */
+  --success-600: #059669;
+  --warning-50: var(--oc-yellow-0);
+  --warning-500: #f59e0b;                       /* Sunlight Warm Amber */
+  --danger-50: var(--oc-red-0);
+  --danger-500: #f43f5e;                        /* Blossom Coral Rose */
+  --info-50: var(--oc-blue-0);
+  --info-500: #0284c7;                          /* Clear Sky Azure */
 
-  /* Elevation Shadows (Light) */
-  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.04);
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
-  --shadow-lg: 0 10px 20px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.03);
-  --card-elevated-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.06);
+  /* Elevation Shadows */
+  --shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(15 23 42 / 0.06), 0 1px 2px -1px rgb(15 23 42 / 0.04);
+  --shadow-md: 0 4px 6px -1px rgb(15 23 42 / 0.06), 0 2px 4px -2px rgb(15 23 42 / 0.04);
+  --shadow-lg: 0 10px 24px -3px rgb(15 23 42 / 0.08), 0 4px 6px -4px rgb(15 23 42 / 0.03);
+  --card-elevated-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.06);
   --specular-top-rim: inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
 
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Plus Jakarta Sans', var(--font-sans);
   --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
 
-  --cyber-blue-primary: var(--indigo-9, #3e63dd);
-  --cyber-cyan: var(--cyan-9, #00a2c7);
-  --cyber-emerald: var(--green-9, #30a46c);
+  --cyber-blue-primary: #2563eb;
+  --cyber-cyan: #0284c7;
+  --cyber-emerald: #10b981;
 }
 
 /* ==========================================================================
-   THEME 1: DARK MODE (Obsidian Titanium & Electric Iris)
-   Linear & Raycast Aesthetic: Deep graphite void, electric iris accents,
-   crisp frosted hairline borders, matte specular rim, ZERO cheap neon cyan.
+   THEME 1: DARK MODE (Deep Oceanic Midnight & Luminous Azure)
+   Natural Atmosphere: Deep Marine Twilight (#0a0f1d), Rich Obsidian Slate (#10192e),
+   Luminous Electric Azure, Living Mint/Emerald signals, ZERO dead muddy black.
    ========================================================================== */
 [data-theme="dark"],
 .dark:not(.cyberpunk) {
-  --bg-canvas: #090a0f;                         /* Pure obsidian graphite void */
-  --bg-surface: #12141c;                        /* Sculpted obsidian card surface */
-  --bg-surface-hover: #171a24;                  /* Clean slate hover */
-  --bg-surface-active: #1d212e;                 /* Active card state */
-  --bg-subtle: #0d0e15;
-  --bg-muted: #151822;
+  --bg-canvas: #0a0f1d;                         /* Deep Oceanic Midnight Sky */
+  --bg-surface: #10192e;                        /* Rich Obsidian Slate Card */
+  --bg-surface-hover: #16223d;                  /* Radiant Oceanic Slate Hover */
+  --bg-surface-active: #1d2c4e;                 /* Elevated Deck Active State */
+  --bg-subtle: #0d1527;
+  --bg-muted: #131f38;
 
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-default: rgba(255, 255, 255, 0.08); /* 1px crisp frosted border */
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --border-focus: var(--iris-9, #5b5bd6);
+  --border-subtle: rgba(148, 163, 184, 0.08);
+  --border-default: rgba(148, 163, 184, 0.14); /* 1px crisp frosted border */
+  --border-strong: rgba(148, 163, 184, 0.25);
+  --border-focus: #3b82f6;
 
-  --text-primary: #ffffff;                      /* Ultra-crisp headings */
-  --text-secondary: var(--slate-11, #b0b4ba);   /* Silver titanium high clarity */
-  --text-muted: var(--slate-9, #696e77);        /* Muted titanium metadata */
-  --text-disabled: var(--slate-7, #43484e);
-  --text-inverse: #090a0f;
+  --text-primary: #ffffff;                      /* Crisp White Headings */
+  --text-secondary: #94a3b8;                    /* Clear Slate Secondary */
+  --text-muted: #64748b;                        /* Crisp Metadata */
+  --text-disabled: #475569;
+  --text-inverse: #0a0f1d;
 
-  --primary-50: var(--iris-2, #16162a);
-  --primary-500: var(--iris-9, #5b5bd6);        /* Electric Iris Accent */
-  --primary-600: var(--iris-10, #6765e8);
-  --primary-surface: rgba(91, 91, 214, 0.14);
-  --primary-border: rgba(91, 91, 214, 0.38);
-  --primary-text: var(--iris-11, #b1a9ff);
+  --primary-50: #0f1c3f;
+  --primary-500: #3b82f6;                       /* Radiant Electric Azure */
+  --primary-600: #2563eb;
+  --primary-surface: rgba(59, 130, 246, 0.14);
+  --primary-border: rgba(59, 130, 246, 0.38);
+  --primary-text: #93c5fd;
 
-  /* Multi-Plane Elevation Shadows with Matte Specular Rim */
-  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.6);
-  --shadow-sm: 0 2px 5px 0 rgb(0 0 0 / 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  --shadow-md: 0 6px 16px -2px rgb(0 0 0 / 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  --shadow-lg: 0 14px 30px -4px rgb(0 0 0 / 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  --card-elevated-shadow: 0 14px 36px -4px rgba(0, 0, 0, 0.85);
-  --specular-top-rim: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  /* Living Natural Status Tokens */
+  --success-50: rgba(16, 185, 129, 0.15);
+  --success-500: #10b981;                       /* Living Emerald */
+  --success-600: #059669;
+  --warning-50: rgba(245, 158, 11, 0.15);
+  --warning-500: #f59e0b;                       /* Sunlight Warm Amber */
+  --danger-50: rgba(244, 63, 94, 0.15);
+  --danger-500: #f43f5e;                        /* Fresh Coral Rose */
+  --info-50: rgba(56, 189, 248, 0.15);
+  --info-500: #38bdf8;                          /* Clear Sky Blue */
+
+  /* Multi-Plane Elevation Shadows with Radiant Specular Rim */
+  --shadow-xs: 0 1px 2px 0 rgb(5 10 25 / 0.5);
+  --shadow-sm: 0 2px 5px 0 rgb(5 10 25 / 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --shadow-md: 0 6px 18px -2px rgb(5 10 25 / 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --shadow-lg: 0 14px 34px -4px rgb(5 10 25 / 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --card-elevated-shadow: 0 14px 36px -4px rgba(5, 10, 25, 0.8);
+  --specular-top-rim: inset 0 1px 0 0 rgba(255, 255, 255, 0.09);
+
+  --cyber-blue-primary: #3b82f6;
+  --cyber-cyan: #38bdf8;
+  --cyber-emerald: #10b981;
 }
 
 /* ==========================================================================
-   THEME 2: CYBER MODE (Tactical Cyber Range HUD & Electric Cyber Blue)
+   THEME 2: CYBER MODE (Tactical Cyber Range HUD & Electric Cyber Azure)
    RADICALLY SLEEK & MODERN CYBERSECURITY AESTHETIC:
-   - Deep Midnight Space Blue Void (#030712 / #050b1a)
-   - Luminous Electric Blue (#0084ff), Cyber Cyan (#00d2ff), Sky Blue (#38bdf8)
-   - High-tech tactical HUD styling with zero muddy green
+   - Deep Marine Cyber Void (#040a1a)
+   - Luminous Tactical Range Console (#08142c)
+   - Living Cyan (#00d2ff), Sky Blue (#38bdf8), Mint Flora (#20c997)
    ========================================================================== */
 [data-theme="cyberpunk"],
 .cyberpunk {
-  --bg-canvas: #040916;                         /* Deep Midnight Tech Blue Void */
-  --bg-surface: #091329;                        /* Luminous Tactical Blue HUD Deck Surface */
-  --bg-surface-hover: #0e1d3e;                  /* Active deck hover */
-  --bg-surface-active: #132752;                 /* Elevated state */
-  --bg-subtle: #060d1f;
-  --bg-muted: #0b1733;
+  --bg-canvas: #040a1a;                         /* Deep Marine Cyber Void */
+  --bg-surface: #08142c;                        /* Tactical Range Console Deck */
+  --bg-surface-hover: #0d1e40;                  /* Active Deck Hover */
+  --bg-surface-active: #122854;                 /* Elevated State */
+  --bg-subtle: #060e22;
+  --bg-muted: #0a1836;
 
   /* Luminous Tactical Cyber Blue Borders */
-  --border-subtle: rgba(56, 189, 248, 0.18);
-  --border-default: rgba(0, 162, 255, 0.35);
+  --border-subtle: rgba(56, 189, 248, 0.2);
+  --border-default: rgba(0, 162, 255, 0.38);
   --border-strong: #0099ff;
   --border-focus: #00d2ff;
 
   /* High-Contrast Luminous Tactical Typography */
-  --text-primary: #ffffff;                      /* Pure crisp white */
-  --text-secondary: #93c5fd;                    /* Electric sky blue clarity */
-  --text-muted: #60a5fa;                        /* High-definition tactical blue metadata */
+  --text-primary: #ffffff;                      /* Pure Crisp White */
+  --text-secondary: #93c5fd;                    /* Electric Sky Blue Clarity */
+  --text-muted: #60a5fa;                        /* High-Definition Tactical Blue Metadata */
   --text-disabled: #1e3a5f;
-  --text-inverse: #030712;
+  --text-inverse: #040a1a;
 
   /* Tactical Electric Cyber Blue & Luminous Accents */
   --primary-50: #0a1b38;
   --primary-500: #0084ff;                       /* Precision Electric Blue */
   --primary-600: #0070db;
-  --primary-surface: rgba(0, 132, 255, 0.16);
-  --primary-border: rgba(0, 162, 255, 0.45);
+  --primary-surface: rgba(0, 132, 255, 0.18);
+  --primary-border: rgba(0, 162, 255, 0.48);
   --primary-text: #7dd3fc;
 
   /* Cyber Blue Depth Shadows */

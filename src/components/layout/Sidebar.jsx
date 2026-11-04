@@ -95,7 +95,7 @@ export function Sidebar() {
             <RiShieldFlashFill className="h-5.5 w-5.5 text-white" />
             <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400 ring-2 ring-white dark:ring-[#090a0f]" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400 ring-2 ring-white dark:ring-[#0a0f1d]" />
             </span>
           </div>
 

@@ -61,23 +61,23 @@ export const CyberParticles = memo(function CyberParticles({
       }
       if (isDark) {
         return {
-          ambient1: { r: 129, g: 140, b: 248 }, // Indigo 400
-          ambient2: { r: 96, g: 165, b: 250 },  // Blue 400
-          ambient3: { r: 147, g: 197, b: 253 }, // Blue 300
-          followerLead: { r: 129, g: 140, b: 248, a: 0.75 },
-          followerTrail1: { r: 96, g: 165, b: 250, a: 0.6 },
-          followerTrail2: { r: 147, g: 197, b: 253, a: 0.5 },
-          followerTrail3: { r: 99, g: 102, b: 241, a: 0.4 },
+          ambient1: { r: 56, g: 189, b: 248 },  // Clear Sky Azure
+          ambient2: { r: 16, g: 185, b: 129 },  // Living Emerald Flora
+          ambient3: { r: 99, g: 102, b: 241 },  // Electric Indigo
+          followerLead: { r: 52, g: 211, b: 153, a: 0.8 },   // Fresh Mint
+          followerTrail1: { r: 56, g: 189, b: 248, a: 0.65 }, // Sky Cyan
+          followerTrail2: { r: 96, g: 165, b: 250, a: 0.5 },  // Royal Blue
+          followerTrail3: { r: 16, g: 185, b: 129, a: 0.4 },  // Living Emerald
         }
       }
       // Light mode
       return {
-        ambient1: { r: 99, g: 102, b: 241 },  // Indigo 500
-        ambient2: { r: 59, g: 130, b: 246 },  // Blue 500
-        ambient3: { r: 14, g: 165, b: 233 },  // Sky 500
-        followerLead: { r: 99, g: 102, b: 241, a: 0.5 },
-        followerTrail1: { r: 59, g: 130, b: 246, a: 0.4 },
-        followerTrail2: { r: 14, g: 165, b: 233, a: 0.35 },
+        ambient1: { r: 37, g: 99, b: 235 },   // Blue 600
+        ambient2: { r: 5, g: 150, b: 105 },   // Emerald 600
+        ambient3: { r: 2, g: 132, b: 199 },   // Sky 600
+        followerLead: { r: 37, g: 99, b: 235, a: 0.55 },
+        followerTrail1: { r: 5, g: 150, b: 105, a: 0.45 },
+        followerTrail2: { r: 2, g: 132, b: 199, a: 0.35 },
         followerTrail3: { r: 79, g: 70, b: 229, a: 0.25 },
       }
     }

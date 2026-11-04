@@ -34,7 +34,7 @@ export function PublicHeader() {
   const displayName = user?.fullName || user?.name || "Học viên"
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/90 dark:bg-[#08090d]/90 cyberpunk:bg-[#051726]/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 transition-colors select-none">
+    <header className="sticky top-0 z-40 w-full bg-white/90 dark:bg-[#0a0f1d]/90 cyberpunk:bg-[#040a1a]/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 transition-colors select-none">
       {/* Subtle Cyan Horizon Glow */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-500/[0.04] via-transparent to-transparent cyberpunk:from-cyan-500/[0.08] pointer-events-none" />
 
@@ -48,7 +48,7 @@ export function PublicHeader() {
           >
             <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-blue-600 text-white cyberpunk:text-white shadow-md shadow-indigo-600/30 dark:shadow-indigo-950/50 cyberpunk:shadow-blue-500/30 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
               <RiShieldFlashFill className="h-5.5 w-5.5 text-white" />
-              <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-[#090a0f]" />
+              <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-[#0a0f1d]" />
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
@@ -123,7 +123,7 @@ export function PublicHeader() {
                 )}
               >
                 {({ close }) => (
-                  <div className="bg-white dark:bg-[#0c1019] text-slate-900 dark:text-slate-100 rounded-xl border border-slate-200/80 dark:border-white/[0.08] shadow-xl overflow-hidden">
+                  <div className="bg-white dark:bg-[#10192e] text-slate-900 dark:text-slate-100 rounded-xl border border-slate-200/80 dark:border-white/[0.08] shadow-xl overflow-hidden">
                     <div className="px-3.5 py-2.5 border-b border-slate-100 dark:border-white/[0.06]">
                       <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">
                         {displayName}
@@ -203,7 +203,7 @@ export function PublicHeader() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1019] px-4 pt-2 pb-6 space-y-3 shadow-lg animate-in slide-in-from-top-2 duration-150">
+        <div className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#10192e] px-4 pt-2 pb-6 space-y-3 shadow-lg animate-in slide-in-from-top-2 duration-150">
           <nav className="flex flex-col space-y-1.5 pt-2">
             {navLinks.map((link) => {
               const Icon = link.icon

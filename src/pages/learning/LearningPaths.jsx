@@ -405,7 +405,7 @@ export function LearningPaths() {
         </div>
 
         {/* Bottom Track CTA Bar */}
-        <div className="p-6 rounded-2xl bg-slate-900 dark:bg-[#12141c] cyberpunk:bg-[#091329] border border-slate-800 dark:border-white/10 cyberpunk:border-cyan-500/40 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
+        <div className="p-6 rounded-2xl bg-slate-900 dark:bg-[#10192e] cyberpunk:bg-[#08142c] border border-slate-800 dark:border-white/10 cyberpunk:border-cyan-500/40 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
           <div className="space-y-1">
             <h4 className="text-base font-bold">
               Sẵn sàng gia nhập lộ trình {activeTrack.title}?

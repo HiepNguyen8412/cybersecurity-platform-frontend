@@ -780,7 +780,7 @@ export function LandingPage() {
              ==================================================================== */}
           <div className="text-center max-w-4xl mx-auto space-y-6 pt-2 sm:pt-6">
             {/* Live Security Clearance Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 dark:bg-white/[0.04] cyberpunk:bg-[#071329] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 shadow-xs backdrop-blur-md hover:border-indigo-500/50 transition-colors select-none">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-[#10192e]/90 cyberpunk:bg-[#08142c] border border-slate-200/90 dark:border-slate-700/60 cyberpunk:border-cyan-500/40 shadow-xs backdrop-blur-md hover:border-sky-500/50 transition-colors select-none">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -789,15 +789,15 @@ export function LandingPage() {
                 DEFENSE RANGE ONLINE // 120+ REAL ADVERSARY SANDBOX TARGETS
               </span>
               <span className="text-slate-400 dark:text-slate-500 text-xs font-mono">&bull;</span>
-              <span className="text-[11px] font-mono-tech text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400 font-bold hidden sm:inline">
+              <span className="text-[11px] font-mono-tech text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 font-bold hidden sm:inline">
                 ZERO-TRUST ISOLATION
               </span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-[68px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.05] selection:bg-indigo-500/30">
+            <h1 className="text-4xl sm:text-6xl lg:text-[68px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.05] selection:bg-blue-500/30">
               Where Cyber Defenders Master{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-blue-600 to-emerald-500 dark:from-sky-300 dark:via-blue-400 dark:to-emerald-400">
                 Authentic Warfare
               </span>
             </h1>
@@ -819,9 +819,9 @@ export function LandingPage() {
 
               <Link
                 to="/labs"
-                className="btn-cyber-interactive inline-flex items-center justify-center gap-2 font-semibold rounded-xl px-6 py-3.5 text-sm bg-white/90 dark:bg-[#12141c]/90 cyberpunk:bg-[#091329] text-slate-800 dark:text-slate-100 cyberpunk:text-cyan-300 border border-slate-200 dark:border-white/10 cyberpunk:border-cyan-500/40 hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-300 cyberpunk:hover:border-cyan-400 cyberpunk:hover:text-cyan-200 shadow-2xs transition-all cursor-pointer backdrop-blur-md"
+                className="btn-cyber-interactive inline-flex items-center justify-center gap-2 font-semibold rounded-xl px-6 py-3.5 text-sm bg-white/90 dark:bg-[#10192e]/90 cyberpunk:bg-[#08142c] text-slate-800 dark:text-slate-100 cyberpunk:text-cyan-300 border border-slate-200 dark:border-slate-700/60 cyberpunk:border-cyan-500/40 hover:border-sky-400 dark:hover:border-sky-500 hover:text-blue-600 dark:hover:text-sky-300 cyberpunk:hover:border-cyan-400 cyberpunk:hover:text-cyan-200 shadow-2xs transition-all cursor-pointer backdrop-blur-md"
               >
-                <FlaskConical className="h-4 w-4 text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400" />
+                <FlaskConical className="h-4 w-4 text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400" />
                 <span>Khám Phá 120+ Phòng Lab</span>
                 <span className="hidden sm:inline-block px-1.5 py-0.5 rounded text-[10px] font-mono-tech bg-slate-100 dark:bg-white/[0.08] text-slate-500 dark:text-slate-400">
                   ⌘K
@@ -858,7 +858,7 @@ export function LandingPage() {
               Unified multi-mode interactive command workstation
              ==================================================================== */}
           <div className="mt-10 max-w-5xl mx-auto">
-            <div className="w-full cyber-terminal rounded-2xl p-4 sm:p-5 text-slate-100 shadow-2xl relative border border-slate-800/90 dark:border-white/[0.1] cyberpunk:border-cyan-500/40 bg-[#0a0d14]/95 backdrop-blur-xl">
+            <div className="w-full cyber-terminal rounded-2xl p-4 sm:p-5 text-slate-100 shadow-2xl shadow-blue-950/40 relative border border-slate-800/90 dark:border-slate-700/60 cyberpunk:border-cyan-500/40 bg-[#0c152a]/95 backdrop-blur-xl">
               {/* Window Frame Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 border-b border-slate-800/80 cyberpunk:border-cyan-500/30 gap-3">
                 {/* Traffic lights + Host ID */}
@@ -874,7 +874,7 @@ export function LandingPage() {
                 </div>
 
                 {/* 3 Interactive Mode Tabs */}
-                <div className="flex items-center bg-slate-900/90 cyberpunk:bg-[#060e1f] p-1 rounded-xl border border-slate-800/90 cyberpunk:border-cyan-500/30 self-start sm:self-auto">
+                <div className="flex items-center bg-[#091020]/90 cyberpunk:bg-[#060e1f] p-1 rounded-xl border border-slate-800/90 cyberpunk:border-cyan-500/30 self-start sm:self-auto">
                   {[
                     { key: "terminal", label: "Terminal Exploit & Patch", icon: Terminal },
                     { key: "scanner", label: "Target CVE Diagnostic HUD", icon: Crosshair },
@@ -889,7 +889,7 @@ export function LandingPage() {
                         onClick={() => setHeroWorkstationTab(tab.key)}
                         className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono-tech transition-all cursor-pointer ${
                           isActive
-                            ? "bg-indigo-600 text-white font-bold shadow-sm"
+                            ? "bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 text-white font-bold shadow-md shadow-blue-500/25"
                             : "text-slate-400 hover:text-white hover:bg-slate-800/60"
                         }`}
                       >
@@ -969,20 +969,20 @@ export function LandingPage() {
                   <div className="space-y-4">
                     <div className="flex flex-col sm:flex-row gap-2">
                       <div className="relative flex-1">
-                        <Crosshair className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-indigo-400" />
+                        <Crosshair className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-sky-400" />
                         <input
                           type="text"
                           value={scanTargetInput}
                           onChange={(e) => setScanTargetInput(e.target.value)}
                           placeholder="Nhập IP hoặc domain mục tiêu (vd: 10.10.14.89, corp.internal)..."
-                          className="w-full pl-9 pr-3 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-xs sm:text-sm font-mono-tech text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400"
+                          className="w-full pl-9 pr-3 py-2.5 bg-[#091020] border border-slate-700/80 rounded-xl text-xs sm:text-sm font-mono-tech text-white placeholder-slate-400 focus:outline-none focus:border-sky-400"
                         />
                       </div>
                       <button
                         type="button"
                         onClick={() => handleRunTargetScan()}
                         disabled={isScanningTarget}
-                        className="btn-cyber-interactive px-5 py-2.5 rounded-xl font-mono-tech font-bold text-xs bg-indigo-600 hover:bg-indigo-500 text-white transition-all shrink-0 cursor-pointer flex items-center justify-center gap-2"
+                        className="btn-cyber-interactive px-5 py-2.5 rounded-xl font-mono-tech font-bold text-xs bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white shadow-md shadow-blue-600/30 transition-all shrink-0 cursor-pointer flex items-center justify-center gap-2"
                       >
                         {isScanningTarget ? (
                           <>
@@ -1024,7 +1024,7 @@ export function LandingPage() {
 
                     {/* Diagnostic Report Result */}
                     {targetScanReport && (
-                      <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-3 animate-in fade-in duration-200">
+                      <div className="p-4 rounded-xl bg-[#0a1224]/95 border border-slate-800/80 space-y-3 animate-in fade-in duration-200">
                         <div className="flex items-center justify-between flex-wrap gap-2">
                           <div className="flex items-center gap-2">
                             <span className="h-2.5 w-2.5 rounded-full bg-rose-500 animate-pulse" />
@@ -1095,7 +1095,7 @@ export function LandingPage() {
                               ? "bg-rose-950/40 border-rose-500/40 text-rose-200"
                               : pkt.status === "mitigated"
                               ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
-                              : "bg-slate-900/80 border-slate-800 text-slate-300"
+                              : "bg-[#0a1224]/80 border-slate-800 text-slate-300"
                           }`}
                         >
                           <div className="flex items-center gap-2.5 min-w-0">
@@ -1166,26 +1166,26 @@ export function LandingPage() {
 
             {/* Telemetry Counter Strip Under Console */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8">
-              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#0e121a]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#10192e]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
                 <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
                   <CountUp end={2400} suffix="+" />
                 </div>
                 <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Chuyên Viên Tác Chiến</div>
               </div>
-              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#0e121a]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
-                <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">
+              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#10192e]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+                <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-sky-400">
                   <CountUp end={120} suffix="+" />
                 </div>
                 <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Phòng Lab Thực Địa</div>
               </div>
-              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#0e121a]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#10192e]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
                 <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">
                   <CountUp end={100} suffix="%" />
                 </div>
                 <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Chuẩn MITRE ATT&CK</div>
               </div>
-              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#0e121a]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
-                <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-cyan-600 dark:text-cyan-400">
+              <div className="p-4 rounded-2xl bg-white/70 dark:bg-[#10192e]/80 cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+                <div className="font-mono-tech text-2xl sm:text-3xl font-extrabold text-sky-600 dark:text-cyan-400">
                   <CountUp end={0} suffix="%" />
                 </div>
                 <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Egress Data Leakage</div>
@@ -1199,7 +1199,7 @@ export function LandingPage() {
           YEWSAFE-INSPIRED STANDARDS & SECURITY ECOSYSTEM MARQUEE
           Infinite Scrolling Ticker with Laser Horizon Glow Accents
          ==================================================================== */}
-      <section className="relative w-full overflow-hidden bg-[#07090e] border-y border-white/5 py-4">
+      <section className="relative w-full overflow-hidden bg-[#090f1e] border-y border-white/5 py-4">
         {/* Hairline Borders (Top & Bottom) */}
         <div className="absolute top-0 inset-x-0 h-px bg-white/[0.06]" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-white/[0.06]" />
@@ -1219,14 +1219,14 @@ export function LandingPage() {
         {/* Infinite Marquee Strip */}
         <div className="flex overflow-hidden relative select-none">
           {/* Left/Right Fade Masks */}
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#07090e] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#07090e] to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#090f1e] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#090f1e] to-transparent z-10 pointer-events-none" />
 
           <div className="animate-marquee-infinite items-center gap-4 py-1">
             {[...STANDARDS_ECOSYSTEM, ...STANDARDS_ECOSYSTEM].map((item, idx) => (
               <div
                 key={`${item.name}-${idx}`}
-                className="flex items-center gap-3 px-4 py-2 rounded-lg bg-[#0e121a]/90 border border-slate-800/80 hover:border-cyan-400/50 hover:bg-[#121722] transition-colors shrink-0 group cursor-default"
+                className="flex items-center gap-3 px-4 py-2 rounded-lg bg-[#10192e]/90 border border-slate-800/80 hover:border-sky-400/50 hover:bg-[#15223e] transition-colors shrink-0 group cursor-default"
               >
                 <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20 shrink-0">{item.tag}</span>
                 <div className="flex flex-col">
@@ -1260,7 +1260,7 @@ export function LandingPage() {
           {PROMO_RIBBON_CARDS.map((card, idx) => (
             <div
               key={idx}
-              className="group relative bg-[#0a0c10]/95 backdrop-blur-md border border-slate-800/80 hover:border-cyan-500/40 rounded-xl p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-950/30 overflow-hidden"
+              className="group relative bg-[#0e172a]/95 backdrop-blur-md border border-slate-800/80 hover:border-sky-500/40 rounded-xl p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-950/30 overflow-hidden"
             >
               {/* Subtle Ambient Hover Glow */}
               <div className="absolute -top-12 -right-12 w-28 h-28 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/15 transition-all pointer-events-none" />
@@ -1686,11 +1686,11 @@ export function LandingPage() {
                 value={labSearch}
                 onChange={(e) => setLabSearch(e.target.value)}
                 placeholder="Tìm kiếm phòng lab, mã CVE..."
-                className="pl-9 pr-3 py-1.5 text-xs font-mono-tech rounded-xl border border-slate-200 dark:border-white/10 cyberpunk:border-cyan-500/40 bg-white dark:bg-[#12141c] cyberpunk:bg-[#030712] text-slate-900 dark:text-white cyberpunk:text-cyan-50 focus:border-blue-600 dark:focus:border-blue-400 outline-none w-full sm:w-48 shadow-2xs"
+                className="pl-9 pr-3 py-1.5 text-xs font-mono-tech rounded-xl border border-slate-200 dark:border-slate-700/60 cyberpunk:border-cyan-500/40 bg-white dark:bg-[#10192e] cyberpunk:bg-[#030712] text-slate-900 dark:text-white cyberpunk:text-cyan-50 focus:border-blue-600 dark:focus:border-sky-400 outline-none w-full sm:w-48 shadow-2xs"
               />
             </div>
 
-            <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-[#12141c] cyberpunk:bg-[#0d1e3d] rounded-xl border border-slate-200/80 dark:border-white/10 cyberpunk:border-cyan-500/40 text-xs">
+            <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-[#10192e] cyberpunk:bg-[#0d1e3d] rounded-xl border border-slate-200/80 dark:border-slate-700/60 cyberpunk:border-cyan-500/40 text-xs">
               {[
                 { key: "all", label: "All" },
                 { key: "web", label: "Web" },
@@ -1716,7 +1716,7 @@ export function LandingPage() {
         </div>
 
         {/* Live Lab Telemetry Summary Bar with CountUp */}
-        <div className="mb-6 p-3.5 rounded-xl bg-slate-50/90 dark:bg-[#12141c] cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-white/10 cyberpunk:border-cyan-500/30 flex flex-wrap items-center justify-between gap-3 text-xs font-mono-tech">
+        <div className="mb-6 p-3.5 rounded-xl bg-slate-50/90 dark:bg-[#10192e] cyberpunk:bg-[#071329] border border-slate-200/80 dark:border-slate-700/60 cyberpunk:border-cyan-500/30 flex flex-wrap items-center justify-between gap-3 text-xs font-mono-tech">
           <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-200">
             <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
             <span className="font-semibold">Kịch Bản Đang Lọc:</span>

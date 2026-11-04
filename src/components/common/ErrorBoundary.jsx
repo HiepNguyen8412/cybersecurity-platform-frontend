@@ -92,11 +92,11 @@ export class ErrorBoundary extends Component {
             aria-hidden="true"
           />
 
-          <div className="relative z-10 max-w-lg w-full bg-[#090a0f]/95 border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/90 text-center space-y-6 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative z-10 max-w-lg w-full bg-[#0a0f1d]/95 border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/90 text-center space-y-6 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200">
             {/* Friendly Shield Icon Header with Glowing Ring */}
             <div className="relative w-16 h-16 rounded-2xl bg-indigo-950/60 border border-indigo-500/40 flex items-center justify-center mx-auto text-indigo-300 shadow-[0_0_20px_rgba(91,91,214,0.25)] ring-1 ring-white/10">
               <RiShieldCheckFill className="w-8 h-8" />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 ring-2 ring-[#090a0f] animate-pulse" />
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 ring-2 ring-[#0a0f1d] animate-pulse" />
             </div>
 
             {/* Main Friendly Content */}
