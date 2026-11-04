@@ -34,8 +34,8 @@ export function PublicHeader() {
   const displayName = user?.fullName || user?.name || "Học viên"
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/85 dark:bg-[#080b14]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] transition-colors select-none">
-      <div className="relative max-w-[1240px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between z-10">
+    <header className="sticky top-0 z-40 w-full bg-white/85 dark:bg-[#090a0f]/90 cyberpunk:bg-[#020617]/95 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 cyberpunk:shadow-[0_4px_24px_rgba(6,182,212,0.1)] transition-colors select-none">
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-16 flex items-center justify-between z-10">
         {/* Logo & Platform Name */}
         <div className="flex items-center gap-3">
           <Link
@@ -43,15 +43,15 @@ export function PublicHeader() {
             className="flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl group"
             title="CyberPath — Trang chủ"
           >
-            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-sky-500 text-white shadow-md shadow-blue-600/20 group-hover:scale-105 transition-transform duration-200">
+            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-sky-500 cyberpunk:from-cyan-500 cyberpunk:to-blue-600 text-white shadow-md shadow-blue-600/20 cyberpunk:shadow-cyan-500/30 group-hover:scale-105 transition-transform duration-200">
               <RiShieldFlashFill className="h-5 w-5 text-white" />
-              <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-[#080b14]" />
+              <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-[#090a0f] cyberpunk:ring-[#020617]" />
             </div>
             <div className="flex flex-col">
               <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white leading-none">
-                Cyber<span className="text-blue-600 dark:text-sky-400">Path</span>
+                Cyber<span className="text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400">Path</span>
               </span>
-              <span className="text-[10px] font-mono tracking-wider text-slate-400 dark:text-slate-500 mt-0.5">
+              <span className="text-[10px] font-mono tracking-wider text-slate-400 dark:text-slate-500 cyberpunk:text-cyan-400/70 mt-0.5">
                 SEC-OPS RANGE
               </span>
             </div>
@@ -61,7 +61,7 @@ export function PublicHeader() {
         {/* Center Desktop Navigation */}
         <nav
           aria-label="Public Navigation"
-          className="hidden md:flex items-center gap-1"
+          className="hidden md:flex items-center gap-1.5"
         >
           {navLinks.map((link) => {
             const Icon = link.icon
@@ -73,8 +73,8 @@ export function PublicHeader() {
                 className={({ isActive }) =>
                   `relative inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs transition-all duration-150 ${
                     isActive
-                      ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-sky-400 font-semibold"
-                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-white/[0.05] font-medium"
+                      ? "bg-blue-50 dark:bg-blue-500/10 cyberpunk:bg-cyan-500/20 text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-300 font-semibold border border-blue-200/60 dark:border-blue-500/20 cyberpunk:border-cyan-500/40"
+                      : "text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-200/80 hover:text-slate-900 dark:hover:text-white cyberpunk:hover:text-cyan-100 hover:bg-slate-100/70 dark:hover:bg-white/[0.05] cyberpunk:hover:bg-cyan-500/10 font-medium"
                   }`
                 }
               >
@@ -86,7 +86,7 @@ export function PublicHeader() {
         </nav>
 
         {/* Right Desktop Auth Actions + Theme Toggle */}
-        <div className="hidden md:flex items-center gap-2.5">
+        <div className="hidden md:flex items-center gap-3">
           {/* Visual Theme Selector */}
           <ThemeToggle />
 
@@ -94,7 +94,7 @@ export function PublicHeader() {
             <div className="flex items-center gap-3">
               <Link
                 to="/dashboard"
-                className="inline-flex items-center gap-2 text-xs font-semibold rounded-lg px-3.5 py-2 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-sky-400 hover:bg-blue-100/80 dark:hover:bg-blue-500/20 transition-all border border-blue-200/60 dark:border-blue-500/20"
+                className="inline-flex items-center gap-2 text-xs font-semibold rounded-lg px-3.5 py-2 bg-blue-50 dark:bg-blue-500/10 cyberpunk:bg-cyan-500/20 text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-300 hover:bg-blue-100/80 dark:hover:bg-blue-500/20 transition-all border border-blue-200/60 dark:border-blue-500/20 cyberpunk:border-cyan-500/40"
               >
                 <RiDashboard3Line className="h-4 w-4" />
                 <span>Bảng Điều Khiển</span>
@@ -106,13 +106,13 @@ export function PublicHeader() {
                 trigger={({ isOpen }) => (
                   <button
                     type="button"
-                    className={`flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors cursor-pointer ${
-                      isOpen ? "bg-slate-100 dark:bg-white/[0.06]" : ""
+                    className={`flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/[0.06] cyberpunk:hover:bg-cyan-950/40 transition-colors cursor-pointer ${
+                      isOpen ? "bg-slate-100 dark:bg-white/[0.06] cyberpunk:bg-cyan-950/40" : ""
                     }`}
                     aria-label="User menu"
                   >
                     <Avatar name={displayName} size="sm" status="online" />
-                    <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 hidden lg:inline-block max-w-[120px] truncate">
+                    <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 cyberpunk:text-cyan-200 hidden lg:inline-block max-w-[120px] truncate">
                       {displayName}
                     </span>
                     <RiArrowDownSLine className="h-4 w-4 text-slate-400" />
@@ -120,8 +120,8 @@ export function PublicHeader() {
                 )}
               >
                 {({ close }) => (
-                  <div className="bg-white dark:bg-[#0f1422] text-slate-900 dark:text-slate-100 rounded-xl border border-slate-200/80 dark:border-white/[0.08] shadow-xl overflow-hidden">
-                    <div className="px-3.5 py-2.5 border-b border-slate-100 dark:border-white/[0.06]">
+                  <div className="bg-white dark:bg-[#0f1422] cyberpunk:bg-[#061224] text-slate-900 dark:text-slate-100 cyberpunk:text-cyan-100 rounded-xl border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 shadow-xl overflow-hidden">
+                    <div className="px-3.5 py-2.5 border-b border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/20">
                       <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">
                         {displayName}
                       </p>
@@ -168,14 +168,14 @@ export function PublicHeader() {
             <div className="flex items-center gap-2">
               <Link
                 to="/login"
-                className="inline-flex items-center justify-center gap-1.5 text-xs font-medium rounded-lg px-3.5 py-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-medium rounded-lg px-3.5 py-2 text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-200 hover:text-slate-900 dark:hover:text-white cyberpunk:hover:text-cyan-100 hover:bg-slate-100 dark:hover:bg-white/[0.06] cyberpunk:hover:bg-cyan-950/40 transition-all cursor-pointer"
               >
-                <RiLoginCircleLine className="h-4 w-4 text-slate-400" />
+                <RiLoginCircleLine className="h-4 w-4 text-slate-400 cyberpunk:text-cyan-400" />
                 <span>Đăng nhập</span>
               </Link>
               <Link
                 to="/register"
-                className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold rounded-lg px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white shadow-xs hover:shadow-sm hover:shadow-blue-600/20 active:scale-[0.98] transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold rounded-lg px-4.5 py-2 bg-blue-600 hover:bg-blue-500 cyberpunk:bg-cyan-500 cyberpunk:hover:bg-cyan-400 text-white cyberpunk:text-slate-950 shadow-xs hover:shadow-sm hover:shadow-blue-600/20 cyberpunk:shadow-cyan-500/30 active:scale-[0.98] transition-all cursor-pointer"
               >
                 <RiFlashlightLine className="h-3.5 w-3.5" />
                 <span>Bắt đầu ngay</span>

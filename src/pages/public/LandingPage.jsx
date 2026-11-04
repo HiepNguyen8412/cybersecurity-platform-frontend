@@ -213,25 +213,25 @@ export function LandingPage() {
   })
 
   return (
-    <div className="w-full bg-[#f8fafc] dark:bg-[#080b14] text-slate-900 dark:text-slate-100 transition-colors duration-200 select-none">
+    <div className="w-full bg-[#f8fafc] dark:bg-[#080b11] cyberpunk:bg-[#020617] text-slate-900 dark:text-slate-100 cyberpunk:text-cyan-50 transition-colors duration-300 select-none">
       {/* ====================================================================
           1. TOP ANNOUNCEMENT BAR (Sleek hairline release pill)
          ==================================================================== */}
-      <div className="w-full bg-slate-50 dark:bg-[#0c101d] border-b border-slate-200/80 dark:border-white/[0.06] py-2 px-4 text-xs font-medium text-slate-600 dark:text-slate-300">
-        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+      <div className="w-full bg-slate-50 dark:bg-[#0d121c] cyberpunk:bg-[#040e1c] border-b border-slate-200/80 dark:border-white/[0.06] cyberpunk:border-cyan-500/30 py-2.5 px-4 text-xs font-medium text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2.5 truncate">
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-sky-300 border border-blue-200/80 dark:border-blue-500/20">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-sky-400 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 dark:bg-blue-500/10 cyberpunk:bg-cyan-500/20 text-blue-700 dark:text-sky-300 cyberpunk:text-cyan-300 border border-blue-200/80 dark:border-blue-500/20 cyberpunk:border-cyan-500/40">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-sky-400 cyberpunk:bg-cyan-400 animate-pulse" />
               BẢN PHÁT HÀNH 2026
             </span>
-            <span className="truncate text-slate-700 dark:text-slate-300">
+            <span className="truncate text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-100/90">
               Cập nhật 24 phòng lab Cloud Security AWS & Kubernetes theo chuẩn NIST SP 800-53 R5.
             </span>
           </div>
 
           <Link
             to="/labs?category=cloud"
-            className="inline-flex items-center gap-1 text-blue-600 dark:text-sky-400 hover:text-blue-700 dark:hover:text-sky-300 font-semibold shrink-0 transition-colors"
+            className="inline-flex items-center gap-1 text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 hover:text-blue-700 dark:hover:text-sky-300 cyberpunk:hover:text-cyan-300 font-semibold shrink-0 transition-colors"
           >
             <span>Khám phá ngay</span>
             <ArrowRight className="h-3.5 w-3.5" />
@@ -240,42 +240,42 @@ export function LandingPage() {
       </div>
 
       {/* ====================================================================
-          2. HERO SECTION — THOÁNG ĐÃNG, SÁNG SỦA, SANG TRỌNG (Linear/Stripe)
+          2. HERO SECTION — THƯ THÁI, RỘNG RÃI, SANG TRỌNG (Linear/Stripe)
          ==================================================================== */}
-      <section className="relative pt-14 sm:pt-20 pb-16 lg:pb-24 overflow-hidden">
-        {/* Soft Ambient Radial Diffusion */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-gradient-to-b from-blue-500/10 via-sky-400/5 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+      <section className="relative pt-24 sm:pt-32 lg:pt-36 pb-24 lg:pb-36 overflow-hidden">
+        {/* Soft Ambient Radial Diffusion with Theme Nuance */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[550px] bg-gradient-to-b from-blue-500/10 via-sky-400/5 to-transparent dark:from-blue-600/15 dark:via-sky-500/5 dark:to-transparent cyberpunk:from-cyan-500/20 cyberpunk:via-sky-500/10 cyberpunk:to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center relative z-10">
           {/* Release Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-[#0f1422] border border-slate-200 dark:border-white/[0.08] text-xs font-medium text-slate-700 dark:text-slate-300 shadow-xs mb-8 transition-colors">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-[#0f1422] cyberpunk:bg-[#061224] border border-slate-200 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 text-xs font-medium text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-200 shadow-xs mb-10 transition-colors">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-            <span className="font-semibold text-slate-900 dark:text-white">Thao Trường Tác Chiến 2026</span>
-            <span className="text-slate-300 dark:text-slate-700">&bull;</span>
-            <span className="text-blue-600 dark:text-sky-400 font-semibold">120+ Sandbox Trực Tiếp</span>
+            <span className="font-semibold text-slate-900 dark:text-white cyberpunk:text-cyan-50">Thao Trường Tác Chiến 2026</span>
+            <span className="text-slate-300 dark:text-slate-700 cyberpunk:text-cyan-800">&bull;</span>
+            <span className="text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 font-semibold">120+ Sandbox Trực Tiếp</span>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] max-w-4xl mx-auto">
+          {/* Main Headline with Generous Breathing Room */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white cyberpunk:text-white leading-[1.16] max-w-5xl mx-auto">
             Luyện tập an ninh mạng thực chiến{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-sky-500 to-blue-500 dark:from-sky-400 dark:via-blue-300 dark:to-cyan-300">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-sky-500 to-blue-500 dark:from-sky-400 dark:via-blue-300 dark:to-cyan-300 cyberpunk:from-cyan-300 cyberpunk:via-sky-200 cyberpunk:to-blue-400">
               trên nền tảng đám mây
             </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-5 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-7 text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-200/80 max-w-3xl mx-auto leading-relaxed">
             Nâng cao kỹ năng phòng thủ và phản ứng sự cố trên các sandbox đám mây được cô lập an toàn ngay trên trình duyệt. Không cần cài đặt máy ảo phức tạp, sẵn sàng thực chiến chỉ sau 3 giây.
           </p>
 
           {/* Dual Action Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
             <Link
               to={isAuthenticated ? "/dashboard" : "/register"}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-semibold text-xs sm:text-sm px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white shadow-sm hover:shadow-md hover:shadow-blue-600/20 active:scale-[0.98] transition-all cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 font-semibold text-sm px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 cyberpunk:bg-cyan-500 cyberpunk:hover:bg-cyan-400 text-white cyberpunk:text-slate-950 shadow-md shadow-blue-600/20 cyberpunk:shadow-cyan-500/30 active:scale-[0.98] transition-all cursor-pointer"
             >
               <Play className="h-4 w-4 fill-current" />
               <span>{isAuthenticated ? "Vào Bảng Điều Khiển Tác Chiến" : "Bắt Đầu Thử Nghiệm Miễn Phí"}</span>
@@ -283,62 +283,62 @@ export function LandingPage() {
 
             <Link
               to="/labs"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-semibold text-xs sm:text-sm px-6 py-3 rounded-lg bg-white dark:bg-[#0f1422] text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/[0.08] hover:bg-slate-50 dark:hover:bg-white/[0.04] shadow-xs active:scale-[0.98] transition-all cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 font-semibold text-sm px-8 py-3.5 rounded-xl bg-white dark:bg-[#0f1422] cyberpunk:bg-[#061224] text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-200 border border-slate-200 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 hover:bg-slate-50 dark:hover:bg-white/[0.04] cyberpunk:hover:bg-cyan-950/40 shadow-xs active:scale-[0.98] transition-all cursor-pointer"
             >
-              <FlaskConical className="h-4 w-4 text-blue-600 dark:text-sky-400" />
+              <FlaskConical className="h-4 w-4 text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400" />
               <span>Khám Phá 120+ Phòng Lab</span>
             </Link>
           </div>
 
           {/* Value Proof Badges */}
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-500 dark:text-slate-400">
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80">
             <span className="flex items-center gap-1.5">
-              <Check className="h-3.5 w-3.5 text-emerald-500 stroke-[2.5]" />
+              <Check className="h-4 w-4 text-emerald-500 stroke-[2.5]" />
               <span>Khởi động trong 3s</span>
             </span>
-            <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+            <span className="text-slate-300 dark:text-slate-700 cyberpunk:text-cyan-800">&bull;</span>
             <span className="flex items-center gap-1.5">
-              <Check className="h-3.5 w-3.5 text-emerald-500 stroke-[2.5]" />
+              <Check className="h-4 w-4 text-emerald-500 stroke-[2.5]" />
               <span>100% Cô lập trình duyệt</span>
             </span>
-            <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+            <span className="text-slate-300 dark:text-slate-700 cyberpunk:text-cyan-800">&bull;</span>
             <span className="flex items-center gap-1.5">
-              <Check className="h-3.5 w-3.5 text-emerald-500 stroke-[2.5]" />
+              <Check className="h-4 w-4 text-emerald-500 stroke-[2.5]" />
               <span>Chuẩn MITRE ATT&CK & NIST</span>
             </span>
             <span className="text-slate-300 dark:text-slate-700">&bull;</span>
             <span className="flex items-center gap-1.5">
-              <Check className="h-3.5 w-3.5 text-emerald-500 stroke-[2.5]" />
+              <Check className="h-4 w-4 text-emerald-500 stroke-[2.5]" />
               <span>Không cần cài máy ảo</span>
             </span>
           </div>
 
           {/* ====================================================================
               3. CENTERPIECE — INTERACTIVE CYBER RANGE WORKBENCH
-              Thiết kế theo chuẩn Linear Studio / Stripe Workbench
+              Rộng rãi, thoáng đạt, thẩm mỹ Linear / Stripe Studio
              ==================================================================== */}
-          <div className="mt-12 max-w-5xl mx-auto text-left">
-            <div className="rounded-2xl bg-white dark:bg-[#0e121e] border border-slate-200/90 dark:border-white/[0.08] shadow-xl overflow-hidden">
+          <div className="mt-16 max-w-5xl lg:max-w-6xl mx-auto text-left">
+            <div className="rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#050f20] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 shadow-2xl cyberpunk:shadow-[0_0_35px_rgba(6,182,212,0.15)] overflow-hidden">
               {/* Studio Window Title Bar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-white/[0.06] bg-slate-50/70 dark:bg-white/[0.02] gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/30 bg-slate-50/70 dark:bg-white/[0.02] cyberpunk:bg-cyan-950/30 gap-4">
                 {/* Traffic lights + Workspace title */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3.5">
                   <div className="flex items-center gap-1.5">
                     <span className="h-2.5 w-2.5 rounded-full bg-rose-400 inline-block" />
                     <span className="h-2.5 w-2.5 rounded-full bg-amber-400 inline-block" />
                     <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 inline-block" />
                   </div>
-                  <span className="font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="font-mono text-xs font-semibold text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-200">
                     range-workbench.internal
                   </span>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-500/20">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 dark:bg-emerald-500/10 cyberpunk:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-500/20 cyberpunk:border-emerald-500/30">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                     SẴN SÀNG TÁC CHIẾN
                   </span>
                 </div>
 
                 {/* 3 Tangible Studio Mode Tabs */}
-                <div className="flex items-center p-1 rounded-lg bg-slate-100 dark:bg-[#080b14] border border-slate-200/80 dark:border-white/[0.06] self-start sm:self-auto text-xs">
+                <div className="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-[#080b14] cyberpunk:bg-[#030914] border border-slate-200/80 dark:border-white/[0.06] cyberpunk:border-cyan-500/40 self-start sm:self-auto text-xs">
                   {[
                     { id: "patch", label: "Chẩn Đoán & Vá Code", icon: Code2 },
                     { id: "packets", label: "Bộ Bắt Gói Tin Mạng", icon: Wifi },
@@ -351,10 +351,10 @@ export function LandingPage() {
                         key={tab.id}
                         type="button"
                         onClick={() => setStudioTab(tab.id)}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium transition-all cursor-pointer ${
+                        className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${
                           active
-                            ? "bg-white dark:bg-[#162032] text-blue-600 dark:text-sky-400 font-semibold shadow-xs"
-                            : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                            ? "bg-white dark:bg-[#162032] cyberpunk:bg-cyan-500/20 text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-300 font-semibold shadow-xs cyberpunk:border cyberpunk:border-cyan-500/40"
+                            : "text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-300/70 hover:text-slate-900 dark:hover:text-white cyberpunk:hover:text-cyan-100"
                         }`}
                       >
                         <Icon className="h-3.5 w-3.5" />
@@ -366,19 +366,19 @@ export function LandingPage() {
               </div>
 
               {/* Studio Workspace Content */}
-              <div className="p-5 sm:p-6 min-h-[300px]">
+              <div className="p-6 sm:p-8 lg:p-10 min-h-[320px]">
                 {/* TAB 1: CODE VULNERABILITY INSPECTOR & 1-CLICK PATCH */}
                 {studioTab === "patch" && (
-                  <div className="space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 dark:border-white/[0.06] gap-2">
+                  <div className="space-y-5">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/20 gap-3">
                       <div>
-                        <div className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 flex items-center gap-2.5">
                           <span>Mục tiêu: Endpoint Xác thực Người dùng (/api/v1/auth/login)</span>
-                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-200/60 dark:border-rose-500/20">
+                          <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-50 dark:bg-rose-500/10 cyberpunk:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/60 dark:border-rose-500/20 cyberpunk:border-rose-500/30">
                             CWE-89 SQL INJECTION
                           </span>
                         </div>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/70 mt-1">
                           Quan sát câu lệnh SQL thô có thể bị khai thác auth-bypass và áp dụng bản vá chuẩn PreparedStatement.
                         </p>
                       </div>
@@ -388,7 +388,7 @@ export function LandingPage() {
                           <button
                             type="button"
                             onClick={handleResetPatch}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 cyberpunk:bg-[#071328] hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-200 border border-transparent cyberpunk:border-cyan-500/30 transition-colors cursor-pointer"
                           >
                             <RotateCw className="h-3 w-3" />
                             <span>Khôi phục lỗ hổng</span>
@@ -398,7 +398,7 @@ export function LandingPage() {
                             type="button"
                             onClick={handleApplyPatch}
                             disabled={isPatching}
-                            className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white shadow-xs transition-all cursor-pointer"
+                            className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 cyberpunk:bg-cyan-500 cyberpunk:hover:bg-cyan-400 text-white cyberpunk:text-slate-950 shadow-xs cyberpunk:shadow-cyan-500/30 transition-all cursor-pointer"
                           >
                             {isPatching ? (
                               <>
@@ -417,40 +417,40 @@ export function LandingPage() {
                     </div>
 
                     {/* Code Diff Box */}
-                    <div className="rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-900 text-slate-200 font-mono text-xs overflow-hidden">
-                      <div className="px-3.5 py-2 bg-slate-950 border-b border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+                    <div className="rounded-xl border border-slate-200 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 bg-slate-900 cyberpunk:bg-[#030914] text-slate-200 font-mono text-xs sm:text-sm overflow-hidden">
+                      <div className="px-4 py-2.5 bg-slate-950 cyberpunk:bg-[#020610] border-b border-slate-800 cyberpunk:border-cyan-500/30 text-xs text-slate-400 cyberpunk:text-cyan-300/80 flex items-center justify-between">
                         <span>src/main/java/com/cyberpath/service/AuthService.java</span>
                         <span className={isPatched ? "text-emerald-400 font-bold" : "text-rose-400 font-bold"}>
                           {isPatched ? "TRẠNG THÁI: ĐÃ BẢO VỆ (PreparedStatement Bound)" : "TRẠNG THÁI: LỖ HỔNG (Ghép chuỗi SQL thô)"}
                         </span>
                       </div>
 
-                      <div className="p-4 space-y-1.5 text-[11px] sm:text-xs">
-                        <div className="text-slate-500">// 1. Nhận thông tin đăng nhập từ payload người dùng</div>
-                        <div className="text-slate-300">String sql;</div>
+                      <div className="p-5 space-y-2 text-xs sm:text-sm">
+                        <div className="text-slate-500 cyberpunk:text-slate-400">// 1. Nhận thông tin đăng nhập từ payload người dùng</div>
+                        <div className="text-slate-300 cyberpunk:text-cyan-100">String sql;</div>
 
                         {!isPatched ? (
-                          <div className="p-2.5 rounded-lg bg-rose-950/40 border border-rose-800/40 text-rose-200">
+                          <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800/40 text-rose-200">
                             <span className="text-rose-400 font-bold select-none">- </span>
                             sql = &quot;SELECT * FROM users WHERE user = &apos;&quot; + username + &quot;&apos; AND pass = &apos;&quot; + password + &quot;&apos;&quot;;
-                            <div className="text-[10px] text-rose-300 mt-1 font-sans">
+                            <div className="text-xs text-rose-300 mt-1.5 font-sans">
                               ⚠ Cảnh báo: Kẻ tấn công có thể chèn chuỗi &quot;&apos; OR 1=1 --&quot; để vượt qua xác thực mật khẩu.
                             </div>
                           </div>
                         ) : (
-                          <div className="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-800/40 text-emerald-200 animate-in fade-in duration-200">
+                          <div className="p-3 rounded-lg bg-emerald-950/40 border border-emerald-800/40 text-emerald-200 animate-in fade-in duration-200">
                             <span className="text-emerald-400 font-bold select-none">+ </span>
                             PreparedStatement stmt = conn.prepareStatement(&quot;SELECT * FROM users WHERE user = ? AND pass = ?&quot;);
                             <br />
                             <span className="text-emerald-400 font-bold select-none">+ </span>
                             stmt.setString(1, username); stmt.setString(2, hashPassword(password));
-                            <div className="text-[10px] text-emerald-300 mt-1 font-sans font-semibold">
+                            <div className="text-xs text-emerald-300 mt-1.5 font-sans font-semibold">
                               ✓ An toàn: Tham số được bind trực tiếp qua driver, loại bỏ hoàn toàn nguy cơ SQL Injection.
                             </div>
                           </div>
                         )}
 
-                        <div className="text-slate-400 pt-1">ResultSet rs = stmt.executeQuery();</div>
+                        <div className="text-slate-400 cyberpunk:text-cyan-300/60 pt-1">ResultSet rs = stmt.executeQuery();</div>
                       </div>
                     </div>
                   </div>
@@ -459,12 +459,12 @@ export function LandingPage() {
                 {/* TAB 2: LIVE PACKET TELEMETRY & DROP ACTION */}
                 {studioTab === "packets" && (
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-white/[0.06]">
+                    <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/20">
                       <div>
-                        <div className="text-xs font-bold text-slate-900 dark:text-white">
+                        <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50">
                           Giao diện Mạng: eth0 (Chế độ giám sát thời gian thực)
                         </div>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/70 mt-0.5">
                           Bóc tách lưu lượng mạng và thực thi luật ngăn chặn tức thời (Active Mitigation).
                         </p>
                       </div>
@@ -472,44 +472,44 @@ export function LandingPage() {
                       <button
                         type="button"
                         onClick={handleResetPackets}
-                        className="text-xs font-semibold text-blue-600 dark:text-sky-400 hover:underline cursor-pointer"
+                        className="text-xs font-semibold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 hover:underline cursor-pointer"
                       >
                         Làm mới danh sách
                       </button>
                     </div>
 
-                    <div className="space-y-2 font-mono text-xs">
+                    <div className="space-y-2.5 font-mono text-xs sm:text-sm">
                       {packetList.map((pkt) => (
                         <div
                           key={pkt.id}
-                          className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition-all ${
+                          className={`p-3.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all ${
                             droppedPacketId === pkt.id
                               ? "opacity-30 scale-98"
                               : pkt.status === "danger"
-                              ? "bg-rose-50/80 dark:bg-rose-950/30 border-rose-200 dark:border-rose-900/50 text-rose-900 dark:text-rose-200"
+                              ? "bg-rose-50/80 dark:bg-rose-950/30 cyberpunk:bg-rose-950/40 border-rose-200 dark:border-rose-900/50 cyberpunk:border-rose-500/40 text-rose-900 dark:text-rose-200"
                               : pkt.status === "mitigated"
-                              ? "bg-emerald-50/80 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900/50 text-emerald-900 dark:text-emerald-200"
-                              : "bg-slate-50/70 dark:bg-white/[0.02] border-slate-200/80 dark:border-white/[0.06] text-slate-700 dark:text-slate-300"
+                              ? "bg-emerald-50/80 dark:bg-emerald-950/30 cyberpunk:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/50 cyberpunk:border-emerald-500/40 text-emerald-900 dark:text-emerald-200"
+                              : "bg-slate-50/70 dark:bg-white/[0.02] cyberpunk:bg-cyan-950/20 border-slate-200/80 dark:border-white/[0.06] cyberpunk:border-cyan-500/30 text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-100"
                           }`}
                         >
-                          <div className="flex items-center gap-3 min-w-0">
+                          <div className="flex items-center gap-3.5 min-w-0">
                             <span
                               className={`text-[10px] font-bold px-2 py-0.5 rounded border shrink-0 ${
                                 pkt.protocol === "TLS 1.3"
-                                  ? "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300"
+                                  ? "bg-emerald-100 dark:bg-emerald-950/60 cyberpunk:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 cyberpunk:text-emerald-300 border-emerald-300"
                                   : pkt.protocol === "DNS"
-                                  ? "bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 border-sky-300"
+                                  ? "bg-sky-100 dark:bg-sky-950/60 cyberpunk:bg-cyan-950/60 text-sky-800 dark:text-sky-300 cyberpunk:text-cyan-300 border-sky-300"
                                   : pkt.status === "danger"
-                                  ? "bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300"
-                                  : "bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 border-indigo-300"
+                                  ? "bg-rose-100 dark:bg-rose-950/60 cyberpunk:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300"
+                                  : "bg-indigo-100 dark:bg-indigo-950/60 cyberpunk:bg-blue-950/60 text-indigo-800 dark:text-indigo-300 border-indigo-300"
                               }`}
                             >
                               {pkt.protocol}
                             </span>
-                            <span className="font-semibold text-xs truncate">
+                            <span className="font-semibold text-xs sm:text-sm truncate">
                               {pkt.src} → {pkt.dst}
                             </span>
-                            <span className="text-slate-500 dark:text-slate-400 hidden md:inline truncate">
+                            <span className="text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/70 hidden md:inline truncate">
                               {pkt.info}
                             </span>
                           </div>
@@ -519,16 +519,16 @@ export function LandingPage() {
                               <button
                                 type="button"
                                 onClick={() => handleDropPacket(pkt.id)}
-                                className="px-3 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold transition-all cursor-pointer shadow-xs active:scale-95"
+                                className="px-3.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold transition-all cursor-pointer shadow-xs active:scale-95"
                               >
                                 CHẶN GÓI TIN
                               </button>
                             ) : pkt.status === "mitigated" ? (
-                              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-600 text-white">
+                              <span className="px-2.5 py-1 rounded text-[10px] font-bold bg-emerald-600 text-white">
                                 ĐÃ CÁCH LY
                               </span>
                             ) : (
-                              <span className="text-[10px] font-semibold text-slate-500 uppercase">
+                              <span className="text-[10px] font-semibold text-slate-500 cyberpunk:text-cyan-400/80 uppercase">
                                 {pkt.statusText}
                               </span>
                             )}
@@ -542,16 +542,16 @@ export function LandingPage() {
                 {/* TAB 3: MITRE ATT&CK ADVERSARY TTPs */}
                 {studioTab === "mitre" && (
                   <div className="space-y-4">
-                    <div className="pb-3 border-b border-slate-100 dark:border-white/[0.06]">
-                      <div className="text-xs font-bold text-slate-900 dark:text-white">
+                    <div className="pb-4 border-b border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/20">
+                      <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50">
                         Ma Trận Chiến Thuật MITRE ATT&CK v14
                       </div>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/70 mt-0.5">
                         Ánh xạ trực tiếp giữa kỹ thuật tấn công của đối thủ và cơ chế phòng thủ chuyên sâu.
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                       {[
                         { id: "T1190", tactic: "Initial Access", name: "Exploit Public-Facing App", fix: "Hardened WAF & continuous patch management." },
                         { id: "T1059", tactic: "Execution", name: "Command Interpreter", fix: "Constrained language mode & AppLocker policy." },
@@ -561,20 +561,20 @@ export function LandingPage() {
                         <div
                           key={ttp.id}
                           onClick={() => setActiveTtpId(ttp.id)}
-                          className={`p-3.5 rounded-xl border text-left cursor-pointer transition-all ${
+                          className={`p-4 rounded-xl border text-left cursor-pointer transition-all ${
                             activeTtpId === ttp.id
-                              ? "bg-blue-50/80 dark:bg-blue-500/10 border-blue-400 dark:border-blue-500 shadow-xs"
-                              : "bg-slate-50/60 dark:bg-white/[0.02] border-slate-200 dark:border-white/[0.06] hover:border-slate-300"
+                              ? "bg-blue-50/80 dark:bg-blue-500/10 cyberpunk:bg-cyan-500/20 border-blue-400 dark:border-blue-500 cyberpunk:border-cyan-400 shadow-xs"
+                              : "bg-slate-50/60 dark:bg-white/[0.02] cyberpunk:bg-cyan-950/20 border-slate-200 dark:border-white/[0.06] cyberpunk:border-cyan-500/30 hover:border-slate-300"
                           }`}
                         >
-                          <div className="flex items-center justify-between text-[10px] font-mono font-bold text-blue-600 dark:text-sky-400">
+                          <div className="flex items-center justify-between text-[10px] font-mono font-bold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400">
                             <span>{ttp.id}</span>
-                            <span className="text-slate-400">{ttp.tactic}</span>
+                            <span className="text-slate-400 cyberpunk:text-cyan-300/60">{ttp.tactic}</span>
                           </div>
-                          <div className="text-xs font-bold text-slate-900 dark:text-white mt-1.5 leading-snug">
+                          <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 mt-2 leading-snug">
                             {ttp.name}
                           </div>
-                          <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                          <div className="text-[11px] text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-200/70 mt-2 leading-relaxed">
                             {ttp.fix}
                           </div>
                         </div>
@@ -585,14 +585,14 @@ export function LandingPage() {
               </div>
 
               {/* Studio Window Footer */}
-              <div className="px-5 py-3 border-t border-slate-100 dark:border-white/[0.06] bg-slate-50/70 dark:bg-white/[0.02] flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <div className="px-6 py-4 border-t border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/30 bg-slate-50/70 dark:bg-white/[0.02] cyberpunk:bg-cyan-950/30 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80">
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-emerald-500" />
                   <span>Ubuntu 24.04 LTS Hardened Sandbox • MicroVM Egress Isolation</span>
                 </div>
                 <Link
                   to="/labs"
-                  className="font-semibold text-blue-600 dark:text-sky-400 hover:underline inline-flex items-center gap-1"
+                  className="font-semibold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 hover:underline inline-flex items-center gap-1"
                 >
                   <span>Mở toàn bộ 120+ phòng Lab</span>
                   <ChevronRight className="h-3.5 w-3.5" />
@@ -600,31 +600,31 @@ export function LandingPage() {
               </div>
             </div>
 
-            {/* Quick Metrics Strip */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
-              <div className="p-4 rounded-xl bg-white dark:bg-[#0e121e] border border-slate-200/80 dark:border-white/[0.08] text-center shadow-xs">
-                <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+            {/* Expansive Metrics Ribbon */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
+              <div className="p-6 rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+                <div className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50">
                   <CountUp end={2400} suffix="+" />
                 </div>
-                <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Học Viên Diễn Tập</div>
+                <div className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/70 mt-2">Học Viên Diễn Tập</div>
               </div>
-              <div className="p-4 rounded-xl bg-white dark:bg-[#0e121e] border border-slate-200/80 dark:border-white/[0.08] text-center shadow-xs">
-                <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-sky-400">
+              <div className="p-6 rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+                <div className="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400">
                   <CountUp end={120} suffix="+" />
                 </div>
-                <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Phòng Lab Thực Địa</div>
+                <div className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/70 mt-2">Phòng Lab Thực Địa</div>
               </div>
-              <div className="p-4 rounded-xl bg-white dark:bg-[#0e121e] border border-slate-200/80 dark:border-white/[0.08] text-center shadow-xs">
-                <div className="text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              <div className="p-6 rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+                <div className="text-3xl sm:text-4xl font-bold text-emerald-600 dark:text-emerald-400 cyberpunk:text-emerald-400">
                   <CountUp end={100} suffix="%" />
                 </div>
-                <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Chuẩn MITRE ATT&CK</div>
+                <div className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/70 mt-2">Chuẩn MITRE ATT&CK</div>
               </div>
-              <div className="p-4 rounded-xl bg-white dark:bg-[#0e121e] border border-slate-200/80 dark:border-white/[0.08] text-center shadow-xs">
-                <div className="text-2xl sm:text-3xl font-bold text-sky-600 dark:text-sky-400">
+              <div className="p-6 rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 text-center shadow-xs">
+                <div className="text-3xl sm:text-4xl font-bold text-sky-600 dark:text-sky-400 cyberpunk:text-cyan-300">
                   <CountUp end={3} prefix="< " suffix="s" />
                 </div>
-                <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Khởi Động Sandbox</div>
+                <div className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/70 mt-2">Khởi Động Sandbox</div>
               </div>
             </div>
           </div>
@@ -632,24 +632,24 @@ export function LandingPage() {
       </section>
 
       {/* ====================================================================
-          4. TIÊU CHUẨN & HỆ SINH THÁI ĐỐI TÁC (Clean, Calm, Grayscale)
+          4. TIÊU CHUẨN & HỆ SINH THÁI ĐỐI TÁC (Thoáng đãng, thanh lịch)
          ==================================================================== */}
-      <section className="py-10 border-y border-slate-200/80 dark:border-white/[0.06] bg-white/50 dark:bg-white/[0.01]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-6">
+      <section className="py-16 sm:py-20 border-y border-slate-200/80 dark:border-white/[0.06] cyberpunk:border-cyan-500/20 bg-white/50 dark:bg-white/[0.01] cyberpunk:bg-[#030816]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="text-center text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 mb-8">
             Tương thích và bám sát các tiêu chuẩn an toàn thông tin hàng đầu thế giới
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
             {INDUSTRY_STANDARDS.map((std) => (
               <div
                 key={std.name}
-                className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200/60 dark:border-white/[0.06] text-center flex flex-col justify-center items-center hover:border-slate-300 dark:hover:border-white/[0.12] transition-colors"
+                className="p-4 rounded-xl bg-slate-50 dark:bg-white/[0.02] cyberpunk:bg-[#071328] border border-slate-200/60 dark:border-white/[0.06] cyberpunk:border-cyan-500/30 text-center flex flex-col justify-center items-center hover:border-slate-300 dark:hover:border-white/[0.12] cyberpunk:hover:border-cyan-400 transition-colors"
               >
-                <span className="text-[10px] font-mono font-bold text-blue-600 dark:text-sky-400">
+                <span className="text-[10px] font-mono font-bold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400">
                   {std.tag}
                 </span>
-                <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 mt-1 leading-tight">
+                <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 cyberpunk:text-cyan-100 mt-1.5 leading-tight">
                   {std.name}
                 </span>
               </div>
@@ -659,205 +659,205 @@ export function LandingPage() {
       </section>
 
       {/* ====================================================================
-          5. BENTO GRID — 4 TRỤ CỘT NĂNG LỰC CÓ MICRO-PREVIEW (Linear/Vercel)
+          5. BENTO GRID — 4 TRỤ CỘT NĂNG LỰC RỘNG RÃI & SÂU SẮC
          ==================================================================== */}
-      <section className="py-18 sm:py-24">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400">
+      <section className="py-24 sm:py-36">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400">
               KIẾN TRÚC THỰC CHIẾN
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mt-2">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white cyberpunk:text-white tracking-tight mt-3">
               Hệ sinh thái diễn tập toàn diện
             </h2>
-            <p className="text-slate-600 dark:text-slate-400 mt-3 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-200/80 mt-4 text-base sm:text-lg leading-relaxed">
               Mỗi module được thiết kế với giao diện trực quan, cho phép học viên trực tiếp quan sát và thao tác trên từng lớp phòng thủ.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
             {/* Bento Card 1: 120+ Sandbox Labs with Mini-Terminal */}
-            <div className="cyber-card p-6 sm:p-7 flex flex-col justify-between group hover:border-blue-400/80 transition-all">
-              <div className="space-y-4">
+            <div className="p-8 sm:p-10 rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/35 flex flex-col justify-between group hover:border-blue-400/80 cyberpunk:hover:border-cyan-400 transition-all shadow-sm cyberpunk:shadow-[0_0_20px_rgba(6,182,212,0.12)]">
+              <div className="space-y-5">
                 <div className="flex items-center justify-between">
-                  <div className="h-10 w-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-sky-400 flex items-center justify-center border border-blue-200/80 dark:border-blue-500/20">
+                  <div className="h-11 w-11 rounded-xl bg-blue-50 dark:bg-blue-500/10 cyberpunk:bg-cyan-500/20 text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-300 flex items-center justify-center border border-blue-200/80 dark:border-blue-500/20 cyberpunk:border-cyan-500/30">
                     <Terminal className="h-5 w-5" />
                   </div>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/[0.06] text-slate-600 dark:text-slate-400">
+                  <span className="text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-slate-100 dark:bg-white/[0.06] cyberpunk:bg-cyan-950/60 text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-300 border border-transparent cyberpunk:border-cyan-500/30">
                     KHỞI CHẠY TỨC THÌ
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white cyberpunk:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 cyberpunk:group-hover:text-cyan-300 transition-colors">
                     120+ Phòng Lab Sandbox Trực Tiếp
                   </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-200/70 mt-2 leading-relaxed">
                     Khởi động container Kali Linux, Burp Suite & DVWA cô lập hoàn toàn trên trình duyệt chỉ sau 3 giây.
                   </p>
                 </div>
 
                 {/* Micro-Terminal Visual Preview */}
-                <div className="rounded-lg bg-slate-900 p-3 font-mono text-[11px] text-slate-300 border border-slate-800 space-y-1">
-                  <div className="flex items-center gap-1.5 text-slate-500 pb-1 border-b border-slate-800/80">
-                    <span className="h-2 w-2 rounded-full bg-slate-600" />
+                <div className="rounded-xl bg-slate-900 cyberpunk:bg-[#030914] p-4 font-mono text-xs sm:text-sm text-slate-300 border border-slate-800 cyberpunk:border-cyan-500/30 space-y-1.5">
+                  <div className="flex items-center gap-2 text-slate-500 cyberpunk:text-cyan-400/60 pb-1.5 border-b border-slate-800/80 cyberpunk:border-cyan-500/20">
+                    <span className="h-2.5 w-2.5 rounded-full bg-slate-600" />
                     <span>student@kali-sandbox:~</span>
                   </div>
-                  <div className="text-emerald-400">$ nmap -sS -p 80,443,8080 target.corp</div>
-                  <div className="text-slate-400">PORT     STATE SERVICE VERSION</div>
-                  <div className="text-slate-200">80/tcp   OPEN  http    Apache/2.4.52 (Ubuntu)</div>
-                  <div className="text-slate-200">443/tcp  OPEN  ssl/tls OpenSSL 3.0.2</div>
+                  <div className="text-emerald-400 cyberpunk:text-emerald-300">$ nmap -sS -p 80,443,8080 target.corp</div>
+                  <div className="text-slate-400 cyberpunk:text-cyan-300/60">PORT     STATE SERVICE VERSION</div>
+                  <div className="text-slate-200 cyberpunk:text-cyan-100">80/tcp   OPEN  http    Apache/2.4.52 (Ubuntu)</div>
+                  <div className="text-slate-200 cyberpunk:text-cyan-100">443/tcp  OPEN  ssl/tls OpenSSL 3.0.2</div>
                 </div>
               </div>
 
-              <div className="pt-4 mt-5 border-t border-slate-100 dark:border-white/[0.06]">
+              <div className="pt-6 mt-8 border-t border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/20">
                 <Link
                   to="/labs"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-sky-400 hover:text-blue-700 dark:hover:text-sky-300 transition-colors"
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 hover:text-blue-700 dark:hover:text-sky-300 cyberpunk:hover:text-cyan-300 transition-colors"
                 >
                   <span>Khám phá phòng lab</span>
-                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
 
             {/* Bento Card 2: APT Campaign Simulator with Kill-Chain Flow */}
-            <div className="cyber-card p-6 sm:p-7 flex flex-col justify-between group hover:border-blue-400/80 transition-all">
-              <div className="space-y-4">
+            <div className="p-8 sm:p-10 rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/35 flex flex-col justify-between group hover:border-blue-400/80 cyberpunk:hover:border-cyan-400 transition-all shadow-sm cyberpunk:shadow-[0_0_20px_rgba(6,182,212,0.12)]">
+              <div className="space-y-5">
                 <div className="flex items-center justify-between">
-                  <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center border border-indigo-200/80 dark:border-indigo-500/20">
+                  <div className="h-11 w-11 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 cyberpunk:bg-cyan-500/20 text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-300 flex items-center justify-center border border-indigo-200/80 dark:border-indigo-500/20 cyberpunk:border-cyan-500/30">
                     <Shield className="h-5 w-5" />
                   </div>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/[0.06] text-slate-600 dark:text-slate-400">
+                  <span className="text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-slate-100 dark:bg-white/[0.06] cyberpunk:bg-cyan-950/60 text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-300 border border-transparent cyberpunk:border-cyan-500/30">
                     CHIẾN DỊCH THỰC TẾ
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white cyberpunk:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 cyberpunk:group-hover:text-cyan-300 transition-colors">
                     Diễn Tập Kịch Bản APT & Ransomware
                   </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-200/70 mt-2 leading-relaxed">
                     Tái hiện chuỗi tấn công nâng cao mô phỏng nhóm APT28, APT29 và khóa mã LockBit trên môi trường Active Directory.
                   </p>
                 </div>
 
                 {/* Kill-Chain Progression Visual */}
-                <div className="rounded-lg bg-slate-900 p-3 font-mono text-[11px] text-slate-300 border border-slate-800">
-                  <div className="text-[10px] text-slate-500 uppercase tracking-wider mb-2">TIẾN TRÌNH TÁC CHIẾN KILL-CHAIN:</div>
-                  <div className="grid grid-cols-4 gap-1.5 text-center text-[10px]">
-                    <div className="p-1.5 rounded bg-blue-950/60 border border-blue-800 text-blue-300">
+                <div className="rounded-xl bg-slate-900 cyberpunk:bg-[#030914] p-4 font-mono text-xs sm:text-sm text-slate-300 border border-slate-800 cyberpunk:border-cyan-500/30">
+                  <div className="text-[10px] text-slate-500 cyberpunk:text-cyan-400/60 uppercase tracking-wider mb-2.5">TIẾN TRÌNH TÁC CHIẾN KILL-CHAIN:</div>
+                  <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                    <div className="p-2 rounded bg-blue-950/60 border border-blue-800 text-blue-300">
                       T1566<br />Phishing
                     </div>
-                    <div className="p-1.5 rounded bg-amber-950/60 border border-amber-800 text-amber-300">
+                    <div className="p-2 rounded bg-amber-950/60 border border-amber-800 text-amber-300">
                       T1059<br />Execute
                     </div>
-                    <div className="p-1.5 rounded bg-rose-950/60 border border-rose-800 text-rose-300">
+                    <div className="p-2 rounded bg-rose-950/60 border border-rose-800 text-rose-300">
                       T1078<br />PrivEsc
                     </div>
-                    <div className="p-1.5 rounded bg-emerald-950/60 border border-emerald-800 text-emerald-300">
+                    <div className="p-2 rounded bg-emerald-950/60 border border-emerald-800 text-emerald-300">
                       BLOCKED<br />Isolated
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-4 mt-5 border-t border-slate-100 dark:border-white/[0.06]">
+              <div className="pt-6 mt-8 border-t border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/20">
                 <Link
                   to="/labs?category=APT"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-sky-400 hover:text-blue-700 dark:hover:text-sky-300 transition-colors"
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 hover:text-blue-700 dark:hover:text-sky-300 cyberpunk:hover:text-cyan-300 transition-colors"
                 >
                   <span>Xem kịch bản APT</span>
-                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
 
             {/* Bento Card 3: SOC & Forensics Center with SIEM Log Stream */}
-            <div className="cyber-card p-6 sm:p-7 flex flex-col justify-between group hover:border-blue-400/80 transition-all">
-              <div className="space-y-4">
+            <div className="p-8 sm:p-10 rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/35 flex flex-col justify-between group hover:border-blue-400/80 cyberpunk:hover:border-cyan-400 transition-all shadow-sm cyberpunk:shadow-[0_0_20px_rgba(6,182,212,0.12)]">
+              <div className="space-y-5">
                 <div className="flex items-center justify-between">
-                  <div className="h-10 w-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-200/80 dark:border-emerald-500/20">
+                  <div className="h-11 w-11 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 cyberpunk:bg-cyan-500/20 text-emerald-600 dark:text-emerald-400 cyberpunk:text-cyan-300 flex items-center justify-center border border-emerald-200/80 dark:border-emerald-500/20 cyberpunk:border-cyan-500/30">
                     <Activity className="h-5 w-5" />
                   </div>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/[0.06] text-slate-600 dark:text-slate-400">
+                  <span className="text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-slate-100 dark:bg-white/[0.06] cyberpunk:bg-cyan-950/60 text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-300 border border-transparent cyberpunk:border-cyan-500/30">
                     PHÒNG THỦ BLUE TEAM
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white cyberpunk:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 cyberpunk:group-hover:text-cyan-300 transition-colors">
                     Trung Tâm Điều Hành SOC & Pháp Chứng
                   </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-200/70 mt-2 leading-relaxed">
                     Rèn luyện kỹ năng điều tra log SIEM Splunk/ELK, phân tích dump bộ nhớ Volatility và tự động hóa cách ly mối đe dọa.
                   </p>
                 </div>
 
                 {/* SIEM Log Stream Visual */}
-                <div className="rounded-lg bg-slate-900 p-3 font-mono text-[11px] text-slate-300 border border-slate-800 space-y-1">
-                  <div className="flex items-center justify-between text-slate-500 text-[10px] pb-1 border-b border-slate-800">
+                <div className="rounded-xl bg-slate-900 cyberpunk:bg-[#030914] p-4 font-mono text-xs text-slate-300 border border-slate-800 cyberpunk:border-cyan-500/30 space-y-1.5">
+                  <div className="flex items-center justify-between text-slate-500 cyberpunk:text-cyan-400/60 text-[10px] pb-1.5 border-b border-slate-800 cyberpunk:border-cyan-500/20">
                     <span>SPLUNK SIEM LOG STREAM</span>
                     <span className="text-emerald-400 font-bold">● LIVE</span>
                   </div>
-                  <div className="text-rose-400 text-[10px] truncate">[CRIT] Suricata: ET WEB_SPECIFIC_APPS SQL Injection</div>
-                  <div className="text-amber-400 text-[10px] truncate">[WARN] Volatility: Unlinked VAD hidden DLL detected</div>
-                  <div className="text-emerald-400 text-[10px] truncate">[INFO] SOAR: Host 10.0.4.88 network egress isolated</div>
+                  <div className="text-rose-400 truncate">[CRIT] Suricata: ET WEB_SPECIFIC_APPS SQL Injection</div>
+                  <div className="text-amber-400 truncate">[WARN] Volatility: Unlinked VAD hidden DLL detected</div>
+                  <div className="text-emerald-400 truncate">[INFO] SOAR: Host 10.0.4.88 network egress isolated</div>
                 </div>
               </div>
 
-              <div className="pt-4 mt-5 border-t border-slate-100 dark:border-white/[0.06]">
+              <div className="pt-6 mt-8 border-t border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/20">
                 <Link
                   to="/labs?category=soc"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-sky-400 hover:text-blue-700 dark:hover:text-sky-300 transition-colors"
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 hover:text-blue-700 dark:hover:text-sky-300 cyberpunk:hover:text-cyan-300 transition-colors"
                 >
                   <span>Vào phòng SOC</span>
-                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
 
             {/* Bento Card 4: Certifications Pathway with Digital Credential */}
-            <div className="cyber-card p-6 sm:p-7 flex flex-col justify-between group hover:border-blue-400/80 transition-all">
-              <div className="space-y-4">
+            <div className="p-8 sm:p-10 rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/35 flex flex-col justify-between group hover:border-blue-400/80 cyberpunk:hover:border-cyan-400 transition-all shadow-sm cyberpunk:shadow-[0_0_20px_rgba(6,182,212,0.12)]">
+              <div className="space-y-5">
                 <div className="flex items-center justify-between">
-                  <div className="h-10 w-10 rounded-xl bg-sky-50 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center border border-sky-200/80 dark:border-sky-500/20">
+                  <div className="h-11 w-11 rounded-xl bg-sky-50 dark:bg-sky-500/10 cyberpunk:bg-cyan-500/20 text-sky-600 dark:text-sky-400 cyberpunk:text-cyan-300 flex items-center justify-center border border-sky-200/80 dark:border-sky-500/20 cyberpunk:border-cyan-500/30">
                     <FileCheck className="h-5 w-5" />
                   </div>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/[0.06] text-slate-600 dark:text-slate-400">
+                  <span className="text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-slate-100 dark:bg-white/[0.06] cyberpunk:bg-cyan-950/60 text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-300 border border-transparent cyberpunk:border-cyan-500/30">
                     CHỨNG NHẬN QUỐC TẾ
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white cyberpunk:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 cyberpunk:group-hover:text-cyan-300 transition-colors">
                     Lộ Trình Đạt Chuẩn CEH, OSCP & Sec+
                   </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-200/70 mt-2 leading-relaxed">
                     Khung năng lực ánh xạ 1:1 theo chuẩn NIST NICE. Cấp chứng nhận kỹ năng số có mã xác thực công khai chứng minh năng lực thực chiến.
                   </p>
                 </div>
 
                 {/* Digital Credential Visual */}
-                <div className="rounded-lg bg-slate-900 p-3 font-mono text-[11px] text-slate-300 border border-slate-800 flex items-center justify-between">
+                <div className="rounded-xl bg-slate-900 cyberpunk:bg-[#030914] p-4 font-mono text-xs sm:text-sm text-slate-300 border border-slate-800 cyberpunk:border-cyan-500/30 flex items-center justify-between">
                   <div>
-                    <div className="text-[10px] text-slate-400">VERIFIED SKILL BADGE</div>
-                    <div className="font-bold text-white text-xs mt-0.5">Offensive Security Certified Practitioner</div>
-                    <div className="text-[10px] text-sky-400 mt-0.5">SHA256: 8f4c...3e19 • NIST NICE SP 800-181</div>
+                    <div className="text-[10px] text-slate-400 cyberpunk:text-cyan-400/60">VERIFIED SKILL BADGE</div>
+                    <div className="font-bold text-white cyberpunk:text-cyan-50 text-xs sm:text-sm mt-0.5">Offensive Security Certified Practitioner</div>
+                    <div className="text-[10px] text-sky-400 cyberpunk:text-cyan-400 mt-0.5">SHA256: 8f4c...3e19 • NIST NICE SP 800-181</div>
                   </div>
-                  <div className="h-8 w-8 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
-                    <CheckCircle2 className="h-4 w-4" />
+                  <div className="h-9 w-9 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
+                    <CheckCircle2 className="h-5 w-5" />
                   </div>
                 </div>
               </div>
 
-              <div className="pt-4 mt-5 border-t border-slate-100 dark:border-white/[0.06]">
+              <div className="pt-6 mt-8 border-t border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/20">
                 <Link
                   to="/learning-paths"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-sky-400 hover:text-blue-700 dark:hover:text-sky-300 transition-colors"
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 hover:text-blue-700 dark:hover:text-sky-300 cyberpunk:hover:text-cyan-300 transition-colors"
                 >
                   <span>Xem lộ trình học</span>
-                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
@@ -868,32 +868,32 @@ export function LandingPage() {
       {/* ====================================================================
           6. BỘ PHÂN TÍCH PAYLOAD TƯƠNG TÁC (Rich Hands-on AST Playground)
          ==================================================================== */}
-      <section className="py-14 bg-slate-100/60 dark:bg-white/[0.01] border-y border-slate-200/80 dark:border-white/[0.06]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="cyber-card p-6 sm:p-8 bg-white dark:bg-[#0e121e]">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-5 space-y-2">
-                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-sky-400 uppercase tracking-wider font-mono">
+      <section className="py-20 sm:py-28 bg-slate-100/60 dark:bg-white/[0.01] cyberpunk:bg-[#030816] border-y border-slate-200/80 dark:border-white/[0.06] cyberpunk:border-cyan-500/20">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="p-8 sm:p-12 rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] border border-slate-200 dark:border-white/[0.08] cyberpunk:border-cyan-500/35 shadow-sm cyberpunk:shadow-[0_0_20px_rgba(6,182,212,0.1)]">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              <div className="lg:col-span-5 space-y-3">
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 uppercase tracking-wider font-mono">
                   <Code2 className="h-4 w-4" />
                   <span>TRÌNH QUÉT CÚ PHÁP PAYLOAD</span>
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white cyberpunk:text-white tracking-tight">
                   Kiểm thử khả năng phòng thủ trực tiếp
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-200/80 leading-relaxed">
                   Nhập chuỗi kiểm thử tấn công (SQLi, XSS, SSRF, Command) để quan sát cơ chế bóc tách token cú pháp và đề xuất phòng thủ chuẩn OWASP.
                 </p>
               </div>
 
-              <div className="lg:col-span-7 space-y-3.5">
-                <div className="flex flex-col sm:flex-row gap-2.5">
+              <div className="lg:col-span-7 space-y-4">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <div className="relative flex-1">
                     <input
                       type="text"
                       value={testPayload}
                       onChange={(e) => setTestPayload(e.target.value)}
                       placeholder="Nhập chuỗi payload kiểm thử..."
-                      className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-[#080b14] border border-slate-200 dark:border-white/[0.1] rounded-xl text-xs sm:text-sm font-mono text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 bg-slate-50 dark:bg-[#080b14] cyberpunk:bg-[#030914] border border-slate-200 dark:border-white/[0.1] cyberpunk:border-cyan-500/40 rounded-xl text-xs sm:text-sm font-mono text-slate-900 dark:text-white cyberpunk:text-cyan-100 placeholder-slate-400 focus:outline-none focus:border-blue-500 cyberpunk:focus:border-cyan-400 transition-colors"
                     />
                   </div>
 
@@ -901,7 +901,7 @@ export function LandingPage() {
                     type="button"
                     onClick={handleAnalyzePayload}
                     disabled={isScanning}
-                    className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white shadow-xs transition-all cursor-pointer shrink-0"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs sm:text-sm font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 cyberpunk:bg-cyan-500 cyberpunk:hover:bg-cyan-400 text-white cyberpunk:text-slate-950 shadow-xs transition-all cursor-pointer shrink-0"
                   >
                     {isScanning ? (
                       <>
@@ -918,8 +918,8 @@ export function LandingPage() {
                 </div>
 
                 {/* Quick Preset Chips */}
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="text-[11px] font-medium text-slate-500">Mẫu có sẵn:</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-medium text-slate-500 cyberpunk:text-cyan-400/80">Mẫu có sẵn:</span>
                   {[
                     { label: "SQL Tautology", val: "' OR 1=1 --" },
                     { label: "Polyglot XSS", val: "<script>alert(document.domain)</script>" },
@@ -930,7 +930,7 @@ export function LandingPage() {
                       key={chip.label}
                       type="button"
                       onClick={() => setTestPayload(chip.val)}
-                      className="text-[11px] font-mono px-2.5 py-1 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
+                      className="text-xs font-mono px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] cyberpunk:bg-cyan-950/40 cyberpunk:hover:bg-cyan-900/60 text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-300 border border-transparent cyberpunk:border-cyan-500/30 transition-colors cursor-pointer"
                     >
                       {chip.label}
                     </button>
@@ -938,26 +938,26 @@ export function LandingPage() {
                 </div>
 
                 {scanResult && (
-                  <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#080b14] border border-slate-200 dark:border-white/[0.08] space-y-2.5 animate-in fade-in duration-200">
-                    <div className="flex items-center justify-between text-xs flex-wrap gap-2">
+                  <div className="p-5 rounded-xl bg-slate-50 dark:bg-[#080b14] cyberpunk:bg-[#030914] border border-slate-200 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 space-y-3 animate-in fade-in duration-200">
+                    <div className="flex items-center justify-between text-xs sm:text-sm flex-wrap gap-2">
                       <span className="font-bold text-rose-600 dark:text-rose-400 font-mono">[{scanResult.type}]</span>
-                      <span className="font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-200/60 dark:border-rose-500/20 text-[11px]">
+                      <span className="font-bold px-2.5 py-0.5 rounded bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-200/60 dark:border-rose-500/20 text-xs">
                         CVSS: {scanResult.severity}
                       </span>
                     </div>
 
                     {/* Parsed Tokens Pills */}
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-[10px] text-slate-400 font-mono">AST TOKENS:</span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] sm:text-xs text-slate-400 font-mono">AST TOKENS:</span>
                       {scanResult.tokens.map((tok) => (
-                        <span key={tok} className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-sky-300 border border-blue-200/60 dark:border-blue-500/20">
+                        <span key={tok} className="text-[10px] sm:text-xs font-mono px-2.5 py-0.5 rounded bg-blue-50 dark:bg-blue-500/10 cyberpunk:bg-cyan-950/60 text-blue-700 dark:text-sky-300 cyberpunk:text-cyan-300 border border-blue-200/60 dark:border-blue-500/20 cyberpunk:border-cyan-500/30">
                           {tok}
                         </span>
                       ))}
                     </div>
 
-                    <p className="text-xs text-slate-600 dark:text-slate-300 pt-1 border-t border-slate-200/60 dark:border-white/[0.06]">
-                      Biện pháp khắc phục: <span className="font-semibold text-emerald-600 dark:text-emerald-400">{scanResult.fix}</span>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-200/80 pt-2 border-t border-slate-200/60 dark:border-white/[0.06] cyberpunk:border-cyan-500/20">
+                      Biện pháp khắc phục: <span className="font-semibold text-emerald-600 dark:text-emerald-400 cyberpunk:text-emerald-300">{scanResult.fix}</span>
                     </p>
                   </div>
                 )}
@@ -970,17 +970,17 @@ export function LandingPage() {
       {/* ====================================================================
           7. DANH MỤC PHÒNG LAB THỰC CHIẾN (Search & Filter Cards)
          ==================================================================== */}
-      <section className="py-16 sm:py-24">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+      <section className="py-24 sm:py-36">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400">
                 PHÒNG LAB TIÊU BIỂU
               </span>
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white cyberpunk:text-white tracking-tight mt-2">
                 Khám phá môi trường diễn tập
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">
+              <p className="text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-200/70 text-sm sm:text-base mt-2">
                 Các bài tập mô phỏng lỗ hổng thực tế được gắn nhãn MITRE ATT&CK và CVE tương ứng.
               </p>
             </div>
@@ -988,17 +988,17 @@ export function LandingPage() {
             {/* Search + Category Filter */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <div className="relative">
-                <Search className="h-4 w-4 text-slate-400 absolute left-3 top-3" />
+                <Search className="h-4 w-4 text-slate-400 absolute left-3.5 top-3.5" />
                 <input
                   type="text"
                   value={labSearchQuery}
                   onChange={(e) => setLabSearchQuery(e.target.value)}
                   placeholder="Tìm phòng lab, CVE, MITRE..."
-                  className="pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-white/[0.1] bg-white dark:bg-[#0e121e] text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 w-full sm:w-56 shadow-xs"
+                  className="pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-white/[0.1] cyberpunk:border-cyan-500/40 bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] text-slate-900 dark:text-white cyberpunk:text-cyan-100 focus:outline-none focus:border-blue-500 cyberpunk:focus:border-cyan-400 w-full sm:w-64 shadow-xs"
                 />
               </div>
 
-              <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-white/[0.04] rounded-xl border border-slate-200/80 dark:border-white/[0.08] text-xs">
+              <div className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-white/[0.04] cyberpunk:bg-[#030914] rounded-xl border border-slate-200/80 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 text-xs">
                 {[
                   { key: "all", label: "Tất cả" },
                   { key: "web", label: "Web" },
@@ -1010,10 +1010,10 @@ export function LandingPage() {
                     key={cat.key}
                     type="button"
                     onClick={() => setLabCategory(cat.key)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                    className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                       labCategory === cat.key
-                        ? "bg-white dark:bg-[#162032] text-blue-600 dark:text-sky-400 font-semibold shadow-xs"
-                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                        ? "bg-white dark:bg-[#162032] cyberpunk:bg-cyan-500/20 text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-300 font-semibold shadow-xs cyberpunk:border cyberpunk:border-cyan-500/40"
+                        : "text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-300/70 hover:text-slate-900 dark:hover:text-white"
                     }`}
                   >
                     {cat.label}
@@ -1024,33 +1024,33 @@ export function LandingPage() {
           </div>
 
           {/* Labs Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
             {filteredLabs.map((lab) => (
               <div
                 key={lab.id}
-                className="cyber-card p-5 flex flex-col justify-between group hover:border-blue-400 transition-all"
+                className="p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#0e121e] cyberpunk:bg-[#061224] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/30 flex flex-col justify-between group hover:border-blue-400 cyberpunk:hover:border-cyan-400 transition-all shadow-xs cyberpunk:shadow-[0_0_15px_rgba(6,182,212,0.08)]"
               >
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-sky-300 border border-blue-200/60 dark:border-blue-500/20">
+                    <span className="font-mono text-[10px] font-bold px-2.5 py-1 rounded bg-blue-50 dark:bg-blue-500/10 cyberpunk:bg-cyan-950/60 text-blue-700 dark:text-sky-300 cyberpunk:text-cyan-300 border border-blue-200/60 dark:border-blue-500/20 cyberpunk:border-cyan-500/30">
                       MITRE: {lab.mitre}
                     </span>
-                    <span className="font-mono text-xs font-bold text-amber-600 dark:text-amber-400">
+                    <span className="font-mono text-xs font-bold text-amber-600 dark:text-amber-400 cyberpunk:text-amber-300">
                       +{lab.points} PTS
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors leading-snug">
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white cyberpunk:text-white group-hover:text-blue-600 dark:group-hover:text-sky-400 cyberpunk:group-hover:text-cyan-300 transition-colors leading-snug">
                     {lab.title}
                   </h3>
 
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 cyberpunk:text-cyan-200/70 leading-relaxed">
                     {lab.desc}
                   </p>
                 </div>
 
-                <div className="mt-5 pt-3 border-t border-slate-100 dark:border-white/[0.06] flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2 text-slate-500 font-medium">
+                <div className="mt-6 pt-4 border-t border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/20 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="flex items-center gap-2 text-slate-500 cyberpunk:text-cyan-400/70 font-medium">
                     <span>{lab.durationMins} phút</span>
                     <span>&bull;</span>
                     <span>{lab.difficulty}</span>
@@ -1058,10 +1058,10 @@ export function LandingPage() {
 
                   <Link
                     to="/labs"
-                    className="inline-flex items-center gap-1 font-semibold text-blue-600 dark:text-sky-400 hover:text-blue-700 transition-colors"
+                    className="inline-flex items-center gap-1.5 font-semibold text-blue-600 dark:text-sky-400 cyberpunk:text-cyan-400 hover:text-blue-700 transition-colors"
                   >
                     <span>Vào Lab</span>
-                    <ChevronRight className="h-3.5 w-3.5" />
+                    <ChevronRight className="h-4 w-4" />
                   </Link>
                 </div>
               </div>
@@ -1071,22 +1071,22 @@ export function LandingPage() {
       </section>
 
       {/* ====================================================================
-          8. CALL TO ACTION BANNER (Thân thiện, ấm áp, sáng sủa)
+          8. CALL TO ACTION BANNER (Thoáng đãng, ấm áp, thư thái)
          ==================================================================== */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
-        <div className="rounded-3xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white p-8 sm:p-12 lg:p-14 text-center shadow-xl shadow-blue-600/10 relative overflow-hidden">
-          <div className="relative z-10 max-w-2xl mx-auto space-y-5">
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-24 sm:pb-36">
+        <div className="rounded-3xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 cyberpunk:from-cyan-900 cyberpunk:via-blue-900 cyberpunk:to-slate-950 cyberpunk:border cyberpunk:border-cyan-500/40 text-white p-10 sm:p-16 lg:p-20 text-center shadow-2xl relative overflow-hidden">
+          <div className="relative z-10 max-w-3xl mx-auto space-y-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
               Sẵn sàng nâng tầm kỹ năng an ninh mạng thực chiến?
             </h2>
-            <p className="text-blue-100 text-base leading-relaxed">
+            <p className="text-blue-100 cyberpunk:text-cyan-100/90 text-base sm:text-lg leading-relaxed">
               Tạo tài khoản miễn phí chỉ trong 30 giây để bắt đầu thử nghiệm các phòng lab đầu tiên. Không yêu cầu thẻ tín dụng, học tập theo tốc độ của bạn.
             </p>
 
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to={isAuthenticated ? "/dashboard" : "/register"}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-semibold text-sm px-7 py-3 rounded-xl bg-white text-blue-600 hover:bg-blue-50 shadow-md active:scale-[0.98] transition-all cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 font-semibold text-sm px-8 py-3.5 rounded-xl bg-white text-blue-600 hover:bg-blue-50 shadow-md active:scale-[0.98] transition-all cursor-pointer"
               >
                 <span>{isAuthenticated ? "Vào Bảng Điều Khiển" : "Tạo Tài Khoản Miễn Phí"}</span>
                 <ChevronRight className="h-4 w-4" />
@@ -1094,7 +1094,7 @@ export function LandingPage() {
 
               <Link
                 to="/pricing"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-medium text-sm px-6 py-3 rounded-xl text-white bg-blue-700/60 hover:bg-blue-700 border border-white/20 active:scale-[0.98] transition-all cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 font-medium text-sm px-7 py-3.5 rounded-xl text-white bg-blue-700/60 hover:bg-blue-700 cyberpunk:bg-cyan-950/60 cyberpunk:hover:bg-cyan-900 border border-white/20 cyberpunk:border-cyan-500/40 active:scale-[0.98] transition-all cursor-pointer"
               >
                 <span>Xem Bảng Giá & Doanh Nghiệp</span>
               </Link>
