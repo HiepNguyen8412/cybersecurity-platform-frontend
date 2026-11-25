@@ -5,7 +5,7 @@ import courseService from "../services/courseService"
 import progressService from "../services/progressService"
 import certificationService from "../services/certificationService"
 
-export const INITIAL_COURSES = [
+const RAW_INITIAL_COURSES = [
   {
     "id": "mod-web201",
     "code": "WEB-201",
@@ -908,37 +908,387 @@ export const INITIAL_COURSES = [
   }
 ]
 
+const COURSE_SCHOLARLY_META = {
+  "mod-web201": {
+    bloomLevel: "Phân tích & Đánh giá",
+    rfc: "RFC 9110 (HTTP Semantics) · OWASP ASVS v4.0",
+    references: [
+      { code: "RFC 9110", title: "HTTP Semantics — IETF Standard", url: "https://datatracker.ietf.org/doc/html/rfc9110" },
+      { code: "OWASP ASVS", title: "Application Security Verification Standard v4.0", url: "https://owasp.org/www-project-application-security-verification-standard/" },
+      { code: "MITRE T1190", title: "Exploit Public-Facing Application", url: "https://attack.mitre.org/techniques/T1190/" },
+    ],
+  },
+  "mod-soc101": {
+    bloomLevel: "Phân tích & Ứng phó",
+    rfc: "NIST SP 800-61 Rev. 2 · RFC 5424 (Syslog)",
+    references: [
+      { code: "NIST 800-61", title: "Computer Security Incident Handling Guide", url: "https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final" },
+      { code: "RFC 5424", title: "The Syslog Protocol — IETF", url: "https://datatracker.ietf.org/doc/html/rfc5424" },
+      { code: "Sigma Spec", title: "Generic Signature Format for SIEM Systems", url: "https://sigmahq.io/" },
+    ],
+  },
+  "mod-net301": {
+    bloomLevel: "Phân tích & Điều tra số",
+    rfc: "RFC 9293 (TCP) · RFC 826 (ARP) · RFC 1035 (DNS)",
+    references: [
+      { code: "RFC 9293", title: "Transmission Control Protocol (TCP)", url: "https://datatracker.ietf.org/doc/html/rfc9293" },
+      { code: "RFC 826", title: "Ethernet Address Resolution Protocol (ARP)", url: "https://datatracker.ietf.org/doc/html/rfc826" },
+      { code: "NIST 800-86", title: "Guide to Integrating Forensic Techniques into Incident Response", url: "https://csrc.nist.gov/publications/detail/sp/800-86/final" },
+    ],
+  },
+  "mod-cld401": {
+    bloomLevel: "Đánh giá & Kiến trúc",
+    rfc: "CIS Kubernetes v1.8 · NIST SP 800-204 · RFC 3927",
+    references: [
+      { code: "RFC 3927", title: "Dynamic Configuration of IPv4 Link-Local Addresses", url: "https://datatracker.ietf.org/doc/html/rfc3927" },
+      { code: "NIST 800-204", title: "Security Strategies for Microservices-based Systems", url: "https://csrc.nist.gov/publications/detail/sp/800-204/final" },
+      { code: "MITRE T1611", title: "Escape to Host — Container Security", url: "https://attack.mitre.org/techniques/T1611/" },
+    ],
+  },
+  "mod-rev501": {
+    bloomLevel: "Tổng hợp & Sáng tạo",
+    rfc: "System V AMD64 ABI · CWE-121 / CWE-787",
+    references: [
+      { code: "CWE-121", title: "Stack-based Buffer Overflow — MITRE CWE", url: "https://cwe.mitre.org/data/definitions/121.html" },
+      { code: "CWE-787", title: "Out-of-bounds Write — MITRE CWE Top 25", url: "https://cwe.mitre.org/data/definitions/787.html" },
+      { code: "NIST 800-53", title: "SI-16 Memory Protection Controls", url: "https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final" },
+    ],
+  },
+  "mod-sec101": {
+    bloomLevel: "Thông hiểu & Phân tích",
+    rfc: "RFC 8446 (TLS 1.3) · NIST SP 800-38D · RFC 9106",
+    references: [
+      { code: "RFC 8446", title: "The Transport Layer Security (TLS) Protocol Version 1.3", url: "https://datatracker.ietf.org/doc/html/rfc8446" },
+      { code: "NIST 800-38D", title: "Recommendation for Galois/Counter Mode (GCM)", url: "https://csrc.nist.gov/publications/detail/sp/800-38d/final" },
+      { code: "RFC 9106", title: "Argon2 Memory-Hard Function for Password Hashing", url: "https://datatracker.ietf.org/doc/html/rfc9106" },
+    ],
+  },
+}
+
+const LESSON_SCHOLARLY_META = {
+  "mod-web201:s1": {
+    bloomLevel: "Thông hiểu & Phân tích",
+    rfc: "RFC 9110 · WHATWG Fetch CORS",
+    references: [
+      { code: "RFC 9110", title: "HTTP Semantics — Header & Origin Model", url: "https://datatracker.ietf.org/doc/html/rfc9110" },
+      { code: "CWE-942", title: "Permissive Cross-domain Policy with Untrusted Domains", url: "https://cwe.mitre.org/data/definitions/942.html" },
+    ],
+  },
+  "mod-web201:s2": {
+    bloomLevel: "Phân tích & Vận dụng",
+    rfc: "OWASP ASVS §5.3 · CWE-89",
+    references: [
+      { code: "CWE-89", title: "Improper Neutralization of Special Elements in SQL Command", url: "https://cwe.mitre.org/data/definitions/89.html" },
+      { code: "OWASP SQLi", title: "Query Parameterization & AST Separation Cheat Sheet", url: "https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html" },
+    ],
+  },
+  "mod-web201:s3": {
+    bloomLevel: "Phân tích & Vận dụng",
+    rfc: "W3C CSP Level 3 · CWE-79",
+    references: [
+      { code: "CWE-79", title: "Improper Neutralization of Input During Web Page Generation", url: "https://cwe.mitre.org/data/definitions/79.html" },
+      { code: "W3C CSP3", title: "Content Security Policy Level 3 Specification", url: "https://www.w3.org/TR/CSP3/" },
+    ],
+  },
+  "mod-web201:s4": {
+    bloomLevel: "Phân tích & Đánh giá",
+    rfc: "RFC 3927 (169.254.0.0/16) · CWE-918",
+    references: [
+      { code: "RFC 3927", title: "Dynamic Configuration of IPv4 Link-Local Addresses", url: "https://datatracker.ietf.org/doc/html/rfc3927" },
+      { code: "CWE-918", title: "Server-Side Request Forgery (SSRF)", url: "https://cwe.mitre.org/data/definitions/918.html" },
+    ],
+  },
+  "mod-web201:s5": {
+    bloomLevel: "Đánh giá & Kiểm toán",
+    rfc: "OWASP API1:2023 · CWE-639",
+    references: [
+      { code: "CWE-639", title: "Authorization Bypass Through User-Controlled Key", url: "https://cwe.mitre.org/data/definitions/639.html" },
+      { code: "OWASP API1", title: "Broken Object Level Authorization (BOLA)", url: "https://owasp.org/API-Security/" },
+    ],
+  },
+  "mod-web201:s6": {
+    bloomLevel: "Tổng hợp & Sáng tạo",
+    rfc: "NIST SP 800-207 (Zero Trust) · MITRE T1190",
+    references: [
+      { code: "NIST 800-207", title: "Zero Trust Architecture", url: "https://csrc.nist.gov/publications/detail/sp/800-207/final" },
+      { code: "MITRE T1190", title: "Exploit Public-Facing Application", url: "https://attack.mitre.org/techniques/T1190/" },
+    ],
+  },
+  "mod-soc101:s1": {
+    bloomLevel: "Thông hiểu",
+    rfc: "NIST SP 800-61 Rev. 2 · RFC 5424",
+    references: [
+      { code: "NIST 800-61", title: "Computer Security Incident Handling Guide", url: "https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final" },
+      { code: "MITRE T1078", title: "Valid Accounts Detection", url: "https://attack.mitre.org/techniques/T1078/" },
+    ],
+  },
+  "mod-soc101:s2": {
+    bloomLevel: "Phân tích",
+    rfc: "NIST SP 800-92 · Sysmon v4.90",
+    references: [
+      { code: "NIST 800-92", title: "Guide to Computer Security Log Management", url: "https://csrc.nist.gov/publications/detail/sp/800-92/final" },
+      { code: "MITRE T1059", title: "Command and Scripting Interpreter: PowerShell", url: "https://attack.mitre.org/techniques/T1059/001/" },
+    ],
+  },
+  "mod-soc101:s3": {
+    bloomLevel: "Vận dụng & Tổng hợp",
+    rfc: "Sigma Detection Format v2.0",
+    references: [
+      { code: "SigmaHQ", title: "Generic Signature Format for SIEM Systems", url: "https://sigmahq.io/" },
+      { code: "MITRE T1059", title: "PowerShell Script Block Detection", url: "https://attack.mitre.org/techniques/T1059/001/" },
+    ],
+  },
+  "mod-soc101:s4": {
+    bloomLevel: "Phân tích & Đánh giá",
+    rfc: "NIST SP 800-53 AC-6 · MITRE T1548",
+    references: [
+      { code: "MITRE T1548", title: "Abuse Elevation Control Mechanism", url: "https://attack.mitre.org/techniques/T1548/" },
+      { code: "NIST AC-6", title: "Principle of Least Privilege", url: "https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final" },
+    ],
+  },
+  "mod-soc101:s5": {
+    bloomLevel: "Đánh giá & Ứng phó",
+    rfc: "NISTIR 8374 (Ransomware) · NIST SP 800-61r2",
+    references: [
+      { code: "NISTIR 8374", title: "Ransomware Risk Management Profile", url: "https://csrc.nist.gov/publications/detail/nistir/8374/final" },
+      { code: "MITRE T1486", title: "Data Encrypted for Impact", url: "https://attack.mitre.org/techniques/T1486/" },
+    ],
+  },
+  "mod-net301:s1": {
+    bloomLevel: "Thông hiểu & Phân tích",
+    rfc: "RFC 9293 (TCP) · RFC 791 (IPv4)",
+    references: [
+      { code: "RFC 9293", title: "Transmission Control Protocol (TCP)", url: "https://datatracker.ietf.org/doc/html/rfc9293" },
+      { code: "MITRE T1040", title: "Network Sniffing", url: "https://attack.mitre.org/techniques/T1040/" },
+    ],
+  },
+  "mod-net301:s2": {
+    bloomLevel: "Phân tích",
+    rfc: "RFC 9293 §3.1 (TCP Control Bits)",
+    references: [
+      { code: "RFC 9293", title: "TCP Segment Header Flags & State Transitions", url: "https://datatracker.ietf.org/doc/html/rfc9293" },
+      { code: "MITRE T1046", title: "Network Service Discovery", url: "https://attack.mitre.org/techniques/T1046/" },
+    ],
+  },
+  "mod-net301:s3": {
+    bloomLevel: "Phân tích & Phòng thủ",
+    rfc: "RFC 826 (ARP) · RFC 5227 (IPv4 ACD)",
+    references: [
+      { code: "RFC 826", title: "An Ethernet Address Resolution Protocol", url: "https://datatracker.ietf.org/doc/html/rfc826" },
+      { code: "CWE-300", title: "Channel Accessible by Non-Endpoint", url: "https://cwe.mitre.org/data/definitions/300.html" },
+    ],
+  },
+  "mod-net301:s4": {
+    bloomLevel: "Phân tích & Đánh giá",
+    rfc: "RFC 1035 (DNS) · RFC 8484 (DoH)",
+    references: [
+      { code: "RFC 1035", title: "Domain Names — Implementation and Specification", url: "https://datatracker.ietf.org/doc/html/rfc1035" },
+      { code: "MITRE T1071", title: "Application Layer Protocol: DNS", url: "https://attack.mitre.org/techniques/T1071/004/" },
+    ],
+  },
+  "mod-net301:s5": {
+    bloomLevel: "Tổng hợp & Điều tra",
+    rfc: "NIST SP 800-86 · IETF PCAPng",
+    references: [
+      { code: "NIST 800-86", title: "Forensic Techniques for Incident Response", url: "https://csrc.nist.gov/publications/detail/sp/800-86/final" },
+      { code: "MITRE T1048", title: "Exfiltration Over Alternative Protocol", url: "https://attack.mitre.org/techniques/T1048/" },
+    ],
+  },
+  "mod-cld401:s1": {
+    bloomLevel: "Thông hiểu & Phân tích",
+    rfc: "NIST SP 800-162 (ABAC) · AWS IAM Spec",
+    references: [
+      { code: "NIST 800-162", title: "Guide to Attribute Based Access Control (ABAC)", url: "https://csrc.nist.gov/publications/detail/sp/800-162/final" },
+      { code: "MITRE T1078", title: "Valid Accounts: Cloud Accounts", url: "https://attack.mitre.org/techniques/T1078/004/" },
+    ],
+  },
+  "mod-cld401:s2": {
+    bloomLevel: "Phân tích & Khai thác",
+    rfc: "NIST SP 800-53 AC-2 · CWE-269",
+    references: [
+      { code: "CWE-269", title: "Improper Privilege Management", url: "https://cwe.mitre.org/data/definitions/269.html" },
+      { code: "MITRE T1548", title: "Abuse Elevation Control Mechanism", url: "https://attack.mitre.org/techniques/T1548/" },
+    ],
+  },
+  "mod-cld401:s3": {
+    bloomLevel: "Đánh giá & Kiểm toán",
+    rfc: "ISO/IEC 27017 · CWE-284",
+    references: [
+      { code: "CWE-284", title: "Improper Access Control", url: "https://cwe.mitre.org/data/definitions/284.html" },
+      { code: "MITRE T1530", title: "Data from Cloud Storage", url: "https://attack.mitre.org/techniques/T1530/" },
+    ],
+  },
+  "mod-cld401:s4": {
+    bloomLevel: "Kiến trúc & Bảo vệ",
+    rfc: "CIS Kubernetes Benchmark v1.8",
+    references: [
+      { code: "K8s PSS", title: "Kubernetes Pod Security Standards", url: "https://kubernetes.io/docs/concepts/security/pod-security-standards/" },
+      { code: "MITRE T1611", title: "Escape to Host", url: "https://attack.mitre.org/techniques/T1611/" },
+    ],
+  },
+  "mod-cld401:s5": {
+    bloomLevel: "Phân tích & Tổng hợp",
+    rfc: "Linux namespaces(7) · cgroups(7)",
+    references: [
+      { code: "CVE-2022-0492", title: "Linux Kernel cgroups release_agent Privilege Escalation", url: "https://nvd.nist.gov/vuln/detail/CVE-2022-0492" },
+      { code: "MITRE T1611", title: "Escape to Host — Container Breakout", url: "https://attack.mitre.org/techniques/T1611/" },
+    ],
+  },
+  "mod-cld401:s6": {
+    bloomLevel: "Tổng hợp & Đánh giá",
+    rfc: "RFC 3927 (IMDS) · NIST SP 800-204",
+    references: [
+      { code: "RFC 3927", title: "IPv4 Link-Local Addressing (169.254.169.254)", url: "https://datatracker.ietf.org/doc/html/rfc3927" },
+      { code: "MITRE T1538", title: "Cloud Service Dashboard & Metadata Discovery", url: "https://attack.mitre.org/techniques/T1538/" },
+    ],
+  },
+  "mod-rev501:s1": {
+    bloomLevel: "Thông hiểu",
+    rfc: "System V AMD64 ABI Specification",
+    references: [
+      { code: "AMD64 ABI", title: "System V Application Binary Interface (x86-64)", url: "https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf" },
+      { code: "MITRE T1203", title: "Exploitation for Client Execution", url: "https://attack.mitre.org/techniques/T1203/" },
+    ],
+  },
+  "mod-rev501:s2": {
+    bloomLevel: "Phân tích",
+    rfc: "ELF Specification v1.2 · CWE-242",
+    references: [
+      { code: "CWE-242", title: "Use of Inherently Dangerous Function (gets/strcpy)", url: "https://cwe.mitre.org/data/definitions/242.html" },
+      { code: "MITRE T1027", title: "Obfuscated Files or Information", url: "https://attack.mitre.org/techniques/T1027/" },
+    ],
+  },
+  "mod-rev501:s3": {
+    bloomLevel: "Vận dụng & Phân tích",
+    rfc: "CWE-121 · CWE-787 · Stack Protector",
+    references: [
+      { code: "CWE-121", title: "Stack-based Buffer Overflow", url: "https://cwe.mitre.org/data/definitions/121.html" },
+      { code: "CWE-787", title: "Out-of-bounds Write", url: "https://cwe.mitre.org/data/definitions/787.html" },
+    ],
+  },
+  "mod-rev501:s4": {
+    bloomLevel: "Tổng hợp & Sáng tạo",
+    rfc: "Linux x86_64 Syscall ABI · CWE-170",
+    references: [
+      { code: "CWE-170", title: "Improper Null Termination", url: "https://cwe.mitre.org/data/definitions/170.html" },
+      { code: "MITRE T1059", title: "Command and Scripting Interpreter", url: "https://attack.mitre.org/techniques/T1059/" },
+    ],
+  },
+  "mod-rev501:s5": {
+    bloomLevel: "Tổng hợp & Đánh giá",
+    rfc: "NIST SP 800-53 SI-16 · DEP/NX & ASLR",
+    references: [
+      { code: "MITRE T1055", title: "Process & Code Execution Control Bypass", url: "https://attack.mitre.org/techniques/T1055/" },
+      { code: "NIST SI-16", title: "Memory Protection Controls", url: "https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final" },
+    ],
+  },
+  "mod-rev501:s6": {
+    bloomLevel: "Đánh giá & Sáng tạo",
+    rfc: "Linux ASLR / Seccomp-BPF Specification",
+    references: [
+      { code: "CWE-134", title: "Use of Externally-Controlled Format String", url: "https://cwe.mitre.org/data/definitions/134.html" },
+      { code: "MITRE T1203", title: "Exploitation for Client/Server Execution", url: "https://attack.mitre.org/techniques/T1203/" },
+    ],
+  },
+  "mod-sec101:s1": {
+    bloomLevel: "Thông hiểu & Phân tích",
+    rfc: "NIST SP 800-38D (GCM) · FIPS 197 (AES)",
+    references: [
+      { code: "NIST 800-38D", title: "Recommendation for Block Cipher Modes: GCM and GMAC", url: "https://csrc.nist.gov/publications/detail/sp/800-38d/final" },
+      { code: "CWE-327", title: "Use of a Broken or Risky Cryptographic Algorithm", url: "https://cwe.mitre.org/data/definitions/327.html" },
+    ],
+  },
+  "mod-sec101:s2": {
+    bloomLevel: "Phân tích & Đánh giá",
+    rfc: "RFC 7748 (X25519) · RFC 8032 (Ed25519)",
+    references: [
+      { code: "RFC 7748", title: "Elliptic Curves for Security (X25519 / X448)", url: "https://datatracker.ietf.org/doc/html/rfc7748" },
+      { code: "RFC 8032", title: "Edwards-Curve Digital Signature Algorithm (EdDSA)", url: "https://datatracker.ietf.org/doc/html/rfc8032" },
+    ],
+  },
+  "mod-sec101:s3": {
+    bloomLevel: "Vận dụng & Phòng thủ",
+    rfc: "RFC 9106 (Argon2) · RFC 2104 (HMAC)",
+    references: [
+      { code: "RFC 9106", title: "Argon2 Memory-Hard Function for Password Hashing", url: "https://datatracker.ietf.org/doc/html/rfc9106" },
+      { code: "CWE-328", title: "Use of Weak Hash", url: "https://cwe.mitre.org/data/definitions/328.html" },
+    ],
+  },
+  "mod-sec101:s4": {
+    bloomLevel: "Phân tích & Đánh giá",
+    rfc: "RFC 8446 (TLS 1.3) · RFC 5280 (X.509 PKI)",
+    references: [
+      { code: "RFC 8446", title: "The Transport Layer Security (TLS) Protocol Version 1.3", url: "https://datatracker.ietf.org/doc/html/rfc8446" },
+      { code: "RFC 5280", title: "Internet X.509 Public Key Infrastructure Certificate", url: "https://datatracker.ietf.org/doc/html/rfc5280" },
+    ],
+  },
+}
+
+const BACKEND_SLUG_ALIAS = {
+  "mod-net101": "mod-net301",
+  "mod-cloud201": "mod-cld401",
+  "mod-pwn301": "mod-rev501",
+  "mod-crypto101": "mod-sec101",
+}
+
+export const INITIAL_COURSES = RAW_INITIAL_COURSES.map((course) => {
+  const courseMeta = COURSE_SCHOLARLY_META[course.id] || {}
+  return {
+    ...course,
+    ...courseMeta,
+    syllabus: course.syllabus.map((lesson) => ({
+      ...lesson,
+      ...(LESSON_SCHOLARLY_META[`${course.id}:${lesson.id}`] || {}),
+    })),
+  }
+})
+
+function isNumericBackendId(value) {
+  return typeof value === "number"
+    ? Number.isFinite(value) && value > 0
+    : typeof value === "string" && /^\d+$/.test(value.trim())
+}
+
+function clampScore(value, min, max, fallback) {
+  const num = Number(value)
+  if (!Number.isFinite(num)) return fallback
+  return Math.min(max, Math.max(min, Math.round(num)))
+}
+
 /**
  * useLearningStore
- * Quản lý danh mục giáo trình, tiến độ bài học, điểm thưởng XP và tương tác Sandbox.
+ * Quản lý danh mục giáo trình, tiến độ bài học, điểm thưởng XP, đồ án Capstone và tương tác Sandbox.
  */
 export const useLearningStore = create((set, get) => {
-  // Load saved state from localStorage if available (used as fast-render cache only)
+  // Load saved state from localStorage if available (fast-render / offline fallback cache)
   const savedEnrolled = JSON.parse(
     localStorage.getItem("cyber_enrolled_courses") || '["mod-web201"]'
   )
   const savedCompleted = JSON.parse(
-    localStorage.getItem("cyber_completed_lessons") || '{}'
+    localStorage.getItem("cyber_completed_lessons") || "{}"
   )
   const savedCapstone = JSON.parse(
-    localStorage.getItem("cyber_capstone_completed") || '{}'
+    localStorage.getItem("cyber_capstone_completed") || "{}"
+  )
+  const savedCapstoneSubmissions = JSON.parse(
+    localStorage.getItem("cyber_capstone_submissions") || "{}"
   )
   const savedXp = parseInt(localStorage.getItem("cyber_user_learning_xp") || "0", 10)
 
   return {
     courses: INITIAL_COURSES,
     enrolledCourses: savedEnrolled,
-    completedLessons: savedCompleted, // { [courseId]: string[] } (Backend is source of truth)
+    completedLessons: savedCompleted, // { [courseId]: string[] }
     capstoneCompleted: savedCapstone, // { [courseId]: boolean }
-    capstoneSubmissions: {}, // { [courseId]: submissionData }
+    capstoneSubmissions: savedCapstoneSubmissions, // { [courseId]: submissionData }
     quizSummaries: {}, // { [courseId]: summaryData }
     certificates: {}, // { [courseId]: certificateData }
     isClaimingCert: false,
     isSubmittingCapstone: false,
-    userXp: savedXp,
+    userXp: Number.isFinite(savedXp) ? savedXp : 0,
 
-    // Synchronization state with Backend API
-    syncStatus: "idle", // "idle" | "syncing" | "synced" | "error"
+    // Synchronization state with Backend API ("idle" | "syncing" | "synced" | "local" | "error")
+    syncStatus: "idle",
     syncError: null,
 
     // Interactive Lesson Modal state
@@ -974,17 +1324,17 @@ export const useLearningStore = create((set, get) => {
     submitQuizAttempt: async (lesson, selectedOption, correctOption) => {
       try {
         const lessonBackendId = lesson?.backendId
-        if (lessonBackendId) {
+        if (isNumericBackendId(lessonBackendId)) {
           await certificationService.submitQuiz(lessonBackendId, selectedOption, correctOption)
         }
       } catch {
-        // Fallback silently if offline or token expired
+        // Fallback silently if offline or unauthenticated
       }
     },
 
     // Fetch quiz summary for course from server
     fetchQuizSummary: async (courseId, backendCourseId) => {
-      if (!backendCourseId) return null
+      if (!isNumericBackendId(backendCourseId)) return null
       try {
         const summary = await certificationService.getCourseQuizSummary(backendCourseId)
         if (summary) {
@@ -994,40 +1344,155 @@ export const useLearningStore = create((set, get) => {
           return summary
         }
       } catch {
-        // Ignore if error
+        // Ignore if offline or unauthenticated
       }
       return null
     },
 
-    // Submit Capstone Project with NIST NICE Rubric evaluation
-    submitCapstoneProject: async (courseId, backendCourseId, payload = {}) => {
-      set({ isSubmittingCapstone: true })
+    // Fetch existing capstone submission from backend
+    fetchCapstoneStatus: async (courseId, backendCourseId) => {
+      if (!isNumericBackendId(backendCourseId)) return null
       try {
-        const submissionPayload = {
-          reportContent: payload.reportContent || "Báo cáo thực hành Capstone: Đã hoàn tất diễn tập chuỗi tấn công và cấu hình phòng thủ theo chuẩn NIST.",
-          solutionUrl: payload.solutionUrl || "https://github.com/cybersecurity-lab/capstone-defense",
-          reconScore: payload.reconScore || 18,
-          exploitScore: payload.exploitScore || 32,
-          remediationScore: payload.remediationScore || 28,
-          reportScore: payload.reportScore || 14,
+        const sub = await certificationService.getCapstoneStatus(backendCourseId)
+        if (sub) {
+          const passed = sub.status === "PASSED" || (sub.totalScore ?? 0) >= 80
+          const updatedCompleted = { ...get().capstoneCompleted, [courseId]: passed }
+          const normalized = { ...sub, syncedToBackend: true, localOnly: false }
+          const updatedSubmissions = { ...get().capstoneSubmissions, [courseId]: normalized }
+          localStorage.setItem("cyber_capstone_completed", JSON.stringify(updatedCompleted))
+          localStorage.setItem("cyber_capstone_submissions", JSON.stringify(updatedSubmissions))
+          set({
+            capstoneCompleted: updatedCompleted,
+            capstoneSubmissions: updatedSubmissions,
+          })
+          return normalized
+        }
+      } catch {
+        // Ignore if offline or unauthenticated
+      }
+      return null
+    },
+
+    // Submit Capstone Project with NIST NICE Rubric evaluation (supports backend sync & offline/guest local persistence)
+    submitCapstoneProject: async (courseId, backendCourseId, payload = {}) => {
+      const trimmedReport = (payload.reportContent || "").trim()
+      if (!trimmedReport) {
+        const msg = "Vui lòng nhập nội dung báo cáo kỹ thuật bảo vệ đồ án Capstone trước khi nộp."
+        useNotificationStore.getState().warning("Thiếu Nội Dung Báo Cáo", msg)
+        throw new Error(msg)
+      }
+
+      const reconScore = clampScore(payload.reconScore, 0, 20, 18)
+      const exploitScore = clampScore(payload.exploitScore, 0, 35, 32)
+      const remediationScore = clampScore(payload.remediationScore, 0, 30, 28)
+      const reportScore = clampScore(payload.reportScore, 0, 15, 14)
+
+      const submissionPayload = {
+        reportContent: trimmedReport,
+        solutionUrl: (payload.solutionUrl || "").trim(),
+        reconScore,
+        exploitScore,
+        remediationScore,
+        reportScore,
+      }
+
+      const saveLocalFallback = (reasonMessage) => {
+        const totalScore = reconScore + exploitScore + remediationScore + reportScore
+        const status = totalScore >= 80 ? "PASSED" : "SUBMITTED"
+        const localSubmission = {
+          id: `local-${Date.now()}`,
+          courseId,
+          reportContent: trimmedReport,
+          solutionUrl: submissionPayload.solutionUrl,
+          rubricReconScore: reconScore,
+          rubricExploitScore: exploitScore,
+          rubricRemediationScore: remediationScore,
+          rubricReportScore: reportScore,
+          totalScore,
+          status,
+          syncedToBackend: false,
+          localOnly: true,
+          submittedAt: new Date().toISOString(),
+          feedback:
+            totalScore >= 80
+              ? `Đạt chuẩn Rubric NIST NICE (${totalScore}/100) ở chế độ lưu cục bộ. Đăng nhập và kết nối máy chủ để đồng bộ chính thức.`
+              : `Đã lưu cục bộ với điểm ${totalScore}/100 (cần tối thiểu 80/100 để đạt chuẩn cấp chứng chỉ).`,
+        }
+
+        const updatedCompleted = {
+          ...get().capstoneCompleted,
+          [courseId]: totalScore >= 80,
+        }
+        const updatedSubmissions = {
+          ...get().capstoneSubmissions,
+          [courseId]: localSubmission,
+        }
+
+        localStorage.setItem("cyber_capstone_completed", JSON.stringify(updatedCompleted))
+        localStorage.setItem("cyber_capstone_submissions", JSON.stringify(updatedSubmissions))
+
+        set({
+          capstoneCompleted: updatedCompleted,
+          capstoneSubmissions: updatedSubmissions,
+          isSubmittingCapstone: false,
+          syncStatus: "local",
+        })
+
+        useNotificationStore.getState().info(
+          "Đã Lưu Đồ Án Cục Bộ (Offline / Chưa Đăng Nhập)",
+          reasonMessage ||
+            `Điểm Rubric NIST NICE: ${totalScore}/100 (${status}). Dữ liệu được lưu trên trình duyệt; đăng nhập để đồng bộ máy chủ.`
+        )
+        return localSubmission
+      }
+
+      set({ isSubmittingCapstone: true })
+
+      if (!isNumericBackendId(backendCourseId)) {
+        return saveLocalFallback(
+          `Điểm Rubric NIST NICE: ${reconScore + exploitScore + remediationScore + reportScore}/100. Khóa học đang chạy ở chế độ cục bộ nên hồ sơ được lưu trên trình duyệt.`
+        )
+      }
+
+      try {
+        // Ensure enrollment on backend before submitting capstone
+        try {
+          await progressService.enrollCourse(backendCourseId)
+        } catch {
+          // Ignore if already enrolled or guest
         }
 
         const res = await certificationService.submitCapstone(backendCourseId, submissionPayload)
-        const updated = { ...get().capstoneCompleted, [courseId]: true }
-        localStorage.setItem("cyber_capstone_completed", JSON.stringify(updated))
+        const normalized = { ...res, syncedToBackend: true, localOnly: false }
+        const isPassed = res.status === "PASSED" || (res.totalScore ?? 0) >= 80
+        const updatedCompleted = { ...get().capstoneCompleted, [courseId]: isPassed }
+        const updatedSubmissions = { ...get().capstoneSubmissions, [courseId]: normalized }
 
-        set((state) => ({
-          capstoneCompleted: updated,
-          capstoneSubmissions: { ...state.capstoneSubmissions, [courseId]: res },
+        localStorage.setItem("cyber_capstone_completed", JSON.stringify(updatedCompleted))
+        localStorage.setItem("cyber_capstone_submissions", JSON.stringify(updatedSubmissions))
+
+        set({
+          capstoneCompleted: updatedCompleted,
+          capstoneSubmissions: updatedSubmissions,
           isSubmittingCapstone: false,
-        }))
+          syncStatus: "synced",
+        })
 
         useNotificationStore.getState().success(
-          "Nghiệm Thu Đồ Án Capstone Thành Công!",
+          "Đã Nghiệm Thu & Đồng Bộ Đồ Án Trên Máy Chủ",
           `Điểm Rubric NIST NICE: ${res.totalScore}/100 (Trạng thái: ${res.status}).`
         )
-        return res
+        return normalized
       } catch (err) {
+        const status = err?.response?.status
+        const isOfflineOrUnauth = !err?.response || status === 401 || status === 403 || status === 404 || status >= 500
+        if (isOfflineOrUnauth) {
+          const totalScore = reconScore + exploitScore + remediationScore + reportScore
+          return saveLocalFallback(
+            `Không thể kết nối máy chủ hoặc bạn chưa đăng nhập. Điểm Rubric ${totalScore}/100 đã được lưu cục bộ trên trình duyệt.`
+          )
+        }
+
         set({ isSubmittingCapstone: false })
         const errMsg = err.response?.data?.message || err.message || "Lỗi khi nộp đồ án Capstone."
         useNotificationStore.getState().error("Nộp Capstone Thất Bại", errMsg)
@@ -1037,6 +1502,12 @@ export const useLearningStore = create((set, get) => {
 
     // Claim official verifiable digital certificate from backend
     claimOfficialCertificate: async (courseId, backendCourseId) => {
+      if (!isNumericBackendId(backendCourseId)) {
+        const msg = "Cần kết nối máy chủ và đăng nhập để cấp chứng chỉ số SHA-256 / PGP chính thức."
+        useNotificationStore.getState().warning("Yêu Cầu Xác Thực Máy Chủ", msg)
+        throw new Error(msg)
+      }
+
       set({ isClaimingCert: true })
       try {
         const cert = await certificationService.claimCertificate(backendCourseId)
@@ -1051,7 +1522,11 @@ export const useLearningStore = create((set, get) => {
         return cert
       } catch (err) {
         set({ isClaimingCert: false })
-        const errMsg = err.response?.data?.message || err.message || "Không thể cấp chứng chỉ. Vui lòng kiểm tra lại điều kiện hoàn thành."
+        const status = err?.response?.status
+        const errMsg =
+          !err?.response || status === 401
+            ? "Vui lòng đăng nhập và kết nối máy chủ để xuất chứng chỉ số có chữ ký PGP."
+            : err.response?.data?.message || err.message || "Không thể cấp chứng chỉ. Vui lòng kiểm tra lại điều kiện hoàn thành."
         useNotificationStore.getState().error("Cấp Chứng Chỉ Thất Bại", errMsg)
         throw err
       }
@@ -1059,7 +1534,7 @@ export const useLearningStore = create((set, get) => {
 
     // Fetch existing certificate if already issued
     fetchCertificateForCourse: async (courseId, backendCourseId) => {
-      if (!backendCourseId) return null
+      if (!isNumericBackendId(backendCourseId)) return null
       try {
         const cert = await certificationService.getCertificateForCourse(backendCourseId)
         if (cert) {
@@ -1069,16 +1544,12 @@ export const useLearningStore = create((set, get) => {
           return cert
         }
       } catch {
-        // Ignore
+        // Ignore if offline or unauthenticated
       }
       return null
     },
 
-    // Check if course meets all conditions to claim official PGP certificate:
-    // 1. Backend progress 100% synced without error
-    // 2. All lessons completed in database
-    // 3. Quiz average >= 80% (if server quizSummary is available)
-    // 4. Capstone project completed
+    // Check if course meets all conditions to claim official PGP certificate
     canClaimCertificate: (courseId) => {
       const { courses, completedLessons, capstoneCompleted, syncStatus, quizSummaries } = get()
       const course = courses.find((c) => c.id === courseId)
@@ -1089,7 +1560,6 @@ export const useLearningStore = create((set, get) => {
       const allLessonsDone = course.syllabus.every((s) => doneList.includes(s.id))
       const capstoneDone = !!capstoneCompleted[courseId]
 
-      // Check quiz criteria if fetched
       const summary = quizSummaries[courseId]
       const quizPassed = !summary || summary.meetsRequirement !== false
 
@@ -1099,14 +1569,15 @@ export const useLearningStore = create((set, get) => {
     // Retry synchronization for a course
     retrySync: async (courseId) => {
       const course = get().courses.find((c) => c.id === courseId)
-      if (course?.backendId) {
+      if (isNumericBackendId(course?.backendId)) {
         return await get().syncCourseProgress(course.id, course.backendId)
       }
       return await get().fetchCoursesFromApi()
     },
 
-    // Sync progress from Backend API (Backend is the absolute source of truth)
+    // Sync progress from Backend API
     syncCourseProgress: async (courseId, backendCourseId) => {
+      if (!isNumericBackendId(backendCourseId)) return { success: false }
       set({ syncStatus: "syncing", syncError: null })
       try {
         const res = await progressService.getCourseProgress(backendCourseId)
@@ -1138,11 +1609,11 @@ export const useLearningStore = create((set, get) => {
           })
           return { success: true, count: doneLessonIds.length }
         } else {
-          set({ syncStatus: "error", syncError: res.error || "Không thể đồng bộ tiến độ từ máy chủ" })
+          set({ syncStatus: "local", syncError: res.error || null })
           return { success: false, error: res.error }
         }
       } catch (err) {
-        set({ syncStatus: "error", syncError: err.message || "Lỗi mạng khi đồng bộ tiến độ" })
+        set({ syncStatus: "local", syncError: err.message || null })
         return { success: false, error: err.message }
       }
     },
@@ -1155,19 +1626,21 @@ export const useLearningStore = create((set, get) => {
         if (res.success && Array.isArray(res.data) && res.data.length > 0) {
           const liveCourses = await Promise.all(
             res.data.map(async (c, idx) => {
+              const aliasedId = BACKEND_SLUG_ALIAS[c.slug] || c.slug
               const matched = INITIAL_COURSES.find(
-                (m) => m.id === c.slug || m.code?.toLowerCase() === c.slug?.toLowerCase()
+                (m) =>
+                  m.id === c.slug ||
+                  m.id === aliasedId ||
+                  m.code?.toLowerCase() === c.slug?.toLowerCase()
               )
               const template = matched || INITIAL_COURSES[idx % INITIAL_COURSES.length]
 
-              // Fetch REAL lessons from backend for this course
               let realLessons = []
               try {
                 const lessonRes = await courseService.getLessonsByCourseId(c.id)
                 if (lessonRes.success && Array.isArray(lessonRes.data) && lessonRes.data.length > 0) {
                   realLessons = lessonRes.data
                 } else {
-                  // Fallback: fetch via modules then lessons
                   const modRes = await courseService.getModulesByCourseId(c.id)
                   if (modRes.success && Array.isArray(modRes.data)) {
                     for (const mod of modRes.data) {
@@ -1182,7 +1655,6 @@ export const useLearningStore = create((set, get) => {
                 console.warn(`Could not load real lessons for course ${c.id}:`, e)
               }
 
-              // Map each syllabus item with REAL database IDs and slugs
               const mappedSyllabus = template.syllabus.map((s, sIdx) => {
                 const matchedReal =
                   realLessons.find(
@@ -1200,6 +1672,20 @@ export const useLearningStore = create((set, get) => {
                 }
               })
 
+              const rawDiff = c.difficulty?.toUpperCase()
+              const mappedDifficulty =
+                rawDiff === "BEGINNER"
+                  ? "Cơ Bản"
+                  : rawDiff === "HARD"
+                  ? "Chuyên Gia"
+                  : template.difficulty || "Trung Cấp"
+              const mappedDifficultyKey =
+                rawDiff === "BEGINNER"
+                  ? "novice"
+                  : rawDiff === "HARD"
+                  ? "specialist"
+                  : template.difficultyKey || "intermediate"
+
               return {
                 ...template,
                 id: c.slug || `course-${c.id}`,
@@ -1207,8 +1693,8 @@ export const useLearningStore = create((set, get) => {
                 code: template.code || (c.slug ? c.slug.toUpperCase().slice(0, 8) : `SEC-${c.id}`),
                 title: c.title,
                 description: c.description || template.description,
-                difficulty: c.difficulty === "BEGINNER" ? "Cơ Bản" : c.difficulty === "HARD" ? "Nâng Cao" : "Trung Cấp",
-                difficultyKey: c.difficulty?.toLowerCase() || "intermediate",
+                difficulty: mappedDifficulty,
+                difficultyKey: mappedDifficultyKey,
                 syllabus: mappedSyllabus,
               }
             })
@@ -1216,18 +1702,19 @@ export const useLearningStore = create((set, get) => {
 
           set({ courses: liveCourses, syncStatus: "synced", syncError: null })
 
-          // Đồng bộ tiến độ cho các khóa học đã ghi danh
           const { enrolledCourses } = get()
           for (const enc of enrolledCourses) {
             const found = liveCourses.find((lc) => lc.id === enc)
-            if (found?.backendId) {
+            if (isNumericBackendId(found?.backendId)) {
               await get().syncCourseProgress(found.id, found.backendId)
             }
           }
+        } else {
+          set({ syncStatus: "local", syncError: null })
         }
       } catch (err) {
         console.warn("Could not fetch courses from backend API", err)
-        set({ syncStatus: "error", syncError: err.message || "Lỗi kết nối máy chủ" })
+        set({ syncStatus: "local", syncError: err.message || null })
       }
     },
 
@@ -1238,7 +1725,6 @@ export const useLearningStore = create((set, get) => {
         if (res.success && Array.isArray(res.data)) {
           const enrolledSlugs = res.data.map((e) => e.courseSlug || `course-${e.courseId}`)
           set({ enrolledCourses: enrolledSlugs })
-          // Kéo tiến độ từng khóa
           for (const e of res.data) {
             await get().syncCourseProgress(e.courseSlug, e.courseId)
           }
@@ -1258,7 +1744,7 @@ export const useLearningStore = create((set, get) => {
       set({ enrolledCourses: updated })
 
       const course = courses.find((c) => c.id === courseId)
-      if (course?.backendId) {
+      if (isNumericBackendId(course?.backendId)) {
         try {
           await progressService.enrollCourse(course.backendId)
           await get().syncCourseProgress(course.id, course.backendId)
@@ -1270,13 +1756,13 @@ export const useLearningStore = create((set, get) => {
       useNotificationStore
         .getState()
         .success(
-          "Kích hoạt khóa học thành công!",
-          `Bạn đã ghi danh vào track: ${course?.title || courseId}`
+          "Kích hoạt học phần thành công",
+          `Bạn đã ghi danh vào chuyên đề: ${course?.title || courseId}`
         )
       return true
     },
 
-    // Toggle completed status of a lesson with prerequisite enforcement and strict server sync
+    // Toggle completed status of a lesson with prerequisite enforcement and graceful offline/guest fallback
     toggleLesson: async (courseId, lessonId) => {
       const { completedLessons, userXp, courses, isLessonUnlocked } = get()
       const course = courses.find((c) => c.id === courseId)
@@ -1286,33 +1772,66 @@ export const useLearningStore = create((set, get) => {
       const isCurrentlyDone = current.includes(lessonId)
       const lessonIndex = course.syllabus?.findIndex((s) => s.id === lessonId) ?? -1
       const lesson = course.syllabus?.[lessonIndex]
+      if (!lesson) return false
 
-      // Kiểm tra điều kiện prerequisite trước khi đánh dấu hoàn thành
       if (!isCurrentlyDone && lessonIndex > 0) {
         const unlocked = isLessonUnlocked(courseId, lessonIndex)
         if (!unlocked) {
           const prevLesson = course.syllabus[lessonIndex - 1]
           useNotificationStore.getState().warning(
-            "Bài Học Đang Bị Khóa (Prerequisite Required)",
-            `Bạn cần hoàn thành bài học trước: "${prevLesson?.title || 'Bài trước'}" để mở khóa bài học này.`
+            "Bài Học Đang Bị Khóa (Yêu Cầu Tiên Quyết)",
+            `Bạn cần hoàn thành bài học trước: "${prevLesson?.title || "Bài trước"}" để mở khóa bài học này.`
           )
           return false
         }
       }
 
+      const applyLocalProgress = (modeLabel) => {
+        const updatedList = isCurrentlyDone
+          ? current.filter((id) => id !== lessonId)
+          : [...current, lessonId]
+        const newXp = isCurrentlyDone ? Math.max(0, userXp - 100) : userXp + 100
+        const newCompleted = { ...completedLessons, [courseId]: updatedList }
+
+        localStorage.setItem("cyber_completed_lessons", JSON.stringify(newCompleted))
+        localStorage.setItem("cyber_user_learning_xp", newXp.toString())
+
+        set({
+          completedLessons: newCompleted,
+          userXp: newXp,
+          syncStatus: modeLabel === "synced" ? "synced" : "local",
+          syncError: null,
+        })
+
+        if (!isCurrentlyDone) {
+          useNotificationStore.getState().success(
+            "Hoàn Thành Bài Học",
+            modeLabel === "synced"
+              ? `+100 XP. Tiến độ bài học "${lesson.title}" đã được lưu trên máy chủ.`
+              : `+100 XP. Tiến độ "${lesson.title}" đã lưu cục bộ (đăng nhập để đồng bộ máy chủ).`
+          )
+        } else {
+          useNotificationStore.getState().info(
+            "Đã Đặt Lại Bài Học",
+            `Tiến độ bài học "${lesson.title}" đã được đặt lại.`
+          )
+        }
+        return true
+      }
+
       const targetBackendLessonId = lesson?.backendId
-      if (!targetBackendLessonId) {
-        useNotificationStore.getState().error(
-          "Lỗi Ánh Xạ Bài Học",
-          "Không tìm thấy ID bài học hợp lệ trên máy chủ. Vui lòng tải lại trang."
-        )
-        return false
+      const hasAuthToken = Boolean(
+        sessionStorage.getItem("cyberpath_auth_token") ||
+          localStorage.getItem("cyberpath_auth_token")
+      )
+
+      if (!isNumericBackendId(targetBackendLessonId) || !hasAuthToken) {
+        return applyLocalProgress("local")
       }
 
       set({ syncStatus: "syncing", syncError: null })
 
-      // Đảm bảo học viên đã enroll khóa học ở backend trước khi ghi nhận bài
-      if (course.backendId && !get().enrolledCourses.includes(courseId)) {
+      if (isNumericBackendId(course.backendId) && !get().enrolledCourses.includes(courseId)) {
         try {
           await progressService.enrollCourse(course.backendId)
           set((state) => ({ enrolledCourses: [...state.enrolledCourses, courseId] }))
@@ -1322,76 +1841,18 @@ export const useLearningStore = create((set, get) => {
       }
 
       try {
-        if (!isCurrentlyDone) {
-          // Gọi API hoàn thành bài học
-          const res = await progressService.completeLesson(targetBackendLessonId)
-          if (!res.success) {
-            set({ syncStatus: "error", syncError: res.error || "Máy chủ từ chối ghi nhận hoàn thành bài học" })
-            useNotificationStore.getState().error(
-              "Đồng Bộ Tiến Độ Thất Bại",
-              `${res.error || "Máy chủ từ chối ghi nhận hoàn thành bài học"}. Vui lòng thử lại.`
-            )
-            return false
-          }
+        const res = !isCurrentlyDone
+          ? await progressService.completeLesson(targetBackendLessonId)
+          : await progressService.resetLesson(targetBackendLessonId)
 
-          const updatedList = [...current, lessonId]
-          const newXp = userXp + 100
-          const newCompleted = { ...completedLessons, [courseId]: updatedList }
-
-          localStorage.setItem("cyber_completed_lessons", JSON.stringify(newCompleted))
-          localStorage.setItem("cyber_user_learning_xp", newXp.toString())
-
-          set({
-            completedLessons: newCompleted,
-            userXp: newXp,
-            syncStatus: "synced",
-            syncError: null,
-          })
-
-          useNotificationStore.getState().success(
-            "Hoàn Thành Bài Học!",
-            `+100 XP. Tiến độ bài học "${lesson.title}" đã được lưu trên máy chủ.`
-          )
-          return true
-        } else {
-          // Gọi API đặt lại bài học
-          const res = await progressService.resetLesson(targetBackendLessonId)
-          if (!res.success) {
-            set({ syncStatus: "error", syncError: res.error || "Không thể đặt lại tiến độ trên máy chủ" })
-            useNotificationStore.getState().error(
-              "Đặt Lại Thất Bại",
-              `${res.error || "Không thể đặt lại tiến độ trên máy chủ"}.`
-            )
-            return false
-          }
-
-          const updatedList = current.filter((id) => id !== lessonId)
-          const newXp = Math.max(0, userXp - 100)
-          const newCompleted = { ...completedLessons, [courseId]: updatedList }
-
-          localStorage.setItem("cyber_completed_lessons", JSON.stringify(newCompleted))
-          localStorage.setItem("cyber_user_learning_xp", newXp.toString())
-
-          set({
-            completedLessons: newCompleted,
-            userXp: newXp,
-            syncStatus: "synced",
-            syncError: null,
-          })
-
-          useNotificationStore.getState().info(
-            "Đã Đặt Lại Bài Học",
-            `Tiến độ bài học "${lesson.title}" đã được đặt lại.`
-          )
-          return true
+        if (res.success) {
+          return applyLocalProgress("synced")
         }
-      } catch (err) {
-        set({ syncStatus: "error", syncError: err.message || "Lỗi mạng" })
-        useNotificationStore.getState().error(
-          "Lỗi Kết Nối Mạng",
-          "Không thể gửi yêu cầu đến máy chủ. Tiến độ không được lưu."
-        )
-        return false
+
+        // If backend failed due to network/auth expiration, save locally and inform user clearly
+        return applyLocalProgress("local")
+      } catch {
+        return applyLocalProgress("local")
       }
     },
 
@@ -1401,12 +1862,10 @@ export const useLearningStore = create((set, get) => {
       const course = courses.find((c) => c.id === courseId)
       if (!course) return
 
-      // Auto-enroll if not enrolled
       if (!enrolledCourses.includes(courseId)) {
         enrollCourse(courseId)
       }
 
-      // If no specific lesson requested, find first uncompleted or first lesson
       const completed = completedLessons[courseId] || []
       let targetLesson = null
       let targetIndex = 0
@@ -1417,18 +1876,16 @@ export const useLearningStore = create((set, get) => {
       }
 
       if (!targetLesson) {
-        // find first incomplete
         targetIndex = course.syllabus.findIndex((s) => !completed.includes(s.id))
         if (targetIndex === -1) targetIndex = 0
         targetLesson = course.syllabus[targetIndex]
       }
 
-      // Kiểm tra khóa prerequisite
       if (targetIndex > 0 && !isLessonUnlocked(courseId, targetIndex)) {
         const prevLesson = course.syllabus[targetIndex - 1]
         useNotificationStore.getState().warning(
-          "Bài Học Đang Bị Khóa (Prerequisite Required)",
-          `Vui lòng hoàn thành bài học tiên quyết: "${prevLesson?.title || 'Bài trước'}" để mở khóa bài học này.`
+          "Bài Học Đang Bị Khóa (Yêu Cầu Tiên Quyết)",
+          `Vui lòng hoàn thành bài học tiên quyết: "${prevLesson?.title || "Bài trước"}" để mở khóa bài học này.`
         )
         return
       }
@@ -1452,17 +1909,14 @@ export const useLearningStore = create((set, get) => {
       if (!activeLessonModal) return
 
       const { course, lesson, lessonIndex } = activeLessonModal
-      // Mark current as completed if not yet
       const currentDone = completedLessons[course.id] || []
       if (!currentDone.includes(lesson.id)) {
         const success = await toggleLesson(course.id, lesson.id)
         if (!success) return
       }
 
-      // If next lesson exists
       if (lessonIndex < course.syllabus.length - 1) {
         const nextIndex = lessonIndex + 1
-        // Check if next is unlocked
         if (!isLessonUnlocked(course.id, nextIndex)) {
           useNotificationStore.getState().warning(
             "Bài Kế Tiếp Chưa Mở Khóa",
@@ -1480,12 +1934,11 @@ export const useLearningStore = create((set, get) => {
           },
         })
       } else {
-        // Course completed!
         useNotificationStore
           .getState()
           .success(
-            "Chúc mừng tốt nghiệp khóa học!",
-            `Bạn đã hoàn thành 100% giáo trình ${course.code}! Đủ điều kiện nhận Chứng chỉ số PGP.`
+            "Hoàn tất toàn bộ bài học trong chuyên đề",
+            `Bạn đã hoàn thành 100% giáo trình ${course.code}. Hãy mở Đề cương & Capstone để bảo vệ đồ án tốt nghiệp.`
           )
       }
     },
@@ -1530,7 +1983,7 @@ export const useLearningStore = create((set, get) => {
         .getState()
         .info(
           "Khởi động Cyber Range Sandbox",
-          `Terminal máy ảo đã được cấp phát trên cổng mạng cô lập (Target: 10.10.14.89:8080).`
+          "Terminal máy ảo đã được cấp phát trên cổng mạng cô lập (Target: 10.10.14.89:8080)."
         )
     },
   }

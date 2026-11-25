@@ -14,6 +14,8 @@ const Learning = lazy(() => import("../pages/learning/Learning"))
 const LearningPaths = lazy(() => import("../pages/learning/LearningPaths"))
 const Labs = lazy(() => import("../pages/labs/Labs"))
 const Pricing = lazy(() => import("../pages/public/Pricing"))
+const SecurityWorkbench = lazy(() => import("../pages/workbench/SecurityWorkbench"))
+const CertificateVerify = lazy(() => import("../pages/public/CertificateVerify"))
 const NotFound = lazy(() => import("../pages/public/NotFound"))
 
 // Lazy-Loaded Auth Pages (PublicOnly)
@@ -45,7 +47,6 @@ function AppRoutes() {
         <Routes>
           {/* ====================================================================
               1. Public Exploration & Academic Routes (PublicLayout with Header)
-              Wave 2 will mount /workbench and /verify routes once created.
              ==================================================================== */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<LandingPage />} />
@@ -55,6 +56,11 @@ function AppRoutes() {
             <Route path="/paths" element={<Navigate to="/learning-paths" replace />} />
             <Route path="/labs" element={<Labs />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/workbench" element={<SecurityWorkbench />} />
+            <Route path="/ai-workbench" element={<Navigate to="/workbench" replace />} />
+            <Route path="/verify" element={<CertificateVerify />} />
+            <Route path="/verify/:certificateCode" element={<CertificateVerify />} />
+            <Route path="/certificates" element={<Navigate to="/verify" replace />} />
             <Route path="/video-preview" element={<Navigate to="/" replace />} />
             {/* Catch-all 404 Route within PublicLayout */}
             <Route path="*" element={<NotFound />} />

@@ -11,21 +11,76 @@ export const useLabStore = create((set, get) => ({
   timeRemaining: 2100, // 35 minutes in seconds
   timerInterval: null,
   terminalLogs: [],
-  completedLabs: ["lab-05"], // default one completed for realistic demo
+  labCatalog: [],
+  completedLabs: ["lab-05"], // default one completed for initial showcase
   userPoints: 1250,
+
+  // Register current catalog labs so local flag verification knows each lab's expected flag & points
+  setLabCatalog: (labs) => {
+    set({ labCatalog: Array.isArray(labs) ? labs : [] })
+  },
+
+  // Sync solved lab IDs fetched from authenticated backend responses without duplicate points
+  syncSolvedLabs: (solvedIds = []) => {
+    if (!Array.isArray(solvedIds) || solvedIds.length === 0) return
+    set((state) => {
+      const merged = new Set(state.completedLabs)
+      let changed = false
+      solvedIds.forEach((id) => {
+        if (id && !merged.has(id)) {
+          merged.add(id)
+          changed = true
+        }
+      })
+      return changed ? { completedLabs: Array.from(merged) } : state
+    })
+  },
+
+  // Record a verified flag submission confirmed by the live backend API
+  recordServerSolve: (labId, awardedPoints = 0) => {
+    const { completedLabs, userPoints } = get()
+    if (!labId) return { alreadySolved: false }
+
+    if (completedLabs.includes(labId)) {
+      return { alreadySolved: true }
+    }
+
+    const pointsToAdd = Number.isFinite(Number(awardedPoints)) ? Number(awardedPoints) : 0
+    set({
+      completedLabs: [...completedLabs, labId],
+      userPoints: userPoints + Math.max(0, pointsToAdd),
+    })
+    return { alreadySolved: false, points: pointsToAdd }
+  },
 
   // Launch a new or existing lab session
   startLab: (lab) => {
-    // Clear any existing timer
     if (get().timerInterval) {
       clearInterval(get().timerInterval)
     }
 
+    const durationSeconds =
+      Number.isFinite(Number(lab?.durationMinutes)) && Number(lab.durationMinutes) > 0
+        ? Number(lab.durationMinutes) * 60
+        : 2100
+
     const initialLogs = [
-      { text: `[HỆ THỐNG] Đang khởi tạo môi trường sandbox cô lập cho "${lab.title}"...`, type: "system" },
-      { text: `[MẠNG LƯỚI] Đã cấp phát IP mục tiêu ảo: ${lab.targetIp || "10.10.14.89"} (Cổng: ${lab.targetPort || "8080"})`, type: "system" },
-      { text: `[TRẠNG THÁI] Container tấn công sẵn sàng. Gõ 'help' để xem danh sách lệnh CLI.`, type: "success" },
-      { text: `root@kali-sandbox:~# `, type: "prompt" },
+      {
+        text: `[HỆ THỐNG] Đang khởi tạo môi trường Sandbox cô lập cho "${lab?.title || "Phòng Thí Nghiệm"}"...`,
+        type: "system",
+      },
+      {
+        text: `[MẠNG LƯỚI] Đã cấp phát địa chỉ mục tiêu: ${lab?.targetIp || "10.10.14.89"} (Cổng: ${lab?.targetPort || "8080"})`,
+        type: "system",
+      },
+      {
+        text: `[KỸ THUẬT] Tham chiếu MITRE ATT&CK®: ${lab?.mitre || "T1190"}`,
+        type: "system",
+      },
+      {
+        text: `[TRẠNG THÁI] Container thực nghiệm đã sẵn sàng. Gõ 'help' để xem danh sách lệnh CLI.`,
+        type: "success",
+      },
     ]
 
     const interval = setInterval(() => {
@@ -41,7 +96,7 @@ export const useLabStore = create((set, get) => ({
       activeLab: lab,
       isRunning: true,
       isTerminalOpen: true,
-      timeRemaining: 2100,
+      timeRemaining: durationSeconds,
       timerInterval: interval,
       terminalLogs: initialLogs,
     })
@@ -57,7 +112,10 @@ export const useLabStore = create((set, get) => ({
       timerInterval: null,
       terminalLogs: [
         ...state.terminalLogs,
-        { text: "[HỆ THỐNG] Phiên thực hành đã kết thúc và tài nguyên đã được giải phóng.", type: "system" },
+        {
+          text: "[HỆ THỐNG] Phiên thực hành đã kết thúc và tài nguyên container đã được thu hồi.",
+          type: "system",
+        },
       ],
     }))
   },
@@ -68,23 +126,36 @@ export const useLabStore = create((set, get) => ({
   // Append new output/input log to terminal
   addLog: (text, type = "stdout") => {
     set((state) => ({
-      terminalLogs: [...state.terminalLogs, { text, type, timestamp: new Date().toLocaleTimeString() }],
+      terminalLogs: [
+        ...state.terminalLogs,
+        { text, type, timestamp: new Date().toLocaleTimeString("vi-VN") },
+      ],
     }))
   },
 
   clearTerminal: () => {
     set({
-      terminalLogs: [{ text: "root@kali-sandbox:~# ", type: "prompt" }],
+      terminalLogs: [
+        {
+          text: "[HỆ THỐNG] Đã làm mới màn hình Terminal. Gõ 'help' để xem danh sách lệnh.",
+          type: "system",
+        },
+      ],
     })
   },
 
-  // Validate and submit flag
-  submitFlag: (labId, flagInput) => {
-    const { activeLab, completedLabs, userPoints } = get()
-    const targetLab = activeLab && activeLab.id === labId ? activeLab : null
-    const cleanFlag = flagInput.trim()
+  // Validate and submit flag locally (used directly for local labs or as fallback when backend is unavailable/401)
+  submitFlag: (labId, flagInput, labMeta = null) => {
+    const { activeLab, labCatalog, completedLabs, userPoints } = get()
+    const targetLab =
+      labMeta ||
+      (activeLab && activeLab.id === labId ? activeLab : null) ||
+      labCatalog.find((item) => item.id === labId || item.backendId === labId) ||
+      null
 
-    if (!cleanFlag.startsWith("FLAG{") || !cleanFlag.endsWith("}")) {
+    const cleanFlag = String(flagInput || "").trim()
+
+    if (!/^FLAG\{.+\}$/.test(cleanFlag)) {
       return {
         success: false,
         message: "Sai định dạng! Flag phải tuân theo chuẩn FLAG{...}",
@@ -94,13 +165,14 @@ export const useLabStore = create((set, get) => ({
     if (completedLabs.includes(labId)) {
       return {
         success: false,
-        message: "Bạn đã giải xong và nhận điểm bài Lab này rồi!",
+        message: "Bạn đã hoàn thành và ghi nhận điểm cho bài thí nghiệm này.",
       }
     }
 
-    // Check if matching lab flag (or generic fallback match)
     const expectedFlag = targetLab?.flag
-    const isCorrect = expectedFlag ? cleanFlag === expectedFlag : cleanFlag.length >= 10
+    const isCorrect = expectedFlag
+      ? cleanFlag === expectedFlag
+      : cleanFlag === "FLAG{SANDBOX_DEMO_2026}" || cleanFlag.length >= 12
 
     if (isCorrect) {
       const earned = targetLab?.points || 400
@@ -110,14 +182,14 @@ export const useLabStore = create((set, get) => ({
       })
       return {
         success: true,
-        message: `Chính xác! Flag được xác nhận thành công. Bạn nhận được +${earned} điểm thưởng!`,
+        message: `Xác thực Flag thành công (+${earned} XP).`,
         points: earned,
       }
     }
 
     return {
       success: false,
-      message: "Flag không chính xác! Hãy kiểm tra lại kết quả khai thác trong Terminal.",
+      message: "Flag chưa chính xác. Hãy kiểm tra lại kết quả khai thác trong Terminal.",
     }
   },
 }))
