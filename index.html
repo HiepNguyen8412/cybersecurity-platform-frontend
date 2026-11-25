@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 
 <head>
   <meta charset="UTF-8" />
@@ -7,33 +7,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="description"
-    content="Modern, interactive cybersecurity education platform for learners, analysts, and security professionals." />
-  <meta name="theme-color" content="#090c13" />
+    content="CyberPath — Học viện nghiên cứu an ninh mạng học thuật và phòng thí nghiệm thực hành cô lập." />
+  <meta name="theme-color" content="#FAF9F6" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&display=swap"
     rel="stylesheet" />
-  <title>CyberPath — Cyber Range & Hands-On Security Platform</title>
+  <title>CyberPath — Học Viện An Ninh Mạng &amp; Phòng Thí Nghiệm Thực Hành</title>
 
-  <!-- Instant Theme Resolver: Eliminates light/dark flicker when opening web -->
+  <!-- Instant 2-Theme Resolver: Editorial Light (default) & Deep Obsidian Dark -->
   <script>
     (function () {
       try {
-        var savedTheme = localStorage.getItem("cyber_theme") || "dark";
+        var rawTheme = localStorage.getItem("cyber_theme");
+        var savedTheme = rawTheme === "dark" || rawTheme === "cyberpunk" ? "dark" : "light";
+        if (rawTheme === "cyberpunk") {
+          localStorage.setItem("cyber_theme", "dark");
+        }
         var root = document.documentElement;
-        if (savedTheme === "light") {
-          root.classList.add("light");
-          root.setAttribute("data-theme", "light");
-          root.style.colorScheme = "light";
-        } else if (savedTheme === "cyberpunk") {
-          root.classList.add("dark", "cyberpunk");
-          root.setAttribute("data-theme", "cyberpunk");
-          root.style.colorScheme = "dark";
-        } else {
+        root.classList.remove("light", "dark", "cyberpunk");
+        if (savedTheme === "dark") {
           root.classList.add("dark");
           root.setAttribute("data-theme", "dark");
           root.style.colorScheme = "dark";
+        } else {
+          root.classList.add("light");
+          root.setAttribute("data-theme", "light");
+          root.style.colorScheme = "light";
+        }
+        var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeColorMeta) {
+          themeColorMeta.setAttribute("content", savedTheme === "dark" ? "#0B0E14" : "#FAF9F6");
         }
       } catch (e) { }
     })();
@@ -41,27 +46,45 @@
 
   <style>
     /* ==========================================================================
-       Bespoke Minimalist Preloader (Quiet, Fast, Human-Grade)
+       Academic Research Atelier Preloader (Editorial Light & Deep Obsidian Dark)
        ========================================================================== */
+    body {
+      background-color: #FAF9F6;
+      color: #0F172A;
+    }
+
+    .dark body,
+    [data-theme="dark"] body {
+      background-color: #0B0E14;
+      color: #F1F5F9;
+    }
+
     .app-preloader-overlay {
       position: fixed;
       inset: 0;
-      background: #090c13;
+      background: #FAF9F6;
+      color: #0F172A;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 999999;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       user-select: none;
       will-change: opacity, transform;
-      transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dark .app-preloader-overlay,
+    [data-theme="dark"] .app-preloader-overlay {
+      background: #0B0E14;
+      color: #F1F5F9;
     }
 
     .app-preloader-overlay.is-exiting {
       opacity: 0 !important;
-      transform: scale(0.99) !important;
+      transform: scale(0.995) !important;
       pointer-events: none !important;
     }
 
@@ -71,16 +94,26 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(15, 23, 42, 0.06);
       z-index: 10;
       overflow: hidden;
+    }
+
+    .dark .app-preloader-bar,
+    [data-theme="dark"] .app-preloader-bar {
+      background: rgba(255, 255, 255, 0.06);
     }
 
     .app-preloader-bar-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #2563eb, #38bdf8);
+      background: #1D4ED8;
       transition: width 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dark .app-preloader-bar-fill,
+    [data-theme="dark"] .app-preloader-bar-fill {
+      background: #3B82F6;
     }
 
     .app-preloader-content {
@@ -90,54 +123,73 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+      padding: 0 1.5rem;
     }
 
     .app-preloader-icon-box {
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #FFFFFF;
+      border: 1px solid #E5E2DC;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.25rem;
-      animation: subtleBreathe 2.4s ease-in-out infinite;
+      margin-bottom: 1rem;
+    }
+
+    .dark .app-preloader-icon-box,
+    [data-theme="dark"] .app-preloader-icon-box {
+      background: #121722;
+      border-color: rgba(255, 255, 255, 0.09);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
     }
 
     .app-preloader-icon {
-      width: 22px;
-      height: 22px;
-      stroke: #38bdf8;
+      width: 20px;
+      height: 20px;
+      stroke: #1D4ED8;
       fill: none;
-      stroke-width: 1.8;
+      stroke-width: 1.6;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
+    .dark .app-preloader-icon,
+    [data-theme="dark"] .app-preloader-icon {
+      stroke: #3B82F6;
+    }
+
     .app-preloader-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #f1f5f9;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.35rem;
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0F172A;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.25rem;
+    }
+
+    .dark .app-preloader-title,
+    [data-theme="dark"] .app-preloader-title {
+      color: #F1F5F9;
     }
 
     .app-preloader-status {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       font-size: 0.75rem;
-      color: #64748b;
-      letter-spacing: 0.02em;
+      color: #64748B;
+      letter-spacing: 0.01em;
     }
 
-    @keyframes subtleBreathe {
-      0%, 100% { transform: scale(0.98); opacity: 0.85; }
-      50% { transform: scale(1.02); opacity: 1; }
+    .dark .app-preloader-status,
+    [data-theme="dark"] .app-preloader-status {
+      color: #94A3B8;
     }
   </style>
 </head>
 
-<body class="bg-[#090c13] text-slate-100 antialiased selection:bg-blue-500/20 selection:text-blue-400">
+<body class="bg-[#FAF9F6] text-[#0F172A] dark:bg-[#0B0E14] dark:text-[#F1F5F9] antialiased selection:bg-blue-600/15 selection:text-blue-700 dark:selection:bg-blue-500/25 dark:selection:text-blue-300">
   <!-- Minimalist Initial Preloader -->
   <div id="cyber-app-preloader" class="app-preloader-overlay" aria-live="polite">
     <div class="app-preloader-bar">
@@ -146,14 +198,14 @@
 
     <div class="app-preloader-content">
       <div class="app-preloader-icon-box">
-        <svg class="app-preloader-icon" viewBox="0 0 24 24">
+        <svg class="app-preloader-icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
           <path d="m9 12 2 2 4-4" />
         </svg>
       </div>
 
-      <div class="app-preloader-title">CyberPath Platform</div>
-      <div class="app-preloader-status">Đang khởi chạy môi trường an toàn...</div>
+      <div class="app-preloader-title">CyberPath</div>
+      <div class="app-preloader-status">Đang chuẩn bị không gian nghiên cứu...</div>
     </div>
   </div>
 
@@ -172,7 +224,7 @@
       function step(now) {
         if (isExiting) return;
         var elapsed = now - startTime;
-        var progress = Math.min(85, (1 - Math.exp(-elapsed / 200)) * 90);
+        var progress = Math.min(85, (1 - Math.exp(-elapsed / 180)) * 90);
         if (topFill) topFill.style.width = progress + "%";
         if (progress < 85) {
           requestAnimationFrame(step);
@@ -191,8 +243,8 @@
             if (preloader && preloader.parentNode) {
               preloader.parentNode.removeChild(preloader);
             }
-          }, 240);
-        }, 80);
+          }, 220);
+        }, 60);
       };
 
       // Instant bypass via click or keypress

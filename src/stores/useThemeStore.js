@@ -1,45 +1,66 @@
 import { create } from "zustand"
 
+const THEME_STORAGE_KEY = "cyber_theme"
+
+function normalizeTheme(value) {
+  if (value === "dark" || value === "cyberpunk") return "dark"
+  return "light"
+}
+
+function readStoredTheme() {
+  if (typeof window === "undefined") return "light"
+  try {
+    return normalizeTheme(localStorage.getItem(THEME_STORAGE_KEY))
+  } catch {
+    return "light"
+  }
+}
+
 /**
  * useThemeStore
- * Manages active application visual theme (light, dark, cyberpunk) and applies classes & data-theme to document.
+ * Manages CyberPath v2's 2-theme system ("light" Editorial Light & "dark" Deep Obsidian Lab Dark).
+ * Coerces legacy "cyberpunk" entries to "dark" and defaults first-time visitors to "light".
  */
 export const useThemeStore = create((set, get) => ({
-  theme: localStorage.getItem("cyber_theme") || "dark",
+  theme: readStoredTheme(),
 
   initTheme: () => {
-    const saved = localStorage.getItem("cyber_theme") || "dark"
+    const saved = readStoredTheme()
     get().setTheme(saved)
   },
 
   setTheme: (newTheme) => {
-    localStorage.setItem("cyber_theme", newTheme)
-    const root = document.documentElement
+    const resolvedTheme = normalizeTheme(newTheme)
 
-    // Clean old theme classes and attributes
-    root.classList.remove("light", "dark", "cyberpunk")
-    root.removeAttribute("data-theme")
-
-    if (newTheme === "light") {
-      root.classList.add("light")
-      root.setAttribute("data-theme", "light")
-      root.style.colorScheme = "light"
-    } else if (newTheme === "cyberpunk") {
-      root.classList.add("dark", "cyberpunk")
-      root.setAttribute("data-theme", "cyberpunk")
-      root.style.colorScheme = "dark"
-    } else {
-      root.classList.add("dark")
-      root.setAttribute("data-theme", "dark")
-      root.style.colorScheme = "dark"
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, resolvedTheme)
+      } catch {
+        // Ignore storage errors in restricted environments
+      }
     }
 
-    set({ theme: newTheme })
+    if (typeof document !== "undefined") {
+      const root = document.documentElement
+      root.classList.remove("light", "dark", "cyberpunk")
+      root.classList.add(resolvedTheme)
+      root.setAttribute("data-theme", resolvedTheme)
+      root.style.colorScheme = resolvedTheme
+
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]')
+      if (themeColorMeta) {
+        themeColorMeta.setAttribute(
+          "content",
+          resolvedTheme === "dark" ? "#0B0E14" : "#FAF9F6"
+        )
+      }
+    }
+
+    set({ theme: resolvedTheme })
   },
 
   toggleTheme: () => {
-    const current = get().theme
-    const nextTheme = current === "dark" ? "light" : current === "light" ? "cyberpunk" : "dark"
+    const nextTheme = get().theme === "dark" ? "light" : "dark"
     get().setTheme(nextTheme)
   },
 }))

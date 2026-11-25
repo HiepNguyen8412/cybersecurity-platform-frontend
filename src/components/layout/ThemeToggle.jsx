@@ -1,48 +1,60 @@
-import { RiSunLine, RiMoonLine, RiRadarLine } from "@remixicon/react"
+import { RiSunLine, RiMoonLine } from "@remixicon/react"
 import useThemeStore from "../../stores/useThemeStore"
 
+/**
+ * ThemeToggle
+ * Refined 2-state segmented pill switch between Editorial Light ("Sáng") and Deep Obsidian Dark ("Tối").
+ * Compact icon-only labels on narrow mobile (<640px) to prevent header overflow.
+ */
 export function ThemeToggle() {
-  const { theme, toggleTheme } = useThemeStore()
-
-  const isLight = theme === "light"
-  const isCyber = theme === "cyberpunk"
+  const { theme, setTheme } = useThemeStore()
+  const isDark = theme === "dark"
 
   return (
-    <button
-      onClick={toggleTheme}
-      type="button"
-      className={`
-        px-3 py-1.5 rounded-xl border transition-all duration-200 cursor-pointer flex items-center gap-2 text-xs font-mono select-none
-        ${
-          isLight
-            ? "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800 shadow-2xs"
-            : isCyber
-            ? "bg-blue-950/60 hover:bg-blue-900/70 border-cyan-500/50 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.25)]"
-            : "bg-white/[0.06] hover:bg-white/[0.1] border-white/[0.1] text-slate-200 shadow-2xs"
-        }
-      `.trim()}
-      title={`Chuyển giao diện: Hiện tại là ${isLight ? "SÁNG (EDITORIAL LIGHT)" : isCyber ? "CYBER BLUE (TACTICAL SOC)" : "TỐI (OBSIDIAN TITANIUM)"}`}
-      aria-label="Chuyển chế độ hiển thị giao diện"
+    <div
+      role="group"
+      aria-label="Chuyển chế độ giao diện Sáng hoặc Tối"
+      className="inline-flex items-center p-0.5 rounded-full bg-[#ECE9E2] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.09] select-none transition-colors duration-200 shrink-0"
     >
-      {isLight ? (
-        <>
-          <RiSunLine className="w-4 h-4 text-amber-500" />
-          <span className="font-semibold text-slate-800">Sáng</span>
-        </>
-      ) : isCyber ? (
-        <>
-          <RiRadarLine className="w-4 h-4 text-cyan-400 animate-pulse" />
-          <span className="font-bold text-cyan-300 tracking-wider">CYBER BLUE</span>
-        </>
-      ) : (
-        <>
-          <RiMoonLine className="w-4 h-4 text-indigo-400" />
-          <span className="font-semibold text-white">Tối</span>
-        </>
-      )}
-    </button>
+      <button
+        type="button"
+        onClick={() => setTheme("light")}
+        aria-pressed={!isDark}
+        aria-label="Chế độ Sáng"
+        title="Chuyển sang giao diện Sáng (Editorial Light)"
+        className={`inline-flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 sm:py-1 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8] ${
+          !isDark
+            ? "bg-white text-[#0F172A] shadow-2xs border border-[#E5E2DC]/80"
+            : "text-[#94A3B8] hover:text-[#F1F5F9] border border-transparent"
+        }`}
+      >
+        <RiSunLine
+          className={`w-3.5 h-3.5 shrink-0 ${!isDark ? "text-amber-600" : "text-[#64748B]"}`}
+          aria-hidden="true"
+        />
+        <span className="hidden sm:inline">Sáng</span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setTheme("dark")}
+        aria-pressed={isDark}
+        aria-label="Chế độ Tối"
+        title="Chuyển sang giao diện Tối (Deep Obsidian)"
+        className={`inline-flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 sm:py-1 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] ${
+          isDark
+            ? "bg-[#121722] text-[#F1F5F9] shadow-2xs border border-white/[0.12]"
+            : "text-[#64748B] hover:text-[#0F172A] border border-transparent"
+        }`}
+      >
+        <RiMoonLine
+          className={`w-3.5 h-3.5 shrink-0 ${isDark ? "text-[#3B82F6]" : "text-[#64748B]"}`}
+          aria-hidden="true"
+        />
+        <span className="hidden sm:inline">Tối</span>
+      </button>
+    </div>
   )
 }
 
 export default ThemeToggle
-

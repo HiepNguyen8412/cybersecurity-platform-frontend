@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { User, Mail, Lock, AlertCircle, Shield, ArrowRight, CheckCircle2 } from "lucide-react"
+import { User, Mail, Lock, AlertCircle, ShieldCheck, ArrowRight, CheckCircle2, Info } from "lucide-react"
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout"
 import { Button, Input, Checkbox, Divider } from "../../components/common"
 import PasswordStrength from "../../components/auth/PasswordStrength"
@@ -9,13 +9,13 @@ import useAuth from "../../hooks/useAuth"
 import { validateEmail, validatePassword } from "../../utils/validators"
 
 /**
- * Production-ready Registration page:
+ * Production-ready Registration page for CyberPath v2 ("Academic Research Atelier"):
  * - Robust input validation and real-time password strength enforcement
  * - Dynamic password match feedback
- * - Responsible security lab usage acknowledgement
+ * - Academic & isolated lab usage acknowledgement
  * - Anti-enumeration handling for existing accounts
  */
-function Register() {
+export function Register() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -23,6 +23,7 @@ function Register() {
   const [agreeTerms, setAgreeTerms] = useState(false)
   const [fieldErrors, setFieldErrors] = useState({})
   const [formError, setFormError] = useState("")
+  const [socialNotice, setSocialNotice] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const { register, login, isLoading, authError, clearAuthError } = useAuth()
@@ -54,7 +55,8 @@ function Register() {
     }
 
     if (!agreeTerms) {
-      errors.agreeTerms = "Bạn phải đồng ý với Điều Khoản Dịch Vụ và Quy Tắc Đạo Đức Phòng Lab để tạo tài khoản."
+      errors.agreeTerms =
+        "Bạn phải đồng ý với Chính sách Bảo mật và Quy chế Học thuật & Sử dụng Lab để tạo tài khoản."
     }
 
     setFieldErrors(errors)
@@ -64,6 +66,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setFormError("")
+    setSocialNotice("")
     clearAuthError()
 
     if (isSubmitting || isLoading) return
@@ -80,7 +83,6 @@ function Register() {
       })
 
       if (result.success) {
-        // Automatically authenticate user and redirect to home page (/)
         try {
           await login(cleanEmail, password, true)
         } catch {
@@ -97,25 +99,28 @@ function Register() {
 
   const activeError = formError || authError
   const isBusy = isSubmitting || isLoading
-
-  // Live password match helper
   const isPasswordMatch = confirmPassword.length > 0 && password === confirmPassword
+
+  const getInputSurfaceClass = (hasError) =>
+    hasError
+      ? "dark:bg-[#0B0E14]/80 dark:text-[#F1F5F9] dark:placeholder:text-[#64748B]"
+      : "border-[#D0CCC3] dark:bg-[#0B0E14]/80 dark:border-white/[0.12] dark:text-[#F1F5F9] dark:placeholder:text-[#64748B] focus:border-[#1D4ED8] dark:focus:border-[#3B82F6] dark:focus:ring-blue-500/20"
 
   return (
     <AuthLayout>
       <div className="space-y-5">
-        {/* Header with Security Sub-badge */}
-        <div className="space-y-1.5 text-center">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 cyberpunk:bg-cyan-950/60 border border-blue-100 dark:border-blue-800/50 cyberpunk:border-cyan-500/40 text-[11px] font-semibold text-blue-700 dark:text-blue-300 cyberpunk:text-cyan-300 tracking-wide uppercase">
-            <Shield className="h-3 w-3" />
-            <span>Đăng Ký Tài Khoản Tác Chiến</span>
+        {/* Scholarly Header */}
+        <div className="space-y-2 text-center">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F3F1EC] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.08] text-[11px] font-mono-tech font-medium text-[#1D4ED8] dark:text-[#38BDF8] tracking-wide uppercase">
+            <ShieldCheck className="h-3 w-3 shrink-0" aria-hidden="true" />
+            <span>Hồ Sơ Học Viên Mới</span>
           </div>
 
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
+          <h1 className="font-serif-editorial text-2xl sm:text-[28px] font-semibold tracking-tight text-[#0F172A] dark:text-[#F1F5F9] leading-tight">
             Tạo Tài Khoản Học Viên
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80 leading-normal">
-            Truy cập hệ thống phòng lab ảo thực chiến, đấu trường an ninh và lộ trình chuyên sâu.
+          </h1>
+          <p className="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] leading-relaxed">
+            Khởi tạo định danh để truy cập hệ thống giáo trình chuẩn hóa, phòng thí nghiệm cô lập và lộ trình chuyên sâu.
           </p>
         </div>
 
@@ -124,9 +129,9 @@ function Register() {
           <div
             role="alert"
             aria-live="assertive"
-            className="p-3.5 rounded-xl bg-rose-50 border border-rose-200/80 text-xs text-rose-700 flex items-start gap-2.5 animate-in fade-in"
+            className="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/30 text-xs text-rose-800 dark:text-rose-200 flex items-start gap-2.5 animate-in fade-in"
           >
-            <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
+            <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" aria-hidden="true" />
             <div className="flex-1">
               <span className="font-semibold block">Lỗi đăng ký tài khoản</span>
               <span>{activeError}</span>
@@ -134,9 +139,20 @@ function Register() {
           </div>
         )}
 
+        {/* OAuth Notice */}
+        {socialNotice && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="p-3 rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.08] text-xs text-[#475569] dark:text-[#94A3B8] flex items-start gap-2.5 animate-in fade-in"
+          >
+            <Info className="h-4 w-4 shrink-0 text-[#1D4ED8] dark:text-[#38BDF8] mt-0.5" aria-hidden="true" />
+            <span>{socialNotice}</span>
+          </div>
+        )}
+
         {/* Registration Form */}
         <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
-          {/* Full Name */}
           <Input
             id="register-name"
             label="Họ và tên"
@@ -148,14 +164,15 @@ function Register() {
               setName(e.target.value)
               if (fieldErrors.name) setFieldErrors((prev) => ({ ...prev, name: "" }))
               if (formError) setFormError("")
+              if (socialNotice) setSocialNotice("")
             }}
-            placeholder="Ví dụ: Nguyễn Văn A"
-            leftIcon={<User className="h-4 w-4 text-slate-400" />}
+            placeholder="Ví dụ: Nguyễn Minh Hiệp"
+            leftIcon={<User className="h-4 w-4 text-[#64748B] dark:text-[#94A3B8]" />}
             errorMessage={fieldErrors.name}
             disabled={isBusy}
+            className={getInputSurfaceClass(Boolean(fieldErrors.name))}
           />
 
-          {/* Email Address */}
           <Input
             id="register-email"
             label="Địa chỉ Email"
@@ -167,14 +184,15 @@ function Register() {
               setEmail(e.target.value)
               if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: "" }))
               if (formError) setFormError("")
+              if (socialNotice) setSocialNotice("")
             }}
             placeholder="hocvien@cyberpath.edu.vn"
-            leftIcon={<Mail className="h-4 w-4 text-slate-400" />}
+            leftIcon={<Mail className="h-4 w-4 text-[#64748B] dark:text-[#94A3B8]" />}
             errorMessage={fieldErrors.email}
             disabled={isBusy}
+            className={getInputSurfaceClass(Boolean(fieldErrors.email))}
           />
 
-          {/* Password with Strength Indicator */}
           <div className="space-y-1.5">
             <Input
               id="register-password"
@@ -189,29 +207,30 @@ function Register() {
                 if (formError) setFormError("")
               }}
               placeholder="••••••••"
-              leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
+              leftIcon={<Lock className="h-4 w-4 text-[#64748B] dark:text-[#94A3B8]" />}
               showPasswordToggle
               errorMessage={fieldErrors.password}
               disabled={isBusy}
+              className={getInputSurfaceClass(Boolean(fieldErrors.password))}
             />
 
-            {/* Progressive Password Strength Meter */}
-            <PasswordStrength password={password} />
+            <div className="dark:[&_.bg-slate-200]:bg-white/10 dark:[&_.text-slate-500]:text-[#94A3B8] dark:[&_.text-emerald-700]:text-emerald-400">
+              <PasswordStrength password={password} />
+            </div>
           </div>
 
-          {/* Confirm Password */}
           <div>
-            <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center justify-between mb-1.5">
               <label
                 htmlFor="register-confirm-password"
-                className="text-xs font-semibold text-slate-700 tracking-wide"
+                className="text-xs font-semibold text-[#0F172A] dark:text-[#E2E8F0] tracking-wide"
               >
-                Xác nhận mật khẩu <span className="text-rose-500">*</span>
+                Xác nhận mật khẩu <span className="text-rose-500 ml-0.5" aria-hidden="true">*</span>
               </label>
 
               {isPasswordMatch && (
-                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 animate-in fade-in">
-                  <CheckCircle2 className="h-3 w-3" />
+                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400 animate-in fade-in">
+                  <CheckCircle2 className="h-3 w-3" aria-hidden="true" />
                   <span>Mật khẩu khớp</span>
                 </span>
               )}
@@ -229,14 +248,14 @@ function Register() {
                 if (formError) setFormError("")
               }}
               placeholder="••••••••"
-              leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
+              leftIcon={<Lock className="h-4 w-4 text-[#64748B] dark:text-[#94A3B8]" />}
               showPasswordToggle
               errorMessage={fieldErrors.confirmPassword}
               disabled={isBusy}
+              className={getInputSurfaceClass(Boolean(fieldErrors.confirmPassword))}
             />
           </div>
 
-          {/* Terms Acceptance */}
           <div className="pt-0.5">
             <Checkbox
               id="agree-terms"
@@ -248,22 +267,21 @@ function Register() {
               disabled={isBusy}
               errorMessage={fieldErrors.agreeTerms}
               label={
-                <span className="text-xs text-slate-600 leading-normal">
+                <span className="text-xs text-[#475569] dark:text-[#94A3B8] leading-normal">
                   Tôi đồng ý với{" "}
-                  <span className="font-semibold text-slate-800">
-                    Điều Khoản Dịch Vụ
+                  <span className="font-semibold text-[#0F172A] dark:text-[#F1F5F9]">
+                    Chính sách Bảo mật
+                  </span>{" "}
+                  và{" "}
+                  <span className="font-semibold text-[#0F172A] dark:text-[#F1F5F9]">
+                    Quy chế Học thuật &amp; Sử dụng Lab
                   </span>
-                  ,{" "}
-                  <span className="font-semibold text-slate-800">
-                    Chính Sách Bảo Mật
-                  </span>
-                  , và Quy tắc đạo đức diễn tập an ninh mạng.
+                  .
                 </span>
               }
             />
           </div>
 
-          {/* Submit CTA */}
           <div className="pt-1">
             <Button
               type="submit"
@@ -274,25 +292,36 @@ function Register() {
               loadingText="Đang tạo tài khoản..."
               rightIcon={!isBusy ? <ArrowRight className="h-4 w-4" /> : null}
             >
-              Tạo Tài Khoản Thực Chiến
+              Tạo Tài Khoản Học Viên
             </Button>
           </div>
         </form>
 
         {/* Social Registration */}
         <div className="space-y-3 pt-1">
-          <Divider label="hoặc đăng ký bằng" />
-          <SocialAuthButtons />
+          <Divider
+            label="hoặc đăng ký bằng"
+            className="[&>div]:border-[#E5E2DC] dark:[&>div]:border-white/[0.08] [&>span]:text-[#64748B] dark:[&>span]:text-[#94A3B8]"
+          />
+          <div className="dark:[&_button]:text-[#F1F5F9] dark:[&_button]:border-white/[0.1] dark:[&_button]:bg-[#161C2A] dark:[&_button:hover]:bg-[#1B2335]">
+            <SocialAuthButtons
+              onSocialClick={(provider) =>
+                setSocialNotice(
+                  `Đăng ký nhanh qua ${provider} hiện đang bảo trì ở môi trường thử nghiệm. Vui lòng tạo tài khoản bằng biểu mẫu email phía trên.`
+                )
+              }
+            />
+          </div>
         </div>
 
         {/* Sign In Link */}
-        <p className="text-center text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 pt-1">
+        <p className="text-center text-xs text-[#475569] dark:text-[#94A3B8] pt-1">
           Đã có tài khoản?{" "}
           <Link
             to="/login"
-            className="font-semibold text-blue-600 dark:text-blue-400 cyberpunk:text-cyan-300 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-colors"
+            className="font-semibold text-[#1D4ED8] dark:text-[#38BDF8] hover:text-[#1E40AF] dark:hover:text-[#60A5FA] hover:underline transition-colors"
           >
-            Sign in
+            Đăng nhập
           </Link>
         </p>
       </div>

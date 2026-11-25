@@ -3,7 +3,7 @@ import { AlertCircle, CheckCircle2, X, Eye, EyeOff } from "lucide-react"
 
 /**
  * Reusable Input component supporting states: default, hover, focus, disabled, error, success,
- * and built-in password visibility toggle.
+ * and built-in password visibility toggle across Editorial Light & Deep Obsidian Dark.
  */
 const Input = forwardRef(function Input(
   {
@@ -45,12 +45,14 @@ const Input = forwardRef(function Input(
     lg: "text-base px-4 py-2.5 h-11",
   }
 
-  // Border and focus state styles
-  let stateStyles = "border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+  let stateStyles =
+    "border-[#E5E2DC] dark:border-white/[0.09] focus:border-[#1D4ED8] dark:focus:border-[#3B82F6] focus:ring-2 focus:ring-blue-600/15 dark:focus:ring-blue-500/20"
   if (isError) {
-    stateStyles = "border-rose-400 text-rose-950 focus:border-rose-600 focus:ring-2 focus:ring-rose-100"
+    stateStyles =
+      "border-rose-400 dark:border-rose-500/70 text-rose-950 dark:text-rose-100 focus:border-rose-600 dark:focus:border-rose-400 focus:ring-2 focus:ring-rose-500/15"
   } else if (isSuccess) {
-    stateStyles = "border-emerald-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+    stateStyles =
+      "border-emerald-400 dark:border-emerald-500/70 focus:border-emerald-600 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/15"
   }
 
   return (
@@ -58,7 +60,7 @@ const Input = forwardRef(function Input(
       {label && (
         <label
           htmlFor={inputId}
-          className="text-xs font-semibold text-slate-700 dark:text-slate-300 cyberpunk:text-cyan-200 tracking-wide flex items-center justify-between"
+          className="text-xs font-semibold text-[#0F172A] dark:text-[#F1F5F9] tracking-wide flex items-center justify-between"
         >
           <span>
             {label}
@@ -69,7 +71,7 @@ const Input = forwardRef(function Input(
 
       <div className="relative flex items-center">
         {leftIcon && (
-          <div className="pointer-events-none absolute left-3 flex items-center text-slate-400">
+          <div className="pointer-events-none absolute left-3 flex items-center text-[#64748B] dark:text-[#94A3B8]">
             {leftIcon}
           </div>
         )}
@@ -89,9 +91,9 @@ const Input = forwardRef(function Input(
             isError ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined
           }
           className={`
-            w-full rounded-xl border bg-white/95 dark:bg-slate-900 cyberpunk:bg-[#060e1d] text-slate-900 dark:text-white cyberpunk:text-cyan-50 transition-all duration-150
-            placeholder:text-slate-400 dark:placeholder:text-slate-500 cyberpunk:placeholder:text-cyan-500/50 outline-none shadow-2xs border-slate-300 dark:border-slate-700 cyberpunk:border-cyan-500/40
-            disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed
+            w-full rounded-xl border bg-white dark:bg-[#161C2A] text-[#0F172A] dark:text-[#F1F5F9] transition-all duration-150
+            placeholder:text-[#94A3B8] dark:placeholder:text-[#64748B] outline-none shadow-2xs
+            disabled:bg-[#F3F1EC] dark:disabled:bg-[#121722] disabled:text-[#94A3B8] dark:disabled:text-[#475569] disabled:cursor-not-allowed
             ${sizeStyles[size] || sizeStyles.md}
             ${stateStyles}
             ${leftIcon ? "pl-9" : ""}
@@ -106,8 +108,9 @@ const Input = forwardRef(function Input(
             <button
               type="button"
               onClick={onClear}
-              className="text-slate-400 hover:text-slate-600 p-0.5 rounded cursor-pointer"
-              aria-label="Clear input"
+              className="text-[#64748B] hover:text-[#0F172A] dark:text-[#94A3B8] dark:hover:text-[#F1F5F9] p-0.5 rounded cursor-pointer transition-colors"
+              aria-label="Xóa nội dung"
+              title="Xóa nội dung"
             >
               <X className="h-3.5 w-3.5" />
             </button>
@@ -117,9 +120,9 @@ const Input = forwardRef(function Input(
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
-              className="text-slate-400 hover:text-slate-600 p-0.5 rounded cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-              aria-label={showPassword ? "Hide password" : "Show password"}
-              title={showPassword ? "Hide password" : "Show password"}
+              className="text-[#64748B] hover:text-[#0F172A] dark:text-[#94A3B8] dark:hover:text-[#F1F5F9] p-0.5 rounded cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8] dark:focus-visible:ring-[#3B82F6]"
+              aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+              title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
             >
               {showPassword ? (
                 <EyeOff className="h-4 w-4" />
@@ -138,25 +141,25 @@ const Input = forwardRef(function Input(
           )}
 
           {rightIcon && !isError && !isSuccess && !(isPasswordType && showPasswordToggle) && (
-            <span className="text-slate-400 flex items-center">{rightIcon}</span>
+            <span className="text-[#64748B] dark:text-[#94A3B8] flex items-center">{rightIcon}</span>
           )}
         </div>
       </div>
 
       {isError && (
-        <p id={`${inputId}-error`} className="text-xs text-rose-600 flex items-center gap-1 mt-1">
+        <p id={`${inputId}-error`} className="text-xs text-rose-600 dark:text-rose-400 flex items-center gap-1 mt-1">
           {errorMessage}
         </p>
       )}
 
       {isSuccess && (
-        <p className="text-xs text-emerald-600 flex items-center gap-1 mt-1">
+        <p className="text-xs text-emerald-600 dark:text-emerald-400 flex items-center gap-1 mt-1">
           {successMessage}
         </p>
       )}
 
       {!isError && !isSuccess && helperText && (
-        <p id={`${inputId}-helper`} className="text-xs text-slate-500 mt-1">
+        <p id={`${inputId}-helper`} className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-1">
           {helperText}
         </p>
       )}

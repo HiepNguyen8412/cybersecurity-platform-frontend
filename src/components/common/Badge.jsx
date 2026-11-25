@@ -1,6 +1,6 @@
 /**
- * Reusable Badge component for statuses, tags, counts, and indicators.
- * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
+ * Reusable Badge component for statuses, tags, counts, and academic markers.
+ * Refined for Editorial Light and Deep Obsidian Dark with 1px hairline borders.
  */
 export function Badge({
   children,
@@ -12,31 +12,45 @@ export function Badge({
   ...props
 }) {
   const variantStyles = {
-    primary: "bg-blue-50 text-blue-700 border-blue-200/60 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800/60 cyberpunk:bg-cyan-950/60 cyberpunk:text-cyan-300 cyberpunk:border-cyan-500/50",
-    secondary: "bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 cyberpunk:bg-[#0d1e3d] cyberpunk:text-cyan-300/90 cyberpunk:border-cyan-500/30",
-    success: "bg-emerald-50 text-emerald-700 border-emerald-200/60 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60 cyberpunk:bg-emerald-950/60 cyberpunk:text-emerald-300 cyberpunk:border-emerald-500/50",
-    warning: "bg-amber-50 text-amber-800 border-amber-200/60 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60 cyberpunk:bg-amber-950/60 cyberpunk:text-amber-300 cyberpunk:border-amber-500/50",
-    error: "bg-rose-50 text-rose-700 border-rose-200/60 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800/60 cyberpunk:bg-rose-950/60 cyberpunk:text-rose-300 cyberpunk:border-rose-500/50",
-    info: "bg-sky-50 text-sky-700 border-sky-200/60 dark:bg-sky-950/60 dark:text-sky-300 dark:border-sky-800/60 cyberpunk:bg-cyan-950/60 cyberpunk:text-cyan-300 cyberpunk:border-cyan-500/50",
-    purple: "bg-purple-50 text-purple-700 border-purple-200/60 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800/60 cyberpunk:bg-purple-950/60 cyberpunk:text-purple-300 cyberpunk:border-purple-500/50",
-    outline: "bg-white text-slate-700 border-slate-300 dark:bg-transparent dark:text-slate-300 dark:border-slate-700 cyberpunk:bg-transparent cyberpunk:text-cyan-300 cyberpunk:border-cyan-500/40",
-    cyber: "font-mono-tech bg-blue-50/90 text-blue-700 border-blue-200 dark:bg-cyan-950/60 dark:text-cyan-300 dark:border-cyan-800/60 cyberpunk:bg-cyan-950/80 cyberpunk:text-cyan-200 cyberpunk:border-cyan-400 shadow-2xs font-semibold tracking-tight",
-    live: "font-mono-tech bg-emerald-50/90 text-emerald-800 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60 cyberpunk:bg-emerald-950/80 cyberpunk:text-emerald-200 cyberpunk:border-emerald-400 shadow-2xs font-semibold tracking-tight",
-    alert: "font-mono-tech bg-rose-50/90 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800/60 cyberpunk:bg-rose-950/80 cyberpunk:text-rose-200 cyberpunk:border-rose-400 shadow-2xs font-semibold tracking-tight",
+    primary:
+      "bg-blue-50 text-[#1D4ED8] border-blue-200/80 dark:bg-blue-500/12 dark:text-[#93C5FD] dark:border-blue-500/25",
+    secondary:
+      "bg-[#F3F1EC] text-[#475569] border-[#E5E2DC] dark:bg-[#161C2A] dark:text-[#94A3B8] dark:border-white/[0.09]",
+    success:
+      "bg-emerald-50 text-emerald-700 border-emerald-200/80 dark:bg-emerald-500/12 dark:text-emerald-300 dark:border-emerald-500/25",
+    warning:
+      "bg-amber-50 text-amber-800 border-amber-200/80 dark:bg-amber-500/12 dark:text-amber-300 dark:border-amber-500/25",
+    error:
+      "bg-rose-50 text-rose-700 border-rose-200/80 dark:bg-rose-500/12 dark:text-rose-300 dark:border-rose-500/25",
+    danger:
+      "bg-rose-50 text-rose-700 border-rose-200/80 dark:bg-rose-500/12 dark:text-rose-300 dark:border-rose-500/25",
+    info:
+      "bg-sky-50 text-sky-700 border-sky-200/80 dark:bg-sky-500/12 dark:text-sky-300 dark:border-sky-500/25",
+    purple:
+      "bg-indigo-50 text-indigo-700 border-indigo-200/80 dark:bg-indigo-500/12 dark:text-indigo-300 dark:border-indigo-500/25",
+    outline:
+      "bg-white text-[#475569] border-[#E5E2DC] dark:bg-transparent dark:text-[#94A3B8] dark:border-white/[0.12]",
+    cyber:
+      "font-mono-tech bg-blue-50/90 text-[#1D4ED8] border-blue-200/80 dark:bg-blue-500/12 dark:text-[#93C5FD] dark:border-blue-500/25 font-semibold tracking-tight",
+    live:
+      "font-mono-tech bg-emerald-50/90 text-emerald-800 border-emerald-200/80 dark:bg-emerald-500/12 dark:text-emerald-300 dark:border-emerald-500/25 font-semibold tracking-tight",
+    alert:
+      "font-mono-tech bg-rose-50/90 text-rose-700 border-rose-200/80 dark:bg-rose-500/12 dark:text-rose-300 dark:border-rose-500/25 font-semibold tracking-tight",
   }
 
   const dotColors = {
-    primary: "bg-blue-500",
+    primary: "bg-[#1D4ED8] dark:bg-[#3B82F6]",
     secondary: "bg-slate-400",
     success: "bg-emerald-500",
     warning: "bg-amber-500",
     error: "bg-rose-500",
+    danger: "bg-rose-500",
     info: "bg-sky-500",
-    purple: "bg-purple-500",
+    purple: "bg-indigo-500",
     outline: "bg-slate-400",
-    cyber: "bg-cyan-400",
-    live: "bg-emerald-400",
-    alert: "bg-rose-400",
+    cyber: "bg-[#1D4ED8] dark:bg-[#3B82F6]",
+    live: "bg-emerald-500",
+    alert: "bg-rose-500",
   }
 
   const sizeStyles = {

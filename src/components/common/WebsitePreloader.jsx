@@ -2,11 +2,11 @@ import { useEffect, memo } from "react"
 
 /**
  * WebsitePreloader
- * 
- * Seamless React coordinator for the unified global preloader.
- * Dissolves immediately once React has finished rendering (Zero-Friction UX).
+ *
+ * Seamless React coordinator for the initial document preloader.
+ * Dismisses immediately once React has mounted.
  */
-export const WebsitePreloader = memo(function WebsitePreloader({ minDuration = 120 }) {
+export const WebsitePreloader = memo(function WebsitePreloader({ minDuration = 80 }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (typeof window !== "undefined" && window.__dismissCyberPreloader) {

@@ -1,5 +1,6 @@
 import { useState, lazy, Suspense } from "react"
 import { Outlet } from "react-router-dom"
+import { HelpCircle } from "lucide-react"
 import PublicHeader from "./PublicHeader"
 import PublicFooter from "./PublicFooter"
 import QuickHelpModal from "../../components/common/QuickHelpModal"
@@ -14,48 +15,48 @@ const LabTerminalModal = lazy(() =>
 )
 
 /**
- * PublicLayout for unauthenticated marketing and informational pages.
- * Keeps Header & Footer permanently mounted with localized Suspense boundary for child routes.
+ * PublicLayout cho các trang giới thiệu, học thuật và tra cứu công khai.
+ * Duy trì PublicHeader và PublicFooter cố định cùng ranh giới Suspense cục bộ.
  */
 export function PublicLayout({ children }) {
   const [isHelpOpen, setIsHelpOpen] = useState(false)
 
   return (
-    <div className="min-h-screen text-slate-900 dark:text-[#e2e8f0] cyberpunk:text-[#f0fdfa] flex flex-col antialiased selection:bg-indigo-500/20 selection:text-indigo-400 relative overflow-x-hidden">
-      {/* Global Cybersecurity Ambient Backdrop (Grid, Aurora Glow & Telemetry) */}
+    <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#0B0E14] text-[#0F172A] dark:text-[#F1F5F9] flex flex-col antialiased selection:bg-[#1D4ED8]/15 selection:text-[#1D4ED8] dark:selection:bg-[#3B82F6]/25 dark:selection:text-[#38BDF8] relative overflow-x-hidden transition-colors duration-200">
+      {/* Nền học thuật tối giản (Editorial Light / Deep Obsidian Dark) */}
       <CyberBackground />
-      
-      {/* 1. Sticky Public Header - NEVER unmounts on route transitions */}
+
+      {/* 1. Thanh điều hướng cố định */}
       <PublicHeader />
 
-      {/* 2. Main Public Page Content with Localized Suspense */}
+      {/* 2. Nội dung trang công khai */}
       <main className="flex-1 w-full relative z-10 route-fade-enter">
         <Suspense fallback={<PageLoadingFallback />}>
           {children || <Outlet />}
         </Suspense>
       </main>
 
-      {/* 3. Minimalist Footer */}
+      {/* 3. Chân trang lưu trữ học thuật */}
       <PublicFooter />
 
-      {/* Floating Interactive Help Button */}
+      {/* Nút mở hộp thoại trợ giúp nhanh */}
       <button
         type="button"
         onClick={() => setIsHelpOpen(true)}
-        title="Need help? Click for Quick Guide & FAQs"
-        aria-label="Need help? Click for Quick Guide & FAQs"
-        className="fixed bottom-5 right-5 z-40 h-10 w-10 rounded-full bg-slate-900 dark:bg-[#121622] text-white flex items-center justify-center font-bold text-sm shadow-lg hover:bg-slate-800 dark:hover:bg-[#1a2030] transition-all hover:scale-105 active:scale-95 cursor-pointer border border-slate-700/80 dark:border-white/[0.1] group"
+        title="Trợ giúp nhanh & Câu hỏi thường gặp"
+        aria-label="Trợ giúp nhanh & Câu hỏi thường gặp"
+        className="fixed bottom-5 right-5 z-40 h-11 w-11 rounded-full bg-[#0F172A] dark:bg-[#121722] text-[#FAF9F6] dark:text-[#F1F5F9] flex items-center justify-center shadow-md hover:bg-[#1D4ED8] dark:hover:bg-[#1D4ED8] transition-colors duration-150 active:scale-[0.98] cursor-pointer border border-[#0F172A]/10 dark:border-white/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8] dark:focus-visible:ring-[#3B82F6]"
       >
-        <span className="group-hover:rotate-12 transition-transform">?</span>
+        <HelpCircle className="h-5 w-5" strokeWidth={1.75} />
       </button>
 
-      {/* Interactive Quick Help & Support Modal */}
+      {/* Hộp thoại trợ giúp & câu hỏi thường gặp */}
       <QuickHelpModal
         isOpen={isHelpOpen}
         onClose={() => setIsHelpOpen(false)}
       />
 
-      {/* Global Interactive Cyber Range Sandbox Terminal Modal */}
+      {/* Cửa sổ Terminal Sandbox tương tác toàn cục */}
       <Suspense fallback={null}>
         <LabTerminalModal />
       </Suspense>

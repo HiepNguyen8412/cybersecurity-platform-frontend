@@ -14,7 +14,6 @@ const Learning = lazy(() => import("../pages/learning/Learning"))
 const LearningPaths = lazy(() => import("../pages/learning/LearningPaths"))
 const Labs = lazy(() => import("../pages/labs/Labs"))
 const Pricing = lazy(() => import("../pages/public/Pricing"))
-const CyberVideoPreview = lazy(() => import("../pages/public/CyberVideoPreview"))
 const NotFound = lazy(() => import("../pages/public/NotFound"))
 
 // Lazy-Loaded Auth Pages (PublicOnly)
@@ -45,8 +44,8 @@ function AppRoutes() {
       <Suspense fallback={<PageLoadingFallback />}>
         <Routes>
           {/* ====================================================================
-              1. Public Exploration & Marketing Routes (PublicLayout with Header)
-              Accessible by everyone, preserves sticky header across all tabs
+              1. Public Exploration & Academic Routes (PublicLayout with Header)
+              Wave 2 will mount /workbench and /verify routes once created.
              ==================================================================== */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<LandingPage />} />
@@ -56,7 +55,7 @@ function AppRoutes() {
             <Route path="/paths" element={<Navigate to="/learning-paths" replace />} />
             <Route path="/labs" element={<Labs />} />
             <Route path="/pricing" element={<Pricing />} />
-            <Route path="/video-preview" element={<CyberVideoPreview />} />
+            <Route path="/video-preview" element={<Navigate to="/" replace />} />
             {/* Catch-all 404 Route within PublicLayout */}
             <Route path="*" element={<NotFound />} />
           </Route>
