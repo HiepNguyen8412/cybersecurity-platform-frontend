@@ -16,7 +16,6 @@ export function Dropdown({
   const toggle = () => setIsOpen((prev) => !prev)
   const close = () => setIsOpen(false)
 
-  // Close on outside click
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -69,7 +68,7 @@ export function Dropdown({
           role="menu"
           aria-orientation="vertical"
           className={`
-            absolute top-full mt-2 z-50 rounded-xl bg-white dark:bg-slate-900 cyberpunk:bg-[#071022] p-1.5 shadow-lg dark:shadow-2xl dark:shadow-black/80 cyberpunk:shadow-sm border border-slate-200/80 dark:border-slate-800 cyberpunk:border-cyan-500/40
+            absolute top-full mt-2 z-50 rounded-xl bg-white dark:bg-[#121722] p-1.5 shadow-lg dark:shadow-2xl dark:shadow-black/60 border border-[#E5E2DC] dark:border-white/[0.09]
             focus:outline-none animate-in fade-in zoom-in-95
             ${alignStyles[align] || alignStyles.right}
             ${width}
@@ -105,14 +104,14 @@ export function DropdownItem({
         disabled:opacity-50 disabled:cursor-not-allowed
         ${
           danger
-            ? "text-rose-600 hover:bg-rose-50 active:bg-rose-100"
-            : "text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white cyberpunk:hover:bg-[#0d1e3d] active:bg-slate-200"
+            ? "text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/12 active:bg-rose-100 dark:active:bg-rose-500/20"
+            : "text-[#0F172A] dark:text-[#F1F5F9] hover:bg-[#F3F1EC] dark:hover:bg-[#161C2A] active:bg-[#ECE9E2] dark:active:bg-[#1B2335]"
         }
         ${className}
       `.trim()}
       {...props}
     >
-      {icon && <span className="shrink-0 text-slate-400 group-hover:text-slate-600">{icon}</span>}
+      {icon && <span className="shrink-0 text-[#64748B] dark:text-[#94A3B8]">{icon}</span>}
       <span className="grow truncate">{children}</span>
     </button>
   )
@@ -120,14 +119,20 @@ export function DropdownItem({
 
 export function DropdownHeader({ children, className = "" }) {
   return (
-    <div className={`px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400 select-none ${className}`}>
+    <div
+      className={`px-3 py-2 text-[10px] font-mono-tech font-semibold uppercase tracking-wider text-[#64748B] dark:text-[#94A3B8] select-none ${className}`}
+    >
       {children}
     </div>
   )
 }
 
 export function DropdownDivider({ className = "" }) {
-  return <div className={`my-1 border-t border-slate-100 dark:border-slate-800 cyberpunk:border-cyan-500/20 ${className}`} />
+  return (
+    <div
+      className={`my-1 border-t border-[#EFEDE7] dark:border-white/[0.06] ${className}`}
+    />
+  )
 }
 
 export default Dropdown

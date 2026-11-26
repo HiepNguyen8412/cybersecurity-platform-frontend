@@ -1,20 +1,13 @@
 import StatCard from "./StatCard"
 
 /**
- * LearningOverview Component
- * 
- * Displays the 4 concise statistics:
- * 1. Overall Progress (42%)
- * 2. Courses Completed (4)
- * 3. Labs Completed (12)
- * 4. Current Streak (7 days)
- * 
- * Clean, lightweight, visually secondary to "Your Next Step".
+ * LearningOverview
+ * Hiển thị lưới 4 chỉ số KPI tiến độ học tập cốt lõi.
  */
 export function LearningOverview({ stats = [], className = "" }) {
   return (
-    <section aria-label="Learning Overview" className={className}>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+    <section aria-label="Tổng quan tiến độ học tập" className={className}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
           <StatCard
             key={stat.id || stat.label}

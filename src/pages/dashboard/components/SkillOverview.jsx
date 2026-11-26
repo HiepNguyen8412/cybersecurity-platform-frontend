@@ -1,27 +1,30 @@
 import { Link } from "react-router-dom"
-import { UserCheck, ArrowRight } from "lucide-react"
+import { Layers, ArrowRight } from "lucide-react"
 import { Card } from "../../../components/common"
 import SkillProgressItem from "./SkillProgressItem"
 
 /**
- * SkillOverview Component
- * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
+ * SkillOverview
+ * Tổng hợp tiến độ năng lực chuyên môn theo từng lĩnh vực an ninh mạng.
  */
 export function SkillOverview({ skills = [], className = "" }) {
   return (
-    <Card variant="default" className={`border-slate-200/90 dark:border-slate-800 cyberpunk:border-cyan-500/50 shadow-2xs ${className}`.trim()}>
+    <Card
+      variant="default"
+      className={`bg-white dark:bg-[#121722] border border-[#E5E2DC] dark:border-white/[0.08] ${className}`.trim()}
+    >
       <div className="space-y-4">
-        {/* Header */}
-        <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800 cyberpunk:border-cyan-500/30">
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-950/70 cyberpunk:bg-cyan-950/80 text-blue-600 dark:text-cyan-400 cyberpunk:text-cyan-300 border border-blue-100 dark:border-blue-800/60 cyberpunk:border-cyan-500/50">
-              <UserCheck className="h-4 w-4" aria-hidden="true" />
+        {/* Tiêu đề */}
+        <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-[#EFEDE7] dark:border-white/[0.06]">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F3F1EC] dark:bg-[#161C2A] text-[#1D4ED8] dark:text-[#38BDF8] border border-[#E5E2DC] dark:border-white/[0.08]">
+              <Layers className="h-4 w-4" aria-hidden="true" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 tracking-tight leading-tight">
-                Tiến độ Năng lực Tác chiến
+              <h2 className="font-serif-editorial text-lg font-medium text-[#0F172A] dark:text-[#F1F5F9] tracking-tight leading-tight">
+                Hồ sơ năng lực cốt lõi
               </h2>
-              <p className="text-[11px] text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300/80">
+              <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">
                 Mức độ thành thạo qua các chuyên đề phòng thủ an ninh mạng
               </p>
             </div>
@@ -29,14 +32,14 @@ export function SkillOverview({ skills = [], className = "" }) {
 
           <Link
             to="/progress"
-            className="text-[11px] font-semibold text-blue-600 dark:text-cyan-400 hover:text-blue-700 dark:hover:text-cyan-300 inline-flex items-center gap-0.5 transition-colors"
+            className="text-xs font-medium text-[#1D4ED8] dark:text-[#38BDF8] hover:underline inline-flex items-center gap-0.5 transition-colors shrink-0"
           >
-            <span>Xem tất cả</span>
+            <span>Chi tiết</span>
             <ArrowRight className="h-3 w-3" aria-hidden="true" />
           </Link>
         </div>
 
-        {/* Skills List */}
+        {/* Danh sách kỹ năng */}
         <div className="space-y-3.5">
           {skills.map((skill) => (
             <SkillProgressItem
@@ -50,9 +53,9 @@ export function SkillOverview({ skills = [], className = "" }) {
           ))}
         </div>
 
-        {/* Footnote */}
-        <div className="pt-1 text-[11px] text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400/80 text-center sm:text-left">
-          Được đo kiểm dựa trên tỉ lệ giải quyết thành công các bài Lab thực chiến.
+        {/* Chú thích phương pháp đo */}
+        <div className="pt-2 border-t border-[#EFEDE7] dark:border-white/[0.06] text-[11px] text-[#64748B] dark:text-[#94A3B8]">
+          Tổng hợp từ kết quả hoàn thành học phần, bài kiểm tra kiến thức và phòng Lab thực nghiệm.
         </div>
       </div>
     </Card>

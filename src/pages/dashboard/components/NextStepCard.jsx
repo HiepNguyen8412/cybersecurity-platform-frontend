@@ -3,89 +3,97 @@ import { ArrowRight, Clock, Compass, PlayCircle, FileText, CheckCircle2 } from "
 import { Card, Badge, Button, ProgressBar, CountUp } from "../../../components/common"
 
 /**
- * NextStepCard Component
- * 
- * The primary focal section of the Dashboard.
- * Visually communicates: "This is what you should do next."
- * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
+ * NextStepCard
+ * Khối trọng tâm điều hướng bước học tập hoặc phòng Lab tiếp theo.
  */
-export function NextStepCard({
-  nextStep = {},
-  className = "",
-}) {
+export function NextStepCard({ nextStep = {}, className = "" }) {
   const {
-    type = "Hands-on Lab",
-    courseTitle = "Nền tảng An toàn Phòng thủ Web",
-    lessonTitle = "SQL Injection: Filter Evasion & Parameterization",
-    description = "Tìm hiểu cách tin tặc vượt qua các bộ lọc blacklist thô sơ và thực hành triển khai Prepared Statements chuẩn hóa trên môi trường code thực tế.",
+    type = "Phòng Lab Thực Hành",
+    mitreCode = "MITRE ATT&CK · T1190",
+    cweCode = "CWE-89",
+    courseTitle = "Nền Tảng An Ninh Ứng Dụng Web",
+    lessonTitle = "SQL Injection: Vượt Bộ Lọc & Tham Số Hóa Truy Vấn",
+    description = "Phân tích cơ chế vượt qua bộ lọc từ khóa và thực hành triển khai Prepared Statements chuẩn hóa trên mã nguồn thực tế.",
     progress = 65,
-    currentTopic = "Bài thực hành 4/6: Xây dựng truy vấn an toàn",
-    estimatedTime = "Còn ~15 phút",
-    primaryAction = { label: "Tiếp tục bài Lab", path: "/labs" },
-    secondaryAction = { label: "Ghi chú bài giảng", path: "/learning" },
+    currentTopic = "Bài 4/6: Xây dựng truy vấn tham số hóa",
+    nextObjectiveLabel = "Mục tiêu kế tiếp: Kiểm chứng truy vấn tham số hóa",
+    completedObjectives = 3,
+    totalObjectives = 6,
+    estimatedTime = "Còn khoảng 15 phút",
+    primaryAction = { label: "Tiếp tục thực hành Lab", path: "/labs" },
+    secondaryAction = { label: "Xem ghi chú học phần", path: "/learning" },
   } = nextStep
 
   return (
     <section aria-labelledby="next-step-heading" className={className}>
       <Card
         variant="focal"
-        className="relative overflow-hidden shadow-md transition-all hover:shadow-lg border-l-4 border-l-blue-600 dark:border-l-blue-400 cyberpunk:border-l-cyan-400 border-blue-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/50 bg-gradient-to-r from-white via-white to-blue-50/40 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800/80 cyberpunk:from-[#060e1d] cyberpunk:via-[#071329] cyberpunk:to-[#091a38] p-5 sm:p-6"
+        padding="none"
+        className="relative overflow-hidden border border-[#E5E2DC] dark:border-white/[0.09] border-l-[3px] border-l-[#1D4ED8] dark:border-l-[#3B82F6] bg-white dark:bg-[#121722] p-5 sm:p-6 shadow-sm"
       >
         <div className="flex flex-col space-y-4">
-          {/* Top Row: Mission Status + MITRE Tag + Remaining Time */}
+          {/* Hàng trên: Trạng thái đề xuất + Mã chuẩn kỹ thuật + Thời lượng */}
           <div className="flex items-center justify-between gap-3 flex-wrap">
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-600 dark:bg-blue-500 cyberpunk:bg-cyan-500 text-white cyberpunk:text-slate-950 text-[11px] font-bold uppercase tracking-wider font-mono-tech select-none shadow-2xs cyberpunk:shadow-sm">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#1D4ED8] dark:bg-[#2563EB] text-white text-[11px] font-semibold uppercase tracking-wider font-mono-tech select-none">
                 <Compass className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                <span>ĐIỀU PHỐI TÁC CHIẾN</span>
+                <span>Bước tiếp theo đề xuất</span>
               </span>
 
-              <Badge variant="cyber" size="sm">
+              <Badge variant="primary" size="sm">
                 {type}
               </Badge>
 
-              <span className="hidden sm:inline-flex items-center text-[10px] font-mono-tech px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 cyberpunk:bg-cyan-950/70 text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/50">
-                MITRE: T1190
-              </span>
+              {mitreCode && (
+                <span className="hidden sm:inline-flex items-center text-[11px] font-mono-tech px-2 py-0.5 rounded bg-[#F3F1EC] dark:bg-[#161C2A] text-[#475569] dark:text-[#94A3B8] border border-[#E5E2DC] dark:border-white/[0.08]">
+                  {mitreCode}
+                </span>
+              )}
+
+              {cweCode && (
+                <span className="hidden md:inline-flex items-center text-[11px] font-mono-tech px-2 py-0.5 rounded bg-[#F3F1EC] dark:bg-[#161C2A] text-[#475569] dark:text-[#94A3B8] border border-[#E5E2DC] dark:border-white/[0.08]">
+                  {cweCode}
+                </span>
+              )}
             </div>
 
             {estimatedTime && (
-              <span className="inline-flex items-center gap-1.5 text-xs font-mono-tech text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300">
-                <Clock className="h-3.5 w-3.5 text-blue-600 dark:text-cyan-400 shrink-0" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1.5 text-xs font-mono-tech text-[#475569] dark:text-[#94A3B8]">
+                <Clock className="h-3.5 w-3.5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" aria-hidden="true" />
                 <span>{estimatedTime}</span>
               </span>
             )}
           </div>
 
-          {/* Core Content: Context & Main Action Title */}
+          {/* Nội dung chính */}
           <div className="space-y-1.5">
             {courseTitle && (
-              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/90 tracking-wide uppercase">
+              <p className="text-xs font-medium text-[#64748B] dark:text-[#94A3B8] tracking-wide uppercase font-mono-tech">
                 {courseTitle}
               </p>
             )}
 
             <h2
               id="next-step-heading"
-              className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 tracking-tight leading-snug group-hover:text-blue-600 dark:group-hover:text-cyan-400"
+              className="font-serif-editorial text-xl sm:text-2xl font-medium text-[#0F172A] dark:text-[#F1F5F9] tracking-tight leading-snug"
             >
               {lessonTitle}
             </h2>
 
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-200 cyberpunk:text-cyan-100 leading-relaxed max-w-3xl">
+            <p className="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] leading-relaxed max-w-3xl">
               {description}
             </p>
           </div>
 
-          {/* Progress Container */}
-          <div className="rounded-xl bg-slate-50/90 dark:bg-slate-800/80 cyberpunk:bg-[#071329] border border-slate-200/70 dark:border-slate-700 cyberpunk:border-cyan-500/40 p-3 sm:p-3.5 space-y-2">
-            <div className="flex items-center justify-between text-xs font-semibold">
-              <span className="text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-100 flex items-center gap-1.5">
-                <PlayCircle className="h-3.5 w-3.5 text-blue-600 dark:text-cyan-400 shrink-0" aria-hidden="true" />
-                <span>{currentTopic}</span>
+          {/* Khối tiến độ nội tuyến */}
+          <div className="rounded-xl bg-[#FAF9F6] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.07] p-3.5 space-y-2">
+            <div className="flex items-center justify-between gap-2 text-xs font-medium">
+              <span className="text-[#0F172A] dark:text-[#F1F5F9] flex items-center gap-1.5 min-w-0">
+                <PlayCircle className="h-3.5 w-3.5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" aria-hidden="true" />
+                <span className="truncate">{currentTopic}</span>
               </span>
-              <span className="text-blue-600 dark:text-cyan-400 cyberpunk:text-cyan-300 font-bold tabular-nums">
-                <CountUp end={progress} suffix="% Hoàn tất" />
+              <span className="text-[#1D4ED8] dark:text-[#38BDF8] font-semibold font-mono-tech tabular-nums shrink-0">
+                <CountUp key={`next-step-${progress}`} end={progress} suffix="% hoàn tất" duration={900} />
               </span>
             </div>
 
@@ -95,22 +103,25 @@ export function NextStepCard({
               variant="primary"
               size="sm"
               label={`Tiến độ bài học: ${progress}%`}
+              className="[&_[role=progressbar]]:bg-[#ECE9E2] dark:[&_[role=progressbar]]:bg-white/[0.08] [&>div:first-child]:sr-only"
             />
 
-            <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80 pt-0.5">
-              <span>Mục tiêu kế tiếp: Xác thực truy vấn tham số hóa</span>
-              <span className="text-emerald-700 dark:text-emerald-400 cyberpunk:text-emerald-300 font-medium hidden sm:inline-flex items-center gap-1">
-                <CheckCircle2 className="h-3 w-3 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
-                <span>3 / 6 mục tiêu đã vượt qua</span>
+            <div className="flex items-center justify-between gap-2 text-[11px] text-[#64748B] dark:text-[#94A3B8] pt-0.5 flex-wrap">
+              <span>{nextObjectiveLabel}</span>
+              <span className="text-emerald-700 dark:text-emerald-400 font-medium inline-flex items-center gap-1 font-mono-tech">
+                <CheckCircle2 className="h-3 w-3 shrink-0" aria-hidden="true" />
+                <span>
+                  {completedObjectives} / {totalObjectives} mục tiêu hoàn thành
+                </span>
               </span>
             </div>
           </div>
 
-          {/* Actions Footer */}
+          {/* Chân trang & Nút hành động */}
           <div className="pt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div className="text-xs text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-200/80">
-              Tiếp tục bài học ngay tại vị trí đã dừng. Không cần cấu hình lại.
-            </div>
+            <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">
+              Tiếp tục trực tiếp tại vị trí đã lưu gần nhất mà không cần khởi tạo lại môi trường.
+            </p>
 
             <div className="flex items-center gap-2.5 self-start sm:self-auto flex-wrap">
               {secondaryAction?.label && (
@@ -118,7 +129,7 @@ export function NextStepCard({
                   <Button
                     variant="outline"
                     size="md"
-                    leftIcon={<FileText className="h-3.5 w-3.5 text-slate-400" />}
+                    leftIcon={<FileText className="h-3.5 w-3.5 text-[#64748B] dark:text-[#94A3B8]" />}
                   >
                     {secondaryAction.label}
                   </Button>
@@ -131,7 +142,7 @@ export function NextStepCard({
                   size="md"
                   rightIcon={<ArrowRight className="h-4 w-4" />}
                 >
-                  {primaryAction.label}
+                  {primaryAction?.label || "Tiếp tục thực hành"}
                 </Button>
               </Link>
             </div>

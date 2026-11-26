@@ -5,7 +5,7 @@ import { ShieldCheck, Loader2 } from "lucide-react"
 
 /**
  * Route wrapper for public auth pages (login, register, forgot-password).
- * If the user is already authenticated, redirects them to their destination or /dashboard.
+ * If the user is already authenticated, redirects them to their destination or /.
  */
 export function PublicOnlyRoute({ children }) {
   const { isAuthenticated, isInitializing } = useAuth()
@@ -16,14 +16,15 @@ export function PublicOnlyRoute({ children }) {
       <div
         role="status"
         aria-live="polite"
-        className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 antialiased"
+        className="min-h-screen bg-[#FAF9F6] dark:bg-[#0B0E14] text-[#0F172A] dark:text-[#F1F5F9] flex flex-col items-center justify-center p-4 antialiased transition-colors"
       >
+        <div className="fixed top-0 left-0 right-0 h-[1.5px] bg-[#1D4ED8] dark:bg-[#3B82F6] opacity-85" aria-hidden="true" />
         <div className="flex flex-col items-center space-y-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md animate-pulse">
-            <ShieldCheck className="h-6 w-6 stroke-[2.2]" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1D4ED8] dark:bg-[#2563EB] text-white border border-[#1E40AF]/20 dark:border-white/[0.12] shadow-sm">
+            <ShieldCheck className="h-6 w-6" strokeWidth={1.8} />
           </div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
-            <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
+          <div className="flex items-center gap-2 text-xs font-medium text-[#475569] dark:text-[#94A3B8]">
+            <Loader2 className="h-4 w-4 animate-spin text-[#1D4ED8] dark:text-[#3B82F6]" aria-hidden="true" />
             <span>Đang kiểm tra quyền truy cập...</span>
           </div>
         </div>

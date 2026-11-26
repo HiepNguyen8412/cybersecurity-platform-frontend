@@ -1,12 +1,13 @@
-import { forwardRef, useEffect, useRef } from "react"
+import { forwardRef, useEffect, useId, useRef } from "react"
 import { Check, Minus } from "lucide-react"
 
 /**
- * Reusable Checkbox component.
+ * Reusable Checkbox component with Editorial Light & Deep Obsidian Dark theming.
  */
 const Checkbox = forwardRef(function Checkbox(
   {
     id,
+    name,
     label,
     description,
     checked = false,
@@ -21,12 +22,15 @@ const Checkbox = forwardRef(function Checkbox(
   },
   ref
 ) {
+  const generatedId = useId()
   const innerRef = useRef(null)
   const resolvedRef = ref || innerRef
-  const checkboxId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined)
+  const checkboxId =
+    id || (typeof label === "string" ? label.toLowerCase().replace(/\s+/g, "-") : generatedId)
+  const checkboxName = name || checkboxId
 
   useEffect(() => {
-    if (resolvedRef.current) {
+    if (resolvedRef && typeof resolvedRef !== "function" && resolvedRef.current) {
       resolvedRef.current.indeterminate = indeterminate
     }
   }, [indeterminate, resolvedRef])
@@ -43,6 +47,7 @@ const Checkbox = forwardRef(function Checkbox(
           <input
             ref={resolvedRef}
             id={checkboxId}
+            name={checkboxName}
             type="checkbox"
             checked={checked}
             onChange={onChange}
@@ -55,13 +60,13 @@ const Checkbox = forwardRef(function Checkbox(
           <div
             className={`
               h-4.5 w-4.5 rounded border transition-all duration-150 flex items-center justify-center
-              peer-focus-visible:ring-2 peer-focus-visible:ring-blue-600 peer-focus-visible:ring-offset-2
+              peer-focus-visible:ring-2 peer-focus-visible:ring-[#1D4ED8] dark:peer-focus-visible:ring-[#3B82F6] peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-[#FAF9F6] dark:peer-focus-visible:ring-offset-[#0B0E14]
               ${
                 checked || indeterminate
-                  ? "bg-blue-600 border-blue-600 text-white"
-                  : "bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] border-slate-300 dark:border-slate-700 cyberpunk:border-cyan-500/40 hover:border-slate-400 dark:hover:border-slate-500"
+                  ? "bg-[#1D4ED8] dark:bg-[#2563EB] border-[#1D4ED8] dark:border-[#3B82F6] text-white"
+                  : "bg-white dark:bg-[#121722] border-[#D0CCC3] dark:border-white/[0.16] hover:border-[#94A3B8] dark:hover:border-white/[0.28]"
               }
-              ${errorMessage ? "border-rose-500" : ""}
+              ${errorMessage ? "border-rose-500 dark:border-rose-500" : ""}
               ${className}
             `.trim()}
           >
@@ -73,13 +78,13 @@ const Checkbox = forwardRef(function Checkbox(
         {(label || description) && (
           <div className="flex flex-col text-sm">
             {label && (
-              <span className="font-medium text-slate-700 leading-tight">
+              <span className="font-medium text-[#0F172A] dark:text-[#F1F5F9] leading-tight">
                 {label}
                 {required && <span className="text-rose-500 ml-0.5">*</span>}
               </span>
             )}
             {description && (
-              <span className="text-xs text-slate-500 leading-normal mt-0.5">
+              <span className="text-xs text-[#475569] dark:text-[#94A3B8] leading-normal mt-0.5">
                 {description}
               </span>
             )}
@@ -88,7 +93,7 @@ const Checkbox = forwardRef(function Checkbox(
       </label>
 
       {errorMessage && (
-        <p className="text-xs text-rose-600 mt-1 pl-7">{errorMessage}</p>
+        <p className="text-xs text-rose-600 dark:text-rose-400 mt-1 pl-7">{errorMessage}</p>
       )}
     </div>
   )

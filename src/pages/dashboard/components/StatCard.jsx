@@ -11,30 +11,30 @@ const iconMap = {
 
 const variantTheme = {
   primary: {
-    iconBg: "bg-indigo-50 dark:bg-indigo-950/70 cyberpunk:bg-emerald-950/80 text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-300 border border-indigo-100 dark:border-indigo-800/60 cyberpunk:border-emerald-500/50",
-    textValue: "text-slate-900 dark:text-white cyberpunk:text-white",
+    iconBg:
+      "bg-blue-50 text-[#1D4ED8] border-blue-200/80 dark:bg-blue-500/12 dark:text-[#38BDF8] dark:border-blue-500/25",
     progressVariant: "primary",
   },
   indigo: {
-    iconBg: "bg-indigo-50 dark:bg-indigo-950/70 cyberpunk:bg-emerald-950/80 text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-300 border border-indigo-100 dark:border-indigo-800/60 cyberpunk:border-emerald-500/50",
-    textValue: "text-slate-900 dark:text-white cyberpunk:text-white",
+    iconBg:
+      "bg-[#F3F1EC] text-[#1D4ED8] border-[#E5E2DC] dark:bg-[#161C2A] dark:text-[#93C5FD] dark:border-white/[0.08]",
     progressVariant: "indigo",
   },
   success: {
-    iconBg: "bg-emerald-50 dark:bg-emerald-950/70 cyberpunk:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 cyberpunk:text-emerald-300 border border-emerald-100 dark:border-emerald-800/60 cyberpunk:border-emerald-500/50",
-    textValue: "text-slate-900 dark:text-white cyberpunk:text-cyan-50",
+    iconBg:
+      "bg-emerald-50 text-emerald-700 border-emerald-200/80 dark:bg-emerald-500/12 dark:text-emerald-400 dark:border-emerald-500/25",
     progressVariant: "success",
   },
   warning: {
-    iconBg: "bg-amber-50 dark:bg-amber-950/70 cyberpunk:bg-amber-950/80 text-amber-600 dark:text-amber-400 cyberpunk:text-amber-300 border border-amber-100 dark:border-amber-800/60 cyberpunk:border-amber-500/50",
-    textValue: "text-slate-900 dark:text-white cyberpunk:text-cyan-50",
+    iconBg:
+      "bg-amber-50 text-amber-700 border-amber-200/80 dark:bg-amber-500/12 dark:text-amber-400 dark:border-amber-500/25",
     progressVariant: "warning",
   },
 }
 
 /**
- * StatCard Component
- * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
+ * StatCard
+ * Thẻ chỉ số KPI gọn nhẹ, phân cấp rõ giữa nền Editorial Light và Deep Obsidian Dark.
  */
 export function StatCard({
   label,
@@ -49,70 +49,65 @@ export function StatCard({
 }) {
   const IconComponent = iconMap[icon] || TrendingUp
   const theme = variantTheme[variant] || variantTheme.primary
+  const numericValue = Number(value)
+  const isNumeric = typeof value === "number" || (!Number.isNaN(numericValue) && value !== "")
 
   return (
     <Card
       variant="default"
       padding="sm"
-      className={`border-slate-200/90 dark:border-slate-700 cyberpunk:border-cyan-500/40 shadow-2xs hover:border-blue-400 dark:hover:border-blue-400 cyberpunk:hover:border-cyan-400 transition-all ${className}`.trim()}
+      className={`bg-white dark:bg-[#121722] border border-[#E5E2DC] dark:border-white/[0.08] hover:border-[#1D4ED8]/40 dark:hover:border-[#3B82F6]/40 transition-colors ${className}`.trim()}
     >
       <div className="flex flex-col space-y-2.5">
-        {/* Top: Icon + Trend or Subtitle */}
+        {/* Hàng trên: Biểu tượng + Nhãn xu hướng */}
         <div className="flex items-center justify-between gap-2">
-          <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${theme.iconBg} shadow-2xs`}>
-            <IconComponent className="h-4.5 w-4.5 stroke-[2]" aria-hidden="true" />
+          <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${theme.iconBg}`}>
+            <IconComponent className="h-4 w-4 stroke-[1.75]" aria-hidden="true" />
           </div>
 
           {trend && (
-            <span className="font-mono-tech text-[10px] font-bold text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-300 bg-slate-100/90 dark:bg-slate-800 cyberpunk:bg-cyan-950/70 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700 cyberpunk:border-cyan-500/40">
+            <span className="font-mono-tech text-[10px] font-medium text-[#475569] dark:text-[#94A3B8] bg-[#F3F1EC] dark:bg-[#161C2A] px-2 py-0.5 rounded-md border border-[#E5E2DC] dark:border-white/[0.08] truncate max-w-[140px]">
               {trend}
             </span>
           )}
         </div>
 
-        {/* Middle: Big Value + Label */}
+        {/* Giá trị số + Tiêu đề chỉ số */}
         <div className="space-y-0.5">
           <div className="flex items-baseline gap-1">
-            <span className={`text-2xl font-extrabold font-mono-tech tracking-tight ${theme.textValue} tabular-nums`}>
-              {typeof value === "number" || (!isNaN(Number(value)) && value !== "") ? (
-                <CountUp end={Number(value)} />
-              ) : (
-                value
-              )}
+            <span className="text-2xl font-bold font-mono-tech tracking-tight text-[#0F172A] dark:text-[#F1F5F9] tabular-nums">
+              {isNumeric ? <CountUp key={`stat-${numericValue}`} end={numericValue} duration={900} /> : value}
             </span>
             {suffix && (
-              <span className="text-sm font-bold font-mono-tech text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300">
+              <span className="text-sm font-semibold font-mono-tech text-[#475569] dark:text-[#94A3B8]">
                 {suffix}
               </span>
             )}
           </div>
 
-          <h3 className="text-xs font-semibold text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-100 tracking-tight">
+          <h3 className="text-xs font-semibold text-[#0F172A] dark:text-[#F1F5F9] tracking-tight">
             {label}
           </h3>
         </div>
 
-        {/* Optional mini progress bar or contextual subtitle */}
+        {/* Thanh tiến độ tùy chọn + Chú thích */}
         {hasProgressBar ? (
-          <div className="pt-0.5 space-y-1">
+          <div className="pt-0.5 space-y-1.5">
             <ProgressBar
-              value={Number(value) || 0}
+              value={numericValue || 0}
               max={100}
               variant={theme.progressVariant}
               size="sm"
-              label={`${label} progress`}
+              label={`Tiến độ ${label}`}
+              className="[&_[role=progressbar]]:bg-[#ECE9E2] dark:[&_[role=progressbar]]:bg-white/[0.08] [&>div:first-child]:sr-only"
             />
             {subtitle && (
-              <p className="text-[11px] text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400/80 truncate">
-                {subtitle}
-              </p>
+              <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8] truncate">{subtitle}</p>
             )}
           </div>
         ) : (
           subtitle && (
-            <p className="text-[11px] text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400/80 truncate">
-              {subtitle}
-            </p>
+            <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8] truncate">{subtitle}</p>
           )
         )}
       </div>

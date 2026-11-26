@@ -26,13 +26,13 @@ import {
 
 /**
  * Learning-First Page Shell
- * 
+ *
  * Communicates clearly:
  * 1. WHERE AM I? (Page title, area badge, breadcrumb)
  * 2. WHAT AM I DOING? (Learning state, current track, progress status)
  * 3. WHAT SHOULD I DO NEXT? (Direct actionable next steps)
- * 
- * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
+ *
+ * Fully adaptive across Editorial Light and Deep Obsidian Dark.
  */
 export function PageShell({
   title,
@@ -48,7 +48,7 @@ export function PageShell({
 }) {
   return (
     <div className="max-w-[1240px] mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 animate-fade-in-up">
-      {/* 1. Header: WHERE AM I? */}
+      {/* 1. Đầu trang: Vị trí & Mạch học tập */}
       <PageHeader
         title={title}
         description={
@@ -63,33 +63,34 @@ export function PageShell({
         }
         actions={
           <div className="flex items-center gap-2.5">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/50 cyberpunk:bg-amber-950/60 border border-amber-200/80 dark:border-amber-800/60 cyberpunk:border-amber-500/50 text-amber-800 dark:text-amber-300 cyberpunk:text-amber-300 text-xs font-semibold select-none">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-500/12 border border-amber-200/80 dark:border-amber-500/25 text-amber-800 dark:text-amber-300 text-xs font-semibold select-none">
               <Flame className="h-4 w-4 text-amber-500 fill-amber-500" />
-              <span>Chuỗi <CountUp end={3} duration={1400} /> ngày liên tiếp</span>
+              <span>
+                Chuỗi <CountUp end={3} duration={1400} /> ngày liên tiếp
+              </span>
             </div>
           </div>
         }
       />
 
-      {/* 2. Main Content Grid */}
+      {/* 2. Lưới nội dung chính */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {/* Left Column (2/3): Current Learning Focus & Next Actions */}
+        {/* Cột trái (2/3): Trọng tâm học tập & Hành động tiếp theo */}
         <div className="lg:col-span-2 space-y-5">
-          {/* Active Learning Progress Card */}
           <Card variant="default">
             <CardHeader className="mb-3">
               <div className="flex items-center justify-between gap-2">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 cyberpunk:text-cyan-400 flex items-center gap-1.5">
+                <span className="text-[11px] font-mono-tech font-semibold uppercase tracking-wider text-[#1D4ED8] dark:text-[#38BDF8] flex items-center gap-1.5">
                   <Icon className="h-4 w-4" />
                   Học phần đang triển khai
                 </span>
-                <span className="text-xs text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300/80 flex items-center gap-1">
+                <span className="text-xs text-[#64748B] dark:text-[#94A3B8] flex items-center gap-1">
                   <Clock className="h-3.5 w-3.5" />
                   ~25 phút còn lại
                 </span>
               </div>
 
-              <CardTitle className="text-lg font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 mt-1">
+              <CardTitle className="font-serif-editorial text-xl font-semibold text-[#0F172A] dark:text-[#F1F5F9] mt-1">
                 {activeModule}
               </CardTitle>
               <CardDescription>
@@ -98,18 +99,20 @@ export function PageShell({
             </CardHeader>
 
             <CardContent className="space-y-4">
-              {/* Progress Bar */}
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 cyberpunk:bg-[#071329] border border-slate-200/70 dark:border-slate-700 cyberpunk:border-cyan-500/40 space-y-2">
+              {/* Thanh tiến độ */}
+              <div className="p-3.5 rounded-xl bg-[#FAF9F6] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.08] space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-200 cyberpunk:text-cyan-100">Tiến độ module</span>
-                  <span className="font-bold text-blue-600 dark:text-cyan-400 cyberpunk:text-cyan-300 inline-flex items-center gap-0.5">
+                  <span className="font-semibold text-[#0F172A] dark:text-[#F1F5F9]">
+                    Tiến độ học phần
+                  </span>
+                  <span className="font-mono-tech font-bold text-[#1D4ED8] dark:text-[#38BDF8] inline-flex items-center gap-1">
                     <CountUp end={progressPercent} suffix="%" duration={1800} /> Hoàn tất
                   </span>
                 </div>
                 <ProgressBar value={progressPercent} max={100} variant="primary" size="sm" />
-                <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 pt-0.5">
-                  <span>Bài 4/7: Input Validation & Sanitization</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 cyberpunk:text-emerald-300 font-medium flex items-center gap-1">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#64748B] dark:text-[#94A3B8] pt-0.5">
+                  <span>Bài 4/7: Kiểm tra &amp; Làm sạch Dữ liệu Đầu vào</span>
+                  <span className="text-emerald-700 dark:text-emerald-400 font-medium flex items-center gap-1">
                     <CheckCircle2 className="h-3 w-3" /> Đã vượt qua 3 bài kiểm tra
                   </span>
                 </div>
@@ -117,8 +120,11 @@ export function PageShell({
             </CardContent>
 
             <CardFooter className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3">
-              <div className="text-xs text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-200/90">
-                Tiếp theo: <span className="font-semibold text-slate-700 dark:text-white cyberpunk:text-cyan-100">Lab Thực chiến: Filter Evasion & Prevention</span>
+              <div className="text-xs text-[#475569] dark:text-[#94A3B8]">
+                Tiếp theo:{" "}
+                <span className="font-semibold text-[#0F172A] dark:text-[#F1F5F9]">
+                  Lab Thực chiến: Vượt Bộ lọc &amp; Biện pháp Phòng ngừa
+                </span>
               </div>
 
               <Link to={nextActionPath}>
@@ -133,20 +139,20 @@ export function PageShell({
             </CardFooter>
           </Card>
 
-          {/* Quick Learning Navigation Cards */}
+          {/* Thẻ điều hướng học tập nhanh */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Card variant="interactive" className="p-4">
               <Link to="/learning-paths" className="block focus:outline-none">
                 <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/60 cyberpunk:bg-cyan-950/70 text-blue-600 dark:text-cyan-400">
-                    <Compass className="h-5 w-5 stroke-[2]" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EFF6FF] dark:bg-[#3B82F6]/12 border border-[#BFDBFE]/70 dark:border-[#3B82F6]/25 text-[#1D4ED8] dark:text-[#38BDF8]">
+                    <Compass className="h-5 w-5" strokeWidth={1.8} />
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
+                    <h4 className="text-sm font-semibold text-[#0F172A] dark:text-[#F1F5F9] leading-tight">
                       Lộ trình Chuyên môn
                     </h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-200/90 mt-1 leading-normal">
-                      Khung chương trình chuẩn hóa cho SOC Analyst & Security Engineer.
+                    <p className="text-xs text-[#475569] dark:text-[#94A3B8] mt-1 leading-normal">
+                      Khung chương trình chuẩn hóa cho Chuyên viên SOC &amp; Kỹ sư Bảo mật.
                     </p>
                   </div>
                 </div>
@@ -156,15 +162,15 @@ export function PageShell({
             <Card variant="interactive" className="p-4">
               <Link to="/labs" className="block focus:outline-none">
                 <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/60 cyberpunk:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400">
-                    <FlaskConical className="h-5 w-5 stroke-[2]" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-500/12 border border-emerald-200/70 dark:border-emerald-500/25 text-emerald-700 dark:text-emerald-400">
+                    <FlaskConical className="h-5 w-5" strokeWidth={1.8} />
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
-                      Phòng Lab & CTF
+                    <h4 className="text-sm font-semibold text-[#0F172A] dark:text-[#F1F5F9] leading-tight">
+                      Phòng Lab &amp; CTF
                     </h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-200/90 mt-1 leading-normal">
-                      Môi trường sandbox cô lập với các lỗ hổng thực tế cần phòng thủ.
+                    <p className="text-xs text-[#475569] dark:text-[#94A3B8] mt-1 leading-normal">
+                      Môi trường cô lập với các lỗ hổng thực tế cần phân tích và phòng thủ.
                     </p>
                   </div>
                 </div>
@@ -173,20 +179,18 @@ export function PageShell({
           </div>
         </div>
 
-        {/* Right Column (1/3): Tactical SOC Intel & Quick Milestones */}
+        {/* Cột phải (1/3): Phân tích theo ngữ cảnh & Cột mốc */}
         <div className="space-y-5">
-          {/* Reusable Contextual Tactical Intel Component */}
           <ContextualAIMentor
             topic={currentTopic}
-            contextDescription="Tình báo thực địa & hướng dẫn phòng thủ cho các lỗ hổng theo chuẩn OWASP Top 10 và MITRE ATT&CK."
+            contextDescription="Phân tích chuyên sâu & hướng dẫn phòng thủ theo chuẩn OWASP Top 10 và MITRE ATT&CK."
           />
 
-          {/* Quick Milestones Card */}
           <Card variant="subtle">
             <CardHeader className="mb-2">
               <div className="flex items-center gap-2">
-                <Compass className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
-                <CardTitle className="text-sm font-semibold text-slate-800 dark:text-white cyberpunk:text-cyan-50">
+                <Compass className="h-4 w-4 text-[#1D4ED8] dark:text-[#38BDF8]" />
+                <CardTitle className="text-sm font-semibold text-[#0F172A] dark:text-[#F1F5F9]">
                   Cột mốc Kỹ năng
                 </CardTitle>
               </div>
@@ -195,15 +199,17 @@ export function PageShell({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800/90 cyberpunk:bg-[#060e1d] border border-slate-200/80 dark:border-slate-700 cyberpunk:border-cyan-500/40">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400">
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-[#121722] border border-[#E5E2DC] dark:border-white/[0.08]">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-50 dark:bg-amber-500/12 text-amber-600 dark:text-amber-400 border border-amber-200/70 dark:border-amber-500/25">
                   <Award className="h-5 w-5" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-semibold text-slate-900 dark:text-white cyberpunk:text-cyan-50 truncate">
-                    Chuyên viên Phòng thủ Web (Web Defense Novice)
+                  <p className="text-xs font-semibold text-[#0F172A] dark:text-[#F1F5F9] truncate">
+                    Phòng thủ Web Cơ bản
                   </p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80">1 / 2 bài lab hoàn tất</p>
+                  <p className="text-[11px] font-mono-tech text-[#64748B] dark:text-[#94A3B8]">
+                    1 / 2 bài lab hoàn tất
+                  </p>
                 </div>
                 <Badge variant="warning" size="sm">
                   <CountUp end={50} suffix="%" duration={1800} />

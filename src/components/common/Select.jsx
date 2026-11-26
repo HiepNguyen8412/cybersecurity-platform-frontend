@@ -1,18 +1,19 @@
-import { forwardRef } from "react"
+import { forwardRef, useId } from "react"
 import { ChevronDown, AlertCircle } from "lucide-react"
 
 /**
- * Reusable Select component.
+ * Reusable Select component with Editorial Light & Deep Obsidian Dark theming.
  */
 const Select = forwardRef(function Select(
   {
     id,
+    name,
     label,
     options = [],
     value,
     defaultValue,
     onChange,
-    placeholder = "Select an option",
+    placeholder = "Chọn một tùy chọn",
     helperText,
     errorMessage,
     disabled = false,
@@ -25,7 +26,10 @@ const Select = forwardRef(function Select(
   },
   ref
 ) {
-  const selectId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined)
+  const generatedId = useId()
+  const selectId =
+    id || (typeof label === "string" ? label.toLowerCase().replace(/\s+/g, "-") : generatedId)
+  const selectName = name || selectId
   const isError = Boolean(errorMessage)
 
   const sizeStyles = {
@@ -34,9 +38,11 @@ const Select = forwardRef(function Select(
     lg: "text-base pl-4 pr-10 py-2.5 h-11",
   }
 
-  let stateStyles = "border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+  let stateStyles =
+    "border-[#E5E2DC] dark:border-white/[0.12] focus:border-[#1D4ED8] dark:focus:border-[#3B82F6] focus:ring-2 focus:ring-[#1D4ED8]/15 dark:focus:ring-[#3B82F6]/20"
   if (isError) {
-    stateStyles = "border-rose-400 text-rose-950 focus:border-rose-600 focus:ring-2 focus:ring-rose-100"
+    stateStyles =
+      "border-rose-500 dark:border-rose-500/80 text-rose-900 dark:text-rose-200 focus:border-rose-600 focus:ring-2 focus:ring-rose-500/15"
   }
 
   return (
@@ -44,11 +50,15 @@ const Select = forwardRef(function Select(
       {label && (
         <label
           htmlFor={selectId}
-          className="text-xs font-semibold text-slate-700 tracking-wide flex items-center justify-between"
+          className="text-xs font-semibold text-[#0F172A] dark:text-[#F1F5F9] tracking-wide flex items-center justify-between"
         >
           <span>
             {label}
-            {required && <span className="text-rose-500 ml-1" aria-hidden="true">*</span>}
+            {required && (
+              <span className="text-rose-500 ml-1" aria-hidden="true">
+                *
+              </span>
+            )}
           </span>
         </label>
       )}
@@ -57,6 +67,7 @@ const Select = forwardRef(function Select(
         <select
           ref={ref}
           id={selectId}
+          name={selectName}
           value={value}
           defaultValue={defaultValue}
           onChange={onChange}
@@ -64,9 +75,9 @@ const Select = forwardRef(function Select(
           required={required}
           aria-invalid={isError}
           className={`
-            w-full appearance-none rounded-lg border bg-white dark:bg-slate-900 cyberpunk:bg-[#071329] text-slate-900 dark:text-slate-100 cyberpunk:text-cyan-200 border-slate-300 dark:border-slate-700 cyberpunk:border-cyan-500/40 transition-all duration-150
+            w-full appearance-none rounded-lg border bg-white dark:bg-[#121722] text-[#0F172A] dark:text-[#F1F5F9] transition-all duration-150
             outline-none cursor-pointer
-            disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed
+            disabled:bg-[#F3F1EC] dark:disabled:bg-[#161C2A] disabled:text-[#94A3B8] dark:disabled:text-[#64748B] disabled:cursor-not-allowed
             ${sizeStyles[size] || sizeStyles.md}
             ${stateStyles}
             ${className}
@@ -88,7 +99,7 @@ const Select = forwardRef(function Select(
             : children}
         </select>
 
-        <div className="pointer-events-none absolute right-3 flex items-center text-slate-400">
+        <div className="pointer-events-none absolute right-3 flex items-center text-[#64748B] dark:text-[#94A3B8]">
           {isError ? (
             <AlertCircle className="h-4 w-4 text-rose-500 shrink-0" aria-hidden="true" />
           ) : (
@@ -98,11 +109,11 @@ const Select = forwardRef(function Select(
       </div>
 
       {isError && (
-        <p className="text-xs text-rose-600 mt-1">{errorMessage}</p>
+        <p className="text-xs text-rose-600 dark:text-rose-400 mt-1">{errorMessage}</p>
       )}
 
       {!isError && helperText && (
-        <p className="text-xs text-slate-500 mt-1">{helperText}</p>
+        <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-1">{helperText}</p>
       )}
     </div>
   )

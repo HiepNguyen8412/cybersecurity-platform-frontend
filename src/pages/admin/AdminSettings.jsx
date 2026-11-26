@@ -4,180 +4,301 @@ import {
   Lock,
   Bell,
   Save,
+  RotateCcw,
 } from "lucide-react"
 import AdminHeader from "./components/AdminHeader"
 import { Card, Button } from "../../components/common"
 import useNotificationStore from "../../stores/useNotificationStore"
 
-export default function AdminSettings() {
-  const [sandboxTimeout, setSandboxTimeout] = useState("45")
-  const [maxContainers, setMaxContainers] = useState("64")
-  const [enforceMfa, setEnforceMfa] = useState(true)
-  const [ipWhitelist, setIpWhitelist] = useState("10.0.0.0/8, 192.168.1.0/24")
-  const [webhookUrl, setWebhookUrl] = useState("https://siem.soc-center.internal/alerts")
-  const [rateLimitRequests, setRateLimitRequests] = useState("120")
+const STORAGE_KEY = "cyber_admin_settings"
+
+const DEFAULT_SETTINGS = {
+  sandboxTimeout: "45",
+  maxContainers: "64",
+  enforceMfa: true,
+  ipWhitelist: "10.0.0.0/8, 192.168.1.0/24",
+  rateLimitRequests: "120",
+  webhookUrl: "https://siem.soc-center.internal/alerts",
+  capstonePassThreshold: "80",
+}
+
+function loadSavedSettings() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return DEFAULT_SETTINGS
+    return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) }
+  } catch {
+    return DEFAULT_SETTINGS
+  }
+}
+
+export function AdminSettings() {
+  const [settings, setSettings] = useState(loadSavedSettings)
 
   const handleSave = (e) => {
     e.preventDefault()
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
+    } catch {
+      // Bỏ qua lỗi lưu trữ cục bộ
+    }
     useNotificationStore.getState().success(
-      "Đã Lưu Cấu Hình Hệ Thống",
-      "Các tham số hạ tầng Sandbox và chính sách an ninh mạng đã được áp dụng toàn range."
+      "Đã lưu cấu hình hệ thống",
+      "Các tham số hạ tầng Sandbox, chính sách bảo mật và ngưỡng thẩm định đã được áp dụng."
+    )
+  }
+
+  const handleResetDefaults = () => {
+    setSettings(DEFAULT_SETTINGS)
+    try {
+      localStorage.removeItem(STORAGE_KEY)
+    } catch {
+      // Bỏ qua lỗi lưu trữ cục bộ
+    }
+    useNotificationStore.getState().info(
+      "Đã khôi phục mặc định",
+      "Các tham số cấu hình đã quay về tiêu chuẩn xuất xưởng của CyberPath."
     )
   }
 
   return (
     <div className="space-y-6 pb-12 animate-fade-in-up">
-      {/* Header */}
       <AdminHeader
-        title="Cấu Hình Hạ Tầng Diễn Tập & An Ninh Hệ Thống"
-        subtitle="Thiết lập tham số tài nguyên cụm container Kubernetes, chính sách bảo vệ chống brute-force và Webhook SIEM"
+        title="Cấu hình Hạ tầng & Chính sách An ninh"
+        subtitle="Thiết lập tham số vòng đời Sandbox Kubernetes, yêu cầu xác thực hai lớp, giới hạn lưu lượng và tích hợp SIEM."
+        statusLabel="LƯU CẤU HÌNH CỤC BỘ"
+        statusTone="sample"
       />
 
       <form onSubmit={handleSave} className="space-y-6 max-w-4xl">
-        {/* Section 1: Sandbox Cluster */}
-        <Card className="p-6 border-slate-200/80 dark:border-slate-800 cyberpunk:border-cyan-500/40 space-y-4">
-          <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100 dark:border-slate-800">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-cyan-400">
-              <Server className="h-4 w-4" />
+        {/* Phần 1: Cụm Container Sandbox */}
+        <Card variant="flat" className="p-6 bg-[#FFFFFF] dark:bg-[#121722] border-[#E5E2DC] dark:border-white/[0.08] space-y-4">
+          <div className="flex items-center gap-3 pb-3 border-b border-[#E5E2DC] dark:border-white/[0.08]">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] text-[#1D4ED8] dark:text-[#38BDF8] border border-[#E5E2DC] dark:border-white/[0.08]">
+              <Server className="h-4 w-4" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                Cấu Hình Cụm Container Sandbox Đám Mây
-              </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Quy định thời gian sống và số lượng container cô lập chạy song song
+              <h2 className="text-sm font-semibold text-[#0F172A] dark:text-[#F1F5F9]">
+                Cụm Container Sandbox & Học thuật
+              </h2>
+              <p className="text-xs text-[#475569] dark:text-[#94A3B8]">
+                Quy định thời lượng sống tối đa, số lượng phiên song song và ngưỡng đạt đồ án Capstone
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
             <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">
-                Thời gian tự động hủy Container (Phút)
+              <label
+                htmlFor="admin-setting-sandbox-timeout"
+                className="block text-[#0F172A] dark:text-[#F1F5F9] font-medium mb-1.5"
+              >
+                Thời hạn tự động thu hồi (Phút)
               </label>
               <select
-                value={sandboxTimeout}
-                onChange={(e) => setSandboxTimeout(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                id="admin-setting-sandbox-timeout"
+                name="sandboxTimeout"
+                value={settings.sandboxTimeout}
+                onChange={(e) =>
+                  setSettings({ ...settings, sandboxTimeout: e.target.value })
+                }
+                className="w-full px-3 py-2 rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.08] text-[#0F172A] dark:text-[#F1F5F9] focus:outline-none focus:border-[#1D4ED8] dark:focus:border-[#3B82F6]"
               >
-                <option value="15">15 phút (Bài lab ngắn)</option>
+                <option value="15">15 phút (Bài thực hành ngắn)</option>
                 <option value="30">30 phút (Tiêu chuẩn)</option>
                 <option value="45">45 phút (Mặc định)</option>
-                <option value="60">60 phút (Kỳ thi sát hạch)</option>
-                <option value="120">120 phút (Diễn tập Red/Blue Team)</option>
+                <option value="60">60 phút (Kiểm tra chuyên sâu)</option>
+                <option value="120">120 phút (Diễn tập đội ngũ)</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">
-                Số container tối đa toàn range
+              <label
+                htmlFor="admin-setting-max-containers"
+                className="block text-[#0F172A] dark:text-[#F1F5F9] font-medium mb-1.5"
+              >
+                Số container tối đa toàn hệ thống
               </label>
               <input
+                id="admin-setting-max-containers"
+                name="maxContainers"
                 type="number"
-                value={maxContainers}
-                onChange={(e) => setMaxContainers(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono"
+                min={8}
+                max={512}
+                value={settings.maxContainers}
+                onChange={(e) =>
+                  setSettings({ ...settings, maxContainers: e.target.value })
+                }
+                className="w-full px-3 py-2 rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.08] text-[#0F172A] dark:text-[#F1F5F9] font-mono-tech focus:outline-none focus:border-[#1D4ED8] dark:focus:border-[#3B82F6]"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="admin-setting-capstone-threshold"
+                className="block text-[#0F172A] dark:text-[#F1F5F9] font-medium mb-1.5"
+              >
+                Ngưỡng đạt chuẩn NIST Rubric
+              </label>
+              <input
+                id="admin-setting-capstone-threshold"
+                name="capstonePassThreshold"
+                type="number"
+                min={60}
+                max={100}
+                value={settings.capstonePassThreshold}
+                onChange={(e) =>
+                  setSettings({ ...settings, capstonePassThreshold: e.target.value })
+                }
+                className="w-full px-3 py-2 rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.08] text-[#0F172A] dark:text-[#F1F5F9] font-mono-tech focus:outline-none focus:border-[#1D4ED8] dark:focus:border-[#3B82F6]"
               />
             </div>
           </div>
         </Card>
 
-        {/* Section 2: Security & Authentication */}
-        <Card className="p-6 border-slate-200/80 dark:border-slate-800 cyberpunk:border-cyan-500/40 space-y-4">
-          <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100 dark:border-slate-800">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
-              <Lock className="h-4 w-4" />
+        {/* Phần 2: Chính sách an ninh & Xác thực */}
+        <Card variant="flat" className="p-6 bg-[#FFFFFF] dark:bg-[#121722] border-[#E5E2DC] dark:border-white/[0.08] space-y-4">
+          <div className="flex items-center gap-3 pb-3 border-b border-[#E5E2DC] dark:border-white/[0.08]">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] text-[#1D4ED8] dark:text-[#3B82F6] border border-[#E5E2DC] dark:border-white/[0.08]">
+              <Lock className="h-4 w-4" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                Chính Sách An Ninh & Xác Thực Bắt Buộc
-              </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Bảo vệ máy chủ trước các cuộc tấn công brute-force và rò rỉ thông tin đăng nhập
+              <h2 className="text-sm font-semibold text-[#0F172A] dark:text-[#F1F5F9]">
+                Chính sách An ninh & Kiểm soát Truy cập
+              </h2>
+              <p className="text-xs text-[#475569] dark:text-[#94A3B8]">
+                Bảo vệ cổng quản trị trước tấn công dò mật khẩu và truy cập ngoài vùng tin cậy
               </p>
             </div>
           </div>
 
           <div className="space-y-4 text-xs">
-            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700">
+            <div className="flex items-center justify-between gap-4 p-3.5 rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] border border-[#EFEDE7] dark:border-white/[0.06]">
               <div>
-                <div className="font-semibold text-slate-900 dark:text-white">
-                  Bắt buộc xác thực 2FA/MFA cho toàn bộ chuyên viên
-                </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Áp dụng cho các tài khoản vai trò Security Analyst, SOC Lead và Super Admin
-                </div>
+                <label
+                  htmlFor="admin-setting-enforce-mfa"
+                  className="font-semibold text-[#0F172A] dark:text-[#F1F5F9] cursor-pointer"
+                >
+                  Bắt buộc xác thực hai lớp (2FA/MFA) cho toàn bộ chuyên viên
+                </label>
+                <p className="text-[11px] text-[#475569] dark:text-[#94A3B8] mt-0.5">
+                  Áp dụng cho vai trò Chuyên viên phân tích, Trưởng ca SOC và Quản trị viên cấp cao
+                </p>
               </div>
               <input
+                id="admin-setting-enforce-mfa"
+                name="enforceMfa"
                 type="checkbox"
-                checked={enforceMfa}
-                onChange={(e) => setEnforceMfa(e.target.checked)}
-                className="h-4 w-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
+                checked={settings.enforceMfa}
+                onChange={(e) =>
+                  setSettings({ ...settings, enforceMfa: e.target.checked })
+                }
+                className="h-4 w-4 rounded border-[#D0CCC3] dark:border-white/[0.16] text-[#1D4ED8] focus:ring-[#1D4ED8] cursor-pointer shrink-0"
               />
             </div>
 
-            <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">
-                Dải mạng IP Whitelist cho quyền Super Admin
-              </label>
-              <input
-                type="text"
-                value={ipWhitelist}
-                onChange={(e) => setIpWhitelist(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono"
-              />
-            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label
+                  htmlFor="admin-setting-ip-whitelist"
+                  className="block text-[#0F172A] dark:text-[#F1F5F9] font-medium mb-1.5"
+                >
+                  Dải mạng tin cậy cho quyền Quản trị viên
+                </label>
+                <input
+                  id="admin-setting-ip-whitelist"
+                  name="ipWhitelist"
+                  type="text"
+                  value={settings.ipWhitelist}
+                  onChange={(e) =>
+                    setSettings({ ...settings, ipWhitelist: e.target.value })
+                  }
+                  className="w-full px-3 py-2 rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.08] text-[#0F172A] dark:text-[#F1F5F9] font-mono-tech focus:outline-none focus:border-[#1D4ED8] dark:focus:border-[#3B82F6]"
+                />
+              </div>
 
-            <div>
-              <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-1">
-                Giới hạn request tối đa (Rate Limit trên mỗi IP/phút)
-              </label>
-              <input
-                type="number"
-                value={rateLimitRequests}
-                onChange={(e) => setRateLimitRequests(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono"
-              />
+              <div>
+                <label
+                  htmlFor="admin-setting-rate-limit"
+                  className="block text-[#0F172A] dark:text-[#F1F5F9] font-medium mb-1.5"
+                >
+                  Giới hạn yêu cầu tối đa (lượt/IP/phút)
+                </label>
+                <input
+                  id="admin-setting-rate-limit"
+                  name="rateLimitRequests"
+                  type="number"
+                  min={10}
+                  max={2000}
+                  value={settings.rateLimitRequests}
+                  onChange={(e) =>
+                    setSettings({ ...settings, rateLimitRequests: e.target.value })
+                  }
+                  className="w-full px-3 py-2 rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.08] text-[#0F172A] dark:text-[#F1F5F9] font-mono-tech focus:outline-none focus:border-[#1D4ED8] dark:focus:border-[#3B82F6]"
+                />
+              </div>
             </div>
           </div>
         </Card>
 
-        {/* Section 3: Webhook SIEM Integration */}
-        <Card className="p-6 border-slate-200/80 dark:border-slate-800 cyberpunk:border-cyan-500/40 space-y-4">
-          <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100 dark:border-slate-800">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
-              <Bell className="h-4 w-4" />
+        {/* Phần 3: Tích hợp Webhook SIEM */}
+        <Card variant="flat" className="p-6 bg-[#FFFFFF] dark:bg-[#121722] border-[#E5E2DC] dark:border-white/[0.08] space-y-4">
+          <div className="flex items-center gap-3 pb-3 border-b border-[#E5E2DC] dark:border-white/[0.08]">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] text-emerald-700 dark:text-emerald-400 border border-[#E5E2DC] dark:border-white/[0.08]">
+              <Bell className="h-4 w-4" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                Tích Hợp Webhook Điều Tra SIEM & Cảnh Báo
-              </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Gửi trực tiếp các sự kiện CRITICAL tới SIEM (Wazuh/Splunk) hoặc Telegram Bot
+              <h2 className="text-sm font-semibold text-[#0F172A] dark:text-[#F1F5F9]">
+                Tích hợp Webhook Điều tra SIEM & Cảnh báo
+              </h2>
+              <p className="text-xs text-[#475569] dark:text-[#94A3B8]">
+                Chuyển tiếp tức thì các sự kiện mức độ nghiêm trọng tới hệ thống SIEM tập trung
               </p>
             </div>
           </div>
 
-          <div className="text-xs space-y-2">
-            <label className="block text-slate-700 dark:text-slate-300 font-semibold">
-              Endpoint Webhook Tiếp Nhận Cảnh Báo
+          <div className="text-xs space-y-1.5">
+            <label
+              htmlFor="admin-setting-webhook-url"
+              className="block text-[#0F172A] dark:text-[#F1F5F9] font-medium"
+            >
+              Địa chỉ Webhook tiếp nhận cảnh báo
             </label>
             <input
+              id="admin-setting-webhook-url"
+              name="webhookUrl"
               type="url"
-              value={webhookUrl}
-              onChange={(e) => setWebhookUrl(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono"
+              value={settings.webhookUrl}
+              onChange={(e) =>
+                setSettings({ ...settings, webhookUrl: e.target.value })
+              }
+              className="w-full px-3 py-2 rounded-xl bg-[#F3F1EC] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.08] text-[#0F172A] dark:text-[#F1F5F9] font-mono-tech focus:outline-none focus:border-[#1D4ED8] dark:focus:border-[#3B82F6]"
             />
           </div>
         </Card>
 
-        {/* Save button */}
-        <div className="flex justify-end">
-          <Button variant="primary" size="md" type="submit" leftIcon={<Save className="h-4 w-4" />}>
-            Lưu Toàn Bộ Cấu Hình Hệ Thống
+        <div className="flex items-center justify-end gap-2.5">
+          <Button
+            variant="outline"
+            size="md"
+            type="button"
+            onClick={handleResetDefaults}
+            leftIcon={<RotateCcw className="h-4 w-4" />}
+          >
+            Khôi phục mặc định
+          </Button>
+          <Button
+            variant="primary"
+            size="md"
+            type="submit"
+            leftIcon={<Save className="h-4 w-4" />}
+          >
+            Lưu toàn bộ cấu hình
           </Button>
         </div>
       </form>
     </div>
   )
 }
+
+export default AdminSettings

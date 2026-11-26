@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import {
   Radar,
   RadarChart,
@@ -7,100 +8,145 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts"
-import { Shield, UserCheck } from "lucide-react"
+import { Shield, Award } from "lucide-react"
 import { CountUp } from "../../../components/common"
+import useThemeStore from "../../../stores/useThemeStore"
+import { mockMitreRadarData } from "../../../data/dashboardMockData"
 
-const DEFAULT_MITRE_DATA = [
-  { domain: "Reconnaissance", score: 85, fullMark: 100 },
-  { domain: "Initial Access", score: 72, fullMark: 100 },
-  { domain: "Execution", score: 90, fullMark: 100 },
-  { domain: "Persistence", score: 65, fullMark: 100 },
-  { domain: "Defense Evasion", score: 78, fullMark: 100 },
-  { domain: "Exfiltration", score: 60, fullMark: 100 },
-]
+function renderMitreTooltip({ active, payload, isDark }) {
+  if (!active || !payload || !payload.length) return null
+  const item = payload[0].payload
+  return (
+    <div
+      className={`p-3 rounded-xl border text-xs font-mono-tech shadow-lg ${
+        isDark
+          ? "bg-[#121722] border-white/[0.14] text-[#F1F5F9]"
+          : "bg-white border-[#E5E2DC] text-[#0F172A]"
+      }`}
+    >
+      <p className={`font-semibold ${isDark ? "text-[#38BDF8]" : "text-[#1D4ED8]"}`}>
+        {item.fullLabel || item.domain}
+      </p>
+      <p className={`mt-1 ${isDark ? "text-[#94A3B8]" : "text-[#475569]"}`}>
+        Mức thành thạo:{" "}
+        <span className={`font-bold ${isDark ? "text-[#F1F5F9]" : "text-[#0F172A]"}`}>
+          {item.score}%
+        </span>
+      </p>
+    </div>
+  )
+}
 
-export function MitreRadarChart({ data = DEFAULT_MITRE_DATA }) {
-  const customTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      const item = payload[0].payload
-      return (
-        <div className="bg-slate-900 dark:bg-black cyberpunk:bg-[#02050f] border border-cyan-500/50 p-2.5 rounded-xl shadow-xl text-xs font-mono text-white">
-          <p className="font-bold text-cyan-400">{item.domain}</p>
-          <p className="text-white mt-1">
-            Độ thành thạo: <span className="text-emerald-400 font-bold">{item.score}%</span>
-          </p>
-        </div>
-      )
-    }
-    return null
-  }
+/**
+ * MitreRadarChart
+ * Biểu đồ radar đánh giá năng lực phòng thủ theo khung phân loại MITRE ATT&CK.
+ * Hiệu chỉnh tương phản cho cả Editorial Light và Deep Obsidian Dark.
+ */
+export function MitreRadarChart({ data = mockMitreRadarData, className = "" }) {
+  const theme = useThemeStore((state) => state.theme)
+  const isDark = theme === "dark"
+
+  const chartData = data && data.length > 0 ? data : mockMitreRadarData
+
+  const summary = useMemo(() => {
+    const highest = chartData.reduce((best, cur) => (cur.score > best.score ? cur : best), chartData[0])
+    const lowest = chartData.reduce((min, cur) => (cur.score < min.score ? cur : min), chartData[0])
+    const average =
+      chartData.reduce((sum, cur) => sum + (Number(cur.score) || 0), 0) / chartData.length
+
+    const tierLabel =
+      average >= 80 ? "Chuyên sâu" : average >= 60 ? "Trung cao cấp" : "Nền tảng"
+
+    return { highest, lowest, average: Number(average.toFixed(1)), tierLabel }
+  }, [chartData])
+
+  const gridColor = isDark ? "rgba(255, 255, 255, 0.12)" : "#E5E2DC"
+  const angleTickFill = isDark ? "#94A3B8" : "#475569"
+  const radiusTickFill = "#64748B"
+  const radarStroke = isDark ? "#38BDF8" : "#1D4ED8"
+  const radarFill = isDark ? "#3B82F6" : "#1D4ED8"
 
   return (
-    <div className="p-5 rounded-2xl cyber-card flex flex-col justify-between">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center space-x-2">
-          <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-500 dark:text-cyan-400 border border-cyan-500/30">
-            <Shield className="w-4 h-4" />
+    <div
+      className={`p-5 rounded-xl bg-white dark:bg-[#121722] border border-[#E5E2DC] dark:border-white/[0.08] shadow-xs flex flex-col justify-between ${className}`.trim()}
+    >
+      {/* Tiêu đề khối biểu đồ */}
+      <div className="flex items-start justify-between gap-3 mb-2">
+        <div className="flex items-start gap-2.5">
+          <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-500/12 text-[#1D4ED8] dark:text-[#38BDF8] border border-blue-200/80 dark:border-blue-500/25 shrink-0">
+            <Shield className="w-4 h-4" aria-hidden="true" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 tracking-wide">
-              Ma Trận MITRE ATT&CK
+            <h3 className="font-serif-editorial text-lg font-medium text-[#0F172A] dark:text-[#F1F5F9] leading-tight">
+              Phân bổ năng lực MITRE ATT&amp;CK
             </h3>
-            <p className="text-[11px] text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300/80 font-mono">
-              Phân tích năng lực phòng thủ & phát hiện xâm nhập
+            <p className="text-[11px] text-[#64748B] dark:text-[#94A3B8] font-mono-tech mt-0.5">
+              Đánh giá năng lực phát hiện và phòng thủ theo chiến thuật
             </p>
           </div>
         </div>
 
-        <span className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 font-mono">
-          <UserCheck className="w-3 h-3" />
-          <span>Cấp độ: Nâng cao</span>
+        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#F3F1EC] dark:bg-[#161C2A] text-[#0F172A] dark:text-[#F1F5F9] border border-[#E5E2DC] dark:border-white/[0.08] font-mono-tech shrink-0">
+          <Award className="w-3 h-3 text-[#1D4ED8] dark:text-[#38BDF8]" aria-hidden="true" />
+          <span>{summary.tierLabel}</span>
         </span>
       </div>
 
-      <div className="w-full h-64 mt-2">
-        <ResponsiveContainer width="100%" height="100%">
-          <RadarChart cx="50%" cy="50%" outerRadius="75%" data={data}>
-            <PolarGrid stroke="#475569" strokeDasharray="3 3" />
+      {/* Vùng đồ thị Recharts */}
+      <div className="w-full h-64 mt-1" aria-label="Biểu đồ radar năng lực theo khung MITRE ATT&CK">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={220}>
+          <RadarChart cx="50%" cy="50%" outerRadius="72%" data={chartData}>
+            <PolarGrid stroke={gridColor} strokeDasharray="3 3" />
             <PolarAngleAxis
               dataKey="domain"
-              tick={{ fill: "#94a3b8", fontSize: 10, fontFamily: "monospace" }}
+              tick={{
+                fill: angleTickFill,
+                fontSize: 11,
+                fontFamily: "var(--font-sans)",
+                fontWeight: 500,
+              }}
             />
             <PolarRadiusAxis
               angle={30}
               domain={[0, 100]}
-              tick={{ fill: "#64748b", fontSize: 9 }}
-              stroke="#475569"
+              tick={{
+                fill: radiusTickFill,
+                fontSize: 9,
+                fontFamily: "var(--font-mono)",
+              }}
+              stroke={gridColor}
             />
-            <Tooltip content={customTooltip} />
+            <Tooltip content={(props) => renderMitreTooltip({ ...props, isDark })} />
             <Radar
-              name="MITRE Score"
+              name="Chỉ số MITRE ATT&CK"
               dataKey="score"
-              stroke="#06b6d4"
-              fill="#06b6d4"
-              fillOpacity={0.4}
+              stroke={radarStroke}
+              strokeWidth={2}
+              fill={radarFill}
+              fillOpacity={isDark ? 0.24 : 0.16}
             />
           </RadarChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 mt-2 pt-3 border-t border-slate-200 dark:border-slate-800 cyberpunk:border-cyan-500/30 text-center font-mono text-[11px]">
+      {/* Chân trang tổng kết chỉ số */}
+      <div className="grid grid-cols-3 gap-2 mt-2 pt-3 border-t border-[#EFEDE7] dark:border-white/[0.06] text-center font-mono-tech text-[11px]">
         <div>
-          <span className="text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 block">Cao nhất</span>
-          <span className="text-emerald-600 dark:text-emerald-400 cyberpunk:text-emerald-300 font-bold inline-flex items-center gap-0.5 justify-center">
-            Execution (<CountUp end={90} suffix="%" duration={1600} />)
+          <span className="text-[#64748B] dark:text-[#94A3B8] block">Điểm mạnh</span>
+          <span className="text-emerald-700 dark:text-emerald-400 font-semibold inline-flex items-center gap-0.5 justify-center">
+            {summary.highest.domain} (<CountUp key={`hi-${summary.highest.score}`} end={summary.highest.score} suffix="%" duration={900} />)
           </span>
         </div>
         <div>
-          <span className="text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 block">Trung bình</span>
-          <span className="text-blue-600 dark:text-cyan-400 cyberpunk:text-cyan-300 font-bold inline-flex items-center justify-center">
-            <CountUp end={75} decimals={1} suffix="%" duration={1800} />
+          <span className="text-[#64748B] dark:text-[#94A3B8] block">Trung bình</span>
+          <span className="text-[#1D4ED8] dark:text-[#38BDF8] font-semibold inline-flex items-center justify-center">
+            <CountUp key={`avg-${summary.average}`} end={summary.average} decimals={1} suffix="%" duration={900} />
           </span>
         </div>
         <div>
-          <span className="text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/80 block">Cần bổ trợ</span>
-          <span className="text-amber-600 dark:text-amber-400 cyberpunk:text-amber-300 font-bold inline-flex items-center gap-0.5 justify-center">
-            Exfil (<CountUp end={60} suffix="%" duration={1500} />)
+          <span className="text-[#64748B] dark:text-[#94A3B8] block">Cần củng cố</span>
+          <span className="text-amber-700 dark:text-amber-400 font-semibold inline-flex items-center gap-0.5 justify-center">
+            {summary.lowest.domain} (<CountUp key={`lo-${summary.lowest.score}`} end={summary.lowest.score} suffix="%" duration={900} />)
           </span>
         </div>
       </div>

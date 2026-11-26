@@ -1,4 +1,4 @@
-import { useState, useRef, useId } from "react"
+import { useState, useRef, useId, useEffect } from "react"
 
 /**
  * Lightweight, accessible Tooltip component.
@@ -14,7 +14,18 @@ export function Tooltip({
   const timeoutRef = useRef(null)
   const tooltipId = useId()
 
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
   const showTooltip = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
     timeoutRef.current = setTimeout(() => {
       setIsVisible(true)
     }, delay)
@@ -51,7 +62,7 @@ export function Tooltip({
           id={tooltipId}
           role="tooltip"
           className={`
-            absolute z-50 px-2.5 py-1 text-xs font-medium text-white bg-slate-900 rounded-md shadow-md
+            absolute z-50 px-2.5 py-1 text-xs font-medium text-[#F1F5F9] bg-[#0F172A] dark:bg-[#1B2335] border border-[#0F172A]/10 dark:border-white/[0.12] rounded-md shadow-md
             whitespace-nowrap pointer-events-none transition-opacity duration-150 animate-in fade-in zoom-in-95
             ${positionStyles[position] || positionStyles.top}
             ${className}

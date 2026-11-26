@@ -3,23 +3,29 @@ import { ChevronRight, Home } from "lucide-react"
 
 /**
  * Reusable Breadcrumb component.
- * Fully adaptive across Light, Dark (Stealth), and Cyber Range themes.
+ * Aligned with Editorial Light & Deep Obsidian Dark.
  */
 export function Breadcrumb({
   items = [],
   showHome = false,
-  separator = <ChevronRight className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500 cyberpunk:text-cyan-500 shrink-0" />,
+  separator = (
+    <ChevronRight
+      className="h-3.5 w-3.5 text-[#94A3B8] dark:text-[#64748B] shrink-0"
+      aria-hidden="true"
+    />
+  ),
   className = "",
 }) {
   return (
-    <nav aria-label="Breadcrumb" className={`flex items-center text-xs ${className}`.trim()}>
+    <nav aria-label="Điều hướng phân cấp" className={`flex items-center text-xs ${className}`.trim()}>
       <ol className="flex items-center space-x-1.5 list-none m-0 p-0 flex-wrap">
         {showHome && (
           <li className="inline-flex items-center">
             <Link
               to="/"
-              className="text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400 hover:text-slate-600 dark:hover:text-slate-200 cyberpunk:hover:text-cyan-200 transition-colors inline-flex items-center"
+              className="text-[#64748B] dark:text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-[#F1F5F9] transition-colors inline-flex items-center"
               title="Trang chủ"
+              aria-label="Trang chủ"
             >
               <Home className="h-3.5 w-3.5" />
             </Link>
@@ -35,7 +41,7 @@ export function Breadcrumb({
               {item.href && !isLast ? (
                 <Link
                   to={item.href}
-                  className="font-medium text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300 hover:text-slate-800 dark:hover:text-white cyberpunk:hover:text-cyan-100 transition-colors inline-flex items-center gap-1.5"
+                  className="font-medium text-[#64748B] dark:text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-[#F1F5F9] transition-colors inline-flex items-center gap-1.5"
                 >
                   {item.icon && <span className="shrink-0">{item.icon}</span>}
                   <span>{item.label}</span>
@@ -45,8 +51,8 @@ export function Breadcrumb({
                   aria-current={isLast ? "page" : undefined}
                   className={`font-semibold inline-flex items-center gap-1.5 ${
                     isLast
-                      ? "text-slate-900 dark:text-white cyberpunk:text-cyan-50"
-                      : "text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80"
+                      ? "text-[#0F172A] dark:text-[#F1F5F9]"
+                      : "text-[#64748B] dark:text-[#94A3B8]"
                   }`}
                 >
                   {item.icon && <span className="shrink-0">{item.icon}</span>}

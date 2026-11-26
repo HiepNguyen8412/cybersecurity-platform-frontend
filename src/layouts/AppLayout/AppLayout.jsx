@@ -22,17 +22,17 @@ export function AppLayout({ children, maxWidth = "max-w-[1240px]", className = "
   const { isSidebarCollapsed } = useLayout()
 
   return (
-    <div className="min-h-screen text-slate-900 dark:text-[#e2e8f0] cyberpunk:text-[#f0fdfa] flex flex-col antialiased relative overflow-x-hidden selection:bg-indigo-500/20 selection:text-indigo-400">
-      {/* Global Cybersecurity Ambient Backdrop (Grid, Aurora Glow & Telemetry) */}
+    <div className="min-h-screen bg-[#FAF9F6] dark:bg-[#0B0E14] text-[#0F172A] dark:text-[#F1F5F9] flex flex-col antialiased relative overflow-x-hidden selection:bg-[#1D4ED8]/15 selection:text-[#1D4ED8] dark:selection:bg-[#3B82F6]/25 dark:selection:text-[#38BDF8] transition-colors duration-200">
+      {/* Nền học thuật tối giản (Editorial Light / Deep Obsidian Dark) */}
       <CyberBackground />
-      
-      {/* 1. Sidebar (Fixed left: expanded 240px / collapsed 72px) - NEVER unmounts */}
+
+      {/* 1. Thanh bên cố định (mở rộng 240px / thu gọn 72px) */}
       <Sidebar />
 
-      {/* 2. Topbar (Fixed top, left-offset responds to sidebar width) - NEVER unmounts */}
+      {/* 2. Thanh điều hướng trên cùng cố định */}
       <Navbar />
 
-      {/* 3. Main Scrollable Content with Localized Suspense Boundary */}
+      {/* 3. Vùng nội dung chính với ranh giới Suspense cục bộ */}
       <main
         className={`
           flex-1 pt-16 min-w-0 transition-all duration-200 ease-in-out relative z-10
@@ -54,7 +54,7 @@ export function AppLayout({ children, maxWidth = "max-w-[1240px]", className = "
         </div>
       </main>
 
-      {/* 4. Global Interactive Cyber Range Sandbox Terminal Modal */}
+      {/* 4. Cửa sổ Terminal Sandbox tương tác toàn cục */}
       <Suspense fallback={null}>
         <LabTerminalModal />
       </Suspense>

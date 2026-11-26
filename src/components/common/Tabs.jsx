@@ -1,5 +1,5 @@
 /**
- * Reusable accessible Tabs component.
+ * Reusable accessible Tabs component with Editorial Light & Deep Obsidian Dark support.
  */
 export function Tabs({
   tabs = [],
@@ -9,32 +9,33 @@ export function Tabs({
   className = "",
 }) {
   const variantContainerStyles = {
-    underline: "border-b border-slate-200 gap-6",
+    underline: "border-b border-[#E5E2DC] dark:border-white/[0.08] gap-6",
     pills: "gap-2",
-    segmented: "bg-slate-100 p-1 rounded-xl gap-1 border border-slate-200/60 inline-flex",
+    segmented:
+      "bg-[#F3F1EC] dark:bg-[#161C2A] p-1 rounded-xl gap-1 border border-[#E5E2DC] dark:border-white/[0.08] inline-flex",
   }
 
-  const getItemStyles = (isActive, isDisabled, variant) => {
+  const getItemStyles = (isActive, isDisabled, currentVariant) => {
     if (isDisabled) {
-      return "opacity-40 cursor-not-allowed text-slate-400"
+      return "opacity-40 cursor-not-allowed text-[#94A3B8] dark:text-[#64748B]"
     }
 
-    if (variant === "segmented") {
+    if (currentVariant === "segmented") {
       return isActive
-        ? "bg-white dark:bg-slate-800 cyberpunk:bg-[#071329] text-slate-900 dark:text-slate-100 cyberpunk:text-cyan-300 shadow-xs font-semibold"
-        : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50"
+        ? "bg-white dark:bg-[#121722] text-[#0F172A] dark:text-[#F1F5F9] shadow-2xs border border-[#E5E2DC]/60 dark:border-white/[0.08] font-semibold"
+        : "text-[#475569] dark:text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-[#F1F5F9] hover:bg-white/60 dark:hover:bg-white/[0.04] border border-transparent"
     }
 
-    if (variant === "pills") {
+    if (currentVariant === "pills") {
       return isActive
-        ? "bg-blue-600 text-white font-semibold shadow-xs"
-        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+        ? "bg-[#1D4ED8] dark:bg-[#2563EB] text-white font-semibold shadow-2xs"
+        : "text-[#475569] dark:text-[#94A3B8] hover:bg-[#F3F1EC] dark:hover:bg-[#161C2A] hover:text-[#0F172A] dark:hover:text-[#F1F5F9]"
     }
 
-    // Default underline
+    // Kiểu gạch chân mặc định
     return isActive
-      ? "text-blue-600 border-b-2 border-blue-600 font-semibold"
-      : "text-slate-500 border-b-2 border-transparent hover:text-slate-800 hover:border-slate-300"
+      ? "text-[#1D4ED8] dark:text-[#38BDF8] border-b-2 border-[#1D4ED8] dark:border-[#38BDF8] font-semibold rounded-none"
+      : "text-[#64748B] dark:text-[#94A3B8] border-b-2 border-transparent hover:text-[#0F172A] dark:hover:text-[#F1F5F9] hover:border-[#D0CCC3] dark:hover:border-white/[0.2] rounded-none"
   }
 
   return (
@@ -61,8 +62,9 @@ export function Tabs({
               if (!isDisabled) onChange?.(tab.id)
             }}
             className={`
-              inline-flex items-center gap-2 py-2 px-3 text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer rounded-lg
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600
+              inline-flex items-center gap-2 py-2 px-3 text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer whitespace-nowrap
+              ${variant === "underline" ? "rounded-t-lg" : "rounded-lg"}
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8] dark:focus-visible:ring-[#3B82F6]
               ${getItemStyles(isActive, isDisabled, variant)}
             `.trim()}
           >
@@ -70,10 +72,10 @@ export function Tabs({
             <span>{tab.label}</span>
             {tab.badge !== undefined && (
               <span
-                className={`ml-1 px-1.5 py-0.2 text-[10px] rounded-full font-semibold ${
+                className={`ml-1 px-1.5 py-0.5 text-[10px] font-mono-tech rounded-full font-semibold ${
                   isActive && variant === "pills"
-                    ? "bg-blue-500 text-white"
-                    : "bg-slate-200/80 text-slate-700"
+                    ? "bg-white/20 text-white"
+                    : "bg-[#ECE9E2] dark:bg-[#1B2335] text-[#475569] dark:text-[#94A3B8]"
                 }`}
               >
                 {tab.badge}

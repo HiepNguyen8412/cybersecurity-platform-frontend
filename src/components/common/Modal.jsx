@@ -16,7 +16,6 @@ export function Modal({
   closeOnEsc = true,
   className = "",
 }) {
-  // ESC key handler and body scroll lock
   useEffect(() => {
     if (!isOpen) return
 
@@ -53,34 +52,37 @@ export function Modal({
       aria-labelledby={title ? "modal-title" : undefined}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
     >
-      {/* Backdrop */}
+      {/* Nền mờ hộp thoại */}
       <div
-        className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity animate-in fade-in"
+        className="fixed inset-0 bg-[#0F172A]/45 dark:bg-black/75 backdrop-blur-xs transition-opacity animate-in fade-in"
         onClick={() => {
           if (closeOnBackdropClick) onClose?.()
         }}
         aria-hidden="true"
       />
 
-      {/* Modal Dialog Box */}
+      {/* Khung hộp thoại */}
       <div
         className={`
-          relative w-full rounded-2xl bg-white dark:bg-slate-900 cyberpunk:bg-[#071022] p-6 shadow-2xl dark:shadow-black/70 cyberpunk:shadow-sm border border-slate-200/80 dark:border-slate-800 cyberpunk:border-cyan-500/50 z-10
+          relative w-full rounded-2xl bg-white dark:bg-[#121722] p-6 shadow-xl dark:shadow-black/70 border border-[#E5E2DC] dark:border-white/[0.09] z-10
           transition-all animate-in zoom-in-95 fade-in duration-200
           ${sizeStyles[size] || sizeStyles.md}
           ${className}
         `.trim()}
       >
-        {/* Header */}
+        {/* Đầu hộp thoại */}
         <div className="flex items-start justify-between gap-4 mb-4">
           <div className="flex flex-col space-y-1">
             {title && (
-              <h2 id="modal-title" className="text-lg font-bold text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
+              <h2
+                id="modal-title"
+                className="font-serif-editorial text-xl font-semibold text-[#0F172A] dark:text-[#F1F5F9] leading-tight"
+              >
                 {title}
               </h2>
             )}
             {description && (
-              <p className="text-xs text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-300/80 leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] leading-relaxed">
                 {description}
               </p>
             )}
@@ -89,19 +91,21 @@ export function Modal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
-            aria-label="Close modal"
+            className="p-1.5 rounded-lg text-[#64748B] dark:text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-[#F1F5F9] hover:bg-[#F3F1EC] dark:hover:bg-[#161C2A] transition-colors cursor-pointer"
+            aria-label="Đóng hộp thoại"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        {/* Content Body */}
-        <div className="text-sm text-slate-600 dark:text-slate-300 cyberpunk:text-slate-200 mb-6">{children}</div>
+        {/* Nội dung */}
+        <div className={`text-sm text-[#475569] dark:text-[#94A3B8] ${footer ? "mb-6" : ""}`}>
+          {children}
+        </div>
 
-        {/* Footer */}
+        {/* Chân hộp thoại */}
         {footer && (
-          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 cyberpunk:border-cyan-500/20 flex items-center justify-end gap-2.5">
+          <div className="pt-4 border-t border-[#EFEDE7] dark:border-white/[0.06] flex items-center justify-end gap-2.5">
             {footer}
           </div>
         )}

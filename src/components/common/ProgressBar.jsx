@@ -12,14 +12,16 @@ export function ProgressBar({
   className = "",
   ...props
 }) {
-  const percentage = Math.min(Math.max(Math.round((value / max) * 100), 0), 100)
+  const safeMax = max > 0 ? max : 100
+  const percentage = Math.min(Math.max(Math.round((value / safeMax) * 100), 0), 100)
 
   const variantStyles = {
-    primary: "bg-blue-600",
-    success: "bg-emerald-600",
+    primary: "bg-[#1D4ED8] dark:bg-[#3B82F6]",
+    success: "bg-emerald-600 dark:bg-emerald-500",
     warning: "bg-amber-500",
-    error: "bg-rose-600",
-    indigo: "bg-indigo-600",
+    error: "bg-rose-600 dark:bg-rose-500",
+    indigo: "bg-indigo-600 dark:bg-indigo-500",
+    neutral: "bg-[#64748B] dark:bg-[#94A3B8]",
   }
 
   const sizeStyles = {
@@ -31,9 +33,13 @@ export function ProgressBar({
   return (
     <div className={`w-full flex flex-col space-y-1.5 ${className}`.trim()} {...props}>
       {(label || showValue) && (
-        <div className="flex justify-between items-center text-xs font-medium text-slate-700">
+        <div className="flex justify-between items-center text-xs font-medium text-[#0F172A] dark:text-[#F1F5F9]">
           {label && <span>{label}</span>}
-          {showValue && <span className="text-slate-500 tabular-nums">{percentage}%</span>}
+          {showValue && (
+            <span className="font-mono-tech text-[#475569] dark:text-[#94A3B8] tabular-nums">
+              {percentage}%
+            </span>
+          )}
         </div>
       )}
 
@@ -41,14 +47,14 @@ export function ProgressBar({
         role="progressbar"
         aria-valuenow={value}
         aria-valuemin={0}
-        aria-valuemax={max}
-        aria-label={label || "Progress"}
-        className={`w-full bg-slate-100 rounded-full overflow-hidden ${sizeStyles[size] || sizeStyles.md}`}
+        aria-valuemax={safeMax}
+        aria-label={label || "Tiến độ hoàn thành"}
+        className={`w-full bg-[#ECE9E2] dark:bg-[#161C2A] rounded-full overflow-hidden ${sizeStyles[size] || sizeStyles.md}`}
       >
         <div
-          className={`h-full rounded-full transition-all duration-300 ease-out ${
-            variantStyles[variant] || variantStyles.primary
-          } ${animated ? "animate-pulse" : ""}`}
+          className={`h-full rounded-full ease-out ${
+            animated ? "transition-all duration-500" : "transition-all duration-300"
+          } ${variantStyles[variant] || variantStyles.primary}`}
           style={{ width: `${percentage}%` }}
         />
       </div>

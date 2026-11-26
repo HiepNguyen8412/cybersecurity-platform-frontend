@@ -1,13 +1,20 @@
 import { useState } from "react"
 import { User } from "lucide-react"
 
+const STATUS_LABELS = {
+  online: "Đang hoạt động",
+  offline: "Ngoại tuyến",
+  busy: "Đang bận",
+  away: "Tạm vắng",
+}
+
 /**
  * Reusable Avatar component with initials fallback, image loading error handling,
  * and status indicators.
  */
 export function Avatar({
   src,
-  alt = "User avatar",
+  alt = "Ảnh đại diện người dùng",
   name = "",
   size = "md",
   status = null,
@@ -16,10 +23,9 @@ export function Avatar({
 }) {
   const [imageError, setImageError] = useState(false)
 
-  // Compute initials from name
   const getInitials = (str) => {
     if (!str) return ""
-    const parts = str.trim().split(" ")
+    const parts = str.trim().split(/\s+/)
     if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase()
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
   }
@@ -48,20 +54,21 @@ export function Avatar({
   }
 
   const statusPositions = {
-    xs: "h-1.5 w-1.5 ring-1 ring-white",
-    sm: "h-2 w-2 ring-1.5 ring-white",
-    md: "h-2.5 w-2.5 ring-2 ring-white",
-    lg: "h-3 w-3 ring-2 ring-white",
-    xl: "h-3.5 w-3.5 ring-2 ring-white",
+    xs: "h-1.5 w-1.5 ring-1 ring-white dark:ring-[#121722]",
+    sm: "h-2 w-2 ring-1.5 ring-white dark:ring-[#121722]",
+    md: "h-2.5 w-2.5 ring-2 ring-white dark:ring-[#121722]",
+    lg: "h-3 w-3 ring-2 ring-white dark:ring-[#121722]",
+    xl: "h-3.5 w-3.5 ring-2 ring-white dark:ring-[#121722]",
   }
 
   const initials = getInitials(name)
   const hasImage = src && !imageError
+  const statusText = status ? STATUS_LABELS[status] || status : ""
 
   return (
     <div className={`relative inline-flex shrink-0 ${className}`.trim()} {...props}>
       <div
-        className={`flex items-center justify-center rounded-full font-semibold overflow-hidden select-none bg-blue-100 text-blue-700 border border-slate-200/80 ${sizeStyles[size] || sizeStyles.md}`}
+        className={`flex items-center justify-center rounded-full font-semibold overflow-hidden select-none bg-[#EFF6FF] dark:bg-[#3B82F6]/15 text-[#1D4ED8] dark:text-[#93C5FD] border border-[#E5E2DC] dark:border-white/[0.1] ${sizeStyles[size] || sizeStyles.md}`}
       >
         {hasImage ? (
           <img
@@ -75,15 +82,15 @@ export function Avatar({
         ) : initials ? (
           <span>{initials}</span>
         ) : (
-          <User className={`${iconSizes[size] || iconSizes.md} text-slate-500`} />
+          <User className={`${iconSizes[size] || iconSizes.md} text-[#64748B] dark:text-[#94A3B8]`} />
         )}
       </div>
 
       {status && (
         <span
           className={`absolute bottom-0 right-0 rounded-full ${statusStyles[status] || statusStyles.online} ${statusPositions[size] || statusPositions.md}`}
-          aria-label={`Status: ${status}`}
-          title={`Status: ${status}`}
+          aria-label={`Trạng thái: ${statusText}`}
+          title={`Trạng thái: ${statusText}`}
         />
       )}
     </div>

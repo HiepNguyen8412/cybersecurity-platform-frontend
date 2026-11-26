@@ -4,16 +4,18 @@ import {
   RiBookOpenLine,
   RiCompassDiscoverLine,
   RiTerminalBoxLine,
-  RiShieldFlashFill,
-  RiUserSettingsLine,
   RiCpuLine,
+  RiVerifiedBadgeLine,
+  RiShieldCheckLine,
+  RiUserSettingsLine,
+  RiServerLine,
   RiFolderShield2Line,
   RiFileHistoryLine,
+  RiSettings4Line,
   RiLineChartLine,
   RiMedalLine,
   RiUser3Line,
   RiEqualizer3Line,
-  RiRadarLine,
   RiArrowRightSLine,
   RiCloseLine,
 } from "@remixicon/react"
@@ -21,12 +23,88 @@ import useLayout from "../../hooks/useLayout"
 import useAuth from "../../hooks/useAuth"
 import { Avatar } from "../common"
 
+const ROLE_LABELS = {
+  ADMIN: "Quản trị viên SOC",
+  SUPER_ADMIN: "Quản trị viên SOC",
+  ADMINISTRATOR: "Quản trị viên SOC",
+  ROLE_ADMIN: "Quản trị viên SOC",
+  ROLE_SUPER_ADMIN: "Quản trị viên SOC",
+  INSTRUCTOR: "Giảng viên Nghiên cứu",
+  ROLE_INSTRUCTOR: "Giảng viên Nghiên cứu",
+  MENTOR: "Giảng viên Nghiên cứu",
+  USER: "Học viên Nghiên cứu",
+  ROLE_USER: "Học viên Nghiên cứu",
+  STUDENT: "Học viên Nghiên cứu",
+  ROLE_STUDENT: "Học viên Nghiên cứu",
+  LEARNER: "Học viên Nghiên cứu",
+  ROLE_LEARNER: "Học viên Nghiên cứu",
+  "SECURITY ANALYST": "Chuyên viên An ninh mạng",
+  SECURITY_ANALYST: "Chuyên viên An ninh mạng",
+  ANALYST: "Chuyên viên An ninh mạng",
+}
+
+function formatRoleLabel(role, roles) {
+  if (Array.isArray(roles)) {
+    const normalizedRoles = roles.map((item) => String(item).trim().toUpperCase())
+    if (
+      normalizedRoles.some((item) =>
+        ["ADMIN", "SUPER_ADMIN", "ADMINISTRATOR", "ROLE_ADMIN", "ROLE_SUPER_ADMIN"].includes(item)
+      )
+    ) {
+      return "Quản trị viên SOC"
+    }
+    for (const item of normalizedRoles) {
+      if (ROLE_LABELS[item]) return ROLE_LABELS[item]
+    }
+  }
+  if (!role) return "Học viên An ninh mạng"
+  const normalized = String(role).trim().toUpperCase()
+  return ROLE_LABELS[normalized] || "Học viên An ninh mạng"
+}
+
+const NAVIGATION_GROUPS = [
+  {
+    group: "HỌC TẬP & NGHIÊN CỨU",
+    items: [
+      { label: "Trung tâm điều hành", icon: RiDashboard3Line, path: "/dashboard" },
+      { label: "Giáo trình bài giảng", icon: RiBookOpenLine, path: "/learning" },
+      { label: "Lộ trình chuyên môn", icon: RiCompassDiscoverLine, path: "/learning-paths" },
+      { label: "Phòng Lab thực chiến", icon: RiTerminalBoxLine, path: "/labs" },
+      { label: "AI Research Workbench", icon: RiCpuLine, path: "/workbench" },
+      { label: "Xác thực Chứng chỉ", icon: RiVerifiedBadgeLine, path: "/verify" },
+    ],
+  },
+  {
+    group: "QUẢN TRỊ HỆ THỐNG (SOC)",
+    items: [
+      { label: "Trung tâm chỉ huy", icon: RiShieldCheckLine, path: "/admin" },
+      { label: "Quản lý người dùng", icon: RiUserSettingsLine, path: "/admin/users" },
+      { label: "Quản trị phòng Lab", icon: RiServerLine, path: "/admin/labs" },
+      { label: "Quản trị khóa học", icon: RiFolderShield2Line, path: "/admin/courses" },
+      { label: "Nhật ký kiểm toán", icon: RiFileHistoryLine, path: "/admin/audit-logs" },
+      { label: "Cấu hình quản trị", icon: RiSettings4Line, path: "/admin/settings" },
+    ],
+  },
+  {
+    group: "TIẾN ĐỘ & NĂNG LỰC",
+    items: [
+      { label: "Thống kê năng lực", icon: RiLineChartLine, path: "/progress" },
+      { label: "Huy hiệu & Chứng chỉ", icon: RiMedalLine, path: "/achievements" },
+    ],
+  },
+  {
+    group: "TÀI KHOẢN & CẤU HÌNH",
+    items: [
+      { label: "Hồ sơ cá nhân", icon: RiUser3Line, path: "/profile" },
+      { label: "Cài đặt hệ thống", icon: RiEqualizer3Line, path: "/settings" },
+    ],
+  },
+]
+
 /**
- * Premium Bespoke Cybersecurity Platform Sidebar.
- * - Powered by @remixicon/react tailored security iconography.
- * - Sculpted "Icon Vessels" with dynamic multi-layer glass borders and jewel gradients.
- * - Clean, non-generic typography with high-contrast tactical telemetry.
- * - Supports expanded (240px) & collapsed (72px) desktop states + responsive mobile drawer.
+ * Academic Research Atelier Sidebar.
+ * Supports Editorial Light & Deep Obsidian Dark with expanded (240px) / collapsed (72px) desktop states
+ * and an accessible mobile drawer.
  */
 export function Sidebar() {
   const {
@@ -37,88 +115,46 @@ export function Sidebar() {
 
   const { user } = useAuth()
   const displayName = user?.fullName || user?.name || "Học viên"
-  const displayRole = user?.role || "Security Analyst"
-
-  // Navigation structure: LEARN, PROGRESS, ADMIN, ACCOUNT with Remix Icons
-  const navigationGroups = [
-    {
-      group: "HỌC TẬP & RÈN LUYỆN",
-      items: [
-        { label: "Trung tâm điều hành", icon: RiDashboard3Line, path: "/dashboard" },
-        { label: "Giáo trình bài giảng", icon: RiBookOpenLine, path: "/learning" },
-        { label: "Lộ trình chuyên môn", icon: RiCompassDiscoverLine, path: "/learning-paths" },
-        { label: "Phòng Lab thực chiến", icon: RiTerminalBoxLine, path: "/labs" },
-      ],
-    },
-    {
-      group: "QUẢN TRỊ VIÊN // SOC ADMIN",
-      items: [
-        { label: "Trung tâm chỉ huy", icon: RiShieldFlashFill, path: "/admin" },
-        { label: "Quản lý người dùng", icon: RiUserSettingsLine, path: "/admin/users" },
-        { label: "Quản trị phòng Lab", icon: RiCpuLine, path: "/admin/labs" },
-        { label: "Quản trị khóa học", icon: RiFolderShield2Line, path: "/admin/courses" },
-        { label: "Nhật ký kiểm toán", icon: RiFileHistoryLine, path: "/admin/audit-logs" },
-      ],
-    },
-    {
-      group: "TIẾN ĐỘ & NĂNG LỰC",
-      items: [
-        { label: "Thống kê năng lực", icon: RiLineChartLine, path: "/progress" },
-        { label: "Huy hiệu & Chứng chỉ", icon: RiMedalLine, path: "/achievements" },
-      ],
-    },
-    {
-      group: "TÀI KHOẢN & CẤU HÌNH",
-      items: [
-        { label: "Hồ sơ cá nhân", icon: RiUser3Line, path: "/profile" },
-        { label: "Cài đặt hệ thống", icon: RiEqualizer3Line, path: "/settings" },
-      ],
-    },
-  ]
+  const displayRole = formatRoleLabel(user?.role, user?.roles)
 
   const renderSidebarContent = (isCollapsed) => (
-    <div className="flex h-full flex-col bg-white dark:bg-[#0c1019] cyberpunk:bg-[#051726] border-r border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 text-slate-900 dark:text-white cyberpunk:text-cyan-50 transition-colors select-none">
-      {/* Brand Header */}
+    <div className="flex h-full flex-col bg-white dark:bg-[#0E131D] border-r border-[#E5E2DC] dark:border-white/[0.08] text-[#0F172A] dark:text-[#F1F5F9] transition-colors select-none">
+      {/* Đầu trang Thương hiệu */}
       <div
-        className={`flex h-16 items-center border-b border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 ${
+        className={`flex h-16 items-center border-b border-[#E5E2DC] dark:border-white/[0.08] ${
           isCollapsed ? "justify-center px-2" : "justify-between px-4 sm:px-5"
         }`}
       >
         <Link
           to="/"
-          className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl group"
+          className="flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D4ED8] dark:focus-visible:ring-[#3B82F6] rounded-lg group min-w-0"
           onClick={closeMobileMenu}
-          title="CyberPath - Trang chủ"
+          title="CyberPath — Học viện An ninh mạng"
         >
-          {/* Custom Sculpted Shield Vessel */}
-          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 dark:bg-indigo-600 cyberpunk:bg-blue-600 text-white cyberpunk:text-white shadow-md shadow-indigo-600/30 dark:shadow-indigo-950/50 cyberpunk:shadow-blue-500/30 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
-            <RiShieldFlashFill className="h-5.5 w-5.5 text-white" />
-            <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400 ring-2 ring-white dark:ring-[#0a0f1d]" />
-            </span>
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#1D4ED8] dark:bg-[#2563EB] text-white border border-[#1E40AF]/20 dark:border-white/[0.12] transition-colors group-hover:bg-[#1E40AF] dark:group-hover:bg-[#3B82F6]">
+            <RiShieldCheckLine className="h-5 w-5" />
           </div>
 
           {!isCollapsed && (
-            <div className="flex flex-col">
-              <span className="text-sm font-extrabold tracking-tight text-slate-900 dark:text-white cyberpunk:text-white leading-tight">
-                Cyber<span className="text-indigo-600 dark:text-indigo-400 cyberpunk:text-cyan-400">Path</span>
+            <div className="flex flex-col min-w-0">
+              <span className="font-serif-editorial text-lg font-semibold tracking-tight text-[#0F172A] dark:text-[#F1F5F9] leading-none">
+                Cyber<span className="text-[#1D4ED8] dark:text-[#38BDF8]">Path</span>
               </span>
-              <span className="text-[10px] font-mono-tech tracking-widest text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400/90 uppercase leading-tight mt-0.5">
-                SEC-OPS RANGE
+              <span className="text-[9.5px] font-mono-tech font-medium tracking-[0.14em] text-[#64748B] dark:text-[#94A3B8] uppercase leading-none mt-1 truncate">
+                HỌC VIỆN AN NINH MẠNG
               </span>
             </div>
           )}
         </Link>
 
-        {/* Mobile close button */}
+        {/* Nút đóng menu trên thiết bị di động */}
         {!isCollapsed && (
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center md:hidden shrink-0">
             <button
               type="button"
               onClick={closeMobileMenu}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
-              aria-label="Đóng menu"
+              className="p-2 rounded-lg text-[#64748B] dark:text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-[#F1F5F9] hover:bg-[#F3F1EC] dark:hover:bg-[#161C2A] transition-colors cursor-pointer"
+              aria-label="Đóng menu điều hướng"
             >
               <RiCloseLine className="h-5 w-5" />
             </button>
@@ -126,19 +162,19 @@ export function Sidebar() {
         )}
       </div>
 
-      {/* Navigation Sections */}
+      {/* Danh mục điều hướng */}
       <nav
         aria-label="Điều hướng nền tảng"
         className={`flex-1 overflow-y-auto py-4 space-y-4 ${
           isCollapsed ? "px-2" : "px-3"
         }`}
       >
-        {navigationGroups.map((group) => (
+        {NAVIGATION_GROUPS.map((group) => (
           <div key={group.group} className="space-y-1">
             {isCollapsed ? (
-              <div className="my-2 border-t border-slate-100 dark:border-white/[0.06] cyberpunk:border-cyan-500/20" />
+              <div className="my-2 border-t border-[#EFEDE7] dark:border-white/[0.06]" />
             ) : (
-              <p className="px-3 pb-1 text-[10px] font-mono-tech font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 cyberpunk:text-cyan-400/80">
+              <p className="px-3 pb-1 text-[10px] font-mono-tech font-semibold uppercase tracking-[0.12em] text-[#64748B] dark:text-[#64748B]">
                 {group.group}
               </p>
             )}
@@ -151,12 +187,12 @@ export function Sidebar() {
                   <NavLink
                     key={item.path}
                     to={item.path}
-                    end={item.path === "/admin" || item.path === "/dashboard"}
+                    end={item.path === "/admin" || item.path === "/dashboard" || item.path === "/verify"}
                     onClick={closeMobileMenu}
                     title={item.label}
                     aria-label={item.label}
                     className={({ isActive }) => `
-                      group relative flex items-center rounded-xl text-xs font-medium transition-all duration-200
+                      group relative flex items-center rounded-xl text-xs transition-colors duration-150
                       ${
                         isCollapsed
                           ? "justify-center p-2"
@@ -164,34 +200,32 @@ export function Sidebar() {
                       }
                       ${
                         isActive
-                          ? "bg-blue-50/80 dark:bg-blue-950/40 cyberpunk:bg-cyan-950/50 text-blue-700 dark:text-white cyberpunk:text-cyan-200 font-semibold border border-blue-200/80 dark:border-blue-500/30 cyberpunk:border-cyan-500/50 shadow-xs"
-                          : "text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-200/90 hover:bg-slate-100/70 dark:hover:bg-white/[0.04] cyberpunk:hover:bg-cyan-950/30 hover:text-slate-900 dark:hover:text-white border border-transparent"
+                          ? "bg-[#1D4ED8]/[0.08] dark:bg-[#3B82F6]/15 text-[#1D4ED8] dark:text-[#F1F5F9] font-semibold border border-[#1D4ED8]/20 dark:border-[#3B82F6]/30"
+                          : "text-[#475569] dark:text-[#94A3B8] hover:bg-[#F3F1EC] dark:hover:bg-[#161C2A] hover:text-[#0F172A] dark:hover:text-[#F1F5F9] border border-transparent font-medium"
                       }
                     `.trim()}
                   >
                     {({ isActive }) => (
                       <>
-                        {/* Active vertical accent bar */}
                         {isActive && (
                           <span
-                            className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-gradient-to-b from-blue-500 to-cyan-400 shadow-[0_0_8px_rgba(59,130,246,0.6)]"
+                            className="absolute left-0 top-2 bottom-2 w-0.5 rounded-r-full bg-[#1D4ED8] dark:bg-[#38BDF8]"
                             aria-hidden="true"
                           />
                         )}
 
-                        {/* Sculpted Icon Vessel */}
                         <span
                           className={`
-                            flex items-center justify-center rounded-lg transition-all duration-200 shrink-0
+                            flex items-center justify-center rounded-lg transition-colors duration-150 shrink-0
                             ${isCollapsed ? "w-9 h-9" : "w-7.5 h-7.5"}
                             ${
                               isActive
-                                ? "bg-indigo-50 dark:bg-indigo-950/60 cyberpunk:bg-emerald-950/60 border border-indigo-200 dark:border-indigo-700/50 cyberpunk:border-emerald-500/40 text-indigo-600 dark:text-indigo-400 cyberpunk:text-emerald-300 shadow-2xs"
-                                : "bg-slate-100/80 dark:bg-white/[0.04] cyberpunk:bg-emerald-950/20 border border-slate-200/60 dark:border-white/5 cyberpunk:border-emerald-500/20 text-slate-500 dark:text-slate-400 cyberpunk:text-emerald-400/80 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 group-hover:bg-indigo-50/70 dark:group-hover:bg-white/[0.08] group-hover:border-indigo-200/70 dark:group-hover:border-white/10"
+                                ? "bg-white dark:bg-[#121722] border border-[#1D4ED8]/25 dark:border-[#3B82F6]/40 text-[#1D4ED8] dark:text-[#38BDF8]"
+                                : "bg-[#F3F1EC] dark:bg-[#161C2A] border border-[#E5E2DC] dark:border-white/[0.07] text-[#64748B] dark:text-[#94A3B8] group-hover:text-[#1D4ED8] dark:group-hover:text-[#38BDF8] group-hover:bg-white dark:group-hover:bg-[#1B2335]"
                             }
                           `.trim()}
                         >
-                          <Icon className="w-4 h-4 transition-transform duration-200 group-hover:scale-110" />
+                          <Icon className="w-4 h-4" />
                         </span>
 
                         {!isCollapsed && (
@@ -207,45 +241,44 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* Cyber Sandbox Telemetry Widget (Desktop expanded only) */}
+      {/* Thẻ trạng thái môi trường cô lập (tĩnh, sạch sẽ) */}
       {!isCollapsed && (
-        <div className="mx-3 mb-2 p-2.5 rounded-xl bg-slate-50/90 dark:bg-[#111726] cyberpunk:bg-[#07243c] border border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-400/50 font-mono-tech text-[10px] space-y-1.5 shadow-2xs">
-          <div className="flex items-center justify-between">
-            <span className="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400 font-bold uppercase tracking-wider">
-              <RiRadarLine className="w-3.5 h-3.5 text-cyan-500 animate-pulse" />
-              <span>SANDBOX OPS</span>
+        <div className="mx-3 mb-2 p-3 rounded-xl bg-[#FAF9F6] dark:bg-[#121722] border border-[#E5E2DC] dark:border-white/[0.08] font-mono-tech text-[10px] space-y-1.5">
+          <div className="flex items-center justify-between gap-2">
+            <span className="inline-flex items-center gap-1.5 text-[#475569] dark:text-[#94A3B8] font-semibold uppercase tracking-wider">
+              <RiShieldCheckLine className="w-3.5 h-3.5 text-[#1D4ED8] dark:text-[#38BDF8]" />
+              <span>THAO TRƯỜNG LAB</span>
             </span>
-            <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 cyberpunk:text-emerald-300 font-bold">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              ONLINE
+            <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-semibold">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+              SẴN SÀNG
             </span>
           </div>
-          <div className="text-slate-600 dark:text-slate-300 cyberpunk:text-cyan-200 flex items-center justify-between pt-0.5 border-t border-slate-200/60 dark:border-white/5">
-            <span>NODE: #412</span>
-            <span>PING: 18ms</span>
-            <span className="text-blue-600 dark:text-cyan-400 font-bold">ISOLATED</span>
+          <div className="text-[#64748B] dark:text-[#94A3B8] flex items-center justify-between pt-1 border-t border-[#EFEDE7] dark:border-white/[0.06]">
+            <span>Cô lập Container</span>
+            <span className="text-[#1D4ED8] dark:text-[#93C5FD] font-semibold">NIST / OWASP</span>
           </div>
         </div>
       )}
 
-      {/* Bottom User Profile Summary */}
-      <div className={`border-t border-slate-200/90 dark:border-white/[0.08] cyberpunk:border-cyan-500/40 ${isCollapsed ? "p-2" : "p-3"}`}>
+      {/* Tóm tắt tài khoản người dùng */}
+      <div className={`border-t border-[#E5E2DC] dark:border-white/[0.08] ${isCollapsed ? "p-2" : "p-3"}`}>
         <Link
           to="/profile"
           onClick={closeMobileMenu}
-          className={`flex items-center rounded-xl hover:bg-slate-100/80 dark:hover:bg-white/[0.05] cyberpunk:hover:bg-cyan-950/40 transition-colors group cursor-pointer ${
+          className={`flex items-center rounded-xl hover:bg-[#F3F1EC] dark:hover:bg-[#161C2A] transition-colors group cursor-pointer ${
             isCollapsed ? "justify-center p-2" : "justify-between p-2"
           }`}
-          title={`${displayName} (${displayRole}) - Xem hồ sơ`}
+          title={`${displayName} (${displayRole}) — Xem hồ sơ`}
         >
           <div className={`flex items-center ${isCollapsed ? "justify-center" : "gap-2.5 min-w-0"}`}>
             <Avatar name={displayName} size="sm" status="online" />
             {!isCollapsed && (
               <div className="flex flex-col min-w-0 text-left">
-                <span className="text-xs font-semibold text-slate-800 dark:text-slate-100 cyberpunk:text-cyan-50 leading-tight truncate group-hover:text-blue-600 dark:group-hover:text-cyan-300 transition-colors">
+                <span className="text-xs font-semibold text-[#0F172A] dark:text-[#F1F5F9] leading-tight truncate group-hover:text-[#1D4ED8] dark:group-hover:text-[#38BDF8] transition-colors">
                   {displayName}
                 </span>
-                <span className="text-[11px] text-slate-500 dark:text-slate-400 cyberpunk:text-cyan-400/90 leading-tight truncate">
+                <span className="text-[11px] text-[#64748B] dark:text-[#94A3B8] leading-tight truncate">
                   {displayRole}
                 </span>
               </div>
@@ -253,7 +286,7 @@ export function Sidebar() {
           </div>
 
           {!isCollapsed && (
-            <RiArrowRightSLine className="h-4 w-4 text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 cyberpunk:group-hover:text-cyan-300 shrink-0 transition-transform group-hover:translate-x-0.5" />
+            <RiArrowRightSLine className="h-4 w-4 text-[#64748B] dark:text-[#94A3B8] group-hover:text-[#0F172A] dark:group-hover:text-[#F1F5F9] shrink-0 transition-transform group-hover:translate-x-0.5" />
           )}
         </Link>
       </div>
@@ -262,9 +295,9 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Desktop Sidebar (Fixed Left: width 240px expanded / 72px collapsed) */}
+      {/* Thanh bên Desktop cố định bên trái (240px mở rộng / 72px thu gọn) */}
       <aside
-        aria-label="Platform Sidebar"
+        aria-label="Thanh bên điều hướng nền tảng"
         className={`hidden md:block fixed left-0 top-0 bottom-0 z-40 transition-all duration-200 ease-in-out ${
           isSidebarCollapsed ? "w-[72px]" : "w-60"
         }`}
@@ -272,22 +305,20 @@ export function Sidebar() {
         {renderSidebarContent(isSidebarCollapsed)}
       </aside>
 
-      {/* Mobile Drawer */}
+      {/* Ngăn kéo điều hướng trên thiết bị di động */}
       {isMobileMenuOpen && (
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Mobile Navigation Drawer"
+          aria-label="Menu điều hướng di động"
           className="fixed inset-0 z-50 md:hidden"
         >
-          {/* Overlay backdrop */}
           <div
-            className="fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-[#0F172A]/50 dark:bg-black/75 backdrop-blur-xs transition-opacity"
             onClick={closeMobileMenu}
             aria-hidden="true"
           />
 
-          {/* Drawer container */}
           <div className="fixed inset-y-0 left-0 w-72 max-w-[85vw] shadow-2xl z-50 animate-in slide-in-from-left duration-200">
             {renderSidebarContent(false)}
           </div>

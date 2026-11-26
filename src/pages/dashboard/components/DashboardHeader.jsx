@@ -1,60 +1,94 @@
-import { Flame, Compass } from "lucide-react"
+import { Flame, Compass, Award } from "lucide-react"
 import { CountUp } from "../../../components/common"
 
+function getGreetingByHour() {
+  const hour = new Date().getHours()
+  if (hour < 12) return "Chào buổi sáng"
+  if (hour < 18) return "Chào buổi chiều"
+  return "Chào buổi tối"
+}
+
 /**
- * DashboardHeader Component
- * 
- * High-contrast, theme-aware greeting & mission clearance banner.
- * Crisp visibility across Light, Stealth Dark, and Tactical Cyber Range.
+ * DashboardHeader
+ * Tiêu đề chào mừng theo chuẩn Academic Research Atelier (Editorial Light & Deep Obsidian Dark).
  */
 export function DashboardHeader({
-  userName = "Chuyên viên SOC",
+  userName = "Nghiên cứu viên CyberPath",
   streakDays = 7,
-  activePathTitle = "Security Analyst",
+  activePathTitle = "Chuyên viên Phân tích An ninh SOC",
+  userPoints = null,
+  isLiveSynced = false,
   className = "",
 }) {
-  const displayName = (userName && userName.trim()) || "Chuyên viên SOC"
+  const displayName = (userName && userName.trim()) || "Nghiên cứu viên CyberPath"
+  const greeting = getGreetingByHour()
 
   return (
     <header
-      className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-1 ${className}`.trim()}
-      aria-label="Dashboard Welcome"
+      className={`flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 pb-2 border-b border-[#EFEDE7] dark:border-white/[0.06] ${className}`.trim()}
+      aria-label="Tổng quan không gian học tập"
     >
-      {/* Left: Greeting & Mission Subtitle */}
-      <div className="space-y-1.5">
+      {/* Trái: Lời chào học thuật & bối cảnh chương trình */}
+      <div className="space-y-2">
         <div className="flex items-center gap-2.5 flex-wrap">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white cyberpunk:text-cyan-50 leading-tight">
-            Chào buổi sáng, {displayName}
-          </h1>
-          <span className="font-mono-tech text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800/60 cyberpunk:bg-cyan-950/60 cyberpunk:text-cyan-300 cyberpunk:border-cyan-500/50 shadow-2xs">
-            CHUYÊN VIÊN AN NINH MẠNG
+          <span className="inline-flex items-center gap-1.5 font-mono-tech text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#F3F1EC] dark:bg-[#161C2A] text-[#475569] dark:text-[#94A3B8] border border-[#E5E2DC] dark:border-white/[0.08]">
+            <span
+              className={`h-1.5 w-1.5 rounded-full ${
+                isLiveSynced
+                  ? "bg-emerald-600 dark:bg-emerald-400"
+                  : "bg-[#1D4ED8] dark:bg-[#38BDF8]"
+              }`}
+              aria-hidden="true"
+            />
+            <span>{isLiveSynced ? "ĐỒNG BỘ HỒ SƠ TRỰC TUYẾN" : "HỒ SƠ NGHIÊN CỨU HỌC THUẬT"}</span>
+          </span>
+          <span className="font-mono-tech text-[11px] text-[#64748B] dark:text-[#94A3B8]">
+            Chuẩn năng lực NIST NICE &amp; MITRE ATT&amp;CK
           </span>
         </div>
-        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-300 cyberpunk:text-cyan-300/80 font-normal leading-relaxed">
-          Trung Tâm Tác Chiến An Ninh Mạng • Lộ Trình Phòng Thủ Chủ Động & Ứng Cứu Sự Cố
+
+        <h1 className="font-serif-editorial text-3xl sm:text-[34px] font-medium tracking-tight text-[#0F172A] dark:text-[#F1F5F9] leading-tight">
+          {greeting}, {displayName}
+        </h1>
+
+        <p className="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] font-normal leading-relaxed max-w-2xl">
+          Không gian tổng hợp tiến độ nghiên cứu, bài thực nghiệm phòng thủ chủ động và hồ sơ năng lực an ninh mạng.
         </p>
       </div>
 
-      {/* Right: Quick Context Badges */}
-      <div className="flex items-center gap-2.5 shrink-0 self-start sm:self-auto flex-wrap">
-        {/* Streak Pill */}
+      {/* Phải: Chỉ số ngữ cảnh nhanh */}
+      <div className="flex items-center gap-2.5 shrink-0 self-start lg:self-auto flex-wrap">
+        {typeof userPoints === "number" && (
+          <div
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121722] border border-[#E5E2DC] dark:border-white/[0.08] text-[#0F172A] dark:text-[#F1F5F9] text-xs font-medium select-none shadow-2xs font-mono-tech"
+            title={`${userPoints.toLocaleString("vi-VN")} điểm kinh nghiệm thực nghiệm`}
+            aria-label={`Tổng điểm tích lũy: ${userPoints} XP`}
+          >
+            <Award className="h-3.5 w-3.5 text-[#1D4ED8] dark:text-[#38BDF8]" aria-hidden="true" />
+            <span>
+              <CountUp key={`xp-${userPoints}`} end={userPoints} duration={900} /> XP
+            </span>
+          </div>
+        )}
+
         <div
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50/90 border border-amber-200/90 text-amber-900 dark:bg-amber-950/50 dark:border-amber-700/60 dark:text-amber-200 cyberpunk:bg-amber-950/40 cyberpunk:border-amber-500/50 cyberpunk:text-amber-300 text-xs font-semibold select-none shadow-2xs font-mono-tech"
-          title={`$<CountUp end={streakDays} duration={1400} /> ngày trực chiến phòng thủ liên tục`}
-          aria-label={`$<CountUp end={streakDays} duration={1400} /> ngày trực chiến`}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50/80 dark:bg-amber-500/10 border border-amber-200/80 dark:border-amber-500/25 text-amber-900 dark:text-amber-300 text-xs font-medium select-none font-mono-tech"
+          title={`${streakDays} ngày nghiên cứu liên tục`}
+          aria-label={`Chuỗi ${streakDays} ngày nghiên cứu liên tục`}
         >
-          <Flame className="h-4 w-4 text-amber-500 fill-amber-500" aria-hidden="true" />
-          <span><CountUp end={streakDays} duration={1400} /> NGÀY TRỰC CHIẾN</span>
+          <Flame className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" aria-hidden="true" />
+          <span>
+            <CountUp key={`streak-${streakDays}`} end={streakDays} duration={900} /> ngày liên tục
+          </span>
         </div>
 
-        {/* Active Path Pill */}
         <div
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50/90 border border-blue-200/90 text-blue-800 dark:bg-blue-950/50 dark:border-blue-700/60 dark:text-blue-200 cyberpunk:bg-cyan-950/50 cyberpunk:border-cyan-500/50 cyberpunk:text-cyan-200 text-xs font-medium select-none shadow-2xs font-mono-tech"
-          title={`Đang tham gia lộ trình ${activePathTitle}`}
+          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50/80 dark:bg-blue-500/12 border border-blue-200/80 dark:border-blue-500/25 text-[#1D4ED8] dark:text-[#93C5FD] text-xs font-medium select-none font-mono-tech"
+          title={`Lộ trình hiện tại: ${activePathTitle}`}
           aria-label={`Lộ trình hiện tại: ${activePathTitle}`}
         >
-          <Compass className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400 cyberpunk:text-cyan-400" aria-hidden="true" />
-          <span className="font-bold text-blue-950 dark:text-blue-100 cyberpunk:text-cyan-100 truncate max-w-[170px] uppercase">{activePathTitle}</span>
+          <Compass className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          <span className="font-semibold truncate max-w-[210px]">{activePathTitle}</span>
         </div>
       </div>
     </header>
